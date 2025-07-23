@@ -1,4 +1,3 @@
-# Archipelago-Maui-Template
-A template project showing how to implement Archipelago.Core.MauiGUI
+# Dark Cloud 1 Rando
 
-Feel free to fork and adjust to make your own project
+Future home of Dark Cloud 1 randomizer for Archipelago
