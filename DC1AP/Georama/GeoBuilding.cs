@@ -1,6 +1,5 @@
-﻿using Archipelago.Core.Util;
+using Archipelago.Core.Util;
 using DC1AP.Constants;
-using DC1AP.IDs;
 using DC1AP.Mem;
 using DC1AP.Threads;
 
