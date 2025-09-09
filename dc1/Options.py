@@ -16,7 +16,7 @@ class Goal(Range):
 
 
 class AllBosses(Toggle):
-    """Requires every boss up to the goal boss in order to finish the game."""
+    """Requires defeating every boss up to the goal boss in order to finish the game."""
     display_name = "All Bosses"
     default = 0
 
@@ -52,3 +52,4 @@ class DarkCloudOptions(PerGameCommonOptions):
     all_bosses: AllBosses
     open_dungeon: OpenDungeon
     # miracle_chests: MiracleChests
+
