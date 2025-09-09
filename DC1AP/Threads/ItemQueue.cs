@@ -1,4 +1,4 @@
-﻿using Archipelago.Core.Util;
+using Archipelago.Core.Util;
 using DC1AP.Constants;
 using DC1AP.Georama;
 using DC1AP.Mem;
@@ -13,7 +13,7 @@ namespace DC1AP.Threads
         //private static int MsToCs = 10;  // Convert 1000ths of a second to 100ths
 
         internal static ConcurrentQueue<(GeoBuilding, long)> GeoBuildingQueue = new();
-        internal static ConcurrentQueue<(GeoItem, IDs.Towns)> GeoItemQueue = new();
+        internal static ConcurrentQueue<(GeoItem, Towns)> GeoItemQueue = new();
         internal static ConcurrentQueue<string> MsgQueue = new();
 
         // TODO not currently used
@@ -25,7 +25,7 @@ namespace DC1AP.Threads
                 GeoBuildingQueue.Enqueue((geoBuilding, id));
         }
 
-        internal static void AddGeoItem(GeoItem geoItem, IDs.Towns town)
+        internal static void AddGeoItem(GeoItem geoItem, Towns town)
         {
             if (PlayerState.PlayerReady())
                 GeoItemQueue.Enqueue((geoItem, town));
@@ -68,7 +68,7 @@ namespace DC1AP.Threads
                         {
                             geoBuilding.Item1.GiveBuilding(geoBuilding.Item2);
                         }
-                        while (PlayerState.CanGiveItemDungeon() && GeoItemQueue.TryDequeue(out (GeoItem, IDs.Towns) geoItem))
+                        while (PlayerState.CanGiveItemDungeon() && GeoItemQueue.TryDequeue(out (GeoItem, Towns) geoItem))
                         {
                             geoItem.Item1.GiveItem(geoItem.Item2);
                         }
