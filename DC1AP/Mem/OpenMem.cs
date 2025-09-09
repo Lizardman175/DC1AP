@@ -49,8 +49,11 @@ namespace DC1AP.Mem
         //private static readonly List<byte[]> maskLists = [NoruneGeoMasks, MatatakiGeoMasks, QueensGeoMasks, MuskaGeoMasks, FactoryGeoMasks, CastleGeoMasks];
         private static readonly List<uint> maskAddrs = [NoruneFirstMask, MatatakiFirstMask, QueensFirstMask, MuskaFirstMask, FactoryFirstMask, CastleFirstMask];
 
+        // TODO 0.2 move this near IndexAddr, rename IndexAddr (do with progressive item update)
+        private static readonly uint CollectedCountAddr = (uint)(CastleFirstMask + 12);
+
         // Prep for future bytes. Going to need double the above bytes for MCs, and then some
-        //private static readonly uint NextByte = (uint)(CastleFirstMask + 12
+        //private static readonly uint NextByte = CollectedCountAddr + 1;
 
         /// <summary>
         /// Returns the stored slot name, or empty string if unset.
