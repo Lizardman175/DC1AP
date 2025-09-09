@@ -1,6 +1,7 @@
-﻿using Archipelago.Core.Util;
+using Archipelago.Core.Util;
 using DC1AP.Mem;
 using DC1AP.Threads;
+using DC1AP.Constants;
 using Serilog;
 
 namespace DC1AP.Georama
@@ -22,7 +23,7 @@ namespace DC1AP.Georama
             this.bldId = bldId;
         }
 
-        public void GiveItem(IDs.Towns townId)
+        public void GiveItem(Towns townId)
         {
             if (!OpenMem.TestGeoMaskBit(townId, bldId, bit))
             {
