@@ -1,6 +1,5 @@
-﻿using Archipelago.Core.Util;
+using Archipelago.Core.Util;
 using DC1AP.Constants;
-using DC1AP.IDs;
 
 namespace DC1AP.Mem
 {
@@ -194,7 +193,7 @@ namespace DC1AP.Mem
         /// </summary>
         /// <param name="town">Town id</param>
         /// <param name="id">Georama item ID</param>
-        internal static void GiveGeoItem(IDs.Towns town, short id)
+        internal static void GiveGeoItem(Towns town, short id)
         {
             uint addr = GeoAddrs.TownGeoInv[(int)town];
             int count = 0;
