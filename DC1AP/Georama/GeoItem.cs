@@ -2,7 +2,6 @@ using Archipelago.Core.Util;
 using DC1AP.Mem;
 using DC1AP.Threads;
 using DC1AP.Constants;
-using Serilog;
 
 namespace DC1AP.Georama
 {
@@ -36,7 +35,6 @@ namespace DC1AP.Georama
                     Memory.Write(addr, (short)1);
                 }
 
-                Log.Information("Bit: " + bit);
                 OpenMem.SetGeoMaskBit(townId, bldId, bit);
                 ItemQueue.AddMsg("Received " + Name + " for " + townId.ToString());
             }

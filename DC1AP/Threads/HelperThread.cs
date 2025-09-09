@@ -159,6 +159,11 @@ namespace DC1AP.Threads
                             atla.Collected = true;
                             App.SendLocation(id);
                         }
+                        else if (App.Client.CurrentSession.Locations.AllLocationsChecked.Contains(id))
+                        {
+                            atla.Collected = true;
+                            Memory.Write(atla.Address, MiscConstants.AtlaClaimed);
+                        }
                     }
                 }
             }
@@ -212,7 +217,13 @@ namespace DC1AP.Threads
                             Atla newAtla;
                             newAtla = new Atla(addr, dun, atlaId);
                             if (atlaValue == MiscConstants.AtlaClaimed)
+                            {
                                 newAtla.Collected = true;
+                                if (!App.Client.CurrentSession.Locations.AllLocationsChecked.Contains(atlaId))
+                                {
+                                    App.SendLocation(atlaId);
+                                }
+                            }
 
                             dunAtla.Add((atlaId, newAtla));
 
