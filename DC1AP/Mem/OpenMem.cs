@@ -1,5 +1,5 @@
-﻿using Archipelago.Core.Util;
-using DC1AP.IDs;
+using Archipelago.Core.Util;
+using DC1AP.Constants;
 
 namespace DC1AP.Mem
 {
