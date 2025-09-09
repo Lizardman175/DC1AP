@@ -1,4 +1,5 @@
-﻿using DC1AP.Threads;
+using DC1AP.Threads;
+using DC1AP.Constants;
 using Serilog;
 using System.Text.Json;
 
@@ -93,7 +94,7 @@ namespace DC1AP.Georama
                         {
                             if (item.ApId == itemId)
                             {
-                                ItemQueue.AddGeoItem(item, (IDs.Towns)i);
+                                ItemQueue.AddGeoItem(item, (Towns)i);
                                 added = true;
                                 break;
                             }
