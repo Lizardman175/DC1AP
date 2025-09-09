@@ -1,0 +1,417 @@
+[
+  {
+    "Name": "Player's House",
+    "ApIds": [971111000],
+    "BaseAddr": 30230568,
+    "BuildingId": 0,
+    "Items": [
+      {
+        "Name": "Player's Keg",
+        "ApId": 971111041,
+        "ItemId": 18
+      },
+      {
+        "Name": "Player's Chimney",
+        "ApId": 971111042,
+        "ItemId": 19
+      },
+      {
+        "Name": "Player's Storage",
+        "ApId": 971111040,
+        "ItemId": 20
+      },
+      {
+        "Name": "Renee",
+        "ApId": 971111092,
+        "ItemId": 52
+      },
+      {
+        "Name": "Player's Llama",
+        "ApId": 971111080,
+        "ItemId": 40
+      },
+      {
+        "Name": "Stray Cat",
+        "ApId": 971111094,
+        "ItemId": 54
+      }
+    ]
+  },
+  {
+    "Name": "Macho's House",
+    "ApIds": [ 971111001 ],
+    "BaseAddr": 30230592,
+    "BuildingId": 1,
+    "Items": [
+      {
+        "Name": "Macho's Fence",
+        "ApId": 971111057,
+        "ItemId": 0
+      },
+      {
+        "Name": "Macho's Lamp",
+        "ApId": 971111062,
+        "ItemId": 1
+      },
+      {
+        "Name": "Annex",
+        "ApId": 971111044,
+        "ItemId": 4
+      },
+      {
+        "Name": "Barbell",
+        "ApId": 971111045,
+        "ItemId": 5
+      },
+      {
+        "Name": "Macho",
+        "ApId": 971111083,
+        "ItemId": 43
+      },
+      {
+        "Name": "Komacho",
+        "ApId": 971111082,
+        "ItemId": 42
+      }
+    ]
+  },
+  {
+    "Name": "Laura's House",
+    "ApIds": [ 971111002 ],
+    "BaseAddr": 30230616,
+    "BuildingId": 2,
+    "Items": [
+      {
+        "Name": "Laura's Fence",
+        "ApId": 971111058,
+        "ItemId": 0
+      },
+      {
+        "Name": "Laura's Lamp",
+        "ApId": 971111063,
+        "ItemId": 1
+      },
+      {
+        "Name": "Laura's Cabin",
+        "ApId": 971111069,
+        "ItemId": 2
+      },
+      {
+        "Name": "Tricycle",
+        "ApId": 971111046,
+        "ItemId": 6
+      },
+      {
+        "Name": "Laura",
+        "ApId": 971111090,
+        "ItemId": 50
+      },
+      {
+        "Name": "Gina",
+        "ApId": 971111089,
+        "ItemId": 49
+      }
+    ]
+  },
+  {
+    "Name": "Paige's House",
+    "ApIds": [ 971111003 ],
+    "BaseAddr": 30230640,
+    "BuildingId": 3,
+    "Items": [
+      {
+        "Name": "Paige's Fence",
+        "ApId": 971111059,
+        "ItemId": 0
+      },
+      {
+        "Name": "Paige's Lamp",
+        "ApId": 971111064,
+        "ItemId": 1
+      },
+      {
+        "Name": "Paige's Cabin",
+        "ApId": 971111070,
+        "ItemId": 2
+      },
+      {
+        "Name": "Wheels",
+        "ApId": 971111047,
+        "ItemId": 7
+      },
+      {
+        "Name": "Pike",
+        "ApId": 971111085,
+        "ItemId": 45
+      },
+      {
+        "Name": "Paige",
+        "ApId": 971111086,
+        "ItemId": 46
+      }
+    ]
+  },
+  {
+    "Name": "Claude's House",
+    "ApIds": [971111004],
+    "BaseAddr": 30230664,
+    "BuildingId": 4,
+    "Items": [
+      {
+        "Name": "Claude's Fence",
+        "ApId": 971111060,
+        "ItemId": 0
+      },
+      {
+        "Name": "Claude's Lamp",
+        "ApId": 971111065,
+        "ItemId": 1
+      },
+      {
+        "Name": "Claude's Cabin",
+        "ApId": 971111071,
+        "ItemId": 2
+      },
+      {
+        "Name": "Claude's Bench",
+        "ApId": 971111039,
+        "ItemId": 8
+      },
+      {
+        "Name": "Candy Box",
+        "ApId": 971111049,
+        "ItemId": 9
+      },
+      {
+        "Name": "Claude",
+        "ApId": 971111081,
+        "ItemId": 41
+      }
+    ]
+  },
+  {
+    "Name": "Hag's House",
+    "ApIds": [ 971111005 ],
+    "BaseAddr": 30230688,
+    "BuildingId": 5,
+    "Items": [
+      {
+        "Name": "Hag's Fence",
+        "ApId": 971111061,
+        "ItemId": 0
+      },
+      {
+        "Name": "Hag's Lamp",
+        "ApId": 971111066,
+        "ItemId": 1
+      },
+      {
+        "Name": "Hag's Cabin",
+        "ApId": 971111072,
+        "ItemId": 2
+      },
+      {
+        "Name": "Hag's Bench",
+        "ApId": 971111048,
+        "ItemId": 8
+      },
+      {
+        "Name": "Jar",
+        "ApId": 971111050,
+        "ItemId": 10
+      },
+      {
+        "Name": "Hag",
+        "ApId": 971111084,
+        "ItemId": 44
+      }
+    ]
+  },
+  {
+    "Name": "Alnet's House",
+    "ApIds": [ 971111006 ],
+    "BaseAddr": 30230712,
+    "BuildingId": 6,
+    "Items": [
+      {
+        "Name": "Alnet's Lamp",
+        "ApId": 971111067,
+        "ItemId": 1
+      },
+      {
+        "Name": "Alnet's Cabin",
+        "ApId": 971111073,
+        "ItemId": 2
+      },
+      {
+        "Name": "Alnet's Stairway",
+        "ApId": 971111043,
+        "ItemId": 3
+      },
+      {
+        "Name": "Alnet",
+        "ApId": 971111088,
+        "ItemId": 48
+      },
+      {
+        "Name": "Carl",
+        "ApId": 971111087,
+        "ItemId": 47
+      },
+      {
+        "Name": "Alnet's Llama",
+        "ApId": 971111095,
+        "ItemId": 55
+      }
+    ]
+  },
+  {
+    "Name": "Gaffer's Buggy",
+    "ApIds": [ 971111007 ],
+    "BaseAddr": 30230736,
+    "BuildingId": 7,
+    "Items": [
+      {
+        "Name": "Supplies",
+        "ApId": 971111051,
+        "ItemId": 11
+      },
+      {
+        "Name": "Gaffer's Sign",
+        "ApId": 971111055,
+        "ItemId": 12
+      },
+      {
+        "Name": "Gaffer's Lamp",
+        "ApId": 971111068,
+        "ItemId": 1
+      },
+      {
+        "Name": "Gaffer",
+        "ApId": 971111091,
+        "ItemId": 51
+      }
+    ]
+  },
+  {
+    "Name": "Dran's Windmill",
+    "ApIds": [ 971111008 ],
+    "BaseAddr": 30230760,
+    "BuildingId": 8,
+    "Items": [
+      {
+        "Name": "Dran's Blade",
+        "ApId": 971111052,
+        "ItemId": 13
+      },
+      {
+        "Name": "Dran's Torch",
+        "ApId": 971111053,
+        "ItemId": 14
+      },
+      {
+        "Name": "Dran's Horn",
+        "ApId": 971111054,
+        "ItemId": 15
+      },
+      {
+        "Name": "Dran's Sign",
+        "ApId": 971111056,
+        "ItemId": 12
+      }
+    ]
+  },
+  {
+    "Name": "Windmill 1",
+    "ApIds": [ 971111009 ],
+    "BaseAddr": 30230784,
+    "BuildingId": 9,
+    "Items": [
+      {
+        "Name": "Windmill Vanes 1",
+        "ApId": 971111074,
+        "ItemId": 16
+      },
+      {
+        "Name": "Windmill Ladder 1",
+        "ApId": 971111077,
+        "ItemId": 17
+      }
+    ]
+  },
+  {
+    "Name": "Windmill 2",
+    "ApIds": [ 971111010 ],
+    "BaseAddr": 30230808,
+    "BuildingId": 10,
+    "Items": [
+      {
+        "Name": "Windmill Vanes 2",
+        "ApId": 971111075,
+        "ItemId": 16
+      },
+      {
+        "Name": "Windmill Ladder 2",
+        "ApId": 971111078,
+        "ItemId": 17
+      }
+    ]
+  },
+  {
+    "Name": "Windmill 3",
+    "ApIds": [ 971111011 ],
+    "BaseAddr": 30230832,
+    "BuildingId": 11,
+    "Items": [
+      {
+        "Name": "Windmill Vanes 3",
+        "ApId": 971111076,
+        "ItemId": 16
+      },
+      {
+        "Name": "Windmill Ladder 3",
+        "ApId": 971111079,
+        "ItemId": 17
+      }
+    ]
+  },
+  {
+    "Name": "Norune Pond",
+    "ApIds": [ 971111012 ],
+    "BaseAddr": 30230856,
+    "BuildingId": 12,
+    "Items": []
+  },
+  {
+    "Name": "Norune Tree",
+    "ApIds": [ 971111013, 971111014 ],
+    "BaseAddr": 30230880,
+    "BuildingId": 13,
+    "Multi": true,
+    "Items": []
+  },
+  {
+    "Name": "Norune Road",
+    "ApIds": [ 971111021, 971111022, 971111023, 971111024, 971111025 ],
+    "BaseAddr": 30230904,
+    "BuildingId": 14,
+    "Multi": true,
+    "Items": []
+  },
+  {
+    "Name": "Norune River",
+    "ApIds": [ 971111031, 971111032, 971111033, 971111034 ],
+    "BaseAddr": 30230928,
+    "BuildingId": 15,
+    "Multi": true,
+    "Items": []
+  },
+  {
+    "Name": "Norune Bridge",
+    "ApIds": [ 971111016 ],
+    "BaseAddr": 30230952,
+    "BuildingId": 16,
+    "Multi": true,
+    "Items": []
+  }
+]

@@ -1,0 +1,490 @@
+[
+  {
+    "Name": "Pao's House",
+    "ApIds": [ 971111200 ],
+    "BaseAddr": 30233568,
+    "BuildingId": 0,
+    "Items": [
+      {
+        "Name": "Pao's Torch",
+        "ApId": 971111278,
+        "ItemId": 0
+      },
+      {
+        "Name": "Pao's Sign",
+        "ApId": 971111269,
+        "ItemId": 1
+      },
+      {
+        "Name": "Pao's Stairway",
+        "ApId": 971111262,
+        "ItemId": 2
+      },
+      {
+        "Name": "Pao's Laundry",
+        "ApId": 971111241,
+        "ItemId": 4
+      },
+      {
+        "Name": "Pao",
+        "ApId": 971111387,
+        "ItemId": 47
+      }
+    ]
+  },
+  {
+    "Name": "Cacao's House",
+    "ApIds": [ 971111201 ],
+    "BaseAddr": 30233592,
+    "BuildingId": 1,
+    "Items": [
+      {
+        "Name": "Cacao's Torch",
+        "ApId": 971111279,
+        "ItemId": 0
+      },
+      {
+        "Name": "Cacao's Sign",
+        "ApId": 971111270,
+        "ItemId": 1
+      },
+      {
+        "Name": "Cacao's Stairway",
+        "ApId": 971111263,
+        "ItemId": 2
+      },
+      {
+        "Name": "Cacao's Laundry",
+        "ApId": 971111242,
+        "ItemId": 4
+      },
+      {
+        "Name": "Cacao's Cabin",
+        "ApId": 971111239,
+        "ItemId": 5
+      },
+      {
+        "Name": "Cacao",
+        "ApId": 971111383,
+        "ItemId": 43
+      }
+    ]
+  },
+  {
+    "Name": "Bunbuku's House",
+    "ApIds": [ 971111202 ],
+    "BaseAddr": 30233616,
+    "BuildingId": 2,
+    "Items": [
+      {
+        "Name": "Bunbuku's Torch",
+        "ApId": 971111280,
+        "ItemId": 0
+      },
+      {
+        "Name": "Bunbuku's Sign",
+        "ApId": 971111271,
+        "ItemId": 1
+      },
+      {
+        "Name": "Bunbuku's Stairway",
+        "ApId": 971111264,
+        "ItemId": 2
+      },
+      {
+        "Name": "Bunbuku's Cabin",
+        "ApId": 971111243,
+        "ItemId": 5
+      },
+      {
+        "Name": "Bunbuku",
+        "ApId": 971111381,
+        "ItemId": 41
+      },
+      {
+        "Name": "Kululu",
+        "ApId": 971111382,
+        "ItemId": 42
+      }
+    ]
+  },
+  {
+    "Name": "Kye's House",
+    "ApIds": [ 971111203 ],
+    "BaseAddr": 30233640,
+    "BuildingId": 3,
+    "Items": [
+      {
+        "Name": "Kye's Torch",
+        "ApId": 971111281,
+        "ItemId": 0
+      },
+      {
+        "Name": "Kye's Sign",
+        "ApId": 971111272,
+        "ItemId": 1
+      },
+      {
+        "Name": "Kye's Stairway",
+        "ApId": 971111265,
+        "ItemId": 2
+      },
+      {
+        "Name": "Kye's Cabin",
+        "ApId": 971111244,
+        "ItemId": 5
+      },
+      {
+        "Name": "Kye",
+        "ApId": 971111388,
+        "ItemId": 48
+      },
+      {
+        "Name": "Momo",
+        "ApId": 971111389,
+        "ItemId": 49
+      }
+    ]
+  },
+  {
+    "Name": "Baron's House",
+    "ApIds": [ 971111204 ],
+    "BaseAddr": 30233664,
+    "BuildingId": 4,
+    "Items": [
+      {
+        "Name": "Baron's Torch",
+        "ApId": 971111282,
+        "ItemId": 0
+      },
+      {
+        "Name": "Baron's Sign",
+        "ApId": 971111273,
+        "ItemId": 1
+      },
+      {
+        "Name": "Baron's Roof",
+        "ApId": 971111246,
+        "ItemId": 7
+      },
+      {
+        "Name": "Branch",
+        "ApId": 971111250,
+        "ItemId": 8
+      },
+      {
+        "Name": "Baron",
+        "ApId": 971111380,
+        "ItemId": 40
+      }
+    ]
+  },
+  {
+    "Name": "Couscous's House",
+    "ApIds": [ 971111205 ],
+    "BaseAddr": 30233688,
+    "BuildingId": 5,
+    "Items": [
+      {
+        "Name": "Couscous's Torch",
+        "ApId": 971111283,
+        "ItemId": 0
+      },
+      {
+        "Name": "Couscous's Sign",
+        "ApId": 971111274,
+        "ItemId": 1
+      },
+      {
+        "Name": "Grass",
+        "ApId": 971111251,
+        "ItemId": 2
+      },
+      {
+        "Name": "Couscous",
+        "ApId": 971111384,
+        "ItemId": 44
+      }
+    ]
+  },
+  {
+    "Name": "Gob's House",
+    "ApIds": [ 971111206 ],
+    "BaseAddr": 30233712,
+    "BuildingId": 6,
+    "Items": [
+      {
+        "Name": "Gob's Torch",
+        "ApId": 971111284,
+        "ItemId": 0
+      },
+      {
+        "Name": "Gob's Sign",
+        "ApId": 971111275,
+        "ItemId": 1
+      },
+      {
+        "Name": "Bone",
+        "ApId": 971111252,
+        "ItemId": 10
+      },
+      {
+        "Name": "Gob's Tree",
+        "ApId": 971111253,
+        "ItemId": 11
+      },
+      {
+        "Name": "Gob",
+        "ApId": 971111385,
+        "ItemId": 45
+      }
+    ]
+  },
+  {
+    "Name": "Mushroom House",
+    "ApIds": [ 971111207 ],
+    "BaseAddr": 30233736,
+    "BuildingId": 7,
+    "Items": [
+      {
+        "Name": "Mushroom Torch",
+        "ApId": 971111285,
+        "ItemId": 0
+      },
+      {
+        "Name": "Mushroom Sign",
+        "ApId": 971111276,
+        "ItemId": 1
+      },
+      {
+        "Name": "Second Floor",
+        "ApId": 971111254,
+        "ItemId": 12
+      },
+      {
+        "Name": "Balcony",
+        "ApId": 971111255,
+        "ItemId": 13
+      },
+      {
+        "Name": "Ro",
+        "ApId": 971111390,
+        "ItemId": 50
+      },
+      {
+        "Name": "Annie",
+        "ApId": 971111391,
+        "ItemId": 51
+      }
+    ]
+  },
+  {
+    "Name": "Well 1",
+    "ApIds": [ 971111208 ],
+    "BaseAddr": 30233760,
+    "BuildingId": 8,
+    "Items": [
+      {
+        "Name": "Well 1 Torch",
+        "ApId": 971111287,
+        "ItemId": 0
+      },
+      {
+        "Name": "Well 1 Stairway",
+        "ApId": 971111266,
+        "ItemId": 2
+      },
+      {
+        "Name": "Well 1 Roof",
+        "ApId": 971111247,
+        "ItemId": 7
+      },
+      {
+        "Name": "Well 1 Bucket",
+        "ApId": 971111259,
+        "ItemId": 15
+      }
+    ]
+  },
+  {
+    "Name": "Well 2",
+    "ApIds": [ 971111209 ],
+    "BaseAddr": 30233784,
+    "BuildingId": 9,
+    "Items": [
+      {
+        "Name": "Well 2 Torch",
+        "ApId": 971111288,
+        "ItemId": 0
+      },
+      {
+        "Name": "Well 2 Stairway",
+        "ApId": 971111267,
+        "ItemId": 2
+      },
+      {
+        "Name": "Well 2 Roof",
+        "ApId": 971111248,
+        "ItemId": 7
+      },
+      {
+        "Name": "Well 2 Bucket",
+        "ApId": 971111260,
+        "ItemId": 15
+      }
+    ]
+  },
+  {
+    "Name": "Well 3",
+    "ApIds": [ 971111210 ],
+    "BaseAddr": 30233808,
+    "BuildingId": 10,
+    "Items": [
+      {
+        "Name": "Well 3 Torch",
+        "ApId": 971111289,
+        "ItemId": 0
+      },
+      {
+        "Name": "Well 3 Stairway",
+        "ApId": 971111268,
+        "ItemId": 2
+      },
+      {
+        "Name": "Well 3 Roof",
+        "ApId": 971111249,
+        "ItemId": 7
+      },
+      {
+        "Name": "Well 3 Bucket",
+        "ApId": 971111261,
+        "ItemId": 15
+      }
+    ]
+  },
+  {
+    "Name": "Watermill 1",
+    "ApIds": [ 971111211 ],
+    "BaseAddr": 30233832,
+    "BuildingId": 11,
+    "Items": [
+      {
+        "Name": "Watermill Torch 1",
+        "ApId": 971111290,
+        "ItemId": 0
+      },
+      {
+        "Name": "Waterwheel 1",
+        "ApId": 971111256,
+        "ItemId": 14
+      }
+    ]
+  },
+  {
+    "Name": "Watermill 2",
+    "ApIds": [ 971111212 ],
+    "BaseAddr": 30233856,
+    "BuildingId": 12,
+    "Items": [
+      {
+        "Name": "Watermill Torch 2",
+        "ApId": 971111291,
+        "ItemId": 0
+      },
+      {
+        "Name": "Waterwheel 2",
+        "ApId": 971111257,
+        "ItemId": 14
+      }
+    ]
+  },
+  {
+    "Name": "Watermill 3",
+    "ApIds": [ 971111213 ],
+    "BaseAddr": 30233880,
+    "BuildingId": 13,
+    "Items": [
+      {
+        "Name": "Watermill Torch 3",
+        "ApId": 971111292,
+        "ItemId": 0
+      },
+      {
+        "Name": "Waterwheel 3",
+        "ApId": 971111258,
+        "ItemId": 14
+      }
+    ]
+  },
+  {
+    "Name": "Owl Shop",
+    "ApIds": [ 971111214 ],
+    "BaseAddr": 30233904,
+    "BuildingId": 14,
+    "Items": [
+      {
+        "Name": "Owl Torch",
+        "ApId": 971111286,
+        "ItemId": 0
+      },
+      {
+        "Name": "Owl Sign",
+        "ApId": 971111277,
+        "ItemId": 1
+      },
+      {
+        "Name": "Owl Shop Entrance",
+        "ApId": 971111245,
+        "ItemId": 6
+      },
+      {
+        "Name": "Wise Owl Entrance",
+        "ApId": 971111240,
+        "ItemId": 3
+      },
+      {
+        "Name": "Mr. Moustache",
+        "ApId": 971111386,
+        "ItemId": 46
+      }
+    ]
+  },
+  {
+    "Name": "Matataki Tree",
+    "ApIds": [ 971111230, 971111231 ],
+    "BaseAddr": 30233928,
+    "BuildingId": 15,
+    "Multi": true,
+    "Items": []
+  },
+  {
+    "Name": "Matataki River",
+    "ApIds": [ 971111220, 971111221, 971111222, 971111223, 971111224, 971111225, 971111226, 971111227 ],
+    "BaseAddr": 30233952,
+    "BuildingId": 16,
+    "Multi": true,
+    "Items": []
+  },
+  {
+    "Name": "Matataki Bridge",
+    "ApIds": [ 971111217 ],
+    "BaseAddr": 30233976,
+    "BuildingId": 17,
+    "Multi": true,
+    "Items": []
+  },
+  {
+    "Name": "Earth A",
+    "ApIds": [ 971111218 ],
+    "BaseAddr": 30234000,
+    "BuildingId": 18,
+    "Items": []
+  },
+  {
+    "Name": "Earth B",
+    "ApIds": [ 971111219 ],
+    "BaseAddr": 30234024,
+    "BuildingId": 19,
+    "Items": []
+  }
+]
