@@ -3,10 +3,6 @@ from dataclasses import dataclass
 from Options import Choice, Toggle, PerGameCommonOptions, Range
 
 
-# TODO Other possible goal options:
-#  fish - catch a mardan? or get the upgraded sword? x fish points?
-#  triforce hunt style thing of collect X item?
-#  demon shaft - I don't wanna...
 class Goal(Range):
     """Select Dungeon from 2-6 to be the goal.  Currently only 2 is supported."""
     display_name = "Boss Goal"
@@ -52,4 +48,5 @@ class DarkCloudOptions(PerGameCommonOptions):
     all_bosses: AllBosses
     open_dungeon: OpenDungeon
     # miracle_chests: MiracleChests
+
 
