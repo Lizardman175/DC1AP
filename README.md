@@ -11,7 +11,8 @@ Home of Dark Cloud 1 randomizer for Archipelago
 - Download the client .exe from the latest release
 
 ## Running the game
+- Generate a game with Archipelago
 - Start the server
 - Start the game on PCSX2
 - Start the client
-- Click the burger icon in the client, put in host/slot/password info and click connect
+- Click the burger icon in the client, put in host/slot/password info and click connect. Make sure to connect before entering the dungeon!
