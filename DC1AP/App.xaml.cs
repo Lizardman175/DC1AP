@@ -48,6 +48,8 @@ namespace DC1AP
         private static MainPageViewModel Context;
         private static readonly object _lockObject = new();
 
+        private static ConcurrentQueue<Archipelago.Core.Models.Location> locationQueue = new();
+
         private DeathLinkService _deathlinkService;
         private Thread queueThread;
         private Thread helperThread;
@@ -247,9 +249,6 @@ namespace DC1AP
             PlayerState.ValidGameState = false;
             Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerReady(slotName), (o) => { return o > 1; });
         }
-        
-        // TODO move
-        private static ConcurrentQueue<Archipelago.Core.Models.Location> locationQueue = new();
 
         internal static async Task SendLocation(int locId)
         {
@@ -478,4 +477,3 @@ namespace DC1AP
         }
     }
 }
-
