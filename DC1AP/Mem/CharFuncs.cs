@@ -1,7 +1,5 @@
 ﻿using Archipelago.Core.Util;
 using DC1AP.Constants;
-using DC1AP.IDs;
-using System.ComponentModel.Design;
 
 namespace DC1AP.Mem
 {
@@ -170,3 +168,4 @@ namespace DC1AP.Mem
         #endregion
     }
 }
+
