@@ -58,7 +58,6 @@ namespace DC1AP
             InitializeComponent();
 
             Context = new MainPageViewModel();
-            Context.ArchipelagoVersion = "0.6.3";
             Context.ConnectClicked += Context_ConnectClicked;
             Context.CommandReceived += (e, a) =>
             {
@@ -479,3 +478,4 @@ namespace DC1AP
         }
     }
 }
+
