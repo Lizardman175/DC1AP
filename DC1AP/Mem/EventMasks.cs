@@ -27,7 +27,7 @@ namespace DC1AP.Mem
 
         private static void InitMask(uint addr, byte mask)
         {
-            byte tempMask = Memory.ReadByte(mask);
+            byte tempMask = Memory.ReadByte(addr);
             tempMask |= mask;
             Memory.WriteByte(addr, tempMask);
         }
