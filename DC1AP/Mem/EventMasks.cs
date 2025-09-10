@@ -21,13 +21,16 @@ namespace DC1AP.Mem
             InitMask(0x01CE43AE, 0x08);
             // First dungeon floor tutorial + cat cutscene
             InitMask(0x01CE43B4, 0xB0);
-            // More of the dungeon tutorials I believe.  4 is the lock-on tutorial, 1 is charge attack upgrade
+            // More of the dungeon tutorials I believe.
+            // 1b is charge attack upgrade
+            // 100b is the lock-on tutorial
+            // 10000000b skips werewolf fight
             InitMask(0x01CE43B5, 0x07);
         }
 
         private static void InitMask(uint addr, byte mask)
         {
-            byte tempMask = Memory.ReadByte(mask);
+            byte tempMask = Memory.ReadByte(addr);
             tempMask |= mask;
             Memory.WriteByte(addr, tempMask);
         }
