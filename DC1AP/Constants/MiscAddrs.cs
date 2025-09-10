@@ -4,7 +4,7 @@ namespace DC1AP.Constants
     // Misc address values that aren't enough to warrant grouping to their own file.
     internal class MiscAddrs
     {
-        public const uint GameIdAddr = 0x1DA82FD;
+        public const uint GameIdAddr = 0x0029E4F0;
 
         // 0x00A2 is A, 0x00BC is a.  Go up from there to get other letters.  Before A2 is Japanese.
         //public const uint ToanNameAddr = 0x1CD4188;
