@@ -1,6 +1,6 @@
 ﻿using Archipelago.Core.Util;
-using DC1AP.Mem;
 using DC1AP.Constants;
+using DC1AP.Mem;
 
 namespace DC1AP.Threads
 {
@@ -16,7 +16,7 @@ namespace DC1AP.Threads
         private const short GarbageGeo = 0x21fa;  // Garbage value of 0x2222 - 0x0028, builtin offset for items vs atla loot table
 
         private static object _lock = new();
-        private static List<(int, Atla)>[] atlaMap = new List<(int, Atla)>[6];
+        private static List<Atla>[] atlaMap = new List<Atla>[6];
         private static bool[] dungeonsMapped = [false, false, false, false, false, false];
 
         private static bool runThread = false;
@@ -32,7 +32,7 @@ namespace DC1AP.Threads
         /// </summary>
         private static void Startup()
         {
-            atlaMap = new List<(int, Atla)>[6];
+            atlaMap = new List<Atla>[6];
             dungeonsMapped = [false, false, false, false, false, false];
             catPlaced = false;
             playableState = false;
@@ -148,24 +148,44 @@ namespace DC1AP.Threads
                 if (curDun < Options.Goal && atlaMap[curDun] != null)
                 {
                     // TODO this doesn't have empty entries for each floor yet
-                    List<(int, Atla)> dunAtla = atlaMap[curDun];
-                    foreach ((int, Atla) atlaTuple in dunAtla)
+                    List<Atla> dunAtla = atlaMap[curDun];
+                    foreach (Atla atla in dunAtla)
                     {
-                        int id = atlaTuple.Item1;
-                        Atla atla = atlaTuple.Item2;
-
                         if (!atla.Collected && Memory.ReadInt(atla.Address) == MiscConstants.AtlaClaimed)
                         {
                             atla.Collected = true;
-                            App.SendLocation(id);
+                            App.SendLocation(atla.LocationId);
                         }
-                        else if (App.Client.CurrentSession.Locations.AllLocationsChecked.Contains(id))
+                        else
                         {
-                            atla.Collected = true;
-                            Memory.Write(atla.Address, MiscConstants.AtlaClaimed);
+                            CheckForCollectedAtla(atla);
                         }
                     }
                 }
+            }
+            // Check for collected atla if we are outside of a dungeon
+            else
+            {
+                for (int i = 0; i < Options.Goal; i++)
+                {
+                    List<Atla> dunAtla = atlaMap[i];
+                    if (dunAtla != null)
+                    {
+                        foreach (Atla atla in dunAtla)
+                        {
+                            CheckForCollectedAtla(atla);
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void CheckForCollectedAtla(Atla atla)
+        {
+            if (!atla.Collected && App.Client.CurrentSession.Locations.AllLocationsChecked.Contains(atla.LocationId))
+            {
+                atla.Collected = true;
+                Memory.Write(atla.Address, MiscConstants.AtlaClaimed);
             }
         }
 
@@ -200,7 +220,7 @@ namespace DC1AP.Threads
                 uint addr = GeoAddrs.AtlaFlagAddrs[dun];
                 // TODO magic nums.  Atla values are likely to change soon, so not bothering yet.
                 int atlaId = MiscConstants.BaseId + 101 + 1000 * (dun + 1);
-                List<(int, Atla)> dunAtla = [];
+                List<Atla> dunAtla = [];
 
                 // TODO D6: make sure this behaves
                 for (int floor = 0; floor < MiscAddrs.FloorCountRear[dun]; floor++)
@@ -225,7 +245,7 @@ namespace DC1AP.Threads
                                 }
                             }
 
-                            dunAtla.Add((atlaId, newAtla));
+                            dunAtla.Add(newAtla);
 
                             atlaId++;
                         }
@@ -234,7 +254,7 @@ namespace DC1AP.Threads
                         else if (!catPlaced && dun == 0 && floor != EmptyFloor1 && floor != EmptyFloor2)
                         {
                             Atla newAtla = new Atla(addr, dun, atlaId);
-                            dunAtla.Add((atlaId, newAtla));
+                            dunAtla.Add(newAtla);
 
                             Memory.Write(addr, MiscConstants.AtlaAvailable);
                             Memory.Write(GeoAddrs.CatlaAddr, MiscConstants.AtlaUnavailable);

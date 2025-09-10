@@ -69,6 +69,7 @@ namespace DC1AP.Constants
         ///     1 = Walking Mode
         /// <br>2 = On Menu</br>
         /// <br>3 = Door Menu</br>
+        /// <br>4 = Floor picker screen</br>
         /// <br>5 = Ally Quick Select</br>
         /// <br>7 = Next Floor Screen</br>
         /// 
