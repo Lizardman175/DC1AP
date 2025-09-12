@@ -32,6 +32,7 @@ using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using Archipelago.MultiClient.Net.MessageLog.Messages;
 using DC1AP.Constants;
 using DC1AP.Georama;
+using DC1AP.Items;
 using DC1AP.Mem;
 using DC1AP.Threads;
 using Newtonsoft.Json;
@@ -65,7 +66,7 @@ namespace DC1AP
             {
                 Client?.SendMessage(a.Command);
             };
-            // TODO save last used host?
+            // TODO save last used host/slot?
             Context.Host = "localhost:38281";
             //Context.Slot = "DC1";
             MainPage = new MainPage(Context);
@@ -121,11 +122,26 @@ namespace DC1AP
                 return;
             }
 
+            // Pull out options from AP
+            Options.ParseOptions(Client.Options);
+
             Thread reconnectThread = new Thread(new ParameterizedThreadStart(Reconnect))
             {
                 IsBackground = true,
             };
             reconnectThread.Start();
+
+            GeoInvMgmt.Init();
+
+            // Initialize things once the player is connected
+            if (PlayerState.PlayerReady())
+            {
+                PlayerReady(e.Slot);
+            }
+            else
+            {
+                PlayerNotReady(e.Slot);
+            }
 
             //if (Client.Options.ContainsKey("EnableDeathlink") && (bool)Client.Options["EnableDeathlink"])
             //{
@@ -133,9 +149,6 @@ namespace DC1AP
             //    _deathlinkService.OnDeathLinkReceived += _deathlinkService_OnDeathLinkReceived;
             //    // TODO listen for player death
             //}
-
-            // Pull out options from AP
-            Options.ParseOptions(Client.Options);
 
             WatchGoal();
 
@@ -194,18 +207,6 @@ namespace DC1AP
                 return null;
             }
 
-            GeoInvMgmt.Init();
-
-            // Initialize things once the player is connected
-            if (PlayerState.PlayerReady())
-            {
-                PlayerReady(slotName);
-            }
-            else
-            {
-                PlayerNotReady(slotName);
-            }
-
             return client;
         }
 
@@ -234,6 +235,11 @@ namespace DC1AP
                 }
 
                 GeoInvMgmt.InitBuildings(true);
+
+                if (Options.StarterWeapons)
+                {
+                    StarterWeapons.GenerateWeapons();
+                }
             }
             else GeoInvMgmt.InitBuildings(false);
 
@@ -339,7 +345,8 @@ namespace DC1AP
             //var itemId = e.Item.Id;
 
             // TODO miracle chests: test the item id and add inventory item instead of geo
-            GeoInvMgmt.GiveItem(e.Item.Id);
+            // TODO with progressive, commenting this out "solves" the race condition
+            //GeoInvMgmt.GiveItem(e.Item.Id);
         }
 
         private void Client_MessageReceived(object? sender, Archipelago.Core.Models.MessageReceivedEventArgs e)
