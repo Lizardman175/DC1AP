@@ -1,148 +1,121 @@
-# TODO for miracle chests, split out only necessary items to be required rather than the whole building.
-#      Ex lamps don't yield miracle chests, but a cabin addition might
-# Grouping of item IDs per building for Norune Village
-from typing import List
-
+from BaseClasses import ItemClassification
 from worlds.dc1.Items import DarkCloudItem
 from worlds.dc1.Options import DarkCloudOptions
-from BaseClasses import ItemClassification
 
 ids = {
-    "Player's House": 971111000,
-    "Macho's House": 971111001,
-    "Laura's House": 971111002,
-    "Paige's House": 971111003,
-    "Claude's House": 971111004,
-    "Hag's House": 971111005,
-    "Alnet's House": 971111006,
-    "Gaffer's Buggy": 971111007,
-    "Dran's Windmill": 971111008,
-    "Windmill 1": 971111009,
-    "Windmill 2": 971111010,
-    "Windmill 3": 971111011,
-    "Pond": 971111012,
-    "Norune Trees A": 971111013,
-    "Norune Trees B": 971111014,
-    "Norune Bridge": 971111016,
-    "Norune Road A": 971111021,
-    "Norune Road B": 971111022,
-    "Norune Road C": 971111023,
-    "Norune Road D": 971111024,
-    "Norune Road E": 971111025,
-    "Norune River A": 971111031,
-    "Norune River B": 971111032,
-    "Norune River C": 971111033,
-    "Norune River D": 971111034,
+    "Progressive Player's House": 971110100,
+    "Progressive Macho's House": 971110101,
+    "Progressive Laura's House": 971110102,
+    "Progressive Paige's House": 971110103,
+    "Progressive Claude's House": 971110104,
+    "Progressive Hag's House": 971110105,
+    "Progressive Alnet's House": 971110106,
+    "Progressive Gaffer's Buggy": 971110107,
+    "Progressive Dran's Windmill": 971110108,
+    "Progressive Windmill 1": 971110109,
+    "Progressive Windmill 2": 971110110,
+    "Progressive Windmill 3": 971110111,
+    "Pond": 971110112,
+    "Norune Trees": 971110113,
+    "Norune Road": 971110114,
+    "Norune River": 971110115,
+    "Norune Bridge": 971110116,
+}
 
-    "Claude's Bench": 971111039,
-    "Player's Storage": 971111040,
-    "Player's Keg": 971111041,
-    "Player's Chimney": 971111042,
-    "Alnet's Stairway": 971111043,
-    "Annex": 971111044,
-    "Barbell": 971111045,
-    "Tricycle": 971111046,
-    "Wheels": 971111047,
-    "Hag's Bench": 971111048,
-    "Candy Box": 971111049,
-    "Jar": 971111050,
-    "Supplies": 971111051,
-    "Dran's Blade": 971111052,
-    "Dran's Torch": 971111053,
-    "Dran's Horn": 971111054,
-    "Gaffer's Sign": 971111055,
-    "Dran's Sign": 971111056,
-    "Macho's Fence": 971111057,
-    "Laura's Fence": 971111058,
-    "Paige's Fence": 971111059,
-    "Claude's Fence": 971111060,
-    "Hag's Fence": 971111061,
-    "Macho's Lamp": 971111062,
-    "Laura's Lamp": 971111063,
-    "Paige's Lamp": 971111064,
-    "Claude's Lamp": 971111065,
-    "Hag's Lamp": 971111066,
-    "Alnet's Lamp": 971111067,
-    "Gaffer's Lamp": 971111068,
-    "Laura's Cabin": 971111069,
-    "Paige's Cabin": 971111070,
-    "Claude's Cabin": 971111071,
-    "Hag's Cabin": 971111072,
-    "Alnet's Cabin": 971111073,
-    "Windmill Vanes 1": 971111074,
-    "Windmill Vanes 2": 971111075,
-    "Windmill Vanes 3": 971111076,
-    "Windmill Ladder 1": 971111077,
-    "Windmill Ladder 2": 971111078,
-    "Windmill Ladder 3": 971111079,
+player_house_ids = ["Progressive Player's House", "Progressive Player's House", "Progressive Player's House",
+                    "Progressive Player's House", "Progressive Player's House", "Progressive Player's House",
+                    "Progressive Player's House"]
 
-    "Player's Llama": 971111080,
-    "Claude": 971111081,
-    "Komacho": 971111082,
-    "Macho": 971111083,
-    "Hag": 971111084,
-    "Pike": 971111085,
-    "Paige": 971111086,
-    "Carl": 971111087,
-    "Alnet": 971111088,
-    "Gina": 971111089,
-    "Laura": 971111090,
-    "Gaffer": 971111091,
-    "Renee": 971111092,
-    "Stray Cat": 971111094,
-    "Alnet's Llama": 971111095
-  }
+# Paige's House & Pike are in the Gaffer list to always be required
+gaffer_buggy_ids = ["Progressive Paige's House", "Progressive Paige's House", "Progressive Gaffer's Buggy",
+                    "Progressive Gaffer's Buggy", "Progressive Gaffer's Buggy", "Progressive Gaffer's Buggy",
+                    "Progressive Gaffer's Buggy"]
 
-player_house_ids = ["Player's House", "Player's Keg", "Player's Chimney", "Player's Storage", "Player's Llama",
-                    "Renee", "Stray Cat"]
-macho_house_ids = ["Macho's House", "Macho's Fence", "Macho's Lamp", "Annex", "Barbell", "Macho", "Komacho"]
-laura_house_ids = ["Laura's House", "Laura's Fence", "Laura's Lamp", "Laura's Cabin", "Tricycle", "Laura", "Gina"]
-# Paige's House & Pike are in the Gaffer list to always be required TODO could find the flag and just always give good gaffer
-paige_house_ids = ["Paige's Fence", "Paige's Lamp", "Paige's Cabin", "Wheels", "Paige"]
-claude_house_ids = ["Claude's House", "Claude's Fence", "Claude's Lamp", "Claude's Cabin", "Claude's Bench", "Candy Box", "Claude"]
-hag_house_ids = ["Hag's House", "Hag's Fence", "Hag's Lamp", "Hag's Cabin", "Hag's Bench", "Jar", "Hag"]
-alnet_house_ids = ["Alnet's House", "Alnet's Lamp", "Alnet's Cabin", "Alnet's Stairway", "Alnet", "Carl", "Alnet's Llama"]
-gaffer_buggy_ids = ["Paige's House", "Pike", "Gaffer's Buggy", "Supplies", "Gaffer's Sign", "Gaffer's Lamp", "Gaffer"]
-d_windmill_ids = ["Dran's Windmill", "Dran's Sign", "Dran's Blade", "Dran's Torch", "Dran's Horn"]
-windmill_ids = ["Windmill 1", "Windmill 2", "Windmill 3", "Windmill Vanes 1", "Windmill Vanes 2", "Windmill Vanes 3",
-                "Windmill Ladder 1", "Windmill Ladder 2", "Windmill Ladder 3"]
-other_ids = ["Norune Trees A", "Norune Trees B", "Norune Bridge", "Norune Road A", "Norune Road B", "Norune Road C",
-             "Norune Road D", "Norune Road E", "Norune River A", "Norune River B", "Norune River C", "Norune River D"]
+# Just windmill (majors! make windmill always progressive (and required by dran/goro?))
+d_windmill_ids = ["Progressive Dran's Windmill", "Progressive Dran's Windmill", "Progressive Dran's Windmill",
+                  "Progressive Dran's Windmill"]
+
+# Macho: House + annex (all minors)
+macho_house_ids = ["Progressive Macho's House", "Progressive Macho's House", "Progressive Macho's House",
+                   "Progressive Macho's House", "Progressive Macho's House"]
+
+# House (gourd+fruit) + cabin (minors)
+laura_house_ids = ["Progressive Laura's House", "Progressive Laura's House", "Progressive Laura's House",
+                   "Progressive Laura's House", "Progressive Laura's House"]
+
+# Paige MCs: Just house, all minors.  Cabin doesn't have chests Paige's house does give the pocket though!
+paige_house_ids = ["Progressive Paige's House", "Progressive Paige's House",
+                   "Progressive Paige's House", "Progressive Paige's House", "Progressive Paige's House"]
+# House + cabin
+claude_house_ids = ["Progressive Claude's House", "Progressive Claude's House", "Progressive Claude's House"]
+
+# House + cabin (minor)
+hag_house_ids = ["Progressive Hag's House", "Progressive Hag's House",
+                 "Progressive Hag's House", "Progressive Hag's House"]
+
+# House (fruit+gourd) + stairs (minors) + cabin (minor)
+alnet_house_ids = ["Progressive Alnet's House", "Progressive Alnet's House",
+                   "Progressive Alnet's House", "Progressive Alnet's House"]
+
+windmill_ids = ["Progressive Windmill 1", "Progressive Windmill 1", "Progressive Windmill 1",
+                "Progressive Windmill 2", "Progressive Windmill 2", "Progressive Windmill 2",
+                "Progressive Windmill 3", "Progressive Windmill 3", "Progressive Windmill 3"]
+other_ids = ["Norune Trees", "Norune Trees", "Norune Bridge", "Norune Road", "Norune Road", "Norune Road",
+             "Norune Road", "Norune Road", "Norune River", "Norune River", "Norune River", "Norune River"]
+
+# TODO split these lists into 2 based on items that spawn from the first half of a dungeon or the second
+# Atla that give MCs by content quality (unless handled otherwise). If MC shuffle is on, these all need to be required
+mc_useful = []
+mc_filler = ["Progressive Macho's House", "Progressive Macho's House", "Progressive Claude's House",
+             "Progressive Claude's House", "Progressive Claude's House", "Progressive Claude's House",]
+# Pieces that only give MCs in the second half of a dungeon
+mc_useful_2 = ["Progressive Laura's House", "Progressive Hag's House", "Progressive Hag's House",
+               "Progressive Alnet's House"]
+mc_filler_2 = ["Progressive Laura's House", "Progressive Hag's House", "Progressive Alnet's House",
+               "Progressive Alnet's House"]
+
+# Defense for now, might add some gourd/eden to guarantee the player has some hp boosts by certain points as well
+stat_upgrades = ["Pond", "Progressive Dran's Windmill"]
+
+# Always required/useful/filler items
+required = stat_upgrades + player_house_ids + gaffer_buggy_ids
+useful = hag_house_ids + paige_house_ids
+filler = windmill_ids + other_ids + alnet_house_ids + claude_house_ids + laura_house_ids + macho_house_ids
 
 
-def create_norune_atla(options: DarkCloudOptions, player: int) -> {str, "DarkCloudItem"}:
+def create_norune_atla(options: DarkCloudOptions, player: int) -> list["DarkCloudItem"]:
     """Create atla items for Norune Village based on option settings."""
-    # DarkCloudWorld.item_name_to_id += ids
-    items = {}
+    items = []
 
-    # Parts always required
-    norune_required = player_house_ids + gaffer_buggy_ids
-
-    # Parts that can be required but otherwise useful (miracle chests/villager rewards)
-    norune_useful_conditional = ["Pond"] + hag_house_ids + laura_house_ids + paige_house_ids + claude_house_ids + alnet_house_ids
-
-    # Filler that may be needed for miracle chests/villager rewards but otherwise nothing needed for atla shuffle
-    norune_filler_conditional = macho_house_ids
-
-    # Always filler (roads etc.)
-    norune_filler_always = windmill_ids + other_ids
+    norune_progression = required
+    norune_useful = useful
+    norune_filler = filler
 
     # Dran's windmill is only full required if Dran is required
     if options.all_bosses:
-        norune_required.extend(d_windmill_ids)
+        norune_progression.extend(d_windmill_ids)
     else:
-        norune_useful_conditional.extend(d_windmill_ids)
+        norune_useful.extend(d_windmill_ids)
 
-    for i in norune_required:
-        items[i] = DarkCloudItem(i, ItemClassification.progression, ids[i], player)
+    # Add miracle chests as progression if chests are shuffled
+    if options.miracle_sanity:
+        norune_progression.extend(mc_useful)
+        norune_progression.extend(mc_useful_2)
+        norune_progression.extend(mc_filler)
+        norune_progression.extend(mc_filler_2)
+    else:
+        norune_useful.extend(mc_useful_2)
+        norune_useful.extend(mc_useful)
+        norune_filler.extend(mc_filler)
+        norune_filler.extend(mc_filler_2)
 
-    for i in norune_useful_conditional:
-        items[i] = DarkCloudItem(i, ItemClassification.useful, ids[i], player)
+    for i in norune_progression:
+        items.append(DarkCloudItem(i, ItemClassification.progression, ids[i], player))
 
-    for i in norune_filler_conditional:
-        items[i] = DarkCloudItem(i, ItemClassification.filler, ids[i], player)
+    for i in norune_useful:
+        items.append(DarkCloudItem(i, ItemClassification.useful, ids[i], player))
 
-    for i in norune_filler_always:
-        items[i] = DarkCloudItem(i, ItemClassification.filler, ids[i], player)
+    for i in norune_filler:
+        items.append(DarkCloudItem(i, ItemClassification.filler, ids[i], player))
 
     return items
