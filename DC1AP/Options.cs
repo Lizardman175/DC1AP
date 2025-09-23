@@ -6,11 +6,14 @@ namespace DC1AP
         private static int goal = 2;
         private static bool openDungeon = true;
         private static bool allBosses = false;
+        private static bool starterWeapons = false;
         //private static bool miracleSanity = false;
 
         public static int Goal { get => goal; }
         public static bool OpenDungeon { get => openDungeon; }
         public static bool AllBosses { get => allBosses; }
+        public static bool StarterWeapons { get => starterWeapons; }
+
         //public static bool MiracleSanity { get => miracleSanity; }
 
         // used to test various values without generating a new rando
@@ -26,6 +29,7 @@ namespace DC1AP
             goal = Int32.Parse(options["goal"].ToString());  // What dungeon to randomize through
             allBosses = options["all_bosses"].ToString() != "0";  // All bosses up to dungeon goal
             openDungeon = options["open_dungeon"].ToString() != "0";  // All floors logically accessible will be unlocked
+            starterWeapons = options["starter_weapons"].ToString() != "0";  // All floors logically accessible will be unlocked
             //miracleSanity = options["miracle_chests"].ToString() != "0";  // Shuffle in miracle chests
         }
     }

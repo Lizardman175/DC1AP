@@ -74,16 +74,6 @@ namespace DC1AP.Mem
                 Memory.WriteString(SlotNameAddr, s);
         }
 
-        //public static void SetGeoMaskBit(Towns town, int bldIndex, int bit)
-        //{
-        //    Memory.WriteBit((uint)(maskAddrs[(int)town] + bldIndex), bit, true);
-        //}
-
-        //public static Boolean TestGeoMaskBit(Towns town, int bldIndex, int bit)
-        //{
-        //    return Memory.ReadBit((uint)(maskAddrs[((int)town)] + bldIndex), bit);
-        //}
-
         public static short GetIndex()
         {
             return Memory.ReadShort(IndexAddr);
@@ -98,10 +88,5 @@ namespace DC1AP.Mem
         {
             Memory.Write(IndexAddr, (short)(GetIndex() + 1));
         }
-
-        //internal static byte GetGeoMask(Towns town, int buildingId)
-        //{
-        //    return Memory.ReadByte((ulong)(maskAddrs[(int)town] + buildingId));
-        //}
     }
 }
