@@ -12,26 +12,30 @@ def items_available(state: CollectionState, player: int, names) -> bool:
 
     return r
 
-
 class RuleManager:
 
     def xiao_available(self, state: CollectionState, player: int) -> bool:
-        return items_available(state, player, NoruneGeoItems.player_house_ids + NoruneGeoItems.gaffer_buggy_ids)
+        #TODO might be able to remove the collect_item implementation using state.count("Progressive...")?
+        return state.has("Stray Cat", player) and state.has("Gaffer's Lamp", player) and state.has("Pike", player)
+        # return progressive_items_available(state, player, "Progressive Player's House") and \
+        #     progressive_items_available(state, player, "Progressive Gaffer's Buggy")
 
     def dran_accessible(self, state: CollectionState, player: int) -> bool:
-        names = NoruneGeoItems.d_windmill_ids
-        return items_available(state, player, names) and self.xiao_available(state, player)
+        return state.has("Dran's Sign", player) and \
+            self.xiao_available(state, player)
 
     def goro_available(self, state: CollectionState, player: int, options: DarkCloudOptions) -> bool:
-        r = items_available(state, player, MatatakiGeoItems.cacao_ids + MatatakiGeoItems.river_ids)
-
-        if r:
-            r = self.xiao_available(state, player)
+        # r = items_available(state, player, MatatakiGeoItems.cacao_ids + MatatakiGeoItems.river_ids)
+        r = state.has("Matataki River E", player) and state.has("Cacao's Laundry", player) and \
+            self.xiao_available(state, player)
 
         return r
 
     def utan_accessible(self, state: CollectionState, player: int, options: DarkCloudOptions) -> bool:
-        r = items_available(state, player, MatatakiGeoItems.mush_ids) and self.goro_available(state, player, options)
+        # r = (items_available(state, player, MatatakiGeoItems.mush_ids) and
+        #      items_available(state, player, MatatakiGeoItems.mush_ids_mc))
+
+        r = state.has("Balcony", player) and self.goro_available(state, player, options)
 
         return r
 
@@ -60,3 +64,4 @@ class RuleManager:
 
     def genie_accessible(self, state: CollectionState, player: int, options: DarkCloudOptions) -> bool:
         return items_available(state, player, DHCGeoItems.ids.keys()) and self.got_accessible(state, player, options)
+
