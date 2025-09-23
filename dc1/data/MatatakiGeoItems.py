@@ -19,7 +19,7 @@ ids = {
     "Progressive Watermill 3": 971110213,
     "Progressive Owl Shop": 971110214,
     "Matataki Trees": 971110215,
-    "Matataki River": 971110216,
+    "Progressive Matataki River": 971110216,
     "Matataki Bridge": 971110217,
     "Earth A": 971110218,
     "Earth B": 971110219,
@@ -30,8 +30,9 @@ cacao_ids = ["Progressive Cacao's House", "Progressive Cacao's House", "Progress
              "Progressive Cacao's House"]
 mush_ids = ["Progressive Mushroom House", "Progressive Mushroom House", "Progressive Mushroom House",
             "Progressive Mushroom House", "Progressive Mushroom House"]
-# Two pieces are needed to reach all MCs in the house
-mush_ids_mc = ["Progressive Mushroom House", "Progressive Mushroom House"]
+# Two pieces are needed to reach all MCs in the house, one for the second half of the dungeon
+mush_ids_mc = ["Progressive Mushroom House"]
+mush_ids_mc2 = ["Progressive Mushroom House"]
 
 pao_ids = ["Progressive Pao's House",
            "Progressive Pao's House", "Progressive Pao's House", "Progressive Pao's House"]
@@ -39,7 +40,7 @@ pao_ids = ["Progressive Pao's House",
 baron_ids = ["Progressive Baron's House", "Progressive Baron's House", "Progressive Baron's House",
              "Progressive Baron's House", "Progressive Baron's House"]
 
-bunbuku_ids = ["Progressive Bunbuku's House", "Progressive Bunbuku's House", "Progressive Bunbuku's House",
+bunbuku_ids = ["Progressive Bunbuku's House", "Progressive Bunbuku's House",
                "Progressive Bunbuku's House", "Progressive Bunbuku's House"]
 
 kye_ids = ["Progressive Kye's House", "Progressive Kye's House", "Progressive Kye's House", "Progressive Kye's House"]
@@ -63,19 +64,22 @@ watermill_ids = ["Progressive Watermill 1", "Progressive Watermill 1", "Progress
                  "Progressive Watermill 2", "Progressive Watermill 3", "Progressive Watermill 3",]
 
 # Only 5 are required for progression, could take 3 out as useful?
-river_ids = ["Matataki River", "Matataki River", "Matataki River", "Matataki River",
-             "Matataki River", "Matataki River", "Matataki River", "Matataki River"]
+river_ids = ["Progressive Matataki River", "Progressive Matataki River", "Progressive Matataki River", "Progressive Matataki River",
+             "Progressive Matataki River", "Progressive Matataki River", "Progressive Matataki River", "Progressive Matataki River"]
 other_ids = ["Matataki Trees", "Matataki Trees", "Matataki Bridge"]
 
 
 # TODO split these lists into 2 based on items that spawn from the first half of a dungeon or the second
 # Atla that give MCs by content quality (unless handled otherwise). If MC shuffle is on, these all need to be required
-mc_useful = ["Progressive Watermill 2", "Progressive Watermill 3", "Progressive Owl Shop", "Progressive Owl Shop",
-             "Progressive Gob's House", "Progressive Couscous's House", "Progressive Bunbuku's House",
-             "Progressive Kye's House", "Progressive Kye's House", "Progressive Kye's House",
+mc_useful = ["Progressive Owl Shop", "Progressive Owl Shop",
+             "Progressive Bunbuku's House",
              "Progressive Baron's House", "Progressive Pao's House", "Progressive Pao's House", ]
 mc_filler = ["Progressive Watermill 1", "Progressive Bunbuku's House", ]
 
+mc_useful_2 = ["Progressive Kye's House", "Progressive Kye's House", "Progressive Kye's House",
+               "Progressive Couscous's House", "Progressive Gob's House",
+               "Progressive Watermill 2", "Progressive Watermill 3", ]
+mc_filler_2 = ["Progressive Bunbuku's House",]
 # Always required/useful/filler items
 required = river_ids + cacao_ids
 useful = pao_ids + baron_ids + gob_ids + owl_ids
@@ -95,20 +99,26 @@ def create_matataki_atla(options: DarkCloudOptions, player: int) -> list["DarkCl
     if options.all_bosses or options.boss_goal == 2:
         matataki_required.extend(mush_ids)
         matataki_required.extend(mush_ids_mc)
+        matataki_required.extend(mush_ids_mc2)
     else:
         matataki_useful.extend(mush_ids)
-        # if options.miracle_chests:
-        # matataki_required.extend(mush_ids_mc)
-        # else:
-        matataki_useful.extend(mush_ids_mc)
+        if options.miracle_sanity:
+            matataki_required.extend(mush_ids_mc)
+            matataki_required.extend(mush_ids_mc2)
+        else:
+            matataki_useful.extend(mush_ids_mc)
+            matataki_useful.extend(mush_ids_mc2)
 
-        # TODO MC: if miracle shuffle, add these to matataki_required
-        # if options.miracle_chests:
-        # matataki_required.extend(mc_useful)
-        # matataki_required.extend(mc_filler)
-        # else:
-    matataki_useful.extend(mc_useful)
-    matataki_filler.extend(mc_filler)
+    if options.miracle_sanity:
+        matataki_required.extend(mc_useful)
+        matataki_required.extend(mc_useful_2)
+        matataki_required.extend(mc_filler)
+        matataki_required.extend(mc_filler_2)
+    else:
+        matataki_useful.extend(mc_useful)
+        matataki_useful.extend(mc_useful_2)
+        matataki_filler.extend(mc_filler)
+        matataki_filler.extend(mc_filler_2)
 
     for i in matataki_required:
         items.append(DarkCloudItem(i, ItemClassification.progression, ids[i], player))

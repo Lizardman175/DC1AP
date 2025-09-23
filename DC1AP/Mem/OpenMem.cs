@@ -1,5 +1,4 @@
 using Archipelago.Core.Util;
-using DC1AP.Constants;
 
 namespace DC1AP.Mem
 {
@@ -20,6 +19,9 @@ namespace DC1AP.Mem
         // Short
         internal static readonly uint IndexAddr = GoalAddr + 1;
 
+        // Short
+        internal static readonly uint CollectedCountAddr = (uint)(IndexAddr + 2);
+
         /*
          * Norune: 17 buildins
          * Matataki: 20
@@ -29,28 +31,6 @@ namespace DC1AP.Mem
          * Memories: 12
          * 91 total 0x58
          */
-        // TODO these aren't used except for their sizes...could just make constants for them.
-        // Ignoring magic nums until progressive atla update since these will go away then
-        //private static readonly byte[] NoruneGeoMasks = new byte[17];
-        //private static readonly byte[] MatatakiGeoMasks = new byte[20];
-        //private static readonly byte[] QueensGeoMasks = new byte[14];
-        //private static readonly byte[] MuskaGeoMasks = new byte[14];
-        //private static readonly byte[] FactoryGeoMasks = new byte[14];
-        //private static readonly byte[] CastleGeoMasks = new byte[12];
-
-        // TODO progressive atla: use the base attr for the buildings to handle masking the items rather bytes here.  Save these to reuse for MCs
-        private static readonly uint NoruneFirstMask = IndexAddr + 2;
-        private static readonly uint MatatakiFirstMask = (uint)(NoruneFirstMask + 17);
-        private static readonly uint QueensFirstMask = (uint)(MatatakiFirstMask + 20);
-        private static readonly uint MuskaFirstMask = (uint)(QueensFirstMask + 14);
-        private static readonly uint FactoryFirstMask = (uint)(MuskaFirstMask + 14);
-        private static readonly uint CastleFirstMask = (uint)(FactoryFirstMask + 14);
-
-        //private static readonly List<byte[]> maskLists = [NoruneGeoMasks, MatatakiGeoMasks, QueensGeoMasks, MuskaGeoMasks, FactoryGeoMasks, CastleGeoMasks];
-        private static readonly List<uint> maskAddrs = [NoruneFirstMask, MatatakiFirstMask, QueensFirstMask, MuskaFirstMask, FactoryFirstMask, CastleFirstMask];
-
-        // TODO 0.2 move this near IndexAddr, rename IndexAddr (do with progressive item update)
-        private static readonly uint CollectedCountAddr = (uint)(CastleFirstMask + 12);
 
         // Prep for future bytes. Going to need double the above bytes for MCs, and then some
         //private static readonly uint NextByte = CollectedCountAddr + 1;
@@ -94,15 +74,15 @@ namespace DC1AP.Mem
                 Memory.WriteString(SlotNameAddr, s);
         }
 
-        public static void SetGeoMaskBit(Towns town, int bldIndex, int bit)
-        {
-            Memory.WriteBit((uint)(maskAddrs[(int)town] + bldIndex), bit, true);
-        }
+        //public static void SetGeoMaskBit(Towns town, int bldIndex, int bit)
+        //{
+        //    Memory.WriteBit((uint)(maskAddrs[(int)town] + bldIndex), bit, true);
+        //}
 
-        public static Boolean TestGeoMaskBit(Towns town, int bldIndex, int bit)
-        {
-            return Memory.ReadBit((uint)(maskAddrs[((int)town)] + bldIndex), bit);
-        }
+        //public static Boolean TestGeoMaskBit(Towns town, int bldIndex, int bit)
+        //{
+        //    return Memory.ReadBit((uint)(maskAddrs[((int)town)] + bldIndex), bit);
+        //}
 
         public static short GetIndex()
         {
@@ -119,9 +99,9 @@ namespace DC1AP.Mem
             Memory.Write(IndexAddr, (short)(GetIndex() + 1));
         }
 
-        internal static byte GetGeoMask(Towns town, int buildingId)
-        {
-            return Memory.ReadByte((ulong)(maskAddrs[(int)town] + buildingId));
-        }
+        //internal static byte GetGeoMask(Towns town, int buildingId)
+        //{
+        //    return Memory.ReadByte((ulong)(maskAddrs[(int)town] + buildingId));
+        //}
     }
 }

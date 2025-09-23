@@ -16,3 +16,6 @@ Home of Dark Cloud 1 randomizer for Archipelago
 - Start the game on PCSX2
 - Start the client
 - Click the burger icon in the client, put in host/slot/password info and click connect. Make sure to connect before entering the dungeon!
+
+## Things of note
+- Due to game mechanics, items can only be received in dungeons.  If you are waiting for an item from another world, hang out in a dungeon floor for a bit.

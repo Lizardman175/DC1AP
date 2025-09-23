@@ -25,7 +25,8 @@ ids = {
 player_house_ids = ["Progressive Player's House", "Progressive Player's House", "Progressive Player's House",
                     "Progressive Player's House", "Progressive Player's House", "Progressive Player's House",
                     "Progressive Player's House"]
-# Paige's House & Pike are in the Gaffer list to always be required TODO could find the flag and just always give good gaffer?
+
+# Paige's House & Pike are in the Gaffer list to always be required
 gaffer_buggy_ids = ["Progressive Paige's House", "Progressive Paige's House", "Progressive Gaffer's Buggy",
                     "Progressive Gaffer's Buggy", "Progressive Gaffer's Buggy", "Progressive Gaffer's Buggy",
                     "Progressive Gaffer's Buggy"]
@@ -46,11 +47,10 @@ laura_house_ids = ["Progressive Laura's House", "Progressive Laura's House", "Pr
 paige_house_ids = ["Progressive Paige's House", "Progressive Paige's House",
                    "Progressive Paige's House", "Progressive Paige's House", "Progressive Paige's House"]
 # House + cabin
-claude_house_ids = ["Progressive Claude's House", "Progressive Claude's House", "Progressive Claude's House",
-                    "Progressive Claude's House", "Progressive Claude's House"]
+claude_house_ids = ["Progressive Claude's House", "Progressive Claude's House", "Progressive Claude's House"]
 
 # House + cabin (minor)
-hag_house_ids = ["Progressive Hag's House", "Progressive Hag's House", "Progressive Hag's House",
+hag_house_ids = ["Progressive Hag's House", "Progressive Hag's House",
                  "Progressive Hag's House", "Progressive Hag's House"]
 
 # House (fruit+gourd) + stairs (minors) + cabin (minor)
@@ -65,14 +65,20 @@ other_ids = ["Norune Trees", "Norune Trees", "Norune Bridge", "Norune Road", "No
 
 # TODO split these lists into 2 based on items that spawn from the first half of a dungeon or the second
 # Atla that give MCs by content quality (unless handled otherwise). If MC shuffle is on, these all need to be required
-mc_useful = ["Progressive Hag's House", "Progressive Hag's House",
-             "Progressive Laura's House", "Progressive Alnet's House"]
+mc_useful = []
 mc_filler = ["Progressive Macho's House", "Progressive Macho's House", "Progressive Claude's House",
-             "Progressive Claude's House", "Progressive Laura's House", "Progressive Alnet's House",
-             "Progressive Alnet's House"]
+             "Progressive Claude's House", "Progressive Claude's House", "Progressive Claude's House",]
+# Pieces that only give MCs in the second half of a dungeon
+mc_useful_2 = ["Progressive Laura's House", "Progressive Hag's House", "Progressive Hag's House",
+               "Progressive Alnet's House"]
+mc_filler_2 = ["Progressive Laura's House", "Progressive Hag's House", "Progressive Alnet's House",
+               "Progressive Alnet's House"]
+
+# Defense for now, might add some gourd/eden to guarantee the player has some hp boosts by certain points as well
+stat_upgrades = ["Pond", "Progressive Dran's Windmill"]
 
 # Always required/useful/filler items
-required = ["Pond", "Progressive Dran's Windmill"] + player_house_ids + gaffer_buggy_ids
+required = stat_upgrades + player_house_ids + gaffer_buggy_ids
 useful = hag_house_ids + paige_house_ids
 filler = windmill_ids + other_ids + alnet_house_ids + claude_house_ids + laura_house_ids + macho_house_ids
 
@@ -91,14 +97,18 @@ def create_norune_atla(options: DarkCloudOptions, player: int) -> list["DarkClou
     else:
         norune_useful.extend(d_windmill_ids)
 
-    # TODO MC: if miracle shuffle, add these to norune_required
-    # if options.miracle_chests:
-    # norune_required.extend(mc_useful)
-    # norune_required.extend(mc_filler)
-    # else:
-    norune_useful.extend(mc_useful)
-    norune_filler.extend(mc_filler)
-
+    # Add miracle chests as progression if chests are shuffled
+    if options.miracle_sanity:
+        norune_required.extend(mc_useful)
+        norune_required.extend(mc_useful_2)
+        norune_required.extend(mc_filler)
+        norune_required.extend(mc_filler_2)
+    else:
+        norune_useful.extend(mc_useful_2)
+        norune_useful.extend(mc_useful)
+        norune_filler.extend(mc_filler)
+        norune_filler.extend(mc_filler_2)
+                 
     for i in norune_required:
         items.append(DarkCloudItem(i, ItemClassification.progression, ids[i], player))
 
