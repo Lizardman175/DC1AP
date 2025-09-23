@@ -80,7 +80,6 @@ mc_useful_2 = ["Progressive Kye's House", "Progressive Kye's House", "Progressiv
                "Progressive Couscous's House", "Progressive Gob's House",
                "Progressive Watermill 2", "Progressive Watermill 3", ]
 mc_filler_2 = ["Progressive Bunbuku's House",]
-
 # Always required/useful/filler items
 required = river_ids + cacao_ids
 useful = pao_ids + baron_ids + gob_ids + owl_ids
@@ -92,36 +91,36 @@ def create_matataki_atla(options: DarkCloudOptions, player: int) -> list["DarkCl
 
     items = []
 
-    matataki_progression = required
+    matataki_required = required
     matataki_useful = useful
     matataki_filler = filler
 
     # Mush house is only full required if Utan is required
     if options.all_bosses or options.boss_goal == 2:
-        matataki_progression.extend(mush_ids)
-        matataki_progression.extend(mush_ids_mc)
-        matataki_progression.extend(mush_ids_mc2)
+        matataki_required.extend(mush_ids)
+        matataki_required.extend(mush_ids_mc)
+        matataki_required.extend(mush_ids_mc2)
     else:
         matataki_useful.extend(mush_ids)
         if options.miracle_sanity:
-            matataki_progression.extend(mush_ids_mc)
-            matataki_progression.extend(mush_ids_mc2)
+            matataki_required.extend(mush_ids_mc)
+            matataki_required.extend(mush_ids_mc2)
         else:
             matataki_useful.extend(mush_ids_mc)
             matataki_useful.extend(mush_ids_mc2)
 
     if options.miracle_sanity:
-        matataki_progression.extend(mc_useful)
-        matataki_progression.extend(mc_useful_2)
-        matataki_progression.extend(mc_filler)
-        matataki_progression.extend(mc_filler_2)
+        matataki_required.extend(mc_useful)
+        matataki_required.extend(mc_useful_2)
+        matataki_required.extend(mc_filler)
+        matataki_required.extend(mc_filler_2)
     else:
         matataki_useful.extend(mc_useful)
         matataki_useful.extend(mc_useful_2)
         matataki_filler.extend(mc_filler)
         matataki_filler.extend(mc_filler_2)
 
-    for i in matataki_progression:
+    for i in matataki_required:
         items.append(DarkCloudItem(i, ItemClassification.progression, ids[i], player))
 
     for i in matataki_useful:

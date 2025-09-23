@@ -87,29 +87,29 @@ def create_norune_atla(options: DarkCloudOptions, player: int) -> list["DarkClou
     """Create atla items for Norune Village based on option settings."""
     items = []
 
-    norune_progression = required
+    norune_required = required
     norune_useful = useful
     norune_filler = filler
 
     # Dran's windmill is only full required if Dran is required
     if options.all_bosses:
-        norune_progression.extend(d_windmill_ids)
+        norune_required.extend(d_windmill_ids)
     else:
         norune_useful.extend(d_windmill_ids)
 
     # Add miracle chests as progression if chests are shuffled
     if options.miracle_sanity:
-        norune_progression.extend(mc_useful)
-        norune_progression.extend(mc_useful_2)
-        norune_progression.extend(mc_filler)
-        norune_progression.extend(mc_filler_2)
+        norune_required.extend(mc_useful)
+        norune_required.extend(mc_useful_2)
+        norune_required.extend(mc_filler)
+        norune_required.extend(mc_filler_2)
     else:
         norune_useful.extend(mc_useful_2)
         norune_useful.extend(mc_useful)
         norune_filler.extend(mc_filler)
         norune_filler.extend(mc_filler_2)
-
-    for i in norune_progression:
+                 
+    for i in norune_required:
         items.append(DarkCloudItem(i, ItemClassification.progression, ids[i], player))
 
     for i in norune_useful:
