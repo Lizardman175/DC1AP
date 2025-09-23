@@ -1,3 +1,4 @@
+using Archipelago.Core.Models;
 using Archipelago.Core.Util;
 using DC1AP.Constants;
 using DC1AP.Mem;
@@ -7,18 +8,20 @@ namespace DC1AP.Georama
 {
     internal class GeoBuilding
     {
+        public static short Multiplier = 5;
+
         private const int ItemShortOffset = 3;
         private const int MaxItemCount = 6;
 
         public required string Name;
-        public long[] ApIds;
+        public long ApId;
         public uint BaseAddr;
         public GeoItem[] Items;
         public int BuildingId;
-        public bool Multi = false;
+        public int Multi = 0;
 
-        private short buildingCount;
-        private bool collected = false;
+        private short buildingValue;
+        //private short buildingCount;
         private uint placedCountAddr;
         private uint BuildingCountAddr;
         private Towns town;
@@ -28,17 +31,17 @@ namespace DC1AP.Georama
         /// </summary>
         internal void ReadValues()
         {
+            buildingValue = Memory.ReadShort(BaseAddr);
             placedCountAddr = BaseAddr + sizeof(short);
             BuildingCountAddr = BaseAddr + sizeof(int);
-            buildingCount = Memory.ReadShort(BuildingCountAddr);
+            //buildingCount = Memory.ReadShort(BuildingCountAddr);
 
-            if (Multi && !collected) buildingCount = 0;
+            //if (Multi > 0 && !collected) buildingCount = 0;
 
-            for (int i = 0; i < Items.Length; i++)
-            {
-                uint itemAddr = BaseAddr + GeoAddrs.HouseInvOffset + (uint)(GeoAddrs.BldFieldDelta * i);
-                Items[i].Init(itemAddr, BuildingId, i+1);
-            }
+            //for (int i = 0; i < Items.Length; i++)
+            //{
+            //    uint itemAddr = BaseAddr + GeoAddrs.HouseInvOffset + (uint)(GeoAddrs.BldFieldDelta * i);
+            //}
         }
 
         internal bool IsMemInit()
@@ -72,34 +75,93 @@ namespace DC1AP.Georama
 
         /// <summary>
         /// </summary>
-        internal void GiveBuilding(long id)
+        internal void GiveBuilding()
         {
-            int bit = 0;
-            if (Multi) bit = ApIds.ToList().IndexOf(id);
-            
-            if (!OpenMem.TestGeoMaskBit(town, BuildingId, bit))
+            // Small chance of race condition giving us 2 items at the same time.  Double check the count before adding.
+            if (buildingValue == CountThisBuilding()) return;
+
+            string? msg = null;
+
+            // Buildings with multiple copies, like river
+            if (Multi != 0 && buildingValue < Multi)
             {
-                Memory.Write(BaseAddr, (short)1);
-                if (Multi)
+                buildingValue++;
+                short buildingCount = (short)(Multiplier * buildingValue);
+                Memory.Write(BuildingCountAddr, buildingCount);
+                msg = "Received " + Name + ".";
+            }
+            // First piece, just enable the building
+            else if (buildingValue == 0)
+            {
+                buildingValue = 1;
+                msg = "Received " + Name + ".";
+            }
+            // Not first piece, add next item
+            else if (buildingValue < Items.Length + 1)
+            {
+                if (buildingValue <= Items.Length)
                 {
-                    byte mask = OpenMem.GetGeoMask(town, BuildingId);
+                    // TODO needs to check for the slot already being filled and give the player the item instead.
+                    GeoItem item = Items[buildingValue - 1];
+                    uint itemAddr = (uint)(BaseAddr + GeoAddrs.HouseInvOffset + (sizeof(short) * item.SlotId));
 
-                    buildingCount = 0;
-                    for (int i = 0; i < 8; i++)
+                    // If there isn't an item set in the item's slot, put it there.  Otherwise, add it to the player's inventory.
+                    if (Memory.ReadShort(itemAddr) == 0)
                     {
-                        byte test = (byte)(mask & (1 << i));
-                        if (test > 0) buildingCount += 5;
+                        Memory.Write(itemAddr, (short)1);
                     }
-                    // TODO can move the bit set above this if and this should be removable.
-                    buildingCount += 5;
-                    Memory.Write(BuildingCountAddr, buildingCount);
-                }
+                    else
+                    {
+                        MemFuncs.GiveGeoItem(town, (short)item.ItemId);
+                    }
 
-                OpenMem.SetGeoMaskBit(town, BuildingId, bit);
-                ItemQueue.AddMsg("Received " + Name + ".");
+                    buildingValue++;
+
+                    msg = "Received " + item.Name + " for " + town.ToString() + ".";
+                }
+            }
+
+            Memory.Write(BaseAddr, buildingValue);
+
+            if (msg != null)
+            {
+                ItemQueue.AddMsg(msg);
+                OpenMem.IncIndex();
             }
         }
 
-        internal GeoItem[] GetItems() => Items;
+        /// <summary>
+        /// Checks how many of this item the player is supposed to have versus how many they actually have and adds items to the queue if missing.
+        /// </summary>
+        internal void CheckItems()
+        {
+            int count = CountThisBuilding();
+
+            if (count > buildingValue)
+            {
+                for (int i = buildingValue + 1; i < count; i++)
+                {
+                    ItemQueue.AddGeoBuilding(this);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Counts how many of this building the player is supposed to have per the GameState.
+        /// </summary>
+        /// <returns></returns>
+        private int CountThisBuilding()
+        {
+            int count = 0;
+            for (int i = 0; i < App.Client.GameState.ReceivedItems.Count; i++)
+            {
+                if (App.Client.GameState.ReceivedItems[i].Id == ApId)
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
     }
 }

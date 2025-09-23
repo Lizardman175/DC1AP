@@ -83,22 +83,10 @@ namespace DC1AP.Georama
                 foreach (GeoBuilding building in list)
                 {
                     // TODO test if the player has the item in question first in the event of syncing with the server.
-                    if (building.ApIds.Contains(itemId))
+                    if (building.ApId == itemId)
                     {
-                        ItemQueue.AddGeoBuilding(building, itemId);
+                        ItemQueue.AddGeoBuilding(building);
                         added = true;
-                    }
-                    else
-                    {
-                        foreach (GeoItem item in building.GetItems())
-                        {
-                            if (item.ApId == itemId)
-                            {
-                                ItemQueue.AddGeoItem(item, (Towns)i);
-                                added = true;
-                                break;
-                            }
-                        }
                     }
 
                     if (added) break;
@@ -108,6 +96,16 @@ namespace DC1AP.Georama
             }
 
             return added;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        internal static void VerifyItems()
+        {
+            foreach (GeoBuilding[] buildingList in buildings)
+                foreach (GeoBuilding building in buildingList)
+                    building.CheckItems();
         }
     }
 }
