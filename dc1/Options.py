@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-
 from Options import Choice, Toggle, PerGameCommonOptions, Range
 
 
@@ -27,26 +26,22 @@ class OpenDungeon(Choice):
     # TODO can we open door locks in the dungeons so all chars aren't required with the open?
 
 
-# TODO
-# class MiracleChests(Choice):
-#     """Shuffle Miracle Chests that spawn as the game progresses as location checks.  Only those from towns within the
-#       selected goal will be randomized.  The three glitched chests by Treant will not be randomized.
-#       (Option currently disabled!)"""
-#     option_exclude = 0
-#     # option_include = 1
-#     default = 0
-#     display_name = "Miracle Chests"
+class MiracleSanity(Toggle):
+    """Currently doesn't do anything but change item classification for certain items. Only added for now to begin logic coding for MCs.
+    Don't use if you find this!!"""
+    display_name = "Miracle Sanity"
+    default = 0
+    # TODO make visible with MC shuffle update
+    visibility = Visibility.none
 
 # TODO death link.
 # class DeathLink(DeathLink):
 
-# TODO other option ideas
 
 @dataclass
 class DarkCloudOptions(PerGameCommonOptions):
     boss_goal: Goal
     all_bosses: AllBosses
     open_dungeon: OpenDungeon
-    # miracle_chests: MiracleChests
-
+    miracle_sanity: MiracleSanity
 
