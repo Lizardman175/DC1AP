@@ -9,12 +9,10 @@ class Goal(Range):
     range_start = 2
     range_end = 2
 
-
 class AllBosses(Toggle):
     """Requires defeating every boss up to the goal boss in order to finish the game."""
     display_name = "All Bosses"
     default = 0
-
 
 class OpenDungeon(Choice):
     """Open all dungeon floors as they become logically available."""
@@ -25,6 +23,10 @@ class OpenDungeon(Choice):
     # option_char = 2  # TODO handle? Idea is dungeons only open when chars that can handle obstacles are available rather than just enough chars to prevent a crash.
     # TODO can we open door locks in the dungeons so all chars aren't required with the open?
 
+class BetterStartingWeapons(Toggle):
+    """Give each character a Tier 1 weapon in addition to their unbreakable starter."""
+    display_name = "Better Starting Weapons"
+    default = 1
 
 class MiracleSanity(Toggle):
     """Currently doesn't do anything but change item classification for certain items. Only added for now to begin logic coding for MCs.
@@ -37,11 +39,10 @@ class MiracleSanity(Toggle):
 # TODO death link.
 # class DeathLink(DeathLink):
 
-
 @dataclass
 class DarkCloudOptions(PerGameCommonOptions):
     boss_goal: Goal
     all_bosses: AllBosses
     open_dungeon: OpenDungeon
+    starter_weapons: BetterStartingWeapons
     miracle_sanity: MiracleSanity
-

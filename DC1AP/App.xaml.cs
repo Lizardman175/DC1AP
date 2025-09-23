@@ -32,6 +32,7 @@ using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using Archipelago.MultiClient.Net.MessageLog.Messages;
 using DC1AP.Constants;
 using DC1AP.Georama;
+using DC1AP.Items;
 using DC1AP.Mem;
 using DC1AP.Threads;
 using Newtonsoft.Json;
@@ -65,7 +66,7 @@ namespace DC1AP
             {
                 Client?.SendMessage(a.Command);
             };
-            // TODO save last used host?
+            // TODO save last used host/slot?
             Context.Host = "localhost:38281";
             //Context.Slot = "DC1";
             MainPage = new MainPage(Context);
@@ -121,11 +122,26 @@ namespace DC1AP
                 return;
             }
 
+            // Pull out options from AP
+            Options.ParseOptions(Client.Options);
+
             Thread reconnectThread = new Thread(new ParameterizedThreadStart(Reconnect))
             {
                 IsBackground = true,
             };
             reconnectThread.Start();
+
+            GeoInvMgmt.Init();
+
+            // Initialize things once the player is connected
+            if (PlayerState.PlayerReady())
+            {
+                PlayerReady(e.Slot);
+            }
+            else
+            {
+                PlayerNotReady(e.Slot);
+            }
 
             //if (Client.Options.ContainsKey("EnableDeathlink") && (bool)Client.Options["EnableDeathlink"])
             //{
@@ -133,9 +149,6 @@ namespace DC1AP
             //    _deathlinkService.OnDeathLinkReceived += _deathlinkService_OnDeathLinkReceived;
             //    // TODO listen for player death
             //}
-
-            // Pull out options from AP
-            Options.ParseOptions(Client.Options);
 
             WatchGoal();
 
@@ -194,18 +207,6 @@ namespace DC1AP
                 return null;
             }
 
-            GeoInvMgmt.Init();
-
-            // Initialize things once the player is connected
-            if (PlayerState.PlayerReady())
-            {
-                PlayerReady(slotName);
-            }
-            else
-            {
-                PlayerNotReady(slotName);
-            }
-
             return client;
         }
 
@@ -228,17 +229,26 @@ namespace DC1AP
                 EventMasks.InitMasks();
 
                 // Show the geo menu for each town randomized and init the respective tables
-                for (int i = 0; i < Options.Goal; i++)
-                {
-                    Memory.Write(GeoAddrs.GeoMenuFlagAddrs[i], (short)1);
-                }
+                // TODO this won't work.  This opens up the towns on the map automatically.  Might be able to manually block them on the map interface?
+                //for (int i = 0; i < Options.Goal; i++)
+                //{
+                //    Memory.Write(GeoAddrs.GeoMenuFlagAddrs[i], (short)1);
+                //}
 
                 GeoInvMgmt.InitBuildings(true);
+
+                if (Options.StarterWeapons)
+                {
+                    StarterWeapons.GenerateWeapons();
+                }
             }
             else GeoInvMgmt.InitBuildings(false);
 
             CharFuncs.Init();
             PlayerState.ValidGameState = true;
+
+            // Check for any missing items after a connect/reconnect
+            ItemQueue.checkItems = true;
 
             // Watch for the player to reset the game, then change the valid state flag and ready up to connect again.
             Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerNotReady(slotName), (o) => { return o <= 1; });
@@ -269,42 +279,46 @@ namespace DC1AP
             if (Options.AllBosses)
             {
                 // Only add the monitors if the relevant boss hasn't been killed yet on this save
+                // Note: Utan doesn't set the normal kill field, so he's handled special
                 byte currKills = Memory.ReadByte(OpenMem.GoalAddr);
                 if ((currKills & 0b1) == 0)
-                    Memory.MonitorAddressForAction<byte>(MiscAddrs.BossKillFlags[0], () => AddBossKill(0b1), (o) => { return o != 0; });
+                    Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(0b1), (o) => { return o == 100; });
                 if ((currKills & 0b10) == 0)
-                    Memory.MonitorAddressForAction<byte>(MiscAddrs.BossKillFlags[1], () => AddBossKill(0b10), (o) => { return o != 0; });
+                    Memory.MonitorAddressForAction<byte>(MiscAddrs.UtanFlag, () => AddBossKill(0b10), (o) => { return o != 0; });
                 bossKillTest |= 0b11;
 
                 if (Options.Goal > 2)
                 {
                     if ((currKills & 0b100) == 0)
-                        Memory.MonitorAddressForAction<byte>(MiscAddrs.BossKillFlags[2], () => AddBossKill(0b100), (o) => { return o != 0; });
+                        Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(0b100), (o) => { return o == 300; });
                     bossKillTest |= 0b100;
                 }
                 if (Options.Goal > 3)
                 {
                     if ((currKills & 0b1000) == 0)
-                        Memory.MonitorAddressForAction<byte>(MiscAddrs.BossKillFlags[3], () => AddBossKill(0b1000), (o) => { return o != 0; });
+                        Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(0b1000), (o) => { return o == 400; });
                     bossKillTest |= 0b1000;
                 }
                 if (Options.Goal > 4)
                 {
                     if ((currKills & 0b1_0000) == 0)
-                        Memory.MonitorAddressForAction<byte>(MiscAddrs.BossKillFlags[4], () => AddBossKill(0b10000), (o) => { return o != 0; });
+                        Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(0b1_0000), (o) => { return o == 500; });
                     bossKillTest |= 0b1_0000;
                 }
                 if (Options.Goal > 5)
                 {
                     if ((currKills & 0b10_0000) == 0)
-                        Memory.MonitorAddressForAction<byte>(MiscAddrs.BossKillFlags[5], () => AddBossKill(0b100000), (o) => { return o != 0; });
+                        Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(0b10_0000), (o) => { return o == 600; });
                     bossKillTest |= 0b10_0000;
                 }
 
                 Memory.MonitorAddressForAction<byte>(OpenMem.GoalAddr, () => Client.SendGoalCompletion(), (o) => { return CheckBossKills(); });
             }
             else
-                Memory.MonitorAddressForAction<byte>(MiscAddrs.BossKillFlags[Options.Goal - 1], () => Client.SendGoalCompletion(), (o) => { return o != 0; });
+                if (Options.Goal == 2)
+                    Memory.MonitorAddressForAction<byte>(MiscAddrs.UtanFlag, () => Client.SendGoalCompletion(), (o) => { return o != 0; });
+                else
+                    Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => Client.SendGoalCompletion(), (o) => { return o == Options.Goal * 100; });
         }
 
         /// <summary>
@@ -331,8 +345,8 @@ namespace DC1AP
 
         private static void Client_ItemReceived(object? sender, ItemReceivedEventArgs e)
         {
-            //LogItem(e.Item);  // TODO not working?
-            
+            LogItem(e.Item);  // TODO not working?  I think this goes to the received items tab.
+
             // TODO log item receipt here or when actually receiving the item?
             //Log.Logger.Information("Item Received: " + e.Item.Name);
 
