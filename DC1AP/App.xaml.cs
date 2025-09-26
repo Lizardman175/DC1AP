@@ -116,7 +116,7 @@ namespace DC1AP
 
             await Client.Login(e.Slot, !string.IsNullOrWhiteSpace(e.Password) ? e.Password : null);
 
-            if (!Client.IsConnected)
+            if (!Client.IsConnected || !Client.IsLoggedIn)
             {
                 Context.ConnectButtonEnabled = true;
                 return;
