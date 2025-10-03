@@ -173,7 +173,7 @@
         "SlotId": 2
       },
       {
-        "Name": "Branch",
+        "Name": "Baron's Branch",
         "ItemId": 8,
         "SlotId": 3
       }
@@ -201,7 +201,7 @@
         "SlotId": 1
       },
       {
-        "Name": "Grass",
+        "Name": "Couscous's Grass",
         "ItemId": 2,
         "SlotId": 2
       }
@@ -229,7 +229,7 @@
         "SlotId": 1
       },
       {
-        "Name": "Bone",
+        "Name": "Gob's Bone",
         "ItemId": 10,
         "SlotId": 2
       },
@@ -247,7 +247,7 @@
     "BuildingId": 7,
     "Items": [
       {
-        "Name": "Second Floor",
+        "Name": "Mushroom Second Floor",
         "ItemId": 12,
         "SlotId": 2
       },
@@ -417,7 +417,7 @@
     ]
   },
   {
-    "Name": "Owl Shop",
+    "Name": "Wise Owl Shop",
     "ApId": 971110214,
     "BaseAddr": 30233904,
     "BuildingId": 14,
@@ -433,12 +433,12 @@
         "SlotId": 4
       },
       {
-        "Name": "Owl Torch",
+        "Name": "Wise Owl Torch",
         "ItemId": 0,
         "SlotId": 0
       },
       {
-        "Name": "Owl Sign",
+        "Name": "Wise Owl Sign",
         "ItemId": 1,
         "SlotId": 1
       },

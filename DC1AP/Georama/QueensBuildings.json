@@ -1,0 +1,384 @@
+[
+  {
+    "Name": "Ruty's Store",
+    "ApId": 971110300,
+    "BaseAddr": 30236568,
+    "BuildingId": 0,
+    "Items": [
+      {
+        "Name": "Ruty",
+        "ItemId": 41,
+        "SlotId": 3
+      },
+      {
+        "Name": "Pushcart (Fish)",
+        "ItemId": 2,
+        "SlotId": 0
+      },
+      {
+        "Name": "Pushcart (Fish)",
+        "ItemId": 2,
+        "SlotId": 1
+      },
+      {
+        "Name": "Pushcart (Fish)",
+        "ItemId": 2,
+        "SlotId": 2
+      }
+    ]
+  },
+  {
+    "Name": "Suzy's Store",
+    "ApId": 971110301,
+    "BaseAddr": 30236592,
+    "BuildingId": 1,
+    "Items": [
+      {
+        "Name": "Suzy's Pushcart",
+        "ItemId": 0,
+        "SlotId": 2
+      },
+      {
+        "Name": "Suzy's Keg",
+        "ItemId": 1,
+        "SlotId": 0
+      },
+      {
+        "Name": "Suzy",
+        "ItemId": 43,
+        "SlotId": 4
+      },
+      {
+        "Name": "Suzy's Urn",
+        "ItemId": 17,
+        "SlotId": 1
+      },
+      {
+        "Name": "Suzy's Lamp",
+        "ItemId": 6,
+        "SlotId": 3
+      }
+    ]
+  },
+  {
+    "Name": "Lana's Store",
+    "ApId": 971110302,
+    "BaseAddr": 30236616,
+    "BuildingId": 2,
+    "Items": [
+      {
+        "Name": "Pushcart (Fruit)",
+        "ItemId": 21,
+        "SlotId": 1
+      },
+      {
+        "Name": "Pushcart (Fruit)",
+        "ItemId": 21,
+        "SlotId": 2
+      },
+      {
+        "Name": "Lana",
+        "ItemId": 42,
+        "SlotId": 3
+      },
+      {
+        "Name": "Pushcart (Fruit)",
+        "ItemId": 21,
+        "SlotId": 0
+      }
+    ]
+  },
+  {
+    "Name": "Jack's Store",
+    "ApId": 971110303,
+    "BaseAddr": 30236640,
+    "BuildingId": 3,
+    "Items": [
+      {
+        "Name": "Jack's Annex Room",
+        "ItemId": 19,
+        "SlotId": 4
+      },
+      {
+        "Name": "Jack",
+        "ItemId": 40,
+        "SlotId": 5
+      },
+      {
+        "Name": "Jack's Chimney",
+        "ItemId": 3,
+        "SlotId": 0
+      },
+      {
+        "Name": "Jack's Sunshade",
+        "ItemId": 4,
+        "SlotId": 1
+      },
+      {
+        "Name": "Jack's Sign",
+        "ItemId": 5,
+        "SlotId": 2
+      },
+      {
+        "Name": "Jack's Lamp",
+        "ItemId": 6,
+        "SlotId": 3
+      }
+    ]
+  },
+  {
+    "Name": "Joker's House",
+    "ApId": 971110304,
+    "BaseAddr": 30236664,
+    "BuildingId": 4,
+    "Items": [
+      {
+        "Name": "Joker",
+        "ItemId": 44,
+        "SlotId": 4
+      },
+      {
+        "Name": "Joker's Chimney",
+        "ItemId": 3,
+        "SlotId": 0
+      },
+      {
+        "Name": "Joker's Sunshade",
+        "ItemId": 4,
+        "SlotId": 1
+      },
+      {
+        "Name": "Joker's Sign",
+        "ItemId": 5,
+        "SlotId": 2
+      },
+      {
+        "Name": "Joker's Lamp",
+        "ItemId": 6,
+        "SlotId": 3
+      }
+    ]
+  },
+  {
+    "Name": "Divining House",
+    "ApId": 971110305,
+    "BaseAddr": 30236688,
+    "BuildingId": 5,
+    "Items": [
+      {
+        "Name": "Snake",
+        "ItemId": 7,
+        "SlotId": 0
+      },
+      {
+        "Name": "Yaya",
+        "ItemId": 49,
+        "SlotId": 2
+      },
+      {
+        "Name": "Yaya's Sign",
+        "ItemId": 5,
+        "SlotId": 1
+      }
+    ]
+  },
+  {
+    "Name": "Cathedral",
+    "ApId": 971110306,
+    "BaseAddr": 30236712,
+    "BuildingId": 6,
+    "Items": [
+      {
+        "Name": "Phil",
+        "ItemId": 52,
+        "SlotId": 3
+      },
+      {
+        "Name": "Hat Shaped Roof",
+        "ItemId": 9,
+        "SlotId": 0
+      },
+      {
+        "Name": "Cathedral's Torch",
+        "ItemId": 10,
+        "SlotId": 1
+      },
+      {
+        "Name": "Holy Mark",
+        "ItemId": 11,
+        "SlotId": 2
+      }
+    ]
+  },
+  {
+    "Name": "Basker's Store",
+    "ApId": 971110307,
+    "BaseAddr": 30236736,
+    "BuildingId": 7,
+    "Items": [
+      {
+        "Name": "Basker's Second Floor",
+        "ItemId": 12,
+        "SlotId": 3
+      },
+      {
+        "Name": "Basker's Chimney",
+        "ItemId": 3,
+        "SlotId": 0
+      },
+      {
+        "Name": "Basker's Sunshade",
+        "ItemId": 4,
+        "SlotId": 1
+      },
+      {
+        "Name": "Basker",
+        "ItemId": 45,
+        "SlotId": 5
+      },
+      {
+        "Name": "Basker's Sign",
+        "ItemId": 5,
+        "SlotId": 2
+      },
+      {
+        "Name": "Basker's Lamp",
+        "ItemId": 6,
+        "SlotId": 4
+      }
+    ]
+  },
+  {
+    "Name": "King's Hideout",
+    "ApId": 971110308,
+    "BaseAddr": 30236760,
+    "BuildingId": 8,
+    "Items": [
+      {
+        "Name": "King's Sunshade",
+        "ItemId": 4,
+        "SlotId": 0
+      },
+      {
+        "Name": "Car",
+        "ItemId": 13,
+        "SlotId": 1
+      },
+      {
+        "Name": "Jake",
+        "ItemId": 48,
+        "SlotId": 3
+      },
+      {
+        "Name": "Stu",
+        "ItemId": 47,
+        "SlotId": 4
+      },
+      {
+        "Name": "King",
+        "ItemId": 46,
+        "SlotId": 5
+      },
+      {
+        "Name": "King's Lamp",
+        "ItemId": 6,
+        "SlotId": 2
+      }
+    ]
+  },
+  {
+    "Name": "Sheriff's Office",
+    "ApId": 971110309,
+    "BaseAddr": 30236784,
+    "BuildingId": 9,
+    "Items": [
+      {
+        "Name": "Deputy Sam",
+        "ItemId": 51,
+        "SlotId": 4
+      },
+      {
+        "Name": "Sheriff Wilder",
+        "ItemId": 50,
+        "SlotId": 5
+      },
+      {
+        "Name": "Prison",
+        "ItemId": 14,
+        "SlotId": 0
+      },
+      {
+        "Name": "Prison",
+        "ItemId": 14,
+        "SlotId": 1
+      },
+      {
+        "Name": "Bicycle",
+        "ItemId": 22,
+        "SlotId": 2
+      },
+      {
+        "Name": "Sherrif's Sign",
+        "ItemId": 5,
+        "SlotId": 3
+      }
+    ]
+  },
+  {
+    "Name": "Fountain",
+    "ApId": 971110310,
+    "BaseAddr": 30236808,
+    "BuildingId": 10,
+    "Items": [
+      {
+        "Name": "Water's Surface",
+        "ItemId": 8,
+        "SlotId": 0
+      },
+      {
+        "Name": "Pillar",
+        "ItemId": 20,
+        "SlotId": 1
+      },
+      {
+        "Name": "Spout",
+        "ItemId": 18,
+        "SlotId": 2
+      }
+    ]
+  },
+  {
+    "Name": "Leaning Tower",
+    "ApId": 971110311,
+    "BaseAddr": 30236832,
+    "BuildingId": 11,
+    "Items": [
+      {
+        "Name": "Tower Second Floor",
+        "ItemId": 15,
+        "SlotId": 0
+      },
+      {
+        "Name": "Tower Third Floor",
+        "ItemId": 16,
+        "SlotId": 1
+      }
+    ]
+  },
+  {
+    "Name": "Queens Tree",
+    "ApId": 971110312,
+    "BaseAddr": 30236856,
+    "BuildingId": 13,
+    "Multi": 2,
+    "Items": []
+  },
+  {
+    "Name": "Queens Road",
+    "ApId": 971110313,
+    "BaseAddr": 30236880,
+    "BuildingId": 14,
+    "Multi": 5,
+    "Items": []
+  }
+]

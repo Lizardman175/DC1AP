@@ -21,11 +21,6 @@
         "SlotId": 4
       },
       {
-        "Name": "Stray Cat",
-        "ItemId": 54,
-        "SlotId": 5
-      },
-      {
         "Name": "Player's Keg",
         "ItemId": 18,
         "SlotId": 0
@@ -34,6 +29,11 @@
         "Name": "Player's Chimney",
         "ItemId": 19,
         "SlotId": 1
+      },
+      {
+        "Name": "Stray Cat",
+        "ItemId": 54,
+        "SlotId": 5
       }
     ]
   },
@@ -44,7 +44,7 @@
     "BuildingId": 1,
     "Items": [
       {
-        "Name": "Annex",
+        "Name": "Macho's Annex",
         "ItemId": 4,
         "SlotId": 2
       },
@@ -163,6 +163,11 @@
         "SlotId": 2
       },
       {
+        "Name": "Candy Box",
+        "ItemId": 9,
+        "SlotId": 4
+      },
+      {
         "Name": "Claude",
         "ItemId": 41,
         "SlotId": 5
@@ -181,11 +186,6 @@
         "Name": "Claude's Bench",
         "ItemId": 8,
         "SlotId": 3
-      },
-      {
-        "Name": "Candy Box",
-        "ItemId": 9,
-        "SlotId": 4
       }
     ]
   },
@@ -201,6 +201,11 @@
         "SlotId": 2
       },
       {
+        "Name": "Hag's Jar",
+        "ItemId": 10,
+        "SlotId": 4
+      },
+      {
         "Name": "Hag",
         "ItemId": 44,
         "SlotId": 5
@@ -211,19 +216,14 @@
         "SlotId": 3
       },
       {
-        "Name": "Hag's Fence",
-        "ItemId": 0,
-        "SlotId": 0
-      },
-      {
         "Name": "Hag's Lamp",
         "ItemId": 1,
         "SlotId": 1
       },
       {
-        "Name": "Jar",
-        "ItemId": 10,
-        "SlotId": 4
+        "Name": "Hag's Fence",
+        "ItemId": 0,
+        "SlotId": 0
       }
     ]
   },
@@ -403,12 +403,12 @@
     "ApId": 971110115,
     "BaseAddr": 30230928,
     "BuildingId": 15,
-    "Multi": 3,
+    "Multi": 4,
     "Items": []
   },
   {
     "Name": "Norune Bridge",
-    "ApId": 971111016,
+    "ApId": 971110116,
     "BaseAddr": 30230952,
     "BuildingId": 16,
     "Multi": 1,
