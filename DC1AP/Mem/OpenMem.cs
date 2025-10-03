@@ -22,16 +22,6 @@ namespace DC1AP.Mem
         // Short
         internal static readonly uint CollectedCountAddr = (uint)(IndexAddr + 2);
 
-        /*
-         * Norune: 17 buildins
-         * Matataki: 20
-         * Queens: 14
-         * Muska: 14
-         * factory: 14
-         * Memories: 12
-         * 91 total 0x58
-         */
-
         // Prep for future bytes. Going to need double the above bytes for MCs, and then some
         //private static readonly uint NextByte = CollectedCountAddr + 1;
 
@@ -41,7 +31,6 @@ namespace DC1AP.Mem
         /// <returns></returns>
         public static string GetSlotName()
         {
-            // TODO make this a generic func for other strings.
             System.Text.Encoding? encoding = System.Text.Encoding.UTF8;
 
             byte[] bytes = Memory.ReadByteArray(SlotNameAddr, SlotNameLen, Enums.Endianness.Little);
@@ -74,16 +63,6 @@ namespace DC1AP.Mem
                 Memory.WriteString(SlotNameAddr, s);
         }
 
-        //public static void SetGeoMaskBit(Towns town, int bldIndex, int bit)
-        //{
-        //    Memory.WriteBit((uint)(maskAddrs[(int)town] + bldIndex), bit, true);
-        //}
-
-        //public static Boolean TestGeoMaskBit(Towns town, int bldIndex, int bit)
-        //{
-        //    return Memory.ReadBit((uint)(maskAddrs[((int)town)] + bldIndex), bit);
-        //}
-
         public static short GetIndex()
         {
             return Memory.ReadShort(IndexAddr);
@@ -98,10 +77,5 @@ namespace DC1AP.Mem
         {
             Memory.Write(IndexAddr, (short)(GetIndex() + 1));
         }
-
-        //internal static byte GetGeoMask(Towns town, int buildingId)
-        //{
-        //    return Memory.ReadByte((ulong)(maskAddrs[(int)town] + buildingId));
-        //}
     }
 }
