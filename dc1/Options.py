@@ -21,6 +21,11 @@ class OpenDungeon(Choice):
     option_closed = 0
     option_open = 1
 
+class BetterStartingWeapons(Toggle):
+    """Give each character a Tier 1 weapon in addition to their unbreakable starter."""
+    display_name = "Better Starting Weapons"
+    default = 1
+
 class MiracleSanity(Toggle):
     """Currently doesn't do anything but change item classification for certain items. Only added for now to begin logic coding for MCs.
     Don't use if you find this!!"""
@@ -37,4 +42,5 @@ class DarkCloudOptions(PerGameCommonOptions):
     boss_goal: Goal
     all_bosses: AllBosses
     open_dungeon: OpenDungeon
+    starter_weapons: BetterStartingWeapons
     miracle_sanity: MiracleSanity

@@ -4,53 +4,52 @@ namespace DC1AP.Constants
     // Misc address values that aren't enough to warrant grouping to their own file.
     internal class MiscAddrs
     {
-        public const uint GameIdAddr = 0x0029E4F0;
+        internal const uint GameIdAddr = 0x0029E4F0;
 
+        // These are blocks of shorts mapped to a table of allowable characters.
         // 0x00A2 is A, 0x00BC is a.  Go up from there to get other letters.  Before A2 is Japanese.
-        //public const uint ToanNameAddr = 0x1CD4188;
-        //public const uint XiaoNameAddr = 0x1CD41C8;
-        //public const uint GoroNameAddr = 0x1CD4208;
-        //public const uint RubyNameAddr = 0x1CD4248;
-        //public const uint UngagaNameAddr = 0x1CD4288;
-        //public const uint OsmondNameAddr = 0x1CD42C8;
+        //internal const uint ToanNameAddr = 0x1CD4188;
+        //internal const uint XiaoNameAddr = 0x1CD41C8;
+        //internal const uint GoroNameAddr = 0x1CD4208;
+        //internal const uint RubyNameAddr = 0x1CD4248;
+        //internal const uint UngagaNameAddr = 0x1CD4288;
+        //internal const uint OsmondNameAddr = 0x1CD42C8;
 
         // 1CD4100 : B10B
 
-        //public const uint GildaAddr = 0x01CDD892;
-
         // For managing adding items
-        //public const uint InvStart = 0x01CDD8BA;
-        //public const uint AttachStart = 0x01CE1A48;
+        //internal const uint InvStart = 0x01CDD8BA;
+        //internal const uint AttachStart = 0x01CE1A48;
 
         // Set to 1 to enable the world map
-        public const uint MapFlagAddr = 0x1CDD86C;
+        internal const uint MapFlagAddr = 0x1CDD86C;
 
         // Addresses for visit count of each town/dungeon on the map.  value >0 makes them show up on the map (curious what negative numbers would do)
         // Value > 0 also prevents dungeons from initializing by default.
-        //public const int NoruneCountAddr = 0x1CE7028; // Norune village counter (clearing it makes Norune unavailable; unless doing a non-standard start, don't edit!)
-        public const uint DBCCountAddr = 0x1CE70C8; // DBC counter
+        //internal const int NoruneCountAddr = 0x1CE7028; // Norune village counter (clearing it makes Norune unavailable; unless doing a non-standard start, don't edit!)
+        internal const uint DBCCountAddr = 0x1CE70C8; // DBC counter
 
         // There is no value that will disable Matataki other than the map flag itself
-        public const uint WOFCountAddr = 0x1CE70CA; // Wise owl forest
+        internal const uint WOFCountAddr = 0x1CE70CA; // Wise owl forest
 
-        //public const uint BrownbooCountAddr = 0x1CE7044; // Brownboo Village
+        //internal const uint BrownbooCountAddr = 0x1CE7044; // Brownboo Village
 
-        public const uint QueensCountAddr = 0x1CE702C;
-        public const uint SWCountAddr = 0x01CE70CC;
+        internal const uint QueensCountAddr = 0x1CE702C;
+        internal const uint SWCountAddr = 0x01CE70CC;
 
-        public const uint MuskaCountAddr = 0x01CE702E;
-        public const uint SMTExtCountAddr = 0x01CE707C; // sun/moon temple exterior counter
-        public const uint SMTIntCountAddr = 0x01CE70CE; // SMT interior (dungeon)
+        internal const uint MuskaCountAddr = 0x01CE702E;
+        internal const uint SMTExtCountAddr = 0x01CE707C; // sun/moon temple exterior counter
+        internal const uint SMTIntCountAddr = 0x01CE70CE; // SMT interior (dungeon)
 
-        public const uint MFCountAddr = 0x01CE7030; // Moon factory
-        public const uint YDCountAddr = 0x01CE7056; // Yellow Drops
-        public const uint MSCountAddr = 0x01CE70D0; // Moon sea
+        internal const uint MFCountAddr = 0x01CE7030; // Moon factory
+        internal const uint YDCountAddr = 0x01CE7056; // Yellow Drops
+        internal const uint MSCountAddr = 0x01CE70D0; // Moon sea
 
-        public const uint GOTCountAddr = 0x01CE70D2; // Gallery of Time
-        public const uint DHCCountAddr = 0x01CE7078; // DHC? Seems to also activate ThE sHaFt
+        internal const uint GOTCountAddr = 0x01CE70D2; // Gallery of Time
+        internal const uint DHCCountAddr = 0x01CE7078; // DHC? Seems to also activate ThE sHaFt
 
         // >0 will open the demon shaft dungeon for business
-        //public const uint ShaftCounterAddr = 0x1CE70A0;
+        //internal const uint ShaftCounterAddr = 0x1CE70A0;
 
         // How many floors are available for a given dungeon.  0 indexed.  Setting these early will skip normal dungeon initialization.
         internal const uint DBCFloorCountAddr = 0x01CDD80B;

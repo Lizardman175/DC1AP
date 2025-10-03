@@ -32,6 +32,7 @@ using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using Archipelago.MultiClient.Net.MessageLog.Messages;
 using DC1AP.Constants;
 using DC1AP.Georama;
+using DC1AP.Items;
 using DC1AP.Mem;
 using DC1AP.Threads;
 using Newtonsoft.Json;
@@ -65,7 +66,7 @@ namespace DC1AP
             {
                 Client?.SendMessage(a.Command);
             };
-            // TODO save last used host?
+            // TODO save last used host/slot?
             Context.Host = "localhost:38281";
             //Context.Slot = "DC1";
             MainPage = new MainPage(Context);
@@ -115,11 +116,14 @@ namespace DC1AP
 
             await Client.Login(e.Slot, !string.IsNullOrWhiteSpace(e.Password) ? e.Password : null);
 
-            if (!Client.IsConnected)
+            if (!Client.IsConnected || !Client.IsLoggedIn)
             {
                 Context.ConnectButtonEnabled = true;
                 return;
             }
+
+            // Pull out options from AP
+            Options.ParseOptions(Client.Options);
 
             Thread reconnectThread = new Thread(new ParameterizedThreadStart(Reconnect))
             {
@@ -127,15 +131,24 @@ namespace DC1AP
             };
             reconnectThread.Start();
 
+            GeoInvMgmt.Init();
+
+            // Initialize things once the player is connected
+            if (PlayerState.PlayerReady())
+            {
+                PlayerReady(e.Slot);
+            }
+            else
+            {
+                PlayerNotReady(e.Slot);
+            }
+
             //if (Client.Options.ContainsKey("EnableDeathlink") && (bool)Client.Options["EnableDeathlink"])
             //{
             //    var _deathlinkService = Client.EnableDeathLink();
             //    _deathlinkService.OnDeathLinkReceived += _deathlinkService_OnDeathLinkReceived;
             //    // TODO listen for player death
             //}
-
-            // Pull out options from AP
-            Options.ParseOptions(Client.Options);
 
             WatchGoal();
 
@@ -192,18 +205,6 @@ namespace DC1AP
                 return null;
             }
 
-            GeoInvMgmt.Init();
-
-            // Initialize things once the player is connected
-            if (PlayerState.PlayerReady())
-            {
-                PlayerReady(slotName);
-            }
-            else
-            {
-                PlayerNotReady(slotName);
-            }
-
             return client;
         }
 
@@ -226,17 +227,26 @@ namespace DC1AP
                 EventMasks.InitMasks();
 
                 // Show the geo menu for each town randomized and init the respective tables
-                for (int i = 0; i < Options.Goal; i++)
-                {
-                    Memory.Write(GeoAddrs.GeoMenuFlagAddrs[i], (short)1);
-                }
+                // TODO this won't work.  This opens up the towns on the map automatically.  Might be able to manually block them on the map interface?
+                //for (int i = 0; i < Options.Goal; i++)
+                //{
+                //    Memory.Write(GeoAddrs.GeoMenuFlagAddrs[i], (short)1);
+                //}
 
                 GeoInvMgmt.InitBuildings(true);
+
+                if (Options.StarterWeapons)
+                {
+                    StarterWeapons.GenerateWeapons();
+                }
             }
             else GeoInvMgmt.InitBuildings(false);
 
             CharFuncs.Init();
             PlayerState.ValidGameState = true;
+
+            // Check for any missing items after a connect/reconnect
+            ItemQueue.checkItems = true;
 
             // Watch for the player to reset the game, then change the valid state flag and ready up to connect again.
             Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerNotReady(slotName), (o) => { return o <= 1; });
