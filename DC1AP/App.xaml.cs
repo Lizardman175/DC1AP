@@ -51,7 +51,7 @@ namespace DC1AP
 
         private static ConcurrentQueue<Archipelago.Core.Models.Location> locationQueue = new();
 
-        private DeathLinkService _deathlinkService;
+        //private DeathLinkService _deathlinkService;
         private Thread queueThread;
         private Thread helperThread;
         private GenericGameClient? ps2Client;
@@ -170,8 +170,6 @@ namespace DC1AP
                 helperThread.Start();
             }
 
-            // TODO send all collected IDs every time on connect?
-
             Context.ConnectButtonEnabled = true;
         }
 
@@ -252,6 +250,12 @@ namespace DC1AP
 
             // Watch for the player to reset the game, then change the valid state flag and ready up to connect again.
             Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerNotReady(slotName), (o) => { return o <= 1; });
+
+            // Skip needing Yaya to dance on your head if doing Saia once the building event viewed flag is set.
+            if (Options.Goal >= 3)
+            {
+                Memory.MonitorAddressForAction<short>(GeoAddrs.YayaBldEventFlag, () => EventMasks.SkipYaya(), (o) => { return o  >= 1; });
+            }
         }
 
         private void PlayerNotReady(string slotName)
@@ -278,43 +282,30 @@ namespace DC1AP
         {
             if (Options.AllBosses)
             {
-                // Only add the monitors if the relevant boss hasn't been killed yet on this save
-                // Note: Utan doesn't set the normal kill field, so he's handled special
-                byte currKills = Memory.ReadByte(OpenMem.GoalAddr);
-                if ((currKills & 0b1) == 0)
-                    Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(0b1), (o) => { return o == 100; });
-                if ((currKills & 0b10) == 0)
-                    Memory.MonitorAddressForAction<byte>(MiscAddrs.UtanFlag, () => AddBossKill(0b10), (o) => { return o != 0; });
-                bossKillTest |= 0b11;
-
-                if (Options.Goal > 2)
+                for (int i = 0; i < Options.Goal; i++)
                 {
-                    if ((currKills & 0b100) == 0)
-                        Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(0b100), (o) => { return o == 300; });
-                    bossKillTest |= 0b100;
-                }
-                if (Options.Goal > 3)
-                {
-                    if ((currKills & 0b1000) == 0)
-                        Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(0b1000), (o) => { return o == 400; });
-                    bossKillTest |= 0b1000;
-                }
-                if (Options.Goal > 4)
-                {
-                    if ((currKills & 0b1_0000) == 0)
-                        Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(0b1_0000), (o) => { return o == 500; });
-                    bossKillTest |= 0b1_0000;
-                }
-                if (Options.Goal > 5)
-                {
-                    if ((currKills & 0b10_0000) == 0)
-                        Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(0b10_0000), (o) => { return o == 600; });
-                    bossKillTest |= 0b10_0000;
+                    byte mask = (byte)(1 << i);
+                    byte currKills = Memory.ReadByte(OpenMem.GoalAddr);
+                    bossKillTest |= mask;
+                    if ((currKills & mask) == 0)
+                    {
+                        // For some reason, the Boss Kill Flag doesn't set for Utan so use the floor kill count instead
+                        if (i == 1)
+                        {
+                            Memory.MonitorAddressForAction<byte>(MiscAddrs.UtanFlag, () => AddBossKill(mask), (o) => { return o != 0; });
+                        }
+                        else
+                        {
+                            int value = (i + 1) * 100;
+                            Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(mask), (o) => { return o == (short)value; });
+                        }
+                    }
                 }
 
                 Memory.MonitorAddressForAction<byte>(OpenMem.GoalAddr, () => Client.SendGoalCompletion(), (o) => { return CheckBossKills(); });
             }
             else
+                // For some reason, the Boss Kill Flag doesn't set for Utan so use the floor kill count instead
                 if (Options.Goal == 2)
                     Memory.MonitorAddressForAction<byte>(MiscAddrs.UtanFlag, () => Client.SendGoalCompletion(), (o) => { return o != 0; });
                 else
@@ -346,11 +337,6 @@ namespace DC1AP
         private static void Client_ItemReceived(object? sender, ItemReceivedEventArgs e)
         {
             LogItem(e.Item);  // TODO not working?  I think this goes to the received items tab.
-
-            // TODO log item receipt here or when actually receiving the item?
-            //Log.Logger.Information("Item Received: " + e.Item.Name);
-
-            //var itemId = e.Item.Id;
 
             // TODO miracle chests: test the item id and add inventory item instead of geo
             GeoInvMgmt.GiveItem(e.Item.Id);
@@ -404,7 +390,7 @@ namespace DC1AP
             }
         }
 
-        private static void OnConnected(object sender, EventArgs args)
+        private static void OnConnected(object? sender, EventArgs? args)
         {
             Log.Logger.Information("Connected to Archipelago");
             Log.Logger.Information($"Playing {Client.CurrentSession.ConnectionInfo.Game} as {Client.CurrentSession.Players.GetPlayerName(Client.CurrentSession.ConnectionInfo.Slot)}");
