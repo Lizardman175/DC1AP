@@ -19,11 +19,9 @@ ids = {
     "Queens Road": 971110313
   }
 
-#TODO still need to sort these for MCs etc.
 king_ids = ["Progressive King's Hideout", "Progressive King's Hideout", "Progressive King's Hideout",
             "Progressive King's Hideout", "Progressive King's Hideout", "Progressive King's Hideout",
             "Progressive King's Hideout"]
-divine_ids = ["Progressive Divining House", "Progressive Divining House"]
 cathedral_ids = ["Progressive Cathedral", "Progressive Cathedral", "Progressive Cathedral",
                  "Progressive Cathedral"]
 joker_ids = ["Progressive Joker's House", "Progressive Joker's House",
@@ -72,17 +70,14 @@ def create_queens_atla(options: DarkCloudOptions, player: int) -> list["DarkClou
     queens_useful = useful
     queens_filler = filler
 
-    # TODO review this, I think something went weird
-    if options.boss_goal > 3:
-        queens_required.extend(divine_ids)
-        queens_required.extend(["Progressive Divining House", "Progressive Divining House"])
+    if options.boss_goal == 3 or options.all_bosses:
+        queens_required.extend(["Progressive Divining House", "Progressive Divining House", "Progressive Divining House", "Progressive Divining House"])
     else:
         if options.miracle_sanity:
-            queens_required.extend(divine_ids)
             queens_required.extend(["Progressive Divining House", "Progressive Divining House"])
         else:
-            queens_useful.extend(divine_ids)
-            queens_filler.extend(["Progressive Divining House", "Progressive Divining House"])
+            queens_useful.extend(["Progressive Divining House", "Progressive Divining House"])
+        queens_filler.extend(["Progressive Divining House", "Progressive Divining House"])
 
     if options.all_bosses or options.boss_goal == 3:
         queens_required.extend(cathedral_ids)
@@ -108,3 +103,4 @@ def create_queens_atla(options: DarkCloudOptions, player: int) -> list["DarkClou
     # print(len(items))
     # print (items)
     return items
+
