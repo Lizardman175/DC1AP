@@ -1,20 +1,18 @@
 from dataclasses import dataclass
-from Options import Choice, Toggle, PerGameCommonOptions, Range
+from Options import Choice, Toggle, PerGameCommonOptions, Range, Visibility
 
 
 class Goal(Range):
-    """Select Dungeon from 2-6 to be the goal.  Currently only 2 is supported."""
+    """Select Dungeon from 2-6 to be the goal.  Currently only 2-3 are supported."""
     display_name = "Boss Goal"
-    default = 2
+    default = 3
     range_start = 2
-    range_end = 2
-
+    range_end = 3
 
 class AllBosses(Toggle):
     """Requires defeating every boss up to the goal boss in order to finish the game."""
     display_name = "All Bosses"
     default = 0
-
 
 class OpenDungeon(Choice):
     """Open all dungeon floors as they become logically available."""
@@ -22,9 +20,6 @@ class OpenDungeon(Choice):
     default = 1
     option_closed = 0
     option_open = 1
-    # option_char = 2  # TODO handle? Idea is dungeons only open when chars that can handle obstacles are available rather than just enough chars to prevent a crash.
-    # TODO can we open door locks in the dungeons so all chars aren't required with the open?
-
 
 class MiracleSanity(Toggle):
     """Currently doesn't do anything but change item classification for certain items. Only added for now to begin logic coding for MCs.
@@ -37,11 +32,9 @@ class MiracleSanity(Toggle):
 # TODO death link.
 # class DeathLink(DeathLink):
 
-
 @dataclass
 class DarkCloudOptions(PerGameCommonOptions):
     boss_goal: Goal
     all_bosses: AllBosses
     open_dungeon: OpenDungeon
     miracle_sanity: MiracleSanity
-
