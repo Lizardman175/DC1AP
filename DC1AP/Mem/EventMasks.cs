@@ -4,6 +4,14 @@ namespace DC1AP.Mem
 {
     internal class EventMasks
     {
+        internal static uint DialogAddr1 = 0x01CE43A8;
+        internal static uint DialogAddr2 = 0x01CE43A9;
+        internal static uint DialogAddr3 = 0x01CE43AC;
+        internal static uint DialogAddr4 = 0x01CE43AD;
+        internal static uint DialogAddr5 = 0x01CE43AE;
+        internal static uint DialogAddr6 = 0x01CE43B4;
+        internal static uint DialogAddr7 = 0x01CE43B5;
+
         /*
          * Unused but known flags/values:
          * 
@@ -22,25 +30,25 @@ namespace DC1AP.Mem
         {
             // Skip first scene entering Queens (40) & first dialog with Randro (80)
             // 11b skips need to get the mayor's key & open DBC, but you skip getting the first items.
-            OrMask(0x01CE43A8, 0xC0);
+            OrMask(DialogAddr1, 0xC0);
             // Skips initial cutscene when entering Matataki
-            OrMask(0x01CE43A9, 0x02);
+            OrMask(DialogAddr2, 0x02);
             // Skip dran pre-fight dialog (1b)
-            OrMask(0x01CE43AC, 0x01);
+            OrMask(DialogAddr3, 0x01);
             // Skip town building tutorial (and manual item)
-            OrMask(0x01CE43AD, 0x01);
+            OrMask(DialogAddr4, 0x01);
             // Skips the withered tree convo when first visiting Matataki
-            OrMask(0x01CE43AE, 0x08);
+            OrMask(DialogAddr5, 0x08);
             // First dungeon floor tutorial + cat cutscene
-            OrMask(0x01CE43B4, 0xB0);
+            OrMask(DialogAddr6, 0xB0);
             // More of the dungeon tutorials I believe.  4 is the lock-on tutorial, 1 is charge attack upgrade
-            OrMask(0x01CE43B5, 0x07);
+            OrMask(DialogAddr7, 0x07);
         }
 
         internal static void SkipYaya()
         {
             // 0x20 for fruit scene, 0x40 for Rando scene. Genie scene doesn't seem to set a flag?
-            OrMask(0x01CE43A9, 0x60);
+            OrMask(DialogAddr2, 0x60);
         }
 
         /// <summary>

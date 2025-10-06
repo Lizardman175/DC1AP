@@ -101,7 +101,6 @@ namespace DC1AP.Georama
             {
                 if (buildingValue <= Items.Length)
                 {
-                    // TODO needs to check for the slot already being filled and give the player the item instead.
                     GeoItem item = Items[buildingValue - 1];
                     uint itemAddr = (uint)(BaseAddr + GeoAddrs.HouseInvOffset + (sizeof(short) * item.SlotId));
 
