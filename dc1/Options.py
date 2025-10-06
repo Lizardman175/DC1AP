@@ -34,6 +34,22 @@ class MiracleSanity(Toggle):
     # TODO make visible with MC shuffle update
     visibility = Visibility.none
 
+class AbsMultiplier(Choice):
+    """Adjust the ABS gained from enemies."""
+    display_name = "ABS Multiplier"
+    option_half = 0
+    option_normal = 1
+    option_one_and_half = 2
+    option_double = 3
+    option_double_and_half = 4
+    option_triple = 5
+    default = 3
+
+class GivePockets(Toggle):
+    """Start with all available pockets received based on settings."""
+    display_name = "Start With Pockets"
+    default = 0
+
 # TODO death link.
 # class DeathLink(DeathLink):
 
@@ -44,3 +60,5 @@ class DarkCloudOptions(PerGameCommonOptions):
     open_dungeon: OpenDungeon
     starter_weapons: BetterStartingWeapons
     miracle_sanity: MiracleSanity
+    abs_multiplier: AbsMultiplier
+    give_pockets: GivePockets
