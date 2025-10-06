@@ -1,13 +1,13 @@
 from dataclasses import dataclass
-from Options import Choice, Toggle, PerGameCommonOptions, Range
+from Options import Choice, Toggle, PerGameCommonOptions, Range, Visibility
 
 
 class Goal(Range):
-    """Select Dungeon from 2-6 to be the goal.  Currently only 2 is supported."""
+    """Select Dungeon from 2-6 to be the goal.  Currently only 2-3 are supported."""
     display_name = "Boss Goal"
-    default = 2
+    default = 3
     range_start = 2
-    range_end = 2
+    range_end = 3
 
 class AllBosses(Toggle):
     """Requires defeating every boss up to the goal boss in order to finish the game."""
@@ -20,8 +20,6 @@ class OpenDungeon(Choice):
     default = 1
     option_closed = 0
     option_open = 1
-    # option_char = 2  # TODO handle? Idea is dungeons only open when chars that can handle obstacles are available rather than just enough chars to prevent a crash.
-    # TODO can we open door locks in the dungeons so all chars aren't required with the open?
 
 class BetterStartingWeapons(Toggle):
     """Give each character a Tier 1 weapon in addition to their unbreakable starter."""
@@ -36,6 +34,22 @@ class MiracleSanity(Toggle):
     # TODO make visible with MC shuffle update
     visibility = Visibility.none
 
+class AbsMultiplier(Choice):
+    """Adjust the ABS gained from enemies."""
+    display_name = "ABS Multiplier"
+    option_half = 0
+    option_normal = 1
+    option_one_and_half = 2
+    option_double = 3
+    option_double_and_half = 4
+    option_triple = 5
+    default = 3
+
+class GivePockets(Toggle):
+    """Start with all available pockets received based on settings."""
+    display_name = "Start With Pockets"
+    default = 0
+
 # TODO death link.
 # class DeathLink(DeathLink):
 
@@ -46,3 +60,5 @@ class DarkCloudOptions(PerGameCommonOptions):
     open_dungeon: OpenDungeon
     starter_weapons: BetterStartingWeapons
     miracle_sanity: MiracleSanity
+    abs_multiplier: AbsMultiplier
+    give_pockets: GivePockets
