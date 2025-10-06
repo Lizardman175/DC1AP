@@ -74,6 +74,7 @@ namespace DC1AP.Threads
             // TODO not sure if these are useful yet.  If so, move them out of the method and add reset to Startup()
             int mostRecentFloor = -1;
             int mostRecentDungeon = -1;
+            bool isBackFloor = false;
 
             Startup();
 
@@ -101,6 +102,7 @@ namespace DC1AP.Threads
                     {
                         byte curDungeon = Memory.ReadByte(MiscAddrs.CurDungeon);
                         byte curFloor = Memory.ReadByte(MiscAddrs.CurFloor);
+                        bool curBackFloor = Memory.ReadByte(MiscAddrs.BackFloorFlag) != 0;
 
                         // Clear out junk georama pieces if collected
                         // TODO could probably be a reaction to the player looting atla?
@@ -121,15 +123,21 @@ namespace DC1AP.Threads
                             Memory.Write(GeoAddrs.AtlaCollectedFlag, 0);
                         }
 
+                        if (isBackFloor != curBackFloor || curFloor != mostRecentFloor)
+                        {
+                            Enemies.MultiplyABS();
+                        }
+
                         mostRecentDungeon = curDungeon;
                         mostRecentFloor = curFloor;
+                        isBackFloor = curBackFloor;
                     }
-                    // TODO else if (Options.MiracleChests) {}
                     // Reset dungeon values if player is not in a dungeon.
                     else
                     {
                         mostRecentFloor = -1;
                         mostRecentDungeon = -1;
+                        isBackFloor = false;
                     }
                 }
 

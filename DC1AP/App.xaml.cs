@@ -218,6 +218,7 @@ namespace DC1AP
                 return;
             }
 
+            // First load for this save, so do extra stuff
             if (currSlot == "")
             {
                 // Store player's slot name into memcard
@@ -235,10 +236,9 @@ namespace DC1AP
 
                 GeoInvMgmt.InitBuildings(true);
 
-                if (Options.StarterWeapons)
-                {
-                    StarterWeapons.GenerateWeapons();
-                }
+                Weapons.GiveCharWeapon(0);
+                InventoryMgmt.GiveFreeFeather();
+                InventoryMgmt.GivePockets();
             }
             else GeoInvMgmt.InitBuildings(false);
 

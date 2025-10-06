@@ -1,5 +1,6 @@
 ﻿using Archipelago.Core.Util;
 using DC1AP.Constants;
+using DC1AP.Items;
 
 namespace DC1AP.Mem
 {
@@ -33,7 +34,6 @@ namespace DC1AP.Mem
             ungaga = false;
             osmond = false;
 
-            // TODO helpful to call XiaoGained() etc. if false? Everything should just be set.
             if (Memory.ReadByte(XiaoSlotAddr) == 0xff)
             {
                 Memory.MonitorAddressForAction<Byte>(XiaoSlotAddr, () => XiaoGained(), (o) => { return o != 0xff; });
@@ -86,13 +86,13 @@ namespace DC1AP.Mem
                 }
 
                 Memory.WriteByte(MiscAddrs.MapFlagAddr, 0x01);
-                //Memory.Write(MiscAddrs.WOFCountAddr, (byte)1);
 
                 if (Options.Goal > ((int)Towns.Matataki) + 1)
                 {
                     Memory.WriteByte(MiscAddrs.QueensCountAddr, 1);
-                    //Memory.Write(MiscAddrs.SWCountAddr, (byte)1);
                 }
+
+                Weapons.GiveCharWeapon(1);
             }
             else
                 Memory.MonitorAddressForAction<Byte>(XiaoSlotAddr, () => XiaoGained(), (o) => { return o != 0xff; });
@@ -113,6 +113,8 @@ namespace DC1AP.Mem
                 {
                     Memory.WriteByte(MiscAddrs.QueensCountAddr, 1);
                 }
+
+                Weapons.GiveCharWeapon(2);
             }
             else
                 Memory.MonitorAddressForAction<Byte>(GoroSlotAddr, () => GoroGained(), (o) => { return o != 0xff; });
@@ -133,6 +135,8 @@ namespace DC1AP.Mem
                     Memory.WriteByte(MiscAddrs.MuskaCountAddr, 1);
                     Memory.WriteByte(MiscAddrs.SMTExtCountAddr, 1);
                 }
+
+                Weapons.GiveCharWeapon(3);
             }
             else
                 Memory.MonitorAddressForAction<Byte>(RubySlotAddr, () => RubyGained(), (o) => { return o != 0xff; });
@@ -153,6 +157,8 @@ namespace DC1AP.Mem
                     Memory.WriteByte(MiscAddrs.YDCountAddr, 1);
                     Memory.WriteByte(MiscAddrs.MFCountAddr, 1);
                 }
+
+                Weapons.GiveCharWeapon(4);
             }
             else
                 Memory.MonitorAddressForAction<Byte>(UngagaSlotAddr, () => UngagaGained(), (o) => { return o != 0xff; });
@@ -172,6 +178,8 @@ namespace DC1AP.Mem
                 {
                     Memory.WriteByte(MiscAddrs.DHCCountAddr, 1);
                 }
+
+                Weapons.GiveCharWeapon(5);
             }
             else
                 Memory.MonitorAddressForAction<Byte>(OsmondSlotAddr, () => OsmondGained(), (o) => { return o != 0xff; });
