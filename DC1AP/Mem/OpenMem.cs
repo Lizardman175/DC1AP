@@ -22,16 +22,6 @@ namespace DC1AP.Mem
         // Short
         internal static readonly uint CollectedCountAddr = (uint)(IndexAddr + 2);
 
-        /*
-         * Norune: 17 buildins
-         * Matataki: 20
-         * Queens: 14
-         * Muska: 14
-         * factory: 14
-         * Memories: 12
-         * 91 total 0x58
-         */
-
         // Prep for future bytes. Going to need double the above bytes for MCs, and then some
         //private static readonly uint NextByte = CollectedCountAddr + 1;
 
@@ -41,7 +31,6 @@ namespace DC1AP.Mem
         /// <returns></returns>
         public static string GetSlotName()
         {
-            // TODO make this a generic func for other strings.
             System.Text.Encoding? encoding = System.Text.Encoding.UTF8;
 
             byte[] bytes = Memory.ReadByteArray(SlotNameAddr, SlotNameLen, Enums.Endianness.Little);

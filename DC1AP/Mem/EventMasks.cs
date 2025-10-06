@@ -22,22 +22,33 @@ namespace DC1AP.Mem
         {
             // Skip first scene entering Queens (40) & first dialog with Randro (80)
             // 11b skips need to get the mayor's key & open DBC, but you skip getting the first items.
-            InitMask(0x01CE43A8, 0xC0);
+            OrMask(0x01CE43A8, 0xC0);
             // Skips initial cutscene when entering Matataki
-            InitMask(0x01CE43A9, 0x02);
+            OrMask(0x01CE43A9, 0x02);
             // Skip dran pre-fight dialog (1b)
-            InitMask(0x01CE43AC, 0x01);
+            OrMask(0x01CE43AC, 0x01);
             // Skip town building tutorial (and manual item)
-            InitMask(0x01CE43AD, 0x01);
+            OrMask(0x01CE43AD, 0x01);
             // Skips the withered tree convo when first visiting Matataki
-            InitMask(0x01CE43AE, 0x08);
+            OrMask(0x01CE43AE, 0x08);
             // First dungeon floor tutorial + cat cutscene
-            InitMask(0x01CE43B4, 0xB0);
+            OrMask(0x01CE43B4, 0xB0);
             // More of the dungeon tutorials I believe.  4 is the lock-on tutorial, 1 is charge attack upgrade
-            InitMask(0x01CE43B5, 0x07);
+            OrMask(0x01CE43B5, 0x07);
         }
 
-        private static void InitMask(uint addr, byte mask)
+        internal static void SkipYaya()
+        {
+            // 0x20 for fruit scene, 0x40 for Rando scene. Genie scene doesn't seem to set a flag?
+            OrMask(0x01CE43A9, 0x60);
+        }
+
+        /// <summary>
+        /// Logical ORs the given mask into the byte at addr.
+        /// </summary>
+        /// <param name="addr">Address to OR</param>
+        /// <param name="mask">Value to OR into the address</param>
+        private static void OrMask(uint addr, byte mask)
         {
             byte tempMask = Memory.ReadByte(addr);
             tempMask |= mask;
