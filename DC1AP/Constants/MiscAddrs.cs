@@ -113,5 +113,9 @@ namespace DC1AP.Constants
         //internal const uint ItemIdAddr = 0x01CFCCEC;  // Int. -1 for no item, anything else to indicate receipt of an item (only test with Atla so far)
         internal const uint AtlaOpeningFlagAddr = 0x002A3524;  // Byte. 0 when normally moving around dungeon, 1 when in opening Atla animation, 2 for atla item message box
         internal const uint LoadingIntoDungeonFlagAddr = 0x002A347C;  // Byte.  1 when on dungeon floor select and while character is entering the dungeon floor.  0 otherwise.
+
+        internal const uint DunMsgAddr = 0x00998BB8;     //The address pointing to the text of the 10th dungeon message. 157 Byte array
+        internal const uint DunMsgDurAddr = 0x01EA7694;  //How long to show the message
+        internal const uint DunMsgIdAddr = 0x01EA76B4;
     }
 }
