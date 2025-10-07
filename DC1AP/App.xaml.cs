@@ -339,8 +339,7 @@ namespace DC1AP
             LogItem(e.Item);  // TODO not working?  I think this goes to the received items tab.
 
             // TODO miracle chests: test the item id and add inventory item instead of geo
-            // TODO with progressive, commenting this out "solves" the race condition
-            //GeoInvMgmt.GiveItem(e.Item.Id);
+            GeoInvMgmt.GiveItem(e.Item.Id);
         }
 
         private void Client_MessageReceived(object? sender, Archipelago.Core.Models.MessageReceivedEventArgs e)

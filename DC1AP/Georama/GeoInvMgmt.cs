@@ -1,5 +1,4 @@
 using DC1AP.Threads;
-using DC1AP.Constants;
 using Serilog;
 using System.Text.Json;
 
@@ -21,7 +20,7 @@ namespace DC1AP.Georama
         {
             for (int i = 0; i < Options.Goal; i++)
             {
-                string filename = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Georama", buildingFiles[i]);
+                string filename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Georama", buildingFiles[i]);
                 string json = File.ReadAllText(filename);
                 JsonSerializerOptions jOptions = new(JsonSerializerDefaults.Web);
                 jOptions.AllowOutOfOrderMetadataProperties = true;
@@ -85,7 +84,7 @@ namespace DC1AP.Georama
                     // TODO test if the player has the item in question first in the event of syncing with the server.
                     if (building.ApId == itemId)
                     {
-                        ItemQueue.AddGeoBuilding(building);
+                        ItemQueue.AddGeorama(building);
                         added = true;
                     }
 

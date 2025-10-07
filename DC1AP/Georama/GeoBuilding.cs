@@ -138,9 +138,9 @@ namespace DC1AP.Georama
 
             if (count > buildingValue)
             {
-                for (int i = buildingValue + 1; i < count; i++)
+                for (int i = buildingValue; i < count; i++)
                 {
-                    ItemQueue.AddGeoBuilding(this);
+                    ItemQueue.AddGeorama(this);
                 }
             }
         }

@@ -20,6 +20,9 @@ namespace DC1AP.Mem
             if (mult == 1)
                 return;
 
+            // Brief sleep as we are fighting the game initializing the dungeon.
+            Thread.Sleep(2000);
+
             uint enemyAddr = FirstEnemy;
             uint enemyAbsAddr = enemyAddr + ABSOffset;
 

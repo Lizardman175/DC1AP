@@ -20,7 +20,7 @@ namespace DC1AP.Threads
         // TODO not currently used
         internal static bool RunThread = true;
 
-        internal static void AddGeoBuilding(GeoBuilding geoBuilding)
+        internal static void AddGeorama(GeoBuilding geoBuilding)
         {
             if (PlayerState.PlayerReady())
                 GeoBuildingQueue.Enqueue(geoBuilding);
@@ -66,7 +66,7 @@ namespace DC1AP.Threads
                     }
 
                     // Don't add to the queue if items are already in it to reduce collisions.
-                    if (checkItems && GeoBuildingQueue.Count > 0)
+                    if (checkItems && GeoBuildingQueue.Count == 0)
                     {
                         GeoInvMgmt.VerifyItems();
                         checkItems = false;
