@@ -12,23 +12,18 @@ namespace DC1AP.Threads
         private const int DisplayTime = 350; // cs, 3.5 seconds
         //private static int MsToCs = 10;  // Convert 1000ths of a second to 100ths
 
-        internal static ConcurrentQueue<(GeoBuilding, long)> GeoBuildingQueue = new();
-        internal static ConcurrentQueue<(GeoItem, Towns)> GeoItemQueue = new();
-        internal static ConcurrentQueue<string> MsgQueue = new();
+        private static ConcurrentQueue<GeoBuilding> GeoBuildingQueue = new();
+        private static ConcurrentQueue<string> MsgQueue = new();
+
+        internal static bool checkItems = false;
 
         // TODO not currently used
         internal static bool RunThread = true;
 
-        internal static void AddGeoBuilding(GeoBuilding geoBuilding, long id)
+        internal static void AddGeorama(GeoBuilding geoBuilding)
         {
             if (PlayerState.PlayerReady())
-                GeoBuildingQueue.Enqueue((geoBuilding, id));
-        }
-
-        internal static void AddGeoItem(GeoItem geoItem, Towns town)
-        {
-            if (PlayerState.PlayerReady())
-                GeoItemQueue.Enqueue((geoItem, town));
+                GeoBuildingQueue.Enqueue(geoBuilding);
         }
 
         internal static void AddMsg(string msg)
@@ -45,51 +40,44 @@ namespace DC1AP.Threads
             RunThread = true;
 
             // Clean out the queues before stopping
-            while (RunThread || !GeoItemQueue.IsEmpty || !GeoBuildingQueue.IsEmpty || !MsgQueue.IsEmpty)
+            while (RunThread || !GeoBuildingQueue.IsEmpty || !MsgQueue.IsEmpty)
             {
+                Thread.Sleep(1000);
+
                 if (PlayerState.PlayerReady())
                 {
-                    short curIndex = OpenMem.GetIndex();
-                    if (App.Client.GameState != null && App.Client.GameState.LastCheckedIndex > curIndex)
-                    {
-                        for (; curIndex < App.Client.GameState.ReceivedItems.Count; curIndex++)
-                            GeoInvMgmt.GiveItem(App.Client.GameState.ReceivedItems[curIndex].Id);
-                        // TODO don't do this? may incur race condition with GeoItem etc. Those shouldn't increment this if they're already set so it shouldn't cause issue though.
-                        OpenMem.SetIndex(curIndex);
-                    }
-
                     // Clear remaining messages once player leaves dungeon
                     if (!PlayerState.IsPlayerInDungeon() && !MsgQueue.IsEmpty) MsgQueue.Clear();
 
                     // Geo items can only be received in dungeon
                     if (PlayerState.CanGiveItemDungeon())
                     {
-                        while (PlayerState.CanGiveItemDungeon() && GeoBuildingQueue.TryDequeue(out (GeoBuilding, long) geoBuilding))
+                        while (PlayerState.CanGiveItemDungeon() && GeoBuildingQueue.TryDequeue(out GeoBuilding geoBuilding))
                         {
-                            geoBuilding.Item1.GiveBuilding(geoBuilding.Item2);
-                        }
-                        while (PlayerState.CanGiveItemDungeon() && GeoItemQueue.TryDequeue(out (GeoItem, Towns) geoItem))
-                        {
-                            geoItem.Item1.GiveItem(geoItem.Item2);
+                            geoBuilding.GiveBuilding();
                         }
 
                         // Display queued up messages after the last one fades.
                         // TODO need extra flag checks; message won't display as player is entering a dungeon floor or if atla are collected too close together, when other messages are displayed, etc.
-                        if (Memory.ReadShort(MiscAddrs.DunMsgDurAddr) == 0 && MsgQueue.TryDequeue(out string? msg))
+                        if (Memory.ReadShort(MessageFuncs.DunMsgDurAddr) == 0 && MsgQueue.TryDequeue(out string? msg))
                             // TODO nums
                             MessageFuncs.DisplayMessageDungeon(msg, 1, 20, DisplayTime);
                         
+                    }
+
+                    // Don't add to the queue if items are already in it to reduce collisions.
+                    if (checkItems && GeoBuildingQueue.Count == 0)
+                    {
+                        GeoInvMgmt.VerifyItems();
+                        checkItems = false;
                     }
                 }
                 // Player hasn't started the game, or has reset so clear the queues.
                 else
                 {
                     GeoBuildingQueue.Clear();
-                    GeoItemQueue.Clear();
                     MsgQueue.Clear();
                 }
-
-                Thread.Sleep(1000);
             }
         }
     }

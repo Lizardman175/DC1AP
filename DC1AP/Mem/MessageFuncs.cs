@@ -24,18 +24,20 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-
 using Archipelago.Core.Util;
-using DC1AP.Constants;
 using System.Text;
 
 namespace DC1AP.Mem
 {
+    /// <summary>
+    /// Adapted from Dark Cloud Enhanced project Dayuppy.cs:DisplayMessageProcess()
+    /// </summary>
     public class MessageFuncs
     {
-        /// <summary>
-        /// Adapted from Dark Cloud Enhanced project Dayuppy.cs:DisplayMessageProcess()
-        /// </summary>
+        private const uint DunMsgAddr = 0x00998BB8;     //The address pointing to the text of the 10th dungeon message. 157 Byte array
+        internal const uint DunMsgDurAddr = 0x01EA7694;  //How long to show the message
+        private const uint DunMsgIdAddr = 0x01EA76B4;
+
         /// 
         /// <param name="message"></param>
         /// <param name="height"></param>
@@ -45,7 +47,7 @@ namespace DC1AP.Mem
         public static void DisplayMessageDungeon(string message, int height, int width, int displayTime)
         {
             byte[] customMessage = Encoding.GetEncoding("utf-8").GetBytes(message);
-            byte[] dungeonMessage = Memory.ReadByteArray(MiscAddrs.DunMsgAddr, message.Length);
+            byte[] dungeonMessage = Memory.ReadByteArray(DunMsgAddr, message.Length);
 
             byte[] outputMessage = new byte[customMessage.Length * 2];
 
@@ -118,7 +120,7 @@ namespace DC1AP.Mem
             }
             */
 
-            Memory.WriteByteArray(MiscAddrs.DunMsgAddr, dungeonMessage);
+            Memory.WriteByteArray(DunMsgAddr, dungeonMessage);
 
             for (int i = 0; i < customMessage.Length; i++)
             {
@@ -196,7 +198,7 @@ namespace DC1AP.Mem
                 {
                     uint aux;
 
-                    aux = MiscAddrs.DunMsgAddr + (uint)outputMessage.Length;
+                    aux = DunMsgAddr + (uint)outputMessage.Length;
 
                     Memory.WriteByte(aux, 1);
                     Memory.WriteByte(aux + 0x1, 255);
@@ -207,12 +209,11 @@ namespace DC1AP.Mem
             //byte[] original10Message = { 52, 253, 66, 253, 63, 253, 76, 253, 63, 253, 2, 255, 67, 253, 77, 253, 2, 255, 72, 253, 73, 253, 2, 255, 77, 253, 67, 253, 65, 253, 72, 253, 2, 255, 73, 253, 64, 253, 2, 255, 71, 253, 73, 253, 72, 253, 77, 253, 78, 253, 63, 253, 76, 253, 77, 253, 2, 255, 0, 255, 73, 253, 72, 253, 2, 255, 78, 253, 66, 253, 67, 253, 77, 253, 2, 255, 64, 253, 70, 253, 73, 253, 73, 253, 76, 253, 109, 253, 2, 255, 57, 253, 73, 253, 79, 253, 2, 255, 61, 253, 59, 253, 72, 253, 2, 255, 79, 253, 77, 253, 63, 253, 2, 255, 83, 253, 73, 253, 79, 253, 76, 253, 2, 255, 0, 255, 63, 253, 77, 253, 61, 253, 59, 253, 74, 253, 63, 253, 2, 255, 77, 253, 69, 253, 67, 253, 70, 253, 70, 253, 109, 253, 0, 255, 3, 252, 87, 253, 44, 253, 63, 253, 59, 253, 80, 253, 63, 253, 2, 255, 36, 253, 79, 253, 72, 253, 65, 253, 63, 253, 73, 253, 72, 253, 87, 253, 0, 252, 2, 255, 59, 253, 80, 253, 59, 253, 67, 253, 70, 253, 59, 253, 60, 253, 70, 253, 63, 253, 88, 253, 1, 255 };
             int messageId = 10;
 
-            Memory.Write(MiscAddrs.DunMsgAddr, 0xffffffff);       //Clear any display message
-            Memory.WriteByteArray(MiscAddrs.DunMsgAddr, outputMessage); //Write our message string onto memory
-            Memory.Write(MiscAddrs.DunMsgIdAddr, messageId);         //Display our custom message
-            Memory.Write(MiscAddrs.DunMsgDurAddr, displayTime);  //Set our custom message duration
-            //Thread.Sleep(300);
-
+            Memory.Write(DunMsgAddr, 0xffffffff);       //Clear any display message
+            Memory.WriteByteArray(DunMsgAddr, outputMessage); //Write our message string onto memory
+            Memory.Write(DunMsgIdAddr, messageId);         //Display our custom message
+            Memory.Write(DunMsgDurAddr, displayTime);  //Set our custom message duration
+ 
             //return outputMessage;
         }
     }
