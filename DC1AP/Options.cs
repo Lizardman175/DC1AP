@@ -30,7 +30,7 @@ namespace DC1AP
         public static void ParseOptions(Dictionary<string, object> options)
         {
             goal = Int32.Parse(options["goal"].ToString());  // What dungeon to randomize through
-            absMultiplier = (Int32.Parse(options["abs_multiplier"].ToString()) + 1) / 2;
+            absMultiplier = (Int32.Parse(options["abs_multiplier"].ToString()) + 1.0f) / 2;
             allBosses = options["all_bosses"].ToString() != "0";  // All bosses up to dungeon goal
             openDungeon = options["open_dungeon"].ToString() != "0";  // All floors logically accessible will be unlocked
             //miracleSanity = options["miracle_chests"].ToString() != "0";  // Shuffle in miracle chests
