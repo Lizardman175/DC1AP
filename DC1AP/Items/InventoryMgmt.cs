@@ -1,4 +1,5 @@
 ﻿using Archipelago.Core.Util;
+using DC1AP.Constants;
 using Serilog;
 
 namespace DC1AP.Items
@@ -108,6 +109,7 @@ namespace DC1AP.Items
         {
             // TODO magic number for Dran's Feather. Create a constant when doing the miracle chests update.
             GiveItem(235);
+            Memory.Write(MiscAddrs.FirstItemDurationAddr, (short)0x42cc);
         }
     }
 }

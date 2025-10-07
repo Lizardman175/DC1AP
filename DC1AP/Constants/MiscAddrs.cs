@@ -108,5 +108,10 @@ namespace DC1AP.Constants
 
         internal const uint InvMaxAddr = 0x01CDD8AC;  // Byte.  Can't exceed 100 or we run past the buffer.
         internal const uint InvCurAddr = 0x01CDD8AD;  // Byte.  Next byte starts the active item shorts, followed by 3 shorts giving count of the active items per slot, then shorts for the other items.
+        internal const uint FirstItemDurationAddr = 0x001CDD988; // Short. 0 for most items. Duration for things like feathers, amulets. Gives value item restores as well for curatives but doesn't seem to do anything if changed. -1 or 0 for no item (sometimes ghost values as well. Seems to be from moving items from the active list with square?)
+
+        //internal const uint ItemIdAddr = 0x01CFCCEC;  // Int. -1 for no item, anything else to indicate receipt of an item (only test with Atla so far)
+        internal const uint AtlaOpeningFlagAddr = 0x002A3524;  // Byte. 0 when normally moving around dungeon, 1 when in opening Atla animation, 2 for atla item message box
+        internal const uint LoadingIntoDungeonFlagAddr = 0x002A347C;  // Byte.  1 when on dungeon floor select and while character is entering the dungeon floor.  0 otherwise.
     }
 }
