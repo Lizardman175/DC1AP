@@ -44,8 +44,8 @@ namespace DC1AP.Items
         }
 
         // Hard coded weapons for now
-        // CrysKnife
-        private static Weapon toan = new(0x0106, 20, 30, 70, 6, 32, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0);
+        // Shamshir
+        private static Weapon toan = new(0x010E, 20, 30, 70, 6, 32, 1, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0);
         // Steel slingshot
         private static Weapon xiao = new(0x012d, 14, 40, 43, 0, 48, 5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 5, 5, 0, 0);
         // Steel Hammer
@@ -85,12 +85,12 @@ namespace DC1AP.Items
                 int i;
                 for (i = 1; i < 10; i++)
                 {
-                    weaponAddr += MiscAddrs.WeaponOffset;
                     short weaponValue = Memory.ReadShort(weaponAddr);
                     if (weaponValue == -1)
                     {
                         break;
                     }
+                    weaponAddr += MiscAddrs.WeaponOffset;
                 }
 
                 if (i < 10)  // If the player already has a full inventory of weapons for the char, don't bother giving another one.
