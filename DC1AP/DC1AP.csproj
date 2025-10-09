@@ -4,7 +4,7 @@
 		<TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
 		<WindowsPackageType>None</WindowsPackageType>
 
-		<OutputType>Exe</OutputType>
+		<OutputType>WinExe</OutputType>
 		<RootNamespace>DC1AP</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
@@ -32,8 +32,16 @@
 		<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <DebugType>pdbonly</DebugType>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <DebugType>none</DebugType>
+	</PropertyGroup>
+
 	<ItemGroup>
-	  <Compile Remove="Randomize.cs" />
+		<Compile Remove="Randomize.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -44,9 +52,9 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows10.0.19041.0'">
-	<PackageReference Include="Archipelago.Core.MauiGUI">
-		<Version>0.1.2</Version>
-	</PackageReference>
+		<PackageReference Include="Archipelago.Core.MauiGUI">
+			<Version>0.1.2</Version>
+		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -56,27 +64,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Properties\Resources.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>Resources.resx</DependentUpon>
-	  </Compile>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Properties\Resources.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Resources\Styles\Colors.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Resources\Styles\Styles.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 	</ItemGroup>
 
 </Project>
