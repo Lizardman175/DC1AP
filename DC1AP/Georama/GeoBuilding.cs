@@ -55,21 +55,18 @@ namespace DC1AP.Georama
             return true;
         }
 
-        internal void Init(int t, bool firstInit)
+        internal void Init(int t)
         {
             town = (Towns)t;
 
-            if (firstInit)
-            {
-                // Some entries have junk data by default, we want to clear that out
-                Memory.Write(placedCountAddr, (short)0);
-                Memory.Write(BuildingCountAddr, (short)1);
+            // Some entries have junk data by default, we want to clear that out
+            Memory.Write(placedCountAddr, (short)0);
+            Memory.Write(BuildingCountAddr, (short)1);
 
-                // We want to set all 6 item slots to zero to clear any junk values, rather than just the count of Items
-                for (int i = ItemShortOffset; i < ItemShortOffset + MaxItemCount; i++)
-                {
-                    Memory.Write((uint)BaseAddr + (uint)(i * sizeof(short)), (short)0);
-                }
+            // We want to set all 6 item slots to zero to clear any junk values, rather than just the count of Items
+            for (int i = ItemShortOffset; i < ItemShortOffset + MaxItemCount; i++)
+            {
+                Memory.Write((uint)BaseAddr + (uint)(i * sizeof(short)), (short)0);
             }
         }
 

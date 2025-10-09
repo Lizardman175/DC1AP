@@ -55,14 +55,13 @@ namespace DC1AP.Georama
             foreach (GeoBuilding building in buildings) building.ReadValues();
         }
 
-        // TODO remove firstInit with progressive item update
-        internal static void InitBuildings(bool firstInit)
+        internal static void InitBuildings()
         {
             for (int i = 0; i < Options.Goal; i++)
             {
                 foreach (GeoBuilding building in buildings[i])
                 {
-                    building.Init(i, firstInit);
+                    building.Init(i);
                 }
 
                 ReadBuildingMem(buildings[i]);
@@ -73,8 +72,6 @@ namespace DC1AP.Georama
         {
             bool added = false;
 
-            // TODO this may be reducable; we'd need a map of ID to building/item or something.  For now, search building/item names
-            // TODO part 2: this will change drastically when implementing progressive georama, so don't bother cleaning now.
             for (int i = 0; i < buildings.Count; i++)
             {
                 GeoBuilding[] list = buildings[i];

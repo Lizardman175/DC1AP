@@ -227,20 +227,12 @@ namespace DC1AP
 
                 EventMasks.InitMasks();
 
-                // Show the geo menu for each town randomized and init the respective tables
-                // TODO this won't work.  This opens up the towns on the map automatically.  Might be able to manually block them on the map interface?
-                //for (int i = 0; i < Options.Goal; i++)
-                //{
-                //    Memory.Write(GeoAddrs.GeoMenuFlagAddrs[i], (short)1);
-                //}
-
-                GeoInvMgmt.InitBuildings(true);
-
                 Weapons.GiveCharWeapon(0);
                 InventoryMgmt.GiveFreeFeather();
-                //InventoryMgmt.GivePockets();
             }
-            else GeoInvMgmt.InitBuildings(false);
+
+            GeoInvMgmt.InitBuildings();
+            GeoInvMgmt.VerifyItems();
 
             CharFuncs.Init();
             PlayerState.ValidGameState = true;
