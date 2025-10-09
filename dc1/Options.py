@@ -45,10 +45,11 @@ class AbsMultiplier(Choice):
     option_triple = 5
     default = 3
 
-class GivePockets(Toggle):
-    """Start with all available pockets received based on settings."""
-    display_name = "Start With Pockets"
-    default = 0
+# TODO haven't found a way to make the miracle chests despawn.  Even setting the flag doesn't seem to do anything.
+# class GivePockets(Toggle):
+#     """Start with all available pockets received based on settings."""
+#     display_name = "Start With Pockets"
+#     default = 0
 
 # TODO death link.
 # class DeathLink(DeathLink):
@@ -61,4 +62,4 @@ class DarkCloudOptions(PerGameCommonOptions):
     starter_weapons: BetterStartingWeapons
     miracle_sanity: MiracleSanity
     abs_multiplier: AbsMultiplier
-    give_pockets: GivePockets
+    # give_pockets: GivePockets
