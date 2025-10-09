@@ -63,7 +63,7 @@ namespace DC1AP.Constants
         internal static uint[] FloorCountAddrs = [DBCFloorCountAddr, WOFFloorCountAddr, SWFloorCountAddr, SMTFloorCountAddr, MSFloorCountAddr, DHCFloorCountAddr];
         // Floor counts are 0 indexed
         internal static byte[] FloorCountFront = [7, 8, 8, 8, 7, 23];
-        internal static byte[] FloorCountRear  = [14, 16, 16, 17, 14, 23];
+        internal static byte[] FloorCountRear  = [14, 16, 17, 17, 14, 23];
 
         // 1 = Walking Mode, 2 = On Menu, 3 = Door Menu, 4 = Floor picker screen, 5 = Ally Quick Select,  7 = Next Floor Screen
         // Only give items/atla in dungeon when this is 1

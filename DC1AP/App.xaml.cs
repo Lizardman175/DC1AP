@@ -238,7 +238,7 @@ namespace DC1AP
 
                 Weapons.GiveCharWeapon(0);
                 InventoryMgmt.GiveFreeFeather();
-                InventoryMgmt.GivePockets();
+                //InventoryMgmt.GivePockets();
             }
             else GeoInvMgmt.InitBuildings(false);
 
@@ -336,7 +336,7 @@ namespace DC1AP
 
         private static void Client_ItemReceived(object? sender, ItemReceivedEventArgs e)
         {
-            LogItem(e.Item);  // TODO not working?  I think this goes to the received items tab.
+            LogItem(e.Item);
 
             // TODO miracle chests: test the item id and add inventory item instead of geo
             GeoInvMgmt.GiveItem(e.Item.Id);

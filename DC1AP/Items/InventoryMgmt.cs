@@ -18,61 +18,61 @@ namespace DC1AP.Items
 
         private static uint FirstInvAddr = ActiveItemCountAddrs[2] + 2;
 
-        internal static void GivePockets()
-        {
-            if (Options.GivePockets)
-            {
-                byte maxInvSize = Memory.ReadByte(InvMaxAddr);
+        //internal static void GivePockets()
+        //{
+        //    if (Options.GivePockets)
+        //    {
+        //        byte maxInvSize = Memory.ReadByte(InvMaxAddr);
 
-                if (maxInvSize > StartingMaxInv)
-                {
-                    Log.Error("Player already has more than 50 max inventory, not adding pockets.");
-                }
+        //        if (maxInvSize > StartingMaxInv)
+        //        {
+        //            Log.Error("Player already has more than 50 max inventory, not adding pockets.");
+        //        }
 
-                byte temp;
+        //        byte temp;
 
-                // 3 pockets are available regardless of Options. 2 in Norune, 1 in Matataki
-                maxInvSize += PocketSize * 3;
+        //        // 3 pockets are available regardless of Options. 2 in Norune, 1 in Matataki
+        //        maxInvSize += PocketSize * 3;
 
-                // TODO magic numbers as we implement miracle chests. Also, don't clear flags if miracle shuffle
-                if (!Options.MiracleSanity)
-                {
-                    // Pocket MC in Mayor's House
-                    temp = Memory.ReadByte(0x01CE484A);
-                    temp |= 1;
-                    Memory.WriteByte(0x01CE484A, temp);
+        //        // TODO magic numbers as we implement miracle chests. Also, don't clear flags if miracle shuffle
+        //        if (!Options.MiracleSanity)
+        //        {
+        //            // Pocket MC in Mayor's House
+        //            temp = Memory.ReadByte(0x01CE484A);
+        //            temp |= 1;
+        //            Memory.WriteByte(0x01CE484A, temp);
 
-                    // Pocket MC in Goro's House
-                    temp = Memory.ReadByte(0x01CE4B13);
-                    temp |= 0x40;
-                    Memory.WriteByte(0x01CE4B13, temp);
+        //            // Pocket MC in Goro's House
+        //            temp = Memory.ReadByte(0x01CE4B13);
+        //            temp |= 0x40;
+        //            Memory.WriteByte(0x01CE4B13, temp);
 
-                    // Paige's House reward Pocket
-                    Memory.Write(30230636, (short)1);
-                }
+        //            // Paige's House reward Pocket
+        //            Memory.Write(30230636, (short)1);
+        //        }
 
-                if (Options.Goal > 2)
-                {
-                    maxInvSize += PocketSize;
+        //        if (Options.Goal > 2)
+        //        {
+        //            maxInvSize += PocketSize;
 
-                    if (!Options.MiracleSanity)
-                    {
-                        // Pocket MC in Cathedral
-                        temp = Memory.ReadByte(0x01CE48BF);
-                        temp |= 0x40;
-                        Memory.WriteByte(0x01CE48BF, temp);
-                    }
-                }
+        //            if (!Options.MiracleSanity)
+        //            {
+        //                // Pocket MC in Cathedral
+        //                temp = Memory.ReadByte(0x01CE48BF);
+        //                temp |= 0x40;
+        //                Memory.WriteByte(0x01CE48BF, temp);
+        //            }
+        //        }
 
-                if (Options.Goal > 3)
-                {
-                    //curInvSize += PocketSize;
-                    // TODO with Muska Lacka update
-                }
+        //        if (Options.Goal > 3)
+        //        {
+        //            //curInvSize += PocketSize;
+        //            // TODO with Muska Lacka update
+        //        }
 
-                Memory.Write(InvMaxAddr, maxInvSize);
-            }
-        }
+        //        Memory.Write(InvMaxAddr, maxInvSize);
+        //    }
+        //}
 
         /// <summary>
         /// Searches for an empty inventory slot and gives the player the item supplied.  Returns true if successful, false if inventory is full.
