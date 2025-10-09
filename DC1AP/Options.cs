@@ -8,7 +8,6 @@ namespace DC1AP
         private static bool openDungeon = true;
         private static bool allBosses = false;
         private static bool starterWeapons = false;
-        private static bool givePockets = false;
         private static bool miracleSanity = false;
 
         public static int Goal { get => goal; }
@@ -17,7 +16,6 @@ namespace DC1AP
         public static bool AllBosses { get => allBosses; }
         public static bool StarterWeapons { get => starterWeapons; }
         public static bool MiracleSanity { get => miracleSanity; }
-        public static bool GivePockets { get => givePockets; }
 
         // used to test various values without generating a new multiworld
         static Options()
@@ -35,7 +33,6 @@ namespace DC1AP
             openDungeon = options["open_dungeon"].ToString() != "0";  // All floors logically accessible will be unlocked
             //miracleSanity = options["miracle_chests"].ToString() != "0";  // Shuffle in miracle chests
             starterWeapons = options["starter_weapons"].ToString() != "0";  // All floors logically accessible will be unlocked
-            givePockets = options["give_pockets"].ToString() != "0";  // Give all available pockets at the start
         }
     }
 }

@@ -58,8 +58,10 @@ namespace DC1AP.Threads
                         }
 
                         // Display queued up messages after the last one fades.
-                        // TODO need extra flag checks; message won't display as player is entering a dungeon floor or if atla are collected too close together, when other messages are displayed, etc.
-                        if (Memory.ReadShort(MessageFuncs.DunMsgDurAddr) == 0 && MsgQueue.TryDequeue(out string? msg))
+                        if (Memory.ReadShort(MiscAddrs.DunMsgIdAddr) == -1 &&
+                            Memory.ReadInt(MiscAddrs.AtlaOpeningFlagAddr) == 0 &&
+                            Memory.ReadByte(MiscAddrs.LoadingIntoDungeonFlagAddr) == 0 &&
+                            MsgQueue.TryDequeue(out string? msg))
                             // TODO nums
                             MessageFuncs.DisplayMessageDungeon(msg, 1, 20, DisplayTime);
                         

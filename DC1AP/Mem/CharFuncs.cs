@@ -87,11 +87,6 @@ namespace DC1AP.Mem
 
                 Memory.WriteByte(MiscAddrs.MapFlagAddr, 0x01);
 
-                if (Options.Goal > ((int)Towns.Matataki) + 1)
-                {
-                    Memory.WriteByte(MiscAddrs.QueensCountAddr, 1);
-                }
-
                 Weapons.GiveCharWeapon(1);
             }
             else
@@ -109,7 +104,7 @@ namespace DC1AP.Mem
                     Memory.WriteByte(MiscAddrs.FloorCountAddrs[(int)Towns.Matataki], MiscAddrs.FloorCountRear[(int)Towns.Matataki]);
                 }
 
-                if (Options.Goal > (int)Towns.Matataki)
+                if (Options.Goal > (int)Towns.Matataki + 1)
                 {
                     Memory.WriteByte(MiscAddrs.QueensCountAddr, 1);
                 }
@@ -127,10 +122,11 @@ namespace DC1AP.Mem
                 ruby = true;
                 if (Options.OpenDungeon)
                 {
-                    Memory.WriteByte(MiscAddrs.FloorCountAddrs[(int)Towns.Queens], MiscAddrs.FloorCountRear[(int)Towns.Queens]);
+                    // -1 so we don't add the boss floor, requiring the player to get the key.
+                    Memory.WriteByte(MiscAddrs.FloorCountAddrs[(int)Towns.Queens], (byte)(MiscAddrs.FloorCountRear[(int)Towns.Queens] - 1));
                 }
 
-                if (Options.Goal > (int)Towns.Queens)
+                if (Options.Goal > (int)Towns.Queens + 1)
                 {
                     Memory.WriteByte(MiscAddrs.MuskaCountAddr, 1);
                     Memory.WriteByte(MiscAddrs.SMTExtCountAddr, 1);
@@ -152,7 +148,7 @@ namespace DC1AP.Mem
                     Memory.WriteByte(MiscAddrs.FloorCountAddrs[(int)Towns.Muska], MiscAddrs.FloorCountRear[(int)Towns.Muska]);
                 }
 
-                if (Options.Goal > (int)Towns.Muska)
+                if (Options.Goal > (int)Towns.Muska + 1)
                 {
                     Memory.WriteByte(MiscAddrs.YDCountAddr, 1);
                     Memory.WriteByte(MiscAddrs.MFCountAddr, 1);
@@ -174,7 +170,7 @@ namespace DC1AP.Mem
                     Memory.WriteByte(MiscAddrs.FloorCountAddrs[(int)Towns.Factory], MiscAddrs.FloorCountRear[(int)Towns.Factory]);
                 }
 
-                if (Options.Goal > (int)Towns.Factory)
+                if (Options.Goal > (int)Towns.Factory + 1)
                 {
                     Memory.WriteByte(MiscAddrs.DHCCountAddr, 1);
                 }

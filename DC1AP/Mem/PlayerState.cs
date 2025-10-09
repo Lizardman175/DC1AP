@@ -29,7 +29,6 @@ namespace DC1AP.Mem
         public static bool CanGiveItemDungeon()
         {
             // TODO currently only know how to display messages in dungeons.  Similar idea for towns I assume, but still working it out.  Limiting messages to in dungeon for now.
-            // TODO .STATE might be the better flag to check here instead of IN_DUNGEON
             // TODO need better check for player entering dungeon floor animation
             return ValidGameState && IsPlayerInDungeon() && Memory.ReadByte(MiscAddrs.DungeonMode) == 1;
         }
