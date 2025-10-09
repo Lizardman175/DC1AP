@@ -25,6 +25,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 using Archipelago.Core.Util;
+using DC1AP.Constants;
 using System.Text;
 
 namespace DC1AP.Mem
@@ -43,7 +44,7 @@ namespace DC1AP.Mem
         public static void DisplayMessageDungeon(string message, int height, int width, int displayTime)
         {
             byte[] customMessage = Encoding.GetEncoding("utf-8").GetBytes(message);
-            byte[] dungeonMessage = Memory.ReadByteArray(DunMsgAddr, message.Length);
+            byte[] dungeonMessage = Memory.ReadByteArray(MiscAddrs.DunMsgAddr, message.Length);
 
             byte[] outputMessage = new byte[customMessage.Length * 2];
 
@@ -116,7 +117,7 @@ namespace DC1AP.Mem
             }
             */
 
-            Memory.WriteByteArray(DunMsgAddr, dungeonMessage);
+            Memory.WriteByteArray(MiscAddrs.DunMsgAddr, dungeonMessage);
 
             for (int i = 0; i < customMessage.Length; i++)
             {
@@ -194,7 +195,7 @@ namespace DC1AP.Mem
                 {
                     uint aux;
 
-                    aux = DunMsgAddr + (uint)outputMessage.Length;
+                    aux = MiscAddrs.DunMsgAddr + (uint)outputMessage.Length;
 
                     Memory.WriteByte(aux, 1);
                     Memory.WriteByte(aux + 0x1, 255);
