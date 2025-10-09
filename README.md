@@ -18,4 +18,5 @@ Home of Dark Cloud 1 randomizer for Archipelago
 - Click the burger icon in the client, put in host/slot/password info and click connect. Make sure to connect before entering the dungeon!
 
 ## Things of note
+- For multiworlds, consider forcing Gaffer's Buggy local (and maybe Paige's House for Pike). These are logically required before Xiao so they'll be guaranteed in the first half of the DBC.
 - Due to game mechanics, items can only be received in dungeons.  If you are waiting for an item from another world, hang out in a dungeon floor for a bit.
