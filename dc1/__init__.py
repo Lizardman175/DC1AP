@@ -264,6 +264,7 @@ class DarkCloudWorld(World):
                 "all_bosses": self.options.all_bosses.value,
                 "open_dungeon": self.options.open_dungeon.value,
                 "starter_weapons": self.options.starter_weapons.value,
+                "abs_multiplier": self.options.abs_multiplier.value,
             },
             "seed": self.multiworld.seed_name,
         }
