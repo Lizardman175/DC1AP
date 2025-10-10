@@ -49,11 +49,12 @@ namespace DC1AP
         private static MainPageViewModel Context;
         private static readonly object _lockObject = new();
 
-        private static ConcurrentQueue<Archipelago.Core.Models.Location> locationQueue = new();
+        private static readonly ConcurrentQueue<Archipelago.Core.Models.Location> locationQueue = new();
 
         //private DeathLinkService _deathlinkService;
         private Thread queueThread;
         private Thread helperThread;
+        private Thread reconnectThread;
         private GenericGameClient? ps2Client;
 
         public App()
@@ -95,7 +96,7 @@ namespace DC1AP
                 Client.CancelMonitors();
             }
 
-            ps2Client = PS2Connect(e.Slot);
+            ps2Client = PS2Connect();
 
             if (ps2Client == null)
             {
@@ -125,11 +126,14 @@ namespace DC1AP
             // Pull out options from AP
             Options.ParseOptions(Client.Options);
 
-            Thread reconnectThread = new Thread(new ParameterizedThreadStart(Reconnect))
+            if (reconnectThread == null)
             {
-                IsBackground = true,
-            };
-            reconnectThread.Start();
+                reconnectThread = new(new ParameterizedThreadStart(Reconnect))
+                {
+                    IsBackground = true
+                };
+                reconnectThread.Start();
+            }
 
             GeoInvMgmt.Init();
 
@@ -176,7 +180,7 @@ namespace DC1AP
         #region PS2
         private static byte bossKillTest = 0;
 
-        private GenericGameClient? PS2Connect(String slotName)
+        private GenericGameClient? PS2Connect()
         {
             String gameId = "BASCUS-97111dkcloud";
 
@@ -210,13 +214,7 @@ namespace DC1AP
 
         private void PlayerReady(string slotName)
         {
-            String currSlot = OpenMem.GetSlotName();
-            if (currSlot != slotName && currSlot.Length > 0)
-            {
-                Log.Logger.Error("Wrong slot name. Current save is using slot \"" + currSlot + "\".");
-                PlayerState.ValidGameState = false;
-                return;
-            }
+            string currSlot = OpenMem.GetSlotName();
 
             // First load for this save, so do extra stuff
             if (currSlot == "")
@@ -230,24 +228,29 @@ namespace DC1AP
                 Weapons.GiveCharWeapon(0);
                 InventoryMgmt.GiveFreeFeather();
             }
+            else if (currSlot != slotName)
+            {
+                Log.Logger.Error("Wrong slot name. Current save is using slot \"" + currSlot + "\".");
+                PlayerState.ValidGameState = false;
+                return;
+            }
 
             GeoInvMgmt.InitBuildings();
-            GeoInvMgmt.VerifyItems();
 
             CharFuncs.Init();
-            PlayerState.ValidGameState = true;
 
             // Check for any missing items after a connect/reconnect
             ItemQueue.checkItems = true;
 
+            // Skip needing Yaya to dance on your head if doing Saia once the building event viewed flag is set.
+            if (Options.Goal >= 3 && !EventMasks.YayaDone())
+            {
+                Memory.MonitorAddressForAction<short>(GeoAddrs.YayaBldEventFlag, () => EventMasks.SkipYaya(), (o) => { return o >= 1; });
+            }
+
+            PlayerState.ValidGameState = true;
             // Watch for the player to reset the game, then change the valid state flag and ready up to connect again.
             Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerNotReady(slotName), (o) => { return o <= 1; });
-
-            // Skip needing Yaya to dance on your head if doing Saia once the building event viewed flag is set.
-            if (Options.Goal >= 3)
-            {
-                Memory.MonitorAddressForAction<short>(GeoAddrs.YayaBldEventFlag, () => EventMasks.SkipYaya(), (o) => { return o  >= 1; });
-            }
         }
 
         private void PlayerNotReady(string slotName)
@@ -279,6 +282,7 @@ namespace DC1AP
                     byte mask = (byte)(1 << i);
                     byte currKills = Memory.ReadByte(OpenMem.GoalAddr);
                     bossKillTest |= mask;
+
                     if ((currKills & mask) == 0)
                     {
                         // For some reason, the Boss Kill Flag doesn't set for Utan so use the floor kill count instead
@@ -294,7 +298,7 @@ namespace DC1AP
                     }
                 }
 
-                Memory.MonitorAddressForAction<byte>(OpenMem.GoalAddr, () => Client.SendGoalCompletion(), (o) => { return CheckBossKills(); });
+                Memory.MonitorAddressForAction<byte>(OpenMem.GoalAddr, () => Client.SendGoalCompletion(), (o) => { return Memory.ReadByte(OpenMem.GoalAddr) == bossKillTest; });
             }
             else
                 // For some reason, the Boss Kill Flag doesn't set for Utan so use the floor kill count instead
@@ -313,11 +317,6 @@ namespace DC1AP
             byte b = Memory.ReadByte(OpenMem.GoalAddr);
             b |= value;
             Memory.WriteByte(OpenMem.GoalAddr, b);
-        }
-
-        private static bool CheckBossKills()
-        {
-            return Memory.ReadByte(OpenMem.GoalAddr) == bossKillTest;
         }
         #endregion
 

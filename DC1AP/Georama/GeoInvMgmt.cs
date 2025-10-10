@@ -6,25 +6,25 @@ namespace DC1AP.Georama
 {
     internal class GeoInvMgmt
     {
-        private static readonly List<String> buildingFiles = ["NoruneBuildings.json", "MatatakiBuildings.json", "QueensBuildings.json",
+        private static readonly List<string> buildingFiles = ["NoruneBuildings.json", "MatatakiBuildings.json", "QueensBuildings.json",
                                                               "MuskaBuildings.json",  "FactoryBuildings.json",  "CastleBuildings.json"];
         private static readonly List<GeoBuilding[]> buildings = [];
 
-        public static void Init() 
+        /// <summary>
+        /// Reads the .json for the building data
+        /// </summary>
+        internal static void Init()
         {
-            ReadBuildingsJson();
-            ReadBuildingsMem();
-        }
+            JsonSerializerOptions jOptions = new(JsonSerializerDefaults.Web)
+            {
+                AllowOutOfOrderMetadataProperties = true,
+                IncludeFields = true
+            };
 
-        private static void ReadBuildingsJson()
-        {
             for (int i = 0; i < Options.Goal; i++)
             {
                 string filename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Georama", buildingFiles[i]);
                 string json = File.ReadAllText(filename);
-                JsonSerializerOptions jOptions = new(JsonSerializerDefaults.Web);
-                jOptions.AllowOutOfOrderMetadataProperties = true;
-                jOptions.IncludeFields = true;
                 GeoBuilding[]? jsonBuildings = JsonSerializer.Deserialize<GeoBuilding[]>(json, jOptions);
 
                 if (jsonBuildings != null) buildings.Add(jsonBuildings);
@@ -32,43 +32,24 @@ namespace DC1AP.Georama
             }
         }
 
-        private static void ReadBuildingsMem()
+        /// <summary>
+        /// Read the memory for each building.  Need to rerun if the player loads a save file so we are synced with the game.
+        /// </summary>
+        internal static void InitBuildings()
         {
             for (int i = 0; i < buildings.Count; i++)
             {
-                GeoBuilding[] bld = buildings[i];
-                if (bld[i].IsMemInit())
-                {
-                    ReadBuildingMem(bld);
-                }
-                else
-                {
-                    // TODO watch for initialization, then call readBuildingMem
-                    // This might be OBE
-                }
-            }
-        }
-
-        // TODO why is this called twice?
-        private static void ReadBuildingMem(GeoBuilding[] buildings)
-        {
-            foreach (GeoBuilding building in buildings) building.ReadValues();
-        }
-
-        internal static void InitBuildings()
-        {
-            for (int i = 0; i < Options.Goal; i++)
-            {
                 foreach (GeoBuilding building in buildings[i])
                 {
-                    building.Init(i);
+                    if (!building.HasBuilding()) building.Init(i);
+                    building.ReadValues();
                 }
-
-                ReadBuildingMem(buildings[i]);
             }
+
+            VerifyItems();
         }
 
-        public static bool GiveItem(long itemId)
+        internal static bool GiveItem(long itemId)
         {
             bool added = false;
 
@@ -95,7 +76,7 @@ namespace DC1AP.Georama
         }
 
         /// <summary>
-        /// 
+        /// Verify the current item list against what the player has and add any missing buildings from the server.
         /// </summary>
         internal static void VerifyItems()
         {

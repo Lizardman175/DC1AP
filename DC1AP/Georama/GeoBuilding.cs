@@ -16,7 +16,7 @@ namespace DC1AP.Georama
         public required string Name;
         public long ApId;
         public uint BaseAddr;
-        public GeoItem[] Items;
+        public GeoItem[]? Items;
         public int BuildingId;
         public int Multi = 0;
 
@@ -44,15 +44,10 @@ namespace DC1AP.Georama
             //}
         }
 
-        internal bool IsMemInit()
+        internal bool HasBuilding()
         {
             // TODO junk data might make this not evaluate to true?
-            if (Memory.ReadShort(BuildingCountAddr) == 0)
-            {
-                return false;
-            }
-
-            return true;
+            return Memory.ReadShort(BuildingCountAddr) != 0;
         }
 
         internal void Init(int t)

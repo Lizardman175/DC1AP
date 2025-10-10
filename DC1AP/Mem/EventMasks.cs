@@ -45,10 +45,17 @@ namespace DC1AP.Mem
             OrMask(DialogAddr7, 0x07);
         }
 
+        private const byte yayaMask = 0x60;
+
         internal static void SkipYaya()
         {
             // 0x20 for fruit scene, 0x40 for Rando scene. Genie scene doesn't seem to set a flag?
-            OrMask(DialogAddr2, 0x60);
+            OrMask(DialogAddr2, yayaMask);
+        }
+
+        internal static Boolean YayaDone()
+        {
+            return (Memory.ReadByte(DialogAddr2) & yayaMask) == yayaMask;
         }
 
         /// <summary>
