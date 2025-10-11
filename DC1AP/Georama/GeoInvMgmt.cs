@@ -41,8 +41,8 @@ namespace DC1AP.Georama
             {
                 foreach (GeoBuilding building in buildings[i])
                 {
-                    if (!building.HasBuilding()) building.Init(i);
-                    building.ReadValues();
+                    if (!building.HasBuilding()) building.Init();
+                    building.ReadValues(i);
                 }
             }
 

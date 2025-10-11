@@ -29,19 +29,13 @@ namespace DC1AP.Georama
         /// <summary>
         /// Pull values from the addresses above and set them locally to compare when checking against the server's values.
         /// </summary>
-        internal void ReadValues()
+        internal void ReadValues(int townId)
         {
+            town = (Towns)townId;
             buildingValue = Memory.ReadShort(BaseAddr);
             placedCountAddr = BaseAddr + sizeof(short);
             BuildingCountAddr = BaseAddr + sizeof(int);
             //buildingCount = Memory.ReadShort(BuildingCountAddr);
-
-            //if (Multi > 0 && !collected) buildingCount = 0;
-
-            //for (int i = 0; i < Items.Length; i++)
-            //{
-            //    uint itemAddr = BaseAddr + GeoAddrs.HouseInvOffset + (uint)(GeoAddrs.BldFieldDelta * i);
-            //}
         }
 
         internal bool HasBuilding()
@@ -50,10 +44,8 @@ namespace DC1AP.Georama
             return Memory.ReadShort(BuildingCountAddr) != 0;
         }
 
-        internal void Init(int t)
+        internal void Init()
         {
-            town = (Towns)t;
-
             // Some entries have junk data by default, we want to clear that out
             Memory.Write(placedCountAddr, (short)0);
             Memory.Write(BuildingCountAddr, (short)1);
