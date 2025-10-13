@@ -25,10 +25,11 @@ class RuleManager:
             self.ruby_available(state, player)
 
     def ungaga_available(self, state: CollectionState, player: int) -> bool:
-        return False
+        return state.has("Sisters' Odds & Ends", player) and self.ruby_available(state, player)
 
     def curse_accessible(self, state: CollectionState, player: int) -> bool:
-        return False
+        return state.has("Chief Bonka's Cabin 2", player) and state.has("Zabo's Hay", player) and \
+            state.has("Enga's Roof", player) and self.ungaga_available(state, player)
 
     def osmond_available(self, state: CollectionState, player: int) -> bool:
         return False
