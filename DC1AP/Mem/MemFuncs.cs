@@ -41,6 +41,7 @@ namespace DC1AP.Mem
         {
             uint addr = GeoAddrs.TownGeoInv[(int)town];
             int count = 0;
+
             while (count < MiscConstants.GeoMaxItemCount)
             {
                 short curValue = Memory.ReadShort(addr);

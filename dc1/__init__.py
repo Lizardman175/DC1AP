@@ -39,7 +39,7 @@ class DarkCloudWorld(World):
     item_name_to_id = {}
     location_name_to_id = {}
 
-    for i in range(3):
+    for i in range(4):
         item_name_to_id.update(geo_class[i].ids)
 
     dungeon_locations = json.loads(pkgutil.get_data(__name__, "data/atla_locations.json").decode())
@@ -192,6 +192,7 @@ class DarkCloudWorld(World):
                  lambda state: rm.got_accessible(state, self.player))
 
         # Set up completion goal
+        #TODO put the options logic in the rule for each boss instead
         match self.options.boss_goal:
             case 2:
                 if self.options.all_bosses:
@@ -215,17 +216,22 @@ class DarkCloudWorld(World):
                                                                                                  self.player)
             case 4:
                 if self.options.all_bosses:
-                    self.multiworld.completion_condition[self.player] = lambda state: rm.saia_accessible(state,
+                    self.multiworld.completion_condition[self.player] = lambda state: rm.curse_accessible(state,
+                                                                                                 self.player) and \
+                                                                                      rm.saia_accessible(state,
                                                                                                  self.player) and \
                                                                                       rm.utan_accessible(state,
                                                                                                  self.player) and \
                                                                                       rm.dran_accessible(state,
                                                                                                  self.player)
-                self.multiworld.completion_condition[self.player] = lambda state: rm.curse_accessible(state,
+                else:
+                    self.multiworld.completion_condition[self.player] = lambda state: rm.curse_accessible(state,
                                                                                                  self.player)
             case 5:
                 if self.options.all_bosses:
                     self.multiworld.completion_condition[self.player] = lambda state: rm.joe_accessible(state,
+                                                                                              self.player) and \
+                                                                                      rm.curse_accessible(state,
                                                                                               self.player) and \
                                                                                       rm.saia_accessible(state,
                                                                                               self.player) and \
@@ -242,6 +248,8 @@ class DarkCloudWorld(World):
                                                                                               self.player) and \
                                                                     rm.joe_accessible(state,
                                                                                       self.player) and \
+                                                                    rm.curse_accessible(state,
+                                                                                        self.player) and \
                                                                     rm.saia_accessible(state,
                                                                                        self.player) and \
                                                                     rm.utan_accessible(state,
