@@ -11,6 +11,7 @@ namespace DC1AP.Mem
         internal static uint DialogAddr5 = 0x01CE43AE;
         internal static uint DialogAddr6 = 0x01CE43B4;
         internal static uint DialogAddr7 = 0x01CE43B5;
+        internal static uint DialogAddr8 = 0x01CE43B8;
 
         /*
          * Unused but known flags/values:
@@ -43,6 +44,9 @@ namespace DC1AP.Mem
             OrMask(DialogAddr6, 0xB0);
             // More of the dungeon tutorials I believe.  4 is the lock-on tutorial, 1 is charge attack upgrade
             OrMask(DialogAddr7, 0x07);
+            // TODO need to track down more flags for the first few convos.
+            // Muska Lacka dialog.  0x04 and 0x08 are the Theo/Ungaga dialogs. 0x10 is the gol/sil convo on floor 9, 0x20 and 0x40 are gol and sil being dead respectively.
+            OrMask(DialogAddr8, 0x08);
         }
 
         private const byte yayaMask = 0x60;

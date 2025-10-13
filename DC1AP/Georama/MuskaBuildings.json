@@ -1,0 +1,354 @@
+[
+  {
+    "Name": "Chief's House",
+    "ApId": 971110400,
+    "BaseAddr": 30239568,
+    "BuildingId": 0,
+    "Items": [
+      {
+        "Name": "Chief Bonka",
+        "ItemId": 40,
+        "SlotId": 3
+      },
+      {
+        "Name": "Chief Bonka's 'Mini Totem Pole",
+        "ItemId": 0,
+        "SlotId": 0
+      },
+      {
+        "Name": "Chief Bonka's Cabin 1",
+        "ItemId": 1,
+        "SlotId": 1
+      },
+      {
+        "Name": "Chief Bonka's Cabin 2",
+        "ItemId": 1,
+        "SlotId": 2
+      }
+    ]
+  },
+  {
+    "Name": "Jibubu's House",
+    "ApId": 971110401,
+    "BaseAddr": 30239592,
+    "BuildingId": 1,
+    "Items": [
+      {
+        "Name": "Jibubu's Stairway",
+        "ItemId": 3,
+        "SlotId": 3
+      },
+      {
+        "Name": "Jibubu",
+        "ItemId": 41,
+        "SlotId": 4
+      },
+      {
+        "Name": "Jibubu's Mini Totem Pole",
+        "ItemId": 0,
+        "SlotId": 0
+      },
+      {
+        "Name": "Jibubu's Cabin",
+        "ItemId": 1,
+        "SlotId": 1
+      },
+      {
+        "Name": "Jibubu's Hay",
+        "ItemId": 2,
+        "SlotId": 2
+      }
+    ]
+  },
+  {
+    "Name": "Zabo's House",
+    "ApId": 971110402,
+    "BaseAddr": 30239616,
+    "BuildingId": 2,
+    "Items": [
+      {
+        "Name": "Zabo",
+        "ItemId": 42,
+        "SlotId": 4
+      },
+      {
+        "Name": "Zabo's Mini Totem Pole",
+        "ItemId": 0,
+        "SlotId": 0
+      },
+      {
+        "Name": "Zabo's Roof",
+        "ItemId": 4,
+        "SlotId": 1
+      },
+      {
+        "Name": "Zabo's Odds & Ends",
+        "ItemId": 5,
+        "SlotId": 2
+      },
+      {
+        "Name": "Zabo's Hay",
+        "ItemId": 1,
+        "SlotId": 3
+      }
+    ]
+  },
+  {
+    "Name": "3 Sisters' House",
+    "ApId": 971110403,
+    "BaseAddr": 30239640,
+    "BuildingId": 3,
+    "Items": [
+      {
+        "Name": "Nagita",
+        "ItemId": 44,
+        "SlotId": 3
+      },
+      {
+        "Name": "Devia",
+        "ItemId": 45,
+        "SlotId": 4
+      },
+      {
+        "Name": "Mikara",
+        "ItemId": 43,
+        "SlotId": 5
+      },
+      {
+        "Name": "Sisters' Mini Totem Pole",
+        "ItemId": 0,
+        "SlotId": 0
+      },
+      {
+        "Name": "Sisters' Cabin",
+        "ItemId": 1,
+        "SlotId": 1
+      },
+      {
+        "Name": "Sisters' Odds & Ends",
+        "ItemId": 5,
+        "SlotId": 2
+      }
+    ]
+  },
+  {
+    "Name": "Brooke's House",
+    "ApId": 971110404,
+    "BaseAddr": 30239664,
+    "BuildingId": 4,
+    "Items": [
+      {
+        "Name": "Brooke",
+        "ItemId": 47,
+        "SlotId": 3
+      },
+      {
+        "Name": "Brooke's Mini Totem Pole",
+        "ItemId": 0,
+        "SlotId": 0
+      },
+      {
+        "Name": "Brooke's Cabin",
+        "ItemId": 1,
+        "SlotId": 1
+      },
+      {
+        "Name": "Brooke's Hay",
+        "ItemId": 2,
+        "SlotId": 2
+      }
+    ]
+  },
+  {
+    "Name": "Enga's House",
+    "ApId": 971110405,
+    "BaseAddr": 30239688,
+    "BuildingId": 5,
+    "Items": [
+      {
+        "Name": "Enga's Stairway",
+        "ItemId": 3,
+        "SlotId": 1
+      },
+      {
+        "Name": "Enga",
+        "ItemId": 46,
+        "SlotId": 5
+      },
+      {
+        "Name": "Enga's Mini Totem Pole",
+        "ItemId": 0,
+        "SlotId": 0
+      },
+      {
+        "Name": "Enga's Stairway Roof",
+        "ItemId": 6,
+        "SlotId": 2
+      },
+      {
+        "Name": "Enga's Odds & Ends",
+        "ItemId": 5,
+        "SlotId": 3
+      },
+      {
+        "Name": "Enga's Roof",
+        "ItemId": 4,
+        "SlotId": 4
+      }
+    ]
+  },
+  {
+    "Name": "Prisoner Cabin",
+    "ApId": 971110406,
+    "BaseAddr": 30239712,
+    "BuildingId": 6,
+    "Items": [
+      {
+        "Name": "Gron",
+        "ItemId": 48,
+        "SlotId": 3
+      },
+      {
+        "Name": "Prisoner's Mini Totem Pole",
+        "ItemId": 0,
+        "SlotId": 0
+      },
+      {
+        "Name": "Prisoner's Stairway",
+        "ItemId": 3,
+        "SlotId": 1
+      },
+      {
+        "Name": "Prisoner's Sign",
+        "ItemId": 7,
+        "SlotId": 2
+      }
+    ]
+  },
+  {
+    "Name": "Toto's House",
+    "ApId": 971110407,
+    "BaseAddr": 30239736,
+    "BuildingId": 7,
+    "Items": [
+      {
+        "Name": "Toto",
+        "ItemId": 49,
+        "SlotId": 3
+      },
+      {
+        "Name": "Toto's Mini Totem Pole",
+        "ItemId": 0,
+        "SlotId": 0
+      },
+      {
+        "Name": "Toto's Handle",
+        "ItemId": 8,
+        "SlotId": 1
+      },
+      {
+        "Name": "Toto's Odds & Ends",
+        "ItemId": 5,
+        "SlotId": 2
+      },
+      {
+        "Name": "Gosuke",
+        "ItemId": 50,
+        "SlotId": 4
+      }
+    ]
+  },
+  {
+    "Name": "Totem Pole A",
+    "ApId": 971110408,
+    "BaseAddr": 30239760,
+    "BuildingId": 8,
+    "Items": [
+      {
+        "Name": "Totem Pole A 2nd Head",
+        "ItemId": 10,
+        "SlotId": 0
+      },
+      {
+        "Name": "Totem Pole A 3rd Head",
+        "ItemId": 11,
+        "SlotId": 1
+      }
+    ]
+  },
+  {
+    "Name": "Totem Pole B",
+    "ApId": 971110409,
+    "BaseAddr": 30239784,
+    "BuildingId": 9,
+    "Items": [
+      {
+        "Name": "Totem Pole B 2nd Head",
+        "ItemId": 10,
+        "SlotId": 0
+      },
+      {
+        "Name": "Totem Pole B 3rd Head",
+        "ItemId": 11,
+        "SlotId": 1
+      }
+    ]
+  },
+  {
+    "Name": "Totem Pole C",
+    "ApId": 971110410,
+    "BaseAddr": 30239808,
+    "BuildingId": 10,
+    "Items": [
+      {
+        "Name": "Totem Pole C 2nd Head",
+        "ItemId": 10,
+        "SlotId": 0
+      },
+      {
+        "Name": "Totem Pole C 3rd Head",
+        "ItemId": 11,
+        "SlotId": 1
+      }
+    ]
+  },
+  {
+    "Name": "Oasis",
+    "ApId": 971110411,
+    "BaseAddr": 30239832,
+    "BuildingId": 11,
+    "Items": [
+      {
+        "Name": "Oasis Tree",
+        "ItemId": 9,
+        "SlotId": 0
+      },
+      {
+        "Name": "Oasis Tree",
+        "ItemId": 9,
+        "SlotId": 1
+      },
+      {
+        "Name": "Oasis Tree",
+        "ItemId": 9,
+        "SlotId": 2
+      }
+    ]
+  },
+  {
+    "Name": "Muska Lacka Trees",
+    "ApId": 971110412,
+    "BaseAddr": 30239856,
+    "BuildingId": 13,
+    "Multi": 2,
+    "Items": []
+  },
+  {
+    "Name": "Muska Lacka Road",
+    "ApId": 971110413,
+    "BaseAddr": 30239880,
+    "BuildingId": 14,
+    "Multi": 5,
+    "Items": []
+  }
+]
