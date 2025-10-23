@@ -45,6 +45,15 @@ class AbsMultiplier(Choice):
     option_triple = 5
     default = 3
 
+class AutoBuild(Choice):
+    display_name = "Auto Build Buildings.  'Muska Only' auto builds only Muska Lacka for 100%"
+    option_off = 0
+    option_any_percent = 1
+    option_hundo = 2
+    option_muska_only = 3
+    # option_robot_only = 4
+    # option_muska_robot_only = 5
+
 # TODO death link.
 # class DeathLink(DeathLink):
 
@@ -56,3 +65,4 @@ class DarkCloudOptions(PerGameCommonOptions):
     starter_weapons: BetterStartingWeapons
     miracle_sanity: MiracleSanity
     abs_multiplier: AbsMultiplier
+    auto_build: AutoBuild
