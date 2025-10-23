@@ -30,7 +30,19 @@
         "ItemId": 4,
         "SlotId": 3
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 3295511510,
+      "Y": 0,
+      "Z": 1128786821,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 3295511510,
+      "Y": 0,
+      "Z": 1128786821,
+      "Orientation": 0
+    }
   },
   {
     "Name": "Cacao's House",
@@ -68,7 +80,19 @@
         "ItemId": 4,
         "SlotId": 3
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 3289777110,
+      "Y": 0,
+      "Z": 1142291169,
+      "Orientation": -1
+    },
+    "AnyCoords": {
+      "X": 3289777110,
+      "Y": 0,
+      "Z": 1142291169,
+      "Orientation": -1
+    }
   },
   {
     "Name": "Bunbuku's House",
@@ -106,7 +130,19 @@
         "ItemId": 1,
         "SlotId": 1
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 1149861314,
+      "Y": 0,
+      "Z": 1138816450,
+      "Orientation": -1
+    },
+    "AnyCoords": {
+      "X": 1149861314,
+      "Y": 0,
+      "Z": 1138816450,
+      "Orientation": -1
+    }
   },
   {
     "Name": "Kye's House",
@@ -144,7 +180,19 @@
         "ItemId": 1,
         "SlotId": 1
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 1125507400,
+      "Y": 0,
+      "Z": 3281389486,
+      "Orientation": 2
+    },
+    "AnyCoords": {
+      "X": 1125507400,
+      "Y": 0,
+      "Z": 3281389486,
+      "Orientation": 2
+    }
   },
   {
     "Name": "Baron's House",
@@ -177,7 +225,19 @@
         "ItemId": 8,
         "SlotId": 3
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 1149451714,
+      "Y": 0,
+      "Z": 1147206369,
+      "Orientation": -1
+    },
+    "AnyCoords": {
+      "X": 1149451714,
+      "Y": 0,
+      "Z": 1147206369,
+      "Orientation": -1
+    }
   },
   {
     "Name": "Couscous's House",
@@ -205,7 +265,19 @@
         "ItemId": 2,
         "SlotId": 2
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 1143929733,
+      "Y": 100.0,
+      "Z": 1140454850,
+      "Orientation": 2
+    },
+    "AnyCoords": {
+      "X": 1143929733,
+      "Y": 0.0,
+      "Z": 1140454850,
+      "Orientation": 2
+    }
   },
   {
     "Name": "Gob's House",
@@ -238,7 +310,19 @@
         "ItemId": 11,
         "SlotId": 3
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 3281391452,
+      "Y": 0,
+      "Z": 3289777111,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 3281391452,
+      "Y": 0,
+      "Z": 3289777111,
+      "Orientation": 0
+    }
   },
   {
     "Name": "Mushroom House",
@@ -276,7 +360,19 @@
         "ItemId": 13,
         "SlotId": 3
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 3291416494,
+      "Y": 50.0,
+      "Z": 3289777111,
+      "Orientation": 1
+    },
+    "AnyCoords": {
+      "X": 3291416494,
+      "Y": 0.0,
+      "Z": 3289777111,
+      "Orientation": 1
+    }
   },
   {
     "Name": "Well 1",
@@ -304,7 +400,13 @@
         "ItemId": 15,
         "SlotId": 3
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 1144748933,
+      "Y": 0,
+      "Z": 1145567969,
+      "Orientation": 1
+    }
   },
   {
     "Name": "Well 2",
@@ -332,7 +434,13 @@
         "ItemId": 15,
         "SlotId": 3
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 3295511510,
+      "Y": 0,
+      "Z": 1143929569,
+      "Orientation": -1
+    }
   },
   {
     "Name": "Well 3",
@@ -360,7 +468,13 @@
         "ItemId": 15,
         "SlotId": 3
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 3293874094,
+      "Y": 0,
+      "Z": 3281389486,
+      "Orientation": 1
+    }
   },
   {
     "Name": "Watermill 1",
@@ -378,7 +492,19 @@
         "ItemId": 14,
         "SlotId": 1
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 1148025733,
+      "Y": 0,
+      "Z": 1143110369,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 1148025733,
+      "Y": 0,
+      "Z": 1143110369,
+      "Orientation": 0
+    }
   },
   {
     "Name": "Watermill 2",
@@ -396,7 +522,19 @@
         "ItemId": 14,
         "SlotId": 1
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 3259529952,
+      "Y": 0,
+      "Z": 3286304686,
+      "Orientation": 1
+    },
+    "AnyCoords": {
+      "X": 3259529952,
+      "Y": 0,
+      "Z": 3286304686,
+      "Orientation": 1
+    }
   },
   {
     "Name": "Watermill 3",
@@ -414,7 +552,19 @@
         "ItemId": 14,
         "SlotId": 1
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 3292234710,
+      "Y": 0,
+      "Z": 1132063621,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 3292234710,
+      "Y": 0,
+      "Z": 1132063621,
+      "Orientation": 0
+    }
   },
   {
     "Name": "Wise Owl Shop",
@@ -447,7 +597,19 @@
         "ItemId": 3,
         "SlotId": 3
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 1111983392,
+      "Y": 0,
+      "Z": 3289777111,
+      "Orientation": 2
+    },
+    "AnyCoords": {
+      "X": 1111983392,
+      "Y": 0,
+      "Z": 3289777111,
+      "Orientation": 2
+    }
   },
   {
     "Name": "Matataki Trees",
@@ -455,7 +617,71 @@
     "BaseAddr": 30233928,
     "BuildingId": 15,
     "Multi": 2,
-    "Items": []
+    "Items": [],
+    "MultiCoords": [
+      {
+        "X": 3288957910,
+        "Y": 0,
+        "Z": 1144748769,
+        "Orientation": 0
+      },
+      {
+        "X": 3292234710,
+        "Y": 0,
+        "Z": 1144748769,
+        "Orientation": 0
+      },
+      {
+        "X": 3290596310,
+        "Y": 0,
+        "Z": 1138816450,
+        "Orientation": 0
+      },
+      {
+        "X": 3288957910,
+        "Y": 0,
+        "Z": 1138816450,
+        "Orientation": 0
+      },
+      {
+        "X": 3279560376,
+        "Y": 0,
+        "Z": 3283027886,
+        "Orientation": 0
+      },
+
+
+      {
+        "X": 1143110533,
+        "Y": 0,
+        "Z": 1144748769,
+        "Orientation": 0
+      },
+      {
+        "X": 1141472133,
+        "Y": 0,
+        "Z": 1148025569,
+        "Orientation": 0
+      },
+      {
+        "X": 1150270914,
+        "Y": 0,
+        "Z": 1143110369,
+        "Orientation": 0
+      },
+      {
+        "X": 3286306652,
+        "Y": 0,
+        "Z": 3292234711,
+        "Orientation": 0
+      },
+      {
+        "X": 1144748933,
+        "Y": 0,
+        "Z": 1132063621,
+        "Orientation": 0
+      }
+    ]
   },
   {
     "Name": "Matataki River",
@@ -463,7 +689,265 @@
     "BaseAddr": 30233952,
     "BuildingId": 16,
     "Multi": 8,
-    "Items": []
+    "Items": [],
+    "MultiCoords": [
+      {
+        "X": 1148025733,
+        "Y": 0,
+        "Z": 1143110369,
+        "Orientation": 0
+      },
+      {
+        "X": 3259529952,
+        "Y": 0,
+        "Z": 3286304686,
+        "Orientation": 1
+      },
+      {
+        "X": 3292234710,
+        "Y": 0,
+        "Z": 1132063621,
+        "Orientation": 0
+      },
+
+
+
+
+      {
+        "X": 1148025733,
+        "Y": 0,
+        "Z": 1141471969,
+        "Orientation": 0
+      },
+      {
+        "X": 1148025733,
+        "Y": 0,
+        "Z": 1144748769,
+        "Orientation": 1
+      },
+      {
+        "X": 3273006776,
+        "Y": 0,
+        "Z": 3286304686,
+        "Orientation": 1
+      },
+      {
+        "X": 1111983392,
+        "Y": 0,
+        "Z": 3286304686,
+        "Orientation": 1
+      },
+      {
+        "X": 3292234710,
+        "Y": 0,
+        "Z": 1125510021,
+        "Orientation": -1
+      },
+      {
+        "X": 3292234710,
+        "Y": 0,
+        "Z": 1135539650,
+        "Orientation": 1
+      },
+
+
+
+
+      {
+        "X": 1148025733,
+        "Y": 0,
+        "Z": 1138816450,
+        "Orientation": 0
+      },
+
+
+
+      {
+        "X": 1146387333,
+        "Y": 0,
+        "Z": 1146387169,
+        "Orientation": 0
+      },
+      {
+        "X": 1146387333,
+        "Y": 0,
+        "Z": 1144748769,
+        "Orientation": -1
+      },
+      {
+        "X": 3293873110,
+        "Y": 0,
+        "Z": 1143110369,
+        "Orientation": 0
+      },
+      {
+        "X": 3293873110,
+        "Y": 0,
+        "Z": 1141471969,
+        "Orientation": 2
+      },
+      {
+        "X": 3293873110,
+        "Y": 0,
+        "Z": 1144748769,
+        "Orientation": 0
+      },
+
+
+      {
+        "X": 3293873110,
+        "Y": 0,
+        "Z": 1135539650,
+        "Orientation": 1
+      },
+      {
+        "X": 1125507400,
+        "Y": 0,
+        "Z": 3286304686,
+        "Orientation": 1
+      },
+      {
+        "X": 3279560376,
+        "Y": 0,
+        "Z": 3286304686,
+        "Orientation": 1
+      },
+      {
+        "X": 3283029852,
+        "Y": 0,
+        "Z": 3286304686,
+        "Orientation": -1
+      },
+      {
+        "X": 1148025733,
+        "Y": 0,
+        "Z": 1135539650,
+        "Orientation": 0
+      },
+
+
+
+
+
+
+      {
+        "X": 3283029852,
+        "Y": 0,
+        "Z": 3283027886,
+        "Orientation": 1
+      },
+      {
+        "X": 3286306652,
+        "Y": 0,
+        "Z": 3283027886,
+        "Orientation": -1
+      },
+      {
+        "X": 3286306652,
+        "Y": 0,
+        "Z": 3279556444,
+        "Orientation": 1
+      },
+      {
+        "X": 3290596310,
+        "Y": 0,
+        "Z": 1125510021,
+        "Orientation": 1
+      },
+
+      {
+        "X": 1111983392,
+        "Y": 0,
+        "Z": 3292234711,
+        "Orientation": 1
+      },
+      {
+        "X": 3259529952,
+        "Y": 0,
+        "Z": 3292234711,
+        "Orientation": 1
+      },
+      {
+        "X": 1125507400,
+        "Y": 0,
+        "Z": 3292234711,
+        "Orientation": 1
+      },
+      {
+        "X": 3295511510,
+        "Y": 0,
+        "Z": 1141471969,
+        "Orientation": 1
+      },
+      {
+        "X": 3296936427,
+        "Y": 0,
+        "Z": 1141471969,
+        "Orientation": -1
+      },
+
+      {
+        "X": 3273006776,
+        "Y": 0,
+        "Z": 3288957911,
+        "Orientation": 0
+      },
+      {
+        "X": 3273006776,
+        "Y": 0,
+        "Z": 3290596311,
+        "Orientation": 0
+      },
+      {
+        "X": 3273006776,
+        "Y": 0,
+        "Z": 3292234711,
+        "Orientation": -1
+      },
+      {
+        "X": 1132061000,
+        "Y": 0,
+        "Z": 3292234711,
+        "Orientation": 2
+      },
+      {
+        "X": 1132061000,
+        "Y": 0,
+        "Z": 3290596311,
+        "Orientation": 0
+      },
+
+      {
+        "X": 1132061000,
+        "Y": 0,
+        "Z": 3288957911,
+        "Orientation": 0
+      },
+      {
+        "X": 3295511510,
+        "Y": 0,
+        "Z": 1146387169,
+        "Orientation": 1
+      },
+      {
+        "X": 3296936427,
+        "Y": 0,
+        "Z": 1146387169,
+        "Orientation": 0
+      },
+      {
+        "X": 3296936427,
+        "Y": 0,
+        "Z": 1144748769,
+        "Orientation": 0
+      },
+      {
+        "X": 3296936427,
+        "Y": 0,
+        "Z": 1143110369,
+        "Orientation": 0
+      }
+    ]
   },
   {
     "Name": "Matataki Bridge",
@@ -471,20 +955,64 @@
     "BaseAddr": 30233976,
     "BuildingId": 17,
     "Multi": 1,
-    "Items": []
+    "Items": [],
+    "MultiCoords": [
+      {
+        "X": 1148025733,
+        "Y": 0,
+        "Z": 1141471969,
+        "Orientation": 0
+      },
+      {
+        "X": 1146387333,
+        "Y": 0,
+        "Z": 1146387169,
+        "Orientation": 0
+      },
+      {
+        "X": 3293873110,
+        "Y": 0,
+        "Z": 1143110369,
+        "Orientation": 0
+      },
+      {
+        "X": 1111983392,
+        "Y": 0,
+        "Z": 3292234711,
+        "Orientation": 1
+      },
+      {
+        "X": 3295511510,
+        "Y": 0,
+        "Z": 1141471969,
+        "Orientation": 1
+      }
+    ]
   },
   {
     "Name": "Earth A",
     "ApId": 971110218,
     "BaseAddr": 30234000,
     "BuildingId": 18,
-    "Items": []
+    "Items": [],
+    "HundoCoords": {
+      "X": 3291416494,
+      "Y": 0,
+      "Z": 3289777111,
+      "Orientation": 0
+    }
   },
   {
     "Name": "Earth B",
     "ApId": 971110219,
     "BaseAddr": 30234024,
     "BuildingId": 19,
-    "Items": []
+    "Items": [],
+    "HundoCoords": {
+      "X": 1143929733,
+      "Y": 0,
+      "Z": 1140454850,
+      "Orientation": 0
+    }
   }
 ]
