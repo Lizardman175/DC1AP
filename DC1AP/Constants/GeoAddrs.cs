@@ -41,6 +41,14 @@ namespace DC1AP.Constants
 
         internal static readonly uint[] TownGeoInv = [T1GeoInv, T2GeoInv, T3GeoInv, T4GeoInv, T5GeoInv, T6GeoInv];
 
+        private const uint T1TownMap = 0x01CD4A64;
+        private const uint T2TownMap = 0x01CD561C;
+        private const uint T3TownMap = 0x01CD61D4;
+        private const uint T4TownMap = 0x01CD6D8C;
+        private const uint T5TownMap = 0x01CD7944;
+
+        internal static readonly uint[] TownMapAddrs = [T1TownMap, T2TownMap, T3TownMap, T4TownMap, T5TownMap];
+
         // Atla per floor memory start addr by dungeon.  4 bytes each.
         // -1 == uninit or no atla there.  -2 == available (also various >0 values for static floor atla).  -3 == collected
         private const uint DBCAtlaFlag = 0x01CD97C4;
