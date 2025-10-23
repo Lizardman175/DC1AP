@@ -273,6 +273,7 @@ class DarkCloudWorld(World):
                 "open_dungeon": self.options.open_dungeon.value,
                 "starter_weapons": self.options.starter_weapons.value,
                 "abs_multiplier": self.options.abs_multiplier.value,
+                "auto_build": self.options.auto_build.value,
             },
             "seed": self.multiworld.seed_name,
         }
