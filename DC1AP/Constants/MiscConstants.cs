@@ -47,5 +47,7 @@ namespace DC1AP.Constants
         internal const short MatatakiBridgeId = 17;
 
         internal const short MatatakiReqRiverCount = 5;
+        internal const short MatatakiBridgeRiverCount = 6;
+        internal const short NoruneBridgeRiverCount = 3;
     }
 }

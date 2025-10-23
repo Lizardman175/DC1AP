@@ -25,7 +25,19 @@
         "ItemId": 1,
         "SlotId": 2
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 3259535184,
+      "Y": 0.0,
+      "Z": 3288959221,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 3283030506,
+      "Y": 0.0,
+      "Z": 3259535184,
+      "Orientation": 0
+    }
   },
   {
     "Name": "Jibubu's House",
@@ -58,7 +70,19 @@
         "ItemId": 2,
         "SlotId": 2
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 1141470987,
+      "Y": 0.0,
+      "Z": 1141470987,
+      "Orientation": -1
+    },
+    "AnyCoords": {
+      "X": 1132059692,
+      "Y": 0.0,
+      "Z": 3283030506,
+      "Orientation": 0
+    }
   },
   {
     "Name": "Zabo's House",
@@ -91,7 +115,19 @@
         "ItemId": 1,
         "SlotId": 3
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 1132059692,
+      "Y": 0.0,
+      "Z": 1135537686,
+      "Orientation": 2
+    },
+    "AnyCoords": {
+      "X": 3259535184,
+      "Y": 0.0,
+      "Z": 3259535184,
+      "Orientation": 0
+    }
   },
   {
     "Name": "3 Sisters' House",
@@ -129,7 +165,19 @@
         "ItemId": 5,
         "SlotId": 2
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 1132059692,
+      "Y": 0.0,
+      "Z": 3288959221,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 3283030506,
+      "Y": 0.0,
+      "Z": 3283030506,
+      "Orientation": 2
+    }
   },
   {
     "Name": "Brooke's House",
@@ -157,7 +205,19 @@
         "ItemId": 2,
         "SlotId": 2
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 3259535184,
+      "Y": 0.0,
+      "Z": 3259535184,
+      "Orientation": 1
+    },
+    "AnyCoords": {
+      "X": 1132059692,
+      "Y": 0.0,
+      "Z": 3259535184,
+      "Orientation": 0
+    }
   },
   {
     "Name": "Enga's House",
@@ -195,7 +255,19 @@
         "ItemId": 4,
         "SlotId": 4
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 3283030506,
+      "Y": 0.0,
+      "Z": 3273008084,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 3259535184,
+      "Y": 0.0,
+      "Z": 3283030506,
+      "Orientation": 0
+    }
   },
   {
     "Name": "Prisoner Cabin",
@@ -223,7 +295,19 @@
         "ItemId": 7,
         "SlotId": 2
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 3288959221,
+      "Y": 0.0,
+      "Z": 1132059692,
+      "Orientation": 1
+    },
+    "AnyCoords": {
+      "X": 1141470987,
+      "Y": 0.0,
+      "Z": 3283030506,
+      "Orientation": 0
+    }
   },
   {
     "Name": "Toto's House",
@@ -256,7 +340,19 @@
         "ItemId": 50,
         "SlotId": 4
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 1141470987,
+      "Y": 0.0,
+      "Z": 1125506092,
+      "Orientation": -1
+    },
+    "AnyCoords": {
+      "X": 1141470987,
+      "Y": 0.0,
+      "Z": 3259535184,
+      "Orientation": 0
+    }
   },
   {
     "Name": "Totem Pole A",
@@ -274,7 +370,19 @@
         "ItemId": 11,
         "SlotId": 1
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 3259535184,
+      "Y": 0.0,
+      "Z": 1132059692,
+      "Orientation": 1
+    },
+    "AnyCoords": {
+      "X": 1138814486,
+      "Y": 0.0,
+      "Z": 1132059692,
+      "Orientation": 0
+    }
   },
   {
     "Name": "Totem Pole B",
@@ -292,7 +400,19 @@
         "ItemId": 11,
         "SlotId": 1
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 1132059692,
+      "Y": 0.0,
+      "Z": 3259535184,
+      "Orientation": 2
+    },
+    "AnyCoords": {
+      "X": 1141470987,
+      "Y": 0.0,
+      "Z": 1132059692,
+      "Orientation": 0
+    }
   },
   {
     "Name": "Totem Pole C",
@@ -310,7 +430,19 @@
         "ItemId": 11,
         "SlotId": 1
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 3283030506,
+      "Y": 0.0,
+      "Z": 1141470987,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 1143109387,
+      "Y": 0.0,
+      "Z": 1132059692,
+      "Orientation": 0
+    }
   },
   {
     "Name": "Oasis",
@@ -333,22 +465,254 @@
         "ItemId": 9,
         "SlotId": 2
       }
-    ]
+    ],
+    "HundoCoords": {
+      "X": 1140452886,
+      "Y": 0.0,
+      "Z": 3276284884,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 1140452886,
+      "Y": 0.0,
+      "Z": 1140452886,
+      "Orientation": 0
+    }
   },
   {
     "Name": "Muska Lacka Trees",
     "ApId": 971110412,
     "BaseAddr": 30239856,
-    "BuildingId": 13,
+    "BuildingId": 12,
     "Multi": 2,
-    "Items": []
+    "Items": [],
+    "MultiCoords": [
+      {
+        "X": 1141470987,
+        "Y": 0.0,
+        "Z": 3288959221,
+        "Orientation": 0
+      },
+      {
+        "X": 1138814486,
+        "Y": 0.0,
+        "Z": 3286307306,
+        "Orientation": 0
+      },
+      {
+        "X": 1141470987,
+        "Y": 0.0,
+        "Z": 1135537686,
+        "Orientation": 0
+      },
+      {
+        "X": 3273008084,
+        "Y": 0.0,
+        "Z": 1141470987,
+        "Orientation": 0
+      },
+      {
+        "X": 1111978160,
+        "Y": 0.0,
+        "Z": 3279561684,
+        "Orientation": 0
+      },
+
+      {
+        "X": 3279561684,
+        "Y": 0.0,
+        "Z": 1135537686,
+        "Orientation": 0
+      },
+      {
+        "X": 3286307306,
+        "Y": 0.0,
+        "Z": 1138814486,
+        "Orientation": 0
+      },
+      {
+        "X": 3290597621,
+        "Y": 0.0,
+        "Z": 1141470987,
+        "Orientation": 0
+      },
+      {
+        "X": 3288959221,
+        "Y": 0.0,
+        "Z": 3273008084,
+        "Orientation": 0
+      },
+      {
+        "X": 3283030506,
+        "Y": 0.0,
+        "Z": 3286307306,
+        "Orientation": 0
+      }
+    ]
   },
   {
     "Name": "Muska Lacka Road",
     "ApId": 971110413,
     "BaseAddr": 30239880,
-    "BuildingId": 14,
+    "BuildingId": 13,
     "Multi": 5,
-    "Items": []
+    "Items": [],
+    "MultiCoords": [
+      {
+        "X": 1135537686,
+        "Y": 0.0,
+        "Z": 1125506092,
+        "Orientation": -1
+      },
+      {
+        "X": 1132059692,
+        "Y": 0.0,
+        "Z": 1125506092,
+        "Orientation": 1
+      },
+      {
+        "X": 1125506092,
+        "Y": 0.0,
+        "Z": 1125506092,
+        "Orientation": 2
+      },
+      {
+        "X": 1125506092,
+        "Y": 0.0,
+        "Z": 1111978160,
+        "Orientation": 0
+      },
+      {
+        "X": 1125506092,
+        "Y": 0.0,
+        "Z": 3259535184,
+        "Orientation": 0
+      },
+      
+      {
+        "X": 1125506092,
+        "Y": 0.0,
+        "Z": 3273008084,
+        "Orientation": 0
+      },
+      {
+        "X": 1125506092,
+        "Y": 0.0,
+        "Z": 3279561684,
+        "Orientation": 0
+      },
+      {
+        "X": 1125506092,
+        "Y": 0.0,
+        "Z": 3283030506,
+        "Orientation": 0
+      },
+      {
+        "X": 1132059692,
+        "Y": 0.0,
+        "Z": 3283030506,
+        "Orientation": -1
+      },
+      {
+        "X": 1111978160,
+        "Y": 0.0,
+        "Z": 3283030506,
+        "Orientation": 1
+      },
+      
+      {
+        "X": 3259535184,
+        "Y": 0.0,
+        "Z": 3283030506,
+        "Orientation": 1
+      },
+      {
+        "X": 1111978160,
+        "Y": 0.0,
+        "Z": 1125506092,
+        "Orientation": 0
+      },
+      {
+        "X": 3259535184,
+        "Y": 0.0,
+        "Z": 1125506092,
+        "Orientation": 1
+      },
+      {
+        "X": 3273008084,
+        "Y": 0.0,
+        "Z": 1125506092,
+        "Orientation": 1
+      },
+      {
+        "X": 3279561684,
+        "Y": 0.0,
+        "Z": 1125506092,
+        "Orientation": 1
+      },
+      
+      {
+        "X": 3283030506,
+        "Y": 0.0,
+        "Z": 1125506092,
+        "Orientation": 1
+      },
+      {
+        "X": 3283030506,
+        "Y": 0.0,
+        "Z": 1111978160,
+        "Orientation": 0
+      },
+      {
+        "X": 1135537686,
+        "Y": 0.0,
+        "Z": 1141470987,
+        "Orientation": -1
+      },
+      {
+        "X": 3283030506,
+        "Y": 0.0,
+        "Z": 1132059692,
+        "Orientation": 2
+      },
+      {
+        "X": 1111978160,
+        "Y": 0.0,
+        "Z": 1132059692,
+        "Orientation": 0
+      },
+      
+      {
+        "X": 1111978160,
+        "Y": 0.0,
+        "Z": 1135537686,
+        "Orientation": 0
+      },
+      {
+        "X": 1111978160,
+        "Y": 0.0,
+        "Z": 1138814486,
+        "Orientation": 0
+      },
+      {
+        "X": 1111978160,
+        "Y": 0.0,
+        "Z": 1141470987,
+        "Orientation": 1
+      },
+      {
+        "X": 1125506092,
+        "Y": 0.0,
+        "Z": 1141470987,
+        "Orientation": 1
+      },
+      {
+        "X": 1132059692,
+        "Y": 0.0,
+        "Z": 1141470987,
+        "Orientation": 1
+      }
+
+    ]
   }
 ]
