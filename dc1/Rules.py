@@ -32,10 +32,11 @@ class RuleManager:
             state.has("Enga's Roof", player) and self.ungaga_available(state, player)
 
     def osmond_available(self, state: CollectionState, player: int) -> bool:
-        return False
+        return self.ungaga_available(state, player)
 
     def joe_accessible(self, state: CollectionState, player: int) -> bool:
-        return False
+        # Just need to finish the head for the admission ticket.
+        return state.has("Eye (HD)", player) and self.ungaga_available(state, player)
 
     def got_accessible(self, state: CollectionState, player: int) -> bool:
         return False
