@@ -39,7 +39,7 @@ class DarkCloudWorld(World):
     item_name_to_id = {}
     location_name_to_id = {}
 
-    for i in range(4):
+    for i in range(5):
         item_name_to_id.update(geo_class[i].ids)
 
     dungeon_locations = json.loads(pkgutil.get_data(__name__, "data/atla_locations.json").decode())

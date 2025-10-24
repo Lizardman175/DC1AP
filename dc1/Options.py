@@ -3,11 +3,11 @@ from Options import Choice, Toggle, PerGameCommonOptions, Range, Visibility
 
 
 class Goal(Range):
-    """Select Dungeon from 2-6 to be the goal.  Currently only 2-4 are supported."""
+    """Select Dungeon from 2-6 to be the goal.  Currently only 2-5 are supported."""
     display_name = "Boss Goal"
-    default = 4
+    default = 5
     range_start = 2
-    range_end = 4
+    range_end = 5
 
 class AllBosses(Toggle):
     """Requires defeating every boss up to the goal boss in order to finish the game."""
@@ -51,8 +51,8 @@ class AutoBuild(Choice):
     option_any_percent = 1
     option_hundo = 2
     option_muska_only = 3
-    # option_robot_only = 4
-    # option_muska_robot_only = 5
+    option_robot_only = 4
+    option_muska_robot_only = 5
 
 # TODO death link.
 # class DeathLink(DeathLink):

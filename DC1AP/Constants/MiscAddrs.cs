@@ -22,19 +22,19 @@ namespace DC1AP.Constants
         //internal const uint AttachStart = 0x01CE1A48;
 
         // Set to 1 to enable the world map
-        internal const uint MapFlagAddr = 0x1CDD86C;
+        internal const uint MapFlagAddr = 0x01CDD86C;
 
         // Addresses for visit count of each town/dungeon on the map.  value >0 makes them show up on the map (curious what negative numbers would do)
         // Value > 0 also prevents dungeons from initializing by default.
         //internal const int NoruneCountAddr = 0x1CE7028; // Norune village counter (clearing it makes Norune unavailable; unless doing a non-standard start, don't edit!)
-        internal const uint DBCCountAddr = 0x1CE70C8; // DBC counter
+        internal const uint DBCCountAddr = 0x01CE70C8; // DBC counter
 
         // There is no value that will disable Matataki other than the map flag itself
-        internal const uint WOFCountAddr = 0x1CE70CA; // Wise owl forest
+        internal const uint WOFCountAddr = 0x01CE70CA; // Wise owl forest
 
         //internal const uint BrownbooCountAddr = 0x1CE7044; // Brownboo Village
 
-        internal const uint QueensCountAddr = 0x1CE702C;
+        internal const uint QueensCountAddr = 0x01CE702C;
         internal const uint SWCountAddr = 0x01CE70CC;
 
         internal const uint MuskaCountAddr = 0x01CE702E;
