@@ -10,14 +10,15 @@ namespace DC1AP.Georama
         internal static List<GeoBuilding[]?> buildings = [null, null, null, null, null, null];
         private static short Multiplier = 5;
 
-        private const int ItemShortOffset = 3;
+        private const uint EventFlagOffset = 4;
+        private const uint ItemShortOffset = 3;
         private const int MaxItemCount = 6;
 
         public required string Name;
         public long ApId;
         public uint BaseAddr;
         public GeoItem[] Items = [];
-        public int BuildingId;
+        public short BuildingId;
         public int Multi = 0;
         public BuildingCoords? AnyCoords;
         // Only D6 should have nothing for HundoCoords so this should be safe to have empty.
@@ -65,9 +66,9 @@ namespace DC1AP.Georama
                 Memory.Write(BuildingCountAddr, (short)1);
 
                 // We want to set all 6 item slots to zero to clear any junk values, rather than just the count of Items
-                for (int i = ItemShortOffset; i < ItemShortOffset + MaxItemCount; i++)
+                for (uint i = ItemShortOffset; i < ItemShortOffset + MaxItemCount; i++)
                 {
-                    Memory.Write((uint)BaseAddr + (uint)(i * sizeof(short)), (short)0);
+                    Memory.Write(BaseAddr + (i * sizeof(short)), (short)0);
                 }
             }
         }
@@ -102,36 +103,39 @@ namespace DC1AP.Georama
             {
                 buildingValue = 1;
 
-                // Auto building of towns. Castle has no town to build
+                // Auto building of towns. Castle has no town to build.
                 if (town < Towns.Castle)
                 {
                     BuildBuilding();
                 }
 
+                // Skip the dialog only events for the 4 pilots
+                if (town == Towns.Factory && MiscConstants.FactoryEventSkips.Contains(BuildingId))
+                {
+                    Memory.Write(BaseAddr - EventFlagOffset, (short)1);
+                }
+
                 msg = "Received " + Name + ".";
             }
             // Not first piece, add next item
-            else if (buildingValue < Items.Length + 1)
+            else if (buildingValue <= Items.Length)
             {
-                if (buildingValue <= Items.Length)
+                GeoItem item = Items[buildingValue - 1];
+                uint itemAddr = (uint)(BaseAddr + GeoAddrs.HouseInvOffset + (sizeof(short) * item.SlotId));
+
+                // If there isn't an item set in the item's slot, put it there.  Otherwise, add it to the player's inventory.
+                if (Memory.ReadShort(itemAddr) == 0)
                 {
-                    GeoItem item = Items[buildingValue - 1];
-                    uint itemAddr = (uint)(BaseAddr + GeoAddrs.HouseInvOffset + (sizeof(short) * item.SlotId));
-
-                    // If there isn't an item set in the item's slot, put it there.  Otherwise, add it to the player's inventory.
-                    if (Memory.ReadShort(itemAddr) == 0)
-                    {
-                        Memory.Write(itemAddr, (short)1);
-                    }
-                    else
-                    {
-                        MemFuncs.GiveGeoItem(town, (short)item.ItemId);
-                    }
-
-                    buildingValue++;
-
-                    msg = "Received " + item.Name + " for " + town.ToString() + ".";
+                    Memory.Write(itemAddr, (short)1);
                 }
+                else
+                {
+                    MemFuncs.GiveGeoItem(town, (short)item.ItemId);
+                }
+
+                buildingValue++;
+
+                msg = "Received " + item.Name + " for " + town.ToString() + ".";
             }
 
             if (msg != null)
@@ -176,6 +180,7 @@ namespace DC1AP.Georama
             return count;
         }
 
+        #region TownBuilding
         private void BuildBuilding()
         {
             GeoBuilding[]? townBuildings = buildings[(int)town];
@@ -352,7 +357,7 @@ namespace DC1AP.Georama
                 buildingIdMem = Memory.ReadShort(addr);
             }
 
-            Memory.Write(addr, (short)BuildingId);
+            Memory.Write(addr, BuildingId);
 
             addr += sizeof(short);
             Memory.Write(addr, map.Orientation);
@@ -391,5 +396,6 @@ namespace DC1AP.Georama
 
             return 0;
         }
+        #endregion
     }
 }

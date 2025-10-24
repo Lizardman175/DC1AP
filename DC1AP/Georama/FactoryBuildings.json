@@ -1,0 +1,492 @@
+[
+  {
+    "Name": "Parts HD",
+    "ApId": 971110500,
+    "BaseAddr": 30242568,
+    "BuildingId": 0,
+    "Items": [
+      {
+        "Name": "Crown (HD)",
+        "ItemId": 0,
+        "SlotId": 0
+      },
+      {
+        "Name": "Eye (HD)",
+        "ItemId": 1,
+        "SlotId": 1
+      }
+    ],
+    "HundoCoords": {
+      "X": 3178610688,
+      "Y": 0.0,
+      "Z": 3278902394,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 3178610688,
+      "Y": 0.0,
+      "Z": 3278902394,
+      "Orientation": 0
+    }
+  },
+  {
+    "Name": "Parts AMR",
+    "ApId": 971110501,
+    "BaseAddr": 30242592,
+    "BuildingId": 1,
+    "Items": [
+      {
+        "Name": "Elephant Emblem (AMR)",
+        "ItemId": 6,
+        "SlotId": 0
+      },
+      {
+        "Name": "Mammoth Tusk (AMR)",
+        "ItemId": 5,
+        "SlotId": 1
+      },
+      {
+        "Name": "Finger (AMR)",
+        "ItemId": 9,
+        "SlotId": 2
+      },
+      {
+        "Name": "Ammonite (AMR)",
+        "ItemId": 4,
+        "SlotId": 3
+      },
+      {
+        "Name": "Twisted Horn (AMR)",
+        "ItemId": 7,
+        "SlotId": 4
+      }
+    ],
+    "HundoCoords": {
+      "X": 3270516408,
+      "Y": 0.0,
+      "Z": 1117771532,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 3270516408,
+      "Y": 0.0,
+      "Z": 1117771532,
+      "Orientation": 0
+    }
+  },
+  {
+    "Name": "Parts AML",
+    "ApId": 971110502,
+    "BaseAddr": 30242616,
+    "BuildingId": 2,
+    "Items": [
+      {
+        "Name": "Elephant Emblem (AML)",
+        "ItemId": 6,
+        "SlotId": 0
+      },
+      {
+        "Name": "Mammoth Tusk (AML)",
+        "ItemId": 5,
+        "SlotId": 1
+      },
+      {
+        "Name": "Finger (AML)",
+        "ItemId": 9,
+        "SlotId": 2
+      },
+      {
+        "Name": "Ammonite (AML)",
+        "ItemId": 4,
+        "SlotId": 3
+      },
+      {
+        "Name": "Twisted Horn (AML)",
+        "ItemId": 7,
+        "SlotId": 4
+      }
+    ],
+    "HundoCoords": {
+      "X": 1123017032,
+      "Y": 0.0,
+      "Z": 1117771532,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 1123017032,
+      "Y": 0.0,
+      "Z": 1117771532,
+      "Orientation": 0
+    }
+  },
+  {
+    "Name": "Parts HGR",
+    "ApId": 971110503,
+    "BaseAddr": 30242640,
+    "BuildingId": 3,
+    "Items": [
+      {
+        "Name": "Big Urn (HGR)",
+        "ItemId": 18,
+        "SlotId": 0
+      },
+      {
+        "Name": "Eagle Head (HGR)",
+        "ItemId": 2,
+        "SlotId": 1
+      },
+      {
+        "Name": "Eagle Feather (HGR)",
+        "ItemId": 3,
+        "SlotId": 2
+      },
+      {
+        "Name": "Amuleo",
+        "ItemId": 40,
+        "SlotId": 3
+      }
+    ],
+    "HundoCoords": {
+      "X": 3273658204,
+      "Y": 0.0,
+      "Z": 3273659514,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 3273658204,
+      "Y": 0.0,
+      "Z": 3273659514,
+      "Orientation": 0
+    }
+  },
+  {
+    "Name": "Parts HGL",
+    "ApId": 971110504,
+    "BaseAddr": 30242664,
+    "BuildingId": 4,
+    "Items": [
+      {
+        "Name": "Big Urn (HGL)",
+        "ItemId": 18,
+        "SlotId": 0
+      },
+      {
+        "Name": "Eagle Head (HGL)",
+        "ItemId": 2,
+        "SlotId": 1
+      },
+      {
+        "Name": "Eagle Feather (HGL)",
+        "ItemId": 3,
+        "SlotId": 2
+      },
+      {
+        "Name": "Gotch",
+        "ItemId": 41,
+        "SlotId": 3
+      }
+    ],
+    "HundoCoords": {
+      "X": 1126166692,
+      "Y": 0.0,
+      "Z": 3273659514,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 1126166692,
+      "Y": 0.0,
+      "Z": 3273659514,
+      "Orientation": 0
+    }
+  },
+  {
+    "Name": "Parts HGR2",
+    "ApId": 971110505,
+    "BaseAddr": 30242688,
+    "BuildingId": 5,
+    "Items": [
+      {
+        "Name": "Urn (HGR2)",
+        "ItemId": 17,
+        "SlotId": 0
+      }
+    ],
+    "HundoCoords": {
+      "X": 3270516408,
+      "Y": 0.0,
+      "Z": 3256898024,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 3270516408,
+      "Y": 0.0,
+      "Z": 3256898024,
+      "Orientation": 0
+    }
+  },
+  {
+    "Name": "Parts HGL2",
+    "ApId": 971110506,
+    "BaseAddr": 30242712,
+    "BuildingId": 6,
+    "Items": [
+      {
+        "Name": "Urn (HGL2)",
+        "ItemId": 17,
+        "SlotId": 0
+      }
+    ],
+    "HundoCoords": {
+      "X": 1123017032,
+      "Y": 0.0,
+      "Z": 3256898024,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 1123017032,
+      "Y": 0.0,
+      "Z": 3256898024,
+      "Orientation": 0
+    }
+  },
+  {
+    "Name": "Parts CT",
+    "ApId": 971110507,
+    "BaseAddr": 30242736,
+    "BuildingId": 7,
+    "Items": [
+      {
+        "Name": "Scale (CT)",
+        "ItemId": 16,
+        "SlotId": 0
+      },
+      {
+        "Name": "Crest Armor (CT)",
+        "ItemId": 19,
+        "SlotId": 1
+      }
+    ],
+    "HundoCoords": {
+      "X": 3178610688,
+      "Y": 0.0,
+      "Z": 3265276148,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 3178610688,
+      "Y": 0.0,
+      "Z": 3265276148,
+      "Orientation": 0
+    }
+  },
+  {
+    "Name": "Parts WT",
+    "ApId": 971110508,
+    "BaseAddr": 30242760,
+    "BuildingId": 8,
+    "Items": [
+      {
+        "Name": "Skirt (WT)",
+        "ItemId": 12,
+        "SlotId": 0
+      },
+      {
+        "Name": "Skull (WT)",
+        "ItemId": 8,
+        "SlotId": 1
+      },
+      {
+        "Name": "Buffalo's Horn (WT)",
+        "ItemId": 11,
+        "SlotId": 2
+      }
+    ],
+    "HundoCoords": {
+      "X": 3178610688,
+      "Y": 0.0,
+      "Z": 1109372440,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 3178610688,
+      "Y": 0.0,
+      "Z": 1109372440,
+      "Orientation": 0
+    }
+  },
+  {
+    "Name": "Parts TIR",
+    "ApId": 971110509,
+    "BaseAddr": 30242784,
+    "BuildingId": 9,
+    "Items": [
+      {
+        "Name": "Urn (TIR)",
+        "ItemId": 17,
+        "SlotId": 0
+      },
+      {
+        "Name": "Tomahon",
+        "ItemId": 42,
+        "SlotId": 1
+      }
+    ],
+    "HundoCoords": {
+      "X": 3256892784,
+      "Y": 0.0,
+      "Z": 1123014412,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 3256892784,
+      "Y": 0.0,
+      "Z": 1123014412,
+      "Orientation": 0
+    }
+  },
+  {
+    "Name": "Parts TIL",
+    "ApId": 971110510,
+    "BaseAddr": 30242808,
+    "BuildingId": 10,
+    "Items": [
+      {
+        "Name": "Urn (TIL)",
+        "ItemId": 17,
+        "SlotId": 0
+      },
+      {
+        "Name": "Boon",
+        "ItemId": 43,
+        "SlotId": 1
+      }
+    ],
+    "HundoCoords": {
+      "X": 1109377680,
+      "Y": 0.0,
+      "Z": 1123014412,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 1109377680,
+      "Y": 0.0,
+      "Z": 1123014412,
+      "Orientation": 0
+    }
+  },
+  {
+    "Name": "Parts FTR",
+    "ApId": 971110511,
+    "BaseAddr": 30242832,
+    "BuildingId": 11,
+    "Items": [
+      {
+        "Name": "Big Urn (FTR)",
+        "ItemId": 18,
+        "SlotId": 0
+      },
+      {
+        "Name": "Turtle Shell (FTR)",
+        "ItemId": 13,
+        "SlotId": 1
+      },
+      {
+        "Name": "Spine of Shell (FTR)",
+        "ItemId": 14,
+        "SlotId": 2
+      },
+      {
+        "Name": "Nail (FTR)",
+        "ItemId": 10,
+        "SlotId": 3
+      }
+    ],
+    "HundoCoords": {
+      "X": 3256892784,
+      "Y": 0.0,
+      "Z": 1131408262,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 3256892784,
+      "Y": 0.0,
+      "Z": 1131408262,
+      "Orientation": 0
+    }
+  },
+  {
+    "Name": "Parts FTL",
+    "ApId": 971110512,
+    "BaseAddr": 30242856,
+    "BuildingId": 12,
+    "Items": [
+      {
+        "Name": "Big Urn (FTL)",
+        "ItemId": 18,
+        "SlotId": 0
+      },
+      {
+        "Name": "Turtle Shell (FTL)",
+        "ItemId": 13,
+        "SlotId": 1
+      },
+      {
+        "Name": "Spine of Shell (FTL)",
+        "ItemId": 14,
+        "SlotId": 2
+      },
+      {
+        "Name": "Nail (FTL)",
+        "ItemId": 10,
+        "SlotId": 3
+      }
+    ],
+    "HundoCoords": {
+      "X": 1109377680,
+      "Y": 0.0,
+      "Z": 1131408262,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 1109377680,
+      "Y": 0.0,
+      "Z": 1131408262,
+      "Orientation": 0
+    }
+  },
+  {
+    "Name": "Lookout",
+    "ApId": 971110513,
+    "BaseAddr": 30242880,
+    "BuildingId": 13,
+    "Items": [
+      {
+        "Name": "Lookout Ladder",
+        "ItemId": 20,
+        "SlotId": 0
+      },
+      {
+        "Name": "Lookout Second Floor",
+        "ItemId": 21,
+        "SlotId": 1
+      },
+      {
+        "Name": "Lookout Ladder 2",
+        "ItemId": 20,
+        "SlotId": 2
+      }
+    ],
+    "HundoCoords": {
+      "X": 3273658204,
+      "Y": 0.0,
+      "Z": 1131408262,
+      "Orientation": 0
+    },
+    "AnyCoords": {
+      "X": 3273658204,
+      "Y": 0.0,
+      "Z": 1131408262,
+      "Orientation": 0
+    }
+  }
+]
