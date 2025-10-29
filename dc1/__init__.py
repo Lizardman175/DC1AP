@@ -181,9 +181,9 @@ class DarkCloudWorld(World):
         set_rule(self.multiworld.get_entrance("Muska -> SMT2", self.player),
                  lambda state: rm.ungaga_available(state, self.player))
         set_rule(self.multiworld.get_entrance("Norune -> Factory", self.player),
-                 lambda state: rm.goro_available(state, self.player))
+                 lambda state: rm.ungaga_available(state, self.player))
         set_rule(self.multiworld.get_entrance("Factory -> MS1", self.player),
-                 lambda state: rm.goro_available(state, self.player))
+                 lambda state: rm.ungaga_available(state, self.player))
         set_rule(self.multiworld.get_entrance("Factory -> MS2", self.player),
                  lambda state: rm.osmond_available(state, self.player))
         set_rule(self.multiworld.get_entrance("Norune -> DHC", self.player),
