@@ -33,11 +33,11 @@ namespace DC1AP.Constants
 
         // town georama inventory.  Each of these is a short, default of -1 if empty.
         private const uint T1GeoInv = 0x01CD8E0C;
-        private const uint T2GeoInv = T1GeoInv + GeoInvOffset; // Matataki offset
-        private const uint T3GeoInv = T2GeoInv + GeoInvOffset; // Presumed Queens offset
-        private const uint T4GeoInv = T3GeoInv + GeoInvOffset; // Presumed ML offset
-        private const uint T5GeoInv = T4GeoInv + GeoInvOffset; // Presumed Factory offset
-        private const uint T6GeoInv = T5GeoInv + GeoInvOffset; // Presumed Last dungeon offset
+        private const uint T2GeoInv = 0x01CD8F0C; // Matataki
+        private const uint T3GeoInv = 0x01CD900C; // Queens
+        private const uint T4GeoInv = 0x01CD910C; // ML
+        private const uint T5GeoInv = 0x01CD920C; // Factory
+        private const uint T6GeoInv = 0x01CD930C; // Castle
 
         internal static readonly uint[] TownGeoInv = [T1GeoInv, T2GeoInv, T3GeoInv, T4GeoInv, T5GeoInv, T6GeoInv];
 

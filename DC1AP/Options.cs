@@ -5,7 +5,7 @@ namespace DC1AP
 {
     internal static class Options
     {
-        private static int goal = 4;
+        private static int goal = 6;
         private static float absMultiplier = 2f;
         private static bool openDungeon = true;
         private static bool allBosses = false;

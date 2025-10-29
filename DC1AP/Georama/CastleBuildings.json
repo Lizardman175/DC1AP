@@ -1,0 +1,348 @@
+[
+  {
+    "Name": "Crowning Day",
+    "ApId": 971110600,
+    "BaseAddr": 30245568,
+    "BuildingId": 0,
+    "Items": [
+      {
+        "Name": "Bed (Crowning Day)",
+        "ItemId": 2,
+        "SlotId": 0
+      },
+      {
+        "Name": "Father (Crowning Day)",
+        "ItemId": 0,
+        "SlotId": 1
+      },
+      {
+        "Name": "Crown (Crowning Day)",
+        "ItemId": 6,
+        "SlotId": 2
+      }
+    ]
+  },
+  {
+    "Name": "Night of the Ceremony",
+    "ApId": 971110601,
+    "BaseAddr": 30245592,
+    "BuildingId": 1,
+    "Items": [
+      {
+        "Name": "Moon (Ceremony)",
+        "ItemId": 3,
+        "SlotId": 0
+      },
+      {
+        "Name": "Castle (Ceremony)",
+        "ItemId": 4,
+        "SlotId": 1
+      },
+      {
+        "Name": "Torch (Ceremony)",
+        "ItemId": 5,
+        "SlotId": 2
+      },
+      {
+        "Name": "Crown (Ceremony)",
+        "ItemId": 6,
+        "SlotId": 3
+      },
+      {
+        "Name": "Sophia (Ceremony)",
+        "ItemId": 1,
+        "SlotId": 4
+      }
+    ]
+  },
+  {
+    "Name": "Reunion in the Storm",
+    "ApId": 971110602,
+    "BaseAddr": 30245616,
+    "BuildingId": 2,
+    "Items": [
+      {
+        "Name": "Bed (Reunion)",
+        "ItemId": 2,
+        "SlotId": 0
+      },
+      {
+        "Name": "Minister (Reunion)",
+        "ItemId": 7,
+        "SlotId": 1
+      },
+      {
+        "Name": "Sophia (Reunion)",
+        "ItemId": 1,
+        "SlotId": 2
+      },
+      {
+        "Name": "Buggy (Reunion)",
+        "ItemId": 8,
+        "SlotId": 3
+      }
+    ]
+  },
+  {
+    "Name": "First Campaign",
+    "ApId": 971110603,
+    "BaseAddr": 30245640,
+    "BuildingId": 3,
+    "Items": [
+      {
+        "Name": "Horserider (Campaign)",
+        "ItemId": 9,
+        "SlotId": 0
+      },
+      {
+        "Name": "Sword (Campaign)",
+        "ItemId": 10,
+        "SlotId": 1
+      },
+      {
+        "Name": "Wizard (Campaign)",
+        "ItemId": 11,
+        "SlotId": 2
+      },
+      {
+        "Name": "Father (Campaign)",
+        "ItemId": 0,
+        "SlotId": 3
+      },
+      {
+        "Name": "Crown (Campaign)",
+        "ItemId": 6,
+        "SlotId": 4
+      }
+    ]
+  },
+  {
+    "Name": "Menace of the West",
+    "ApId": 971110604,
+    "BaseAddr": 30245664,
+    "BuildingId": 4,
+    "Items": [
+      {
+        "Name": "Wizard (Menace)",
+        "ItemId": 11,
+        "SlotId": 0
+      },
+      {
+        "Name": "The Broken Sword (Menace)",
+        "ItemId": 25,
+        "SlotId": 1
+      },
+      {
+        "Name": "Horserider (Menace)",
+        "ItemId": 9,
+        "SlotId": 2
+      },
+      {
+        "Name": "Castle (Menace)",
+        "ItemId": 4,
+        "SlotId": 3
+      },
+      {
+        "Name": "Sophia (Menace)",
+        "ItemId": 1,
+        "SlotId": 4
+      }
+    ]
+  },
+  {
+    "Name": "The Deal",
+    "ApId": 971110605,
+    "BaseAddr": 30245688,
+    "BuildingId": 5,
+    "Items": [
+      {
+        "Name": "Fort (The Deal)",
+        "ItemId": 12,
+        "SlotId": 0
+      },
+      {
+        "Name": "The Broken Sword (The Deal)",
+        "ItemId": 25,
+        "SlotId": 1
+      },
+      {
+        "Name": "Black Robed Man (The Deal)",
+        "ItemId": 13,
+        "SlotId": 2
+      },
+      {
+        "Name": "Bloody Agreement (The Deal)",
+        "ItemId": 14,
+        "SlotId": 3
+      }
+    ]
+  },
+  {
+    "Name": "Dark Power",
+    "ApId": 971110606,
+    "BaseAddr": 30245712,
+    "BuildingId": 6,
+    "Items": [
+      {
+        "Name": "Black Blood (Dark Power)",
+        "ItemId": 15,
+        "SlotId": 0
+      },
+      {
+        "Name": "Light (Dark Power)",
+        "ItemId": 16,
+        "SlotId": 1
+      },
+      {
+        "Name": "Wizard (Dark Power)",
+        "ItemId": 11,
+        "SlotId": 2
+      },
+      {
+        "Name": "Castle (Dark Power)",
+        "ItemId": 4,
+        "SlotId": 3
+      },
+      {
+        "Name": "Sophia (Dark Power)",
+        "ItemId": 1,
+        "SlotId": 4
+      }
+    ]
+  },
+  {
+    "Name": "The Assassin",
+    "ApId": 971110607,
+    "BaseAddr": 30245736,
+    "BuildingId": 7,
+    "Items": [
+      {
+        "Name": "Castle (Assassin)",
+        "ItemId": 4,
+        "SlotId": 0
+      },
+      {
+        "Name": "Wine (Assassin)",
+        "ItemId": 17,
+        "SlotId": 1
+      },
+      {
+        "Name": "Moon (Assassin)",
+        "ItemId": 4,
+        "SlotId": 2
+      },
+      {
+        "Name": "Sophia (Assassin)",
+        "ItemId": 1,
+        "SlotId": 3
+      },
+      {
+        "Name": "Door (Assassin)",
+        "ItemId": 18,
+        "SlotId": 4
+      },
+      {
+        "Name": "Assassin (Assassin)",
+        "ItemId": 19,
+        "SlotId": 5
+      }
+    ]
+  },
+  {
+    "Name": "Must be Protected",
+    "ApId": 971110608,
+    "BaseAddr": 30245760,
+    "BuildingId": 8,
+    "Items": [
+      {
+        "Name": "Sophia (Protected)",
+        "ItemId": 1,
+        "SlotId": 0
+      },
+      {
+        "Name": "Knife (Protected)",
+        "ItemId": 20,
+        "SlotId": 1
+      },
+      {
+        "Name": "Bloody Dress (Protected)",
+        "ItemId": 21,
+        "SlotId": 2
+      }
+    ]
+  },
+  {
+    "Name": "Birth of the Demon",
+    "ApId": 971110609,
+    "BaseAddr": 30245784,
+    "BuildingId": 9,
+    "Items": [
+      {
+        "Name": "Castle (Demon)",
+        "ItemId": 4,
+        "SlotId": 0
+      },
+      {
+        "Name": "Dark Cloud (Demon)",
+        "ItemId": 22,
+        "SlotId": 1
+      },
+      {
+        "Name": "Black Blood (Demon)",
+        "ItemId": 15,
+        "SlotId": 2
+      }
+    ]
+  },
+  {
+    "Name": "Things Lost",
+    "ApId": 971110610,
+    "BaseAddr": 30245808,
+    "BuildingId": 10,
+    "Items": [
+      {
+        "Name": "Ruined Castle (Things Lost)",
+        "ItemId": 23,
+        "SlotId": 0
+      },
+      {
+        "Name": "Grave (Things Lost)",
+        "ItemId": 24,
+        "SlotId": 1
+      },
+      {
+        "Name": "The Broken Sword (Things Lost)",
+        "ItemId": 25,
+        "SlotId": 2
+      }
+    ]
+  },
+  {
+    "Name": "Departure",
+    "ApId": 971110611,
+    "BaseAddr": 30245832,
+    "BuildingId": 11,
+    "Items": [
+      {
+        "Name": "Sandglass (Departure)",
+        "ItemId": 26,
+        "SlotId": 0
+      },
+      {
+        "Name": "Prophet (Departure)",
+        "ItemId": 27,
+        "SlotId": 1
+      },
+      {
+        "Name": "Sword (Departure)",
+        "ItemId": 10,
+        "SlotId": 2
+      },
+      {
+        "Name": "Book of Curses (Departure)",
+        "ItemId": 28,
+        "SlotId": 3
+      }
+    ]
+  }
+]

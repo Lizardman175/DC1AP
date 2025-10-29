@@ -6,11 +6,11 @@ namespace DC1AP.Mem
 {
     internal class CharFuncs
     {
-        private static Boolean xiao = false;
-        private static Boolean goro = false;
-        private static Boolean ruby = false;
-        private static Boolean ungaga = false;
-        private static Boolean osmond = false;
+        private static bool xiao = false;
+        private static bool goro = false;
+        private static bool ruby = false;
+        private static bool ungaga = false;
+        private static bool osmond = false;
 
         // Indicates which weapon slot is equipped by the char 0-9.  FF for no weapon/not recruited.
         //private static uint ToanWeaponSlot = 0x01CDD88C;  // Never sets to FF, even at title screen
@@ -20,11 +20,25 @@ namespace DC1AP.Mem
         private static uint UngagaSlotAddr = 0x01CDD890;
         private static uint OsmondSlotAddr = 0x01CDD891;
 
-        internal static bool Xiao { get => xiao; }
-        internal static bool Goro { get => goro; }
-        internal static bool Ruby { get => ruby; }
-        internal static bool Ungaga { get => ungaga; }
-        internal static bool Osmond { get => osmond; }
+        internal static bool HaveChar(int index)
+        {
+            switch (index)
+            {
+                case (int)Towns.Norune:
+                    return xiao;
+                case (int)Towns.Matataki:
+                    return goro;
+                case (int)Towns.Queens:
+                    return ruby;
+                case (int)Towns.Muska:
+                    return ungaga;
+                case (int)Towns.Factory:
+                case (int)Towns.Castle:
+                    return osmond;
+                default:
+                    return false;
+            }
+        }
 
         internal static void Init()
         {
@@ -46,32 +60,29 @@ namespace DC1AP.Mem
             }
             else goro = true;
 
-            // The else fallthrough if Options fails shouldn't affect anything for the randomzier on these checks.
             if (Memory.ReadByte(RubySlotAddr) == 0xff)
             {
-                if (Options.Goal > 2)
+                if (Options.Goal >= (int) Towns.Queens + 1)
                     Memory.MonitorAddressForAction<Byte>(RubySlotAddr, () => RubyGained(), (o) => { return o != 0xff; });
+                else ruby = true;
             }
-            else ruby = true;
 
             if (Memory.ReadByte(UngagaSlotAddr) == 0xff)
             {
-                if (Options.Goal > 3)
+                if (Options.Goal >= (int) Towns.Muska + 1)
                     Memory.MonitorAddressForAction<Byte>(UngagaSlotAddr, () => UngagaGained(), (o) => { return o != 0xff; });
+                else ungaga = true;
             }
-            else ungaga = true;
 
             if (Memory.ReadByte(OsmondSlotAddr) == 0xff)
             {
-                if (Options.Goal > 4)
+                if (Options.Goal >= (int)Towns.Factory + 1)
                     Memory.MonitorAddressForAction<Byte>(OsmondSlotAddr, () => OsmondGained(), (o) => { return o != 0xff; });
+                else osmond = true;
             }
-            else osmond = true;
         }
 
         #region CharUnlocks
-        // Unlock things based on the player gaining chars and the YAML options.
-
         /// <summary>
         /// When the player recruits Xiao, give them Matataki & Queens access, back of DBC (conditional)
         /// </summary>
@@ -87,7 +98,7 @@ namespace DC1AP.Mem
 
                 Memory.WriteByte(MiscAddrs.MapFlagAddr, 0x01);
 
-                Weapons.GiveCharWeapon(1);
+                Weapons.GiveCharWeapon((int)Towns.Norune + 1);
             }
             else
                 Memory.MonitorAddressForAction<Byte>(XiaoSlotAddr, () => XiaoGained(), (o) => { return o != 0xff; });
@@ -109,7 +120,7 @@ namespace DC1AP.Mem
                     Memory.WriteByte(MiscAddrs.QueensCountAddr, 1);
                 }
 
-                Weapons.GiveCharWeapon(2);
+                Weapons.GiveCharWeapon((int)Towns.Matataki + 1);
             }
             else
                 Memory.MonitorAddressForAction<Byte>(GoroSlotAddr, () => GoroGained(), (o) => { return o != 0xff; });
@@ -132,7 +143,7 @@ namespace DC1AP.Mem
                     Memory.WriteByte(MiscAddrs.SMTExtCountAddr, 1);
                 }
 
-                Weapons.GiveCharWeapon(3);
+                Weapons.GiveCharWeapon((int)Towns.Queens + 1);
             }
             else
                 Memory.MonitorAddressForAction<Byte>(RubySlotAddr, () => RubyGained(), (o) => { return o != 0xff; });
@@ -154,7 +165,7 @@ namespace DC1AP.Mem
                     Memory.WriteByte(MiscAddrs.MFCountAddr, 1);
                 }
 
-                Weapons.GiveCharWeapon(4);
+                Weapons.GiveCharWeapon((int)Towns.Muska + 1);
             }
             else
                 Memory.MonitorAddressForAction<Byte>(UngagaSlotAddr, () => UngagaGained(), (o) => { return o != 0xff; });
@@ -175,7 +186,7 @@ namespace DC1AP.Mem
                     Memory.WriteByte(MiscAddrs.DHCCountAddr, 1);
                 }
 
-                Weapons.GiveCharWeapon(5);
+                Weapons.GiveCharWeapon((int)Towns.Factory + 1);
             }
             else
                 Memory.MonitorAddressForAction<Byte>(OsmondSlotAddr, () => OsmondGained(), (o) => { return o != 0xff; });
@@ -183,4 +194,3 @@ namespace DC1AP.Mem
         #endregion
     }
 }
-

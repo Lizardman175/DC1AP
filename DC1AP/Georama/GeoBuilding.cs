@@ -125,13 +125,13 @@ namespace DC1AP.Georama
 
                 // If there isn't an item set in the item's slot, put it there.  Otherwise, add it to the player's inventory.
                 if (Memory.ReadShort(itemAddr) == 0)
-                {
                     Memory.Write(itemAddr, (short)1);
-                }
                 else
-                {
                     MemFuncs.GiveGeoItem(town, (short)item.ItemId);
-                }
+
+                // Skip having to view the d6 events after getting the last item
+                if (town == Towns.Castle && buildingValue == Items.Length)
+                    EventMasks.SetD6Flag(BuildingId);
 
                 buildingValue++;
 
