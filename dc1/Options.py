@@ -3,11 +3,11 @@ from Options import Choice, Toggle, PerGameCommonOptions, Range, Visibility
 
 
 class Goal(Range):
-    """Select Dungeon from 2-6 to be the goal.  Currently only 2-5 are supported."""
+    """Select Dungeon from 2-6 to be the goal."""
     display_name = "Boss Goal"
-    default = 5
+    default = 6
     range_start = 2
-    range_end = 5
+    range_end = 6
 
 class AllBosses(Toggle):
     """Requires defeating every boss up to the goal boss in order to finish the game."""

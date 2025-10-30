@@ -21,6 +21,14 @@ namespace DC1AP.Constants
         MuskaRobot = 5
     }
 
+    internal enum ItemCategory
+    {
+        Inventory = 0,
+        Weapon,
+        Attachment,
+        FactoryGeo // For removing the Sun Sphere
+    }
+
     internal class MiscConstants
     {
         internal const int BaseId = 971_110_000;
@@ -49,6 +57,10 @@ namespace DC1AP.Constants
         internal const short MatatakiReqRiverCount = 5;
         internal const short MatatakiBridgeRiverCount = 6;
         internal const short NoruneBridgeRiverCount = 3;
+
+        // TODO temp until we have all item IDs
+        internal const short SunSphereItemId = 0x0F;
+        internal const short MoonOrbItemId = 0xF2;
 
         internal static int[] FactoryEventSkips = [3, 4, 9, 10];
     }

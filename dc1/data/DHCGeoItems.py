@@ -5,57 +5,51 @@ from worlds.dc1.Items import DarkCloudItem
 from worlds.dc1.Options import DarkCloudOptions
 
 ids = {
-    "Crowning Day": 971112000,
-    "Night of the Ceremony": 971112001,
-    "Reunion in the Storm": 971112002,
-    "First Campaign": 971112003,
-    "Menace of the West": 971112004,
-    "The Deal": 971112005,
-    "Dark Power": 971112006,
-    "The Assassin": 971112007,
-    "Must be Protected": 971112008,
-    "Birth of the Demon": 971112009,
-    "Things Lost": 971112010,
-    "Departure": 971112011,
-
-    "Father": 971112040,
-    "Sophia": 971112041,
-    "Bed": 971112042,
-    "Moon": 971112043,
-    "Castle": 971112044,
-    "Memories Torch": 971112045,
-    "Crown": 971112046,
-    "Minister": 971112047,
-    "Buggy": 971112048,
-    "Horserider": 971112049,
-    "Sword": 971112050,
-    "Wizard": 971112051,
-    "Fort": 971112052,
-    "Black Robed Man": 971112053,
-    "Bloody Agreement": 971112054,
-    "Black Blood": 971112055,
-    "Light": 971112056,
-    "Wine": 971112057,
-    "Door": 971112058,
-    "Assassin": 971112059,
-    "Knife": 971112060,
-    "Bloody Dress": 971112061,
-    "Dark Cloud": 971112062,
-    "Ruined Castle": 971112063,
-    "Grave": 971112064,
-    "The Broken Sword": 971112065,
-    "Sandglass": 971112066,
-    "Prophet": 971112067,
-    "Book of Curses": 971112068
+    "Progressive Crowning Day": 971110600,
+    "Progressive Ceremony": 971110601,
+    "Progressive Reunion": 971110602,
+    "Progressive Campaign": 971110603,
+    "Progressive Menace": 971110604,
+    "Progressive The Deal": 971110605,
+    "Progressive Dark Power": 971110606,
+    "Progressive Assassin": 971110607,
+    "Progressive Protected": 971110608,
+    "Progressive Demon": 971110609,
+    "Progressive Things Lost": 971110610,
+    "Progressive Departure": 971110611,
   }
+
+cday_ids = ["Progressive Crowning Day", "Progressive Crowning Day",
+            "Progressive Crowning Day", "Progressive Crowning Day"]
+ceremony_ids = ["Progressive Ceremony", "Progressive Ceremony", "Progressive Ceremony",
+                "Progressive Ceremony", "Progressive Ceremony", "Progressive Ceremony"]
+reunion_ids = ["Progressive Reunion", "Progressive Reunion", "Progressive Reunion",
+               "Progressive Reunion", "Progressive Reunion"]
+campaign_ids = ["Progressive Campaign", "Progressive Campaign", "Progressive Campaign",
+                "Progressive Campaign", "Progressive Campaign", "Progressive Campaign",]
+menace_ids = ["Progressive Menace", "Progressive Menace", "Progressive Menace",
+              "Progressive Menace", "Progressive Menace", "Progressive Menace",]
+deal_ids = ["Progressive The Deal", "Progressive The Deal", "Progressive The Deal",
+            "Progressive The Deal", "Progressive The Deal"]
+power_ids = ["Progressive Dark Power", "Progressive Dark Power", "Progressive Dark Power",
+             "Progressive Dark Power", "Progressive Dark Power", "Progressive Dark Power"]
+assassin_ids = ["Progressive Assassin", "Progressive Assassin", "Progressive Assassin", "Progressive Assassin",
+                "Progressive Assassin", "Progressive Assassin", "Progressive Assassin"]
+prot_ids = ["Progressive Protected", "Progressive Protected", "Progressive Protected", "Progressive Protected"]
+demon_ids = ["Progressive Demon", "Progressive Demon", "Progressive Demon", "Progressive Demon"]
+things_ids = ["Progressive Things Lost", "Progressive Things Lost",
+              "Progressive Things Lost", "Progressive Things Lost"]
+departure_ids = ["Progressive Departure", "Progressive Departure", "Progressive Departure",
+                 "Progressive Departure", "Progressive Departure"]
 
 def create_castle_atla(options: DarkCloudOptions, player: int) -> List["DarkCloudItem"]:
     """Create atla items for Dark Heaven Castle."""
-    # DarkCloudWorld.item_name_to_id += ids
     items = []
+    required = (cday_ids + ceremony_ids + reunion_ids + campaign_ids + menace_ids + deal_ids + power_ids +
+                assassin_ids + prot_ids + demon_ids + things_ids + departure_ids)
+
     # All castle atla are required for the genie fight
-    # TODO need duplicates for dupe items, so still need more work here
-    for i in ids:
+    for i in required:
         items.append(DarkCloudItem(i, ItemClassification.progression, ids[i], player))
 
     return items

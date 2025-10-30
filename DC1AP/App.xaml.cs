@@ -184,12 +184,12 @@ namespace DC1AP
         {
             String gameId = "BASCUS-97111dkcloud";
 
-            GenericGameClient client = new GenericGameClient("pcsx2-qt");
+            GenericGameClient client = new("pcsx2-qt");
             try
             {
                 client.Connect();
             }
-            catch (System.ArgumentException)
+            catch (ArgumentException)
             {
                 Log.Logger.Error("PCSX2 not running, open PCSX2 before connecting!");
                 Context.ConnectButtonEnabled = true;
@@ -245,7 +245,7 @@ namespace DC1AP
             // Skip needing Yaya to dance on your head if doing Saia once the building event viewed flag is set.
             if (Options.Goal >= 3 && !EventMasks.YayaDone())
             {
-                Memory.MonitorAddressForAction<short>(GeoAddrs.YayaBldEventFlag, () => EventMasks.SkipYaya(), (o) => { return o >= 1; });
+                Memory.MonitorAddressForAction<short>(GeoAddrs.YayaBldEventFlag, EventMasks.SkipYaya, (o) => { return o >= 1; });
             }
 
             PlayerState.ValidGameState = true;
@@ -293,7 +293,7 @@ namespace DC1AP
                         else
                         {
                             int value = (i + 1) * 100;
-                            Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(mask), (o) => { return o == (short)value; });
+                            Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(mask), (o) => { return o == (short) value; });
                         }
                     }
                 }
@@ -311,12 +311,29 @@ namespace DC1AP
         /// <summary>
         /// Mask the boss kills into the goal byte.
         /// </summary>
-        /// <param name="value">Value with bit set for killed boss.</param>
-        private static void AddBossKill(byte value)
+        /// <param name="mask">Bit to set for killed boss.</param>
+        private static void AddBossKill(byte mask)
         {
             byte b = Memory.ReadByte(OpenMem.GoalAddr);
-            b |= value;
+            b |= mask;
             Memory.WriteByte(OpenMem.GoalAddr, b);
+
+            // Take away the useless Moon Orb item since we already have Queens access
+            if (mask == 1 << (int)Towns.Queens)
+            {
+                new Thread(() => ItemQueue.RemoveItemLoop(MiscConstants.MoonOrbItemId, ItemCategory.Inventory))
+                {
+                    IsBackground = true
+                }.Start();
+            }
+            // Don't want the player to be able to activate the giant as it will remove miracle chests.
+            else if (mask == 1 << (int)Towns.Factory && Options.MiracleSanity)
+            {
+                new Thread(() => ItemQueue.RemoveItemLoop(MiscConstants.SunSphereItemId, ItemCategory.FactoryGeo))
+                {
+                    IsBackground = true
+                }.Start();
+            }
         }
         #endregion
 
@@ -333,7 +350,7 @@ namespace DC1AP
             GeoInvMgmt.GiveItem(e.Item.Id);
         }
 
-        private void Client_MessageReceived(object? sender, Archipelago.Core.Models.MessageReceivedEventArgs e)
+        private void Client_MessageReceived(object? sender, MessageReceivedEventArgs e)
         {
             if (e.Message.Parts.Any(x => x.Text == "[Hint]: "))
             {
@@ -342,14 +359,14 @@ namespace DC1AP
             Log.Logger.Information(JsonConvert.SerializeObject(e.Message));
         }
 
-        private static void LogItem(Archipelago.Core.Models.Item item)
+        private static void LogItem(Item item)
         {
-            var messageToLog = new LogListItem(new List<TextSpan>()
-            {
+            var messageToLog = new LogListItem(
+            [
                 new TextSpan(){Text = $"[{item.Id.ToString()}] -", TextColor = Color.FromRgb(255, 255, 255)},
                 new TextSpan(){Text = $"{item.Name}", TextColor = Color.FromRgb(200, 255, 200)},
                 //new TextSpan(){Text = $"x{item.Quantity.ToString()}", TextColor = Color.FromRgb(200, 255, 200)}
-            });
+            ]);
             lock (_lockObject)
             {
                 Application.Current.Dispatcher.DispatchAsync(() =>
@@ -367,7 +384,7 @@ namespace DC1AP
             {
                 return; //Hint already in list
             }
-            List<TextSpan> spans = new List<TextSpan>();
+            List<TextSpan> spans = [];
             foreach (var part in message.Parts)
             {
                 spans.Add(new TextSpan() { Text = part.Text, TextColor = Color.FromRgb(part.Color.R, part.Color.G, part.Color.B) });

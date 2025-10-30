@@ -39,8 +39,8 @@ class DarkCloudWorld(World):
     item_name_to_id = {}
     location_name_to_id = {}
 
-    for i in range(5):
-        item_name_to_id.update(geo_class[i].ids)
+    for i in geo_class:
+        item_name_to_id.update(i.ids)
 
     dungeon_locations = json.loads(pkgutil.get_data(__name__, "data/atla_locations.json").decode())
     for i in dungeon_locations:
@@ -181,9 +181,9 @@ class DarkCloudWorld(World):
         set_rule(self.multiworld.get_entrance("Muska -> SMT2", self.player),
                  lambda state: rm.ungaga_available(state, self.player))
         set_rule(self.multiworld.get_entrance("Norune -> Factory", self.player),
-                 lambda state: rm.goro_available(state, self.player))
+                 lambda state: rm.ungaga_available(state, self.player))
         set_rule(self.multiworld.get_entrance("Factory -> MS1", self.player),
-                 lambda state: rm.goro_available(state, self.player))
+                 lambda state: rm.ungaga_available(state, self.player))
         set_rule(self.multiworld.get_entrance("Factory -> MS2", self.player),
                  lambda state: rm.osmond_available(state, self.player))
         set_rule(self.multiworld.get_entrance("Norune -> DHC", self.player),
