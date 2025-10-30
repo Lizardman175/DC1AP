@@ -14,6 +14,12 @@ namespace DC1AP.Mem
         internal static uint DialogAddr8 = 0x01CE43B8;
         internal static uint DialogAddr9 = 0x01CE43AA;
 
+        // Does more than just shipwreck, but that's the only thing we interact with it for currently
+        private static uint ShipwreckKeyAddr = 0x01CE43AB;
+        private const byte ShipwreckKeyValue = 0xFF - 0x10;
+
+        // 01CE43AF Boss kill flag for Joe: sets to 0x01
+
         // Flags for last dungeon events viewed.
         // 0x40 = crowning day, 0x80 = ceremony
         private static uint EastKingStoryAddr1 = 0x01CE43C4;
@@ -61,10 +67,10 @@ namespace DC1AP.Mem
             OrMask(DialogAddr7, 0x07);
             // TODO need to track down more flags for the first few convos.
             // Muska Lacka dialog.  0x04 and 0x08 are the Theo/Ungaga dialogs. 0x10 is the gol/sil convo on floor 9, 0x20 and 0x40 are gol and sil being dead respectively.
-            OrMask(DialogAddr8, 0x08);
+            OrMask(DialogAddr8, 0x0C);
             // Addr8+1 goes to 0x10 for Osmond scene
-            // Factory entrance sequence
-            OrMask(DialogAddr9, 0x40);
+            
+            OrMask(DialogAddr9, 0x40); // Factory entrance sequence
             OrMask(DialogAddr3, 0x08); // Skip the pre robot battle dialog. (doesn't actually skip it?)
             OrMask(DialogAddr3, 0x10); // Genie/Robot fight
             OrMask(DialogAddr3, 0x80); // Skip initial DHC dialog
@@ -93,6 +99,13 @@ namespace DC1AP.Mem
             byte tempMask = Memory.ReadByte(addr);
             tempMask |= mask;
             Memory.WriteByte(addr, tempMask);
+        }
+
+        internal static void ClearShipwreckKey()
+        {
+            byte tempMask = Memory.ReadByte(ShipwreckKeyAddr);
+            tempMask &= ShipwreckKeyValue;
+            Memory.WriteByte(ShipwreckKeyAddr, tempMask);
         }
 
         internal static void SetD6Flag(int buildingId)

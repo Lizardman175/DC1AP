@@ -64,22 +64,22 @@ namespace DC1AP.Mem
             {
                 if (Options.Goal >= (int) Towns.Queens + 1)
                     Memory.MonitorAddressForAction<Byte>(RubySlotAddr, () => RubyGained(), (o) => { return o != 0xff; });
-                else ruby = true;
             }
+            else ruby = true;
 
             if (Memory.ReadByte(UngagaSlotAddr) == 0xff)
             {
                 if (Options.Goal >= (int) Towns.Muska + 1)
                     Memory.MonitorAddressForAction<Byte>(UngagaSlotAddr, () => UngagaGained(), (o) => { return o != 0xff; });
-                else ungaga = true;
             }
+            else ungaga = true;
 
             if (Memory.ReadByte(OsmondSlotAddr) == 0xff)
             {
                 if (Options.Goal >= (int)Towns.Factory + 1)
                     Memory.MonitorAddressForAction<Byte>(OsmondSlotAddr, () => OsmondGained(), (o) => { return o != 0xff; });
-                else osmond = true;
             }
+            else osmond = true;
         }
 
         #region CharUnlocks
@@ -91,7 +91,7 @@ namespace DC1AP.Mem
             if (PlayerState.PlayerReady())
             {
                 xiao = true;
-                if (Options.OpenDungeon)
+                if (Options.OpenDungeon && Memory.ReadByte(MiscAddrs.FloorCountAddrs[(int)Towns.Norune]) != 0xFF)
                 {
                     Memory.WriteByte(MiscAddrs.FloorCountAddrs[(int)Towns.Norune], MiscAddrs.FloorCountRear[(int)Towns.Norune]);
                 }
@@ -110,7 +110,7 @@ namespace DC1AP.Mem
             if (PlayerState.PlayerReady())
             {
                 goro = true;
-                if (Options.OpenDungeon)
+                if (Options.OpenDungeon && Memory.ReadByte(MiscAddrs.FloorCountAddrs[(int)Towns.Matataki]) != 0xFF)
                 {
                     Memory.WriteByte(MiscAddrs.FloorCountAddrs[(int)Towns.Matataki], MiscAddrs.FloorCountRear[(int)Towns.Matataki]);
                 }
@@ -131,7 +131,7 @@ namespace DC1AP.Mem
             if (PlayerState.PlayerReady())
             {
                 ruby = true;
-                if (Options.OpenDungeon)
+                if (Options.OpenDungeon && Memory.ReadByte(MiscAddrs.FloorCountAddrs[(int)Towns.Queens]) != 0xFF)
                 {
                     // -1 so we don't add the boss floor, requiring the player to get the key.
                     Memory.WriteByte(MiscAddrs.FloorCountAddrs[(int)Towns.Queens], (byte)(MiscAddrs.FloorCountRear[(int)Towns.Queens] - 1));
@@ -154,7 +154,7 @@ namespace DC1AP.Mem
             if (PlayerState.PlayerReady())
             {
                 ungaga = true;
-                if (Options.OpenDungeon)
+                if (Options.OpenDungeon && Memory.ReadByte(MiscAddrs.FloorCountAddrs[(int)Towns.Muska]) != 0xFF)
                 {
                     Memory.WriteByte(MiscAddrs.FloorCountAddrs[(int)Towns.Muska], MiscAddrs.FloorCountRear[(int)Towns.Muska]);
                 }
@@ -176,7 +176,7 @@ namespace DC1AP.Mem
             if (PlayerState.PlayerReady())
             {
                 osmond = true;
-                if (Options.OpenDungeon)
+                if (Options.OpenDungeon && Memory.ReadByte(MiscAddrs.FloorCountAddrs[(int)Towns.Factory]) != 0xFF)
                 {
                     Memory.WriteByte(MiscAddrs.FloorCountAddrs[(int)Towns.Factory], MiscAddrs.FloorCountRear[(int)Towns.Factory]);
                 }
