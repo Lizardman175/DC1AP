@@ -46,13 +46,18 @@ class AbsMultiplier(Choice):
     default = 3
 
 class AutoBuild(Choice):
-    display_name = "Auto Build Buildings.  'Muska Only' auto builds only Muska Lacka for 100%"
+    """Automatically places building pieces as received.
+    Hundo places buildings for 100% town completion.
+    Any percent places only buildings with chests clustered similar to how speed runs place them.
+    Muska only auto builds only Muska Lacka for 100%, robot only the sun giant and muska/robot builds both."""
+    display_name = "Auto Build Buildings"
     option_off = 0
     option_any_percent = 1
     option_hundo = 2
     option_muska_only = 3
     option_robot_only = 4
     option_muska_robot_only = 5
+    default = 2
 
 # TODO death link.
 # class DeathLink(DeathLink):
