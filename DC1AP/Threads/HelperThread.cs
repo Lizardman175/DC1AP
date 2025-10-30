@@ -270,10 +270,15 @@ namespace DC1AP.Threads
                 // Set floor count based on dungeon flag/char recruits
                 if (Memory.ReadByte(MiscAddrs.FloorCountAddrs[dun]) == 0 && Options.OpenDungeon && Options.Goal > dun)
                 {
-                     if (CharFuncs.HaveChar(dun))
-                         Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], MiscAddrs.FloorCountRear[dun]);
-                     else
-                         Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], MiscAddrs.FloorCountFront[dun]);
+                    if (CharFuncs.HaveChar(dun))
+                    {
+                        byte floorCount = MiscAddrs.FloorCountRear[dun];
+                        if (dun == (int)Towns.Queens)
+                            floorCount--;
+                        Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], floorCount);
+                    }
+                    else
+                        Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], MiscAddrs.FloorCountFront[dun]);
                 }
 
                 atlaMap[dun] = dunAtla;

@@ -241,7 +241,6 @@ namespace DC1AP
 
             // Check for any missing items after a connect/reconnect
             ItemQueue.checkItems = true;
-
             // Skip needing Yaya to dance on your head if doing Saia once the building event viewed flag is set.
             if (Options.Goal >= 3 && !EventMasks.YayaDone())
             {
@@ -297,8 +296,6 @@ namespace DC1AP
                         }
                     }
                 }
-
-                Memory.MonitorAddressForAction<byte>(OpenMem.GoalAddr, () => Client.SendGoalCompletion(), (o) => { return Memory.ReadByte(OpenMem.GoalAddr) == bossKillTest; });
             }
             else
                 // For some reason, the Boss Kill Flag doesn't set for Utan so use the floor kill count instead
@@ -314,17 +311,27 @@ namespace DC1AP
         /// <param name="mask">Bit to set for killed boss.</param>
         private static void AddBossKill(byte mask)
         {
-            byte b = Memory.ReadByte(OpenMem.GoalAddr);
-            b |= mask;
-            Memory.WriteByte(OpenMem.GoalAddr, b);
+            byte bb = Memory.ReadByte(OpenMem.GoalAddr);
+            bb |= mask;
+            Memory.WriteByte(OpenMem.GoalAddr, bb);
 
-            // Take away the useless Moon Orb item since we already have Queens access
+            if (bb == bossKillTest)
+            {
+                Client.SendGoalCompletion();
+                return;
+            }
+
+            // Take away the useless Moon Orb item since we already have Muska Lacka access
             if (mask == 1 << (int)Towns.Queens)
             {
                 new Thread(() => ItemQueue.RemoveItemLoop(MiscConstants.MoonOrbItemId, ItemCategory.Inventory))
                 {
                     IsBackground = true
                 }.Start();
+
+                // Prevent the player from refighting the boss
+                Memory.WriteByte(MiscAddrs.FloorCountAddrs[(int)Towns.Queens], (byte)(MiscAddrs.FloorCountRear[(int)Towns.Queens] - 1));
+                EventMasks.ClearShipwreckKey();
             }
             // Don't want the player to be able to activate the giant as it will remove miracle chests.
             else if (mask == 1 << (int)Towns.Factory && Options.MiracleSanity)
@@ -333,6 +340,35 @@ namespace DC1AP
                 {
                     IsBackground = true
                 }.Start();
+            }
+
+            // If early bosses aren't yet defeated, lower the flag value so the player can't be locked out of earlier bosses.
+            if (mask > 1 << (int)Towns.Matataki)
+            {
+                if ((bb & 1) == 0)
+                {
+                    Memory.Write(MiscAddrs.BossKillAddr, (short)0);
+                    // Small edge case if the player leaves after the Curse fight before finishing the boat ride, need to monitor again for the boss re-fight potentially
+                    if (mask == 1 << (int)Towns.Muska)
+                    {
+                        int value = ((int)Towns.Muska + 1) * 100;
+                        Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(mask), (o) => { return o == (short)value; });
+                    }
+                }
+                else if ((bb & (1 << (int)Towns.Queens)) == 0)
+                {
+                    Memory.Write(MiscAddrs.BossKillAddr, (short)100);
+                    // Small edge case if the player leaves after the Curse fight before finishing the boat ride, need to monitor again for the boss re-fight potentially
+                    if (mask == 1 << (int)Towns.Muska)
+                    {
+                        int value = ((int)Towns.Muska + 1) * 100;
+                        Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(mask), (o) => { return o == (short)value; });
+                    }
+                }
+                else if ((bb & (1 << (int)Towns.Muska)) == 0)
+                {
+                    Memory.Write(MiscAddrs.BossKillAddr, (short)300);
+                }
             }
         }
         #endregion
