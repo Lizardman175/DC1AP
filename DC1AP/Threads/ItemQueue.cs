@@ -1,6 +1,7 @@
 using Archipelago.Core.Util;
 using DC1AP.Constants;
 using DC1AP.Georama;
+using DC1AP.Items;
 using DC1AP.Mem;
 using Serilog;
 using System.Collections.Concurrent;
@@ -80,6 +81,35 @@ namespace DC1AP.Threads
                     GeoBuildingQueue.Clear();
                     MsgQueue.Clear();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Waits until the player has the specified item then removes it from their inventory and exits.f
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="itemCat"></param>
+        internal static void RemoveItemLoop(short itemId, ItemCategory itemCat)
+        {
+            bool found = false;
+            while (!found)
+            {
+                if (!PlayerState.PlayerReady())
+                    break;
+
+                switch (itemCat)
+                {
+                    case ItemCategory.Inventory:
+                        found = InventoryMgmt.RemoveInvItem(itemId);
+                        break;
+                    case ItemCategory.FactoryGeo:
+                        found = InventoryMgmt.RemoveGeoItem(itemId, (int)Towns.Factory);
+                        break;
+                    default:
+                        found = true;
+                        break;
+                }
+                Thread.Sleep(500);
             }
         }
     }

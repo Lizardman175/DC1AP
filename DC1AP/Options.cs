@@ -1,14 +1,17 @@
 ﻿
+using DC1AP.Constants;
+
 namespace DC1AP
 {
     internal static class Options
     {
-        private static int goal = 3;
+        private static int goal = 6;
         private static float absMultiplier = 2f;
         private static bool openDungeon = true;
         private static bool allBosses = false;
         private static bool starterWeapons = false;
         private static bool miracleSanity = false;
+        private static AutobuildFlags autobuild = AutobuildFlags.Off;
 
         public static int Goal { get => goal; }
         public static float AbsMultiplier { get => absMultiplier; }
@@ -16,6 +19,7 @@ namespace DC1AP
         public static bool AllBosses { get => allBosses; }
         public static bool StarterWeapons { get => starterWeapons; }
         public static bool MiracleSanity { get => miracleSanity; }
+        internal static AutobuildFlags Autobuild { get => autobuild; }
 
         // used to test various values without generating a new multiworld
         static Options()
@@ -33,6 +37,10 @@ namespace DC1AP
             openDungeon = options["open_dungeon"].ToString() != "0";  // All floors logically accessible will be unlocked
             //miracleSanity = options["miracle_chests"].ToString() != "0";  // Shuffle in miracle chests
             starterWeapons = options["starter_weapons"].ToString() != "0";  // All floors logically accessible will be unlocked
+
+            // Backwards compatibility if statement
+            if (options.TryGetValue("auto_build", out object? value))
+                autobuild = (AutobuildFlags)Int32.Parse(value.ToString());
         }
     }
 }

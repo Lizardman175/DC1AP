@@ -22,19 +22,19 @@ namespace DC1AP.Constants
         //internal const uint AttachStart = 0x01CE1A48;
 
         // Set to 1 to enable the world map
-        internal const uint MapFlagAddr = 0x1CDD86C;
+        internal const uint MapFlagAddr = 0x01CDD86C;
 
         // Addresses for visit count of each town/dungeon on the map.  value >0 makes them show up on the map (curious what negative numbers would do)
         // Value > 0 also prevents dungeons from initializing by default.
         //internal const int NoruneCountAddr = 0x1CE7028; // Norune village counter (clearing it makes Norune unavailable; unless doing a non-standard start, don't edit!)
-        internal const uint DBCCountAddr = 0x1CE70C8; // DBC counter
+        internal const uint DBCCountAddr = 0x01CE70C8; // DBC counter
 
         // There is no value that will disable Matataki other than the map flag itself
-        internal const uint WOFCountAddr = 0x1CE70CA; // Wise owl forest
+        internal const uint WOFCountAddr = 0x01CE70CA; // Wise owl forest
 
         //internal const uint BrownbooCountAddr = 0x1CE7044; // Brownboo Village
 
-        internal const uint QueensCountAddr = 0x1CE702C;
+        internal const uint QueensCountAddr = 0x01CE702C;
         internal const uint SWCountAddr = 0x01CE70CC;
 
         internal const uint MuskaCountAddr = 0x01CE702E;
@@ -58,11 +58,11 @@ namespace DC1AP.Constants
         internal const uint SMTFloorCountAddr = 0x01CDD80E;
         internal const uint MSFloorCountAddr  = 0x01CDD80F;
         internal const uint DHCFloorCountAddr = 0x01CDD810;
-        internal const uint DSFloorCountAddr  = 0x01CDD811;
+        //internal const uint DSFloorCountAddr  = 0x01CDD811;
 
         internal static uint[] FloorCountAddrs = [DBCFloorCountAddr, WOFFloorCountAddr, SWFloorCountAddr, SMTFloorCountAddr, MSFloorCountAddr, DHCFloorCountAddr];
         // Floor counts are 0 indexed
-        internal static byte[] FloorCountFront = [7, 8, 8, 8, 7, 23];
+        internal static byte[] FloorCountFront = [ 7,  8,  8,  8,  7, 23];
         internal static byte[] FloorCountRear  = [14, 16, 17, 17, 14, 23];
 
         // 1 = Walking Mode, 2 = On Menu, 3 = Door Menu, 4 = Floor picker screen, 5 = Ally Quick Select,  7 = Next Floor Screen
@@ -105,10 +105,6 @@ namespace DC1AP.Constants
         internal const uint EnemyOffset = 0x0190;
         internal const uint FirstEnemy = 0x01E16BA0;
         internal const uint FirstEnemyAbsAddr = 0x01E16C50;
-
-        internal const uint InvMaxAddr = 0x01CDD8AC;  // Byte.  Can't exceed 100 or we run past the buffer.
-        internal const uint InvCurAddr = 0x01CDD8AD;  // Byte.  Next byte starts the active item shorts, followed by 3 shorts giving count of the active items per slot, then shorts for the other items.
-        internal const uint FirstItemDurationAddr = 0x001CDD988; // Short. 0 for most items. Duration for things like feathers, amulets. Gives value item restores as well for curatives but doesn't seem to do anything if changed. -1 or 0 for no item (sometimes ghost values as well. Seems to be from moving items from the active list with square?)
 
         //internal const uint ItemIdAddr = 0x01CFCCEC;  // Int. -1 for no item, anything else to indicate receipt of an item (only test with Atla so far)
         internal const uint AtlaOpeningFlagAddr = 0x002A3524;  // Byte. 0 when normally moving around dungeon, 1 when in opening Atla animation, 2 for atla item message box

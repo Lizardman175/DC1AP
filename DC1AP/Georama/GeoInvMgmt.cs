@@ -8,7 +8,6 @@ namespace DC1AP.Georama
     {
         private static readonly List<string> buildingFiles = ["NoruneBuildings.json", "MatatakiBuildings.json", "QueensBuildings.json",
                                                               "MuskaBuildings.json",  "FactoryBuildings.json",  "CastleBuildings.json"];
-        private static readonly List<GeoBuilding[]> buildings = [];
 
         /// <summary>
         /// Reads the .json for the building data
@@ -27,7 +26,7 @@ namespace DC1AP.Georama
                 string json = File.ReadAllText(filename);
                 GeoBuilding[]? jsonBuildings = JsonSerializer.Deserialize<GeoBuilding[]>(json, jOptions);
 
-                if (jsonBuildings != null) buildings.Add(jsonBuildings);
+                if (jsonBuildings != null) GeoBuilding.buildings[i] = jsonBuildings;
                 else Log.Logger.Error("Failed to read " + buildingFiles[i]);
             }
         }
@@ -37,12 +36,15 @@ namespace DC1AP.Georama
         /// </summary>
         internal static void InitBuildings()
         {
-            for (int i = 0; i < buildings.Count; i++)
+            for (int i = 0; i < Options.Goal; i++)
             {
-                foreach (GeoBuilding building in buildings[i])
+                GeoBuilding[]? buildings = GeoBuilding.buildings[i];
+                if (buildings == null) continue;
+
+                foreach (GeoBuilding building in buildings)
                 {
-                    if (!building.HasBuilding()) building.Init();
-                    building.ReadValues(i);
+                    building.Init(i);
+                    building.ReadValues();
                 }
             }
 
@@ -53,9 +55,10 @@ namespace DC1AP.Georama
         {
             bool added = false;
 
-            for (int i = 0; i < buildings.Count; i++)
+            for (int i = 0; i < Options.Goal; i++)
             {
-                GeoBuilding[] list = buildings[i];
+                GeoBuilding[] list = GeoBuilding.buildings[i];
+                if (list == null) continue;
 
                 foreach (GeoBuilding building in list)
                 {
@@ -80,9 +83,12 @@ namespace DC1AP.Georama
         /// </summary>
         internal static void VerifyItems()
         {
-            foreach (GeoBuilding[] buildingList in buildings)
+            foreach (GeoBuilding[]? buildingList in GeoBuilding.buildings)
+            {
+                if (buildingList == null) continue;
                 foreach (GeoBuilding building in buildingList)
                     building.CheckItems();
+            }
         }
     }
 }

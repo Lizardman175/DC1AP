@@ -7,10 +7,32 @@ namespace DC1AP.Mem
         internal static uint DialogAddr1 = 0x01CE43A8;
         internal static uint DialogAddr2 = 0x01CE43A9;
         internal static uint DialogAddr3 = 0x01CE43AC;
-        internal static uint DialogAddr4 = 0x01CE43AD;
+        internal static uint DialogAddr4 = 0x01CE43AD;  // 0x02 is releated to end game cutscenes
         internal static uint DialogAddr5 = 0x01CE43AE;
         internal static uint DialogAddr6 = 0x01CE43B4;
         internal static uint DialogAddr7 = 0x01CE43B5;
+        internal static uint DialogAddr8 = 0x01CE43B8;
+        internal static uint DialogAddr9 = 0x01CE43AA;
+
+        // Does more than just shipwreck, but that's the only thing we interact with it for currently
+        private static uint ShipwreckKeyAddr = 0x01CE43AB;
+        private const byte ShipwreckKeyValue = 0xFF - 0x10;
+
+        // 01CE43AF Boss kill flag for Joe: sets to 0x01
+
+        // Flags for last dungeon events viewed.
+        // 0x40 = crowning day, 0x80 = ceremony
+        private static uint EastKingStoryAddr1 = 0x01CE43C4;
+        // 0x01 = reunion, 0x02 = campaign, 0x04 = menace, 0x08 = Deal
+        // 0x10 = dark power, 0x20 = assassin, 0x40 = protected, 0x80 = demon 
+        private static uint EastKingStoryAddr2 = 0x01CE43C5;
+        // 0x01 = Things Lost, 0x02 = Departure 
+        private static uint EastKingStoryAddr3 = 0x01CE43C6;
+
+        internal static (uint, byte)[] D6StorySkip = [(EastKingStoryAddr1, 0x40), (EastKingStoryAddr1, 0x80),
+            (EastKingStoryAddr2, 0x01), (EastKingStoryAddr2, 0x02), (EastKingStoryAddr2, 0x04), (EastKingStoryAddr2, 0x08),
+            (EastKingStoryAddr2, 0x10), (EastKingStoryAddr2, 0x20), (EastKingStoryAddr2, 0x40), (EastKingStoryAddr2, 0x80),
+            (EastKingStoryAddr3, 0x01), (EastKingStoryAddr3, 0x02)];
 
         /*
          * Unused but known flags/values:
@@ -43,6 +65,15 @@ namespace DC1AP.Mem
             OrMask(DialogAddr6, 0xB0);
             // More of the dungeon tutorials I believe.  4 is the lock-on tutorial, 1 is charge attack upgrade
             OrMask(DialogAddr7, 0x07);
+            // TODO need to track down more flags for the first few convos.
+            // Muska Lacka dialog.  0x04 and 0x08 are the Theo/Ungaga dialogs. 0x10 is the gol/sil convo on floor 9, 0x20 and 0x40 are gol and sil being dead respectively.
+            OrMask(DialogAddr8, 0x0C);
+            // Addr8+1 goes to 0x10 for Osmond scene
+            
+            OrMask(DialogAddr9, 0x40); // Factory entrance sequence
+            OrMask(DialogAddr3, 0x08); // Skip the pre robot battle dialog. (doesn't actually skip it?)
+            OrMask(DialogAddr3, 0x10); // Genie/Robot fight
+            OrMask(DialogAddr3, 0x80); // Skip initial DHC dialog
         }
 
         private const byte yayaMask = 0x60;
@@ -68,6 +99,19 @@ namespace DC1AP.Mem
             byte tempMask = Memory.ReadByte(addr);
             tempMask |= mask;
             Memory.WriteByte(addr, tempMask);
+        }
+
+        internal static void ClearShipwreckKey()
+        {
+            byte tempMask = Memory.ReadByte(ShipwreckKeyAddr);
+            tempMask &= ShipwreckKeyValue;
+            Memory.WriteByte(ShipwreckKeyAddr, tempMask);
+        }
+
+        internal static void SetD6Flag(int buildingId)
+        {
+            (uint, byte) set = D6StorySkip[buildingId];
+            OrMask(set.Item1, set.Item2);
         }
     }
 }

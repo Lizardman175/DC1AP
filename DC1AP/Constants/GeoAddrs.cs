@@ -33,13 +33,21 @@ namespace DC1AP.Constants
 
         // town georama inventory.  Each of these is a short, default of -1 if empty.
         private const uint T1GeoInv = 0x01CD8E0C;
-        private const uint T2GeoInv = T1GeoInv + GeoInvOffset; // Matataki offset
-        private const uint T3GeoInv = T2GeoInv + GeoInvOffset; // Presumed Queens offset
-        private const uint T4GeoInv = T3GeoInv + GeoInvOffset; // Presumed ML offset
-        private const uint T5GeoInv = T4GeoInv + GeoInvOffset; // Presumed Factory offset
-        private const uint T6GeoInv = T5GeoInv + GeoInvOffset; // Presumed Last dungeon offset
+        private const uint T2GeoInv = 0x01CD8F0C; // Matataki
+        private const uint T3GeoInv = 0x01CD900C; // Queens
+        private const uint T4GeoInv = 0x01CD910C; // ML
+        private const uint T5GeoInv = 0x01CD920C; // Factory
+        private const uint T6GeoInv = 0x01CD930C; // Castle
 
         internal static readonly uint[] TownGeoInv = [T1GeoInv, T2GeoInv, T3GeoInv, T4GeoInv, T5GeoInv, T6GeoInv];
+
+        private const uint T1TownMap = 0x01CD4A64;
+        private const uint T2TownMap = 0x01CD561C;
+        private const uint T3TownMap = 0x01CD61D4;
+        private const uint T4TownMap = 0x01CD6D8C;
+        private const uint T5TownMap = 0x01CD7944;
+
+        internal static readonly uint[] TownMapAddrs = [T1TownMap, T2TownMap, T3TownMap, T4TownMap, T5TownMap];
 
         // Atla per floor memory start addr by dungeon.  4 bytes each.
         // -1 == uninit or no atla there.  -2 == available (also various >0 values for static floor atla).  -3 == collected

@@ -260,5 +260,226 @@
 
   "Leaning Tower": "Progressive Leaning Tower",
   "Tower Second Floor": "Progressive Leaning Tower",
-  "Tower Third Floor": "Progressive Leaning Tower"
+  "Tower Third Floor": "Progressive Leaning Tower",
+
+
+
+  "Chief's House": "Progressive Chief's House",
+  "Chief Bonka": "Progressive Chief's House",
+  "Chief Bonka's Mini Totem Pole": "Progressive Chief's House",
+  "Chief Bonka's Cabin 1": "Progressive Chief's House",
+  "Chief Bonka's Cabin 2": "Progressive Chief's House",
+
+  "Jibubu's House": "Progressive Jibubu's House",
+  "Jibubu's Stairway": "Progressive Jibubu's House",
+  "Jibubu": "Progressive Jibubu's House",
+  "Jibubu's Mini Totem Pole": "Progressive Jibubu's House",
+  "Jibubu's Cabin": "Progressive Jibubu's House",
+  "Jibubu's Hay": "Progressive Jibubu's House",
+
+  "Zabo's House": "Progressive Zabo's House",
+  "Zabo": "Progressive Zabo's House",
+  "Zabo's Mini Totem Pole": "Progressive Zabo's House",
+  "Zabo's Roof": "Progressive Zabo's House",
+  "Zabo's Odds & Ends": "Progressive Zabo's House",
+  "Zabo's Hay": "Progressive Zabo's House",
+
+  "3 Sisters' House": "Progressive 3 Sisters' House",
+  "Nagita": "Progressive 3 Sisters' House",
+  "Devia": "Progressive 3 Sisters' House",
+  "Mikara": "Progressive 3 Sisters' House",
+  "Sisters' Mini Totem Pole": "Progressive 3 Sisters' House",
+  "Sisters' Cabin": "Progressive 3 Sisters' House",
+  "Sisters' Odds & Ends": "Progressive 3 Sisters' House",
+
+  "Brooke's House": "Progressive Brooke's House",
+  "Brooke": "Progressive Brooke's House",
+  "Brooke's Mini Totem Pole": "Progressive Brooke's House",
+  "Brooke's Cabin": "Progressive Brooke's House",
+  "Brooke's Hay": "Progressive Brooke's House",
+  
+  "Enga's House": "Progressive Enga's House",
+  "Enga's Stairway": "Progressive Enga's House",
+  "Enga": "Progressive Enga's House",
+  "Enga's Mini Totem Pole": "Progressive Enga's House",
+  "Enga's Stairway Roof": "Progressive Enga's House",
+  "Enga's Odds & Ends": "Progressive Enga's House",
+  "Enga's Roof": "Progressive Enga's House",
+
+  "Prisoner's Cabin": "Progressive Prisoner's Cabin",
+  "Gron": "Progressive Prisoner's Cabin",
+  "Prisoner's Mini Totem Pole": "Progressive Prisoner's Cabin",
+  "Prisoner's Stairway": "Progressive Prisoner's Cabin",
+  "Prisoner's Sign": "Progressive Prisoner's Cabin",
+
+  "Toto's House": "Progressive Toto's House",
+  "Toto": "Progressive Toto's House",
+  "Toto's Mini Totem Pole": "Progressive Toto's House",
+  "Toto's Handle": "Progressive Toto's House",
+  "Toto's Odds & Ends": "Progressive Toto's House",
+  "Gosuke": "Progressive Toto's House",
+
+  "Totem Pole A": "Progressive Totem Pole A",
+  "Totem Pole A 2nd Head": "Progressive Totem Pole A",
+  "Totem Pole A 3rd Head": "Progressive Totem Pole A",
+
+  "Totem Pole B": "Progressive Totem Pole B",
+  "Totem Pole B 2nd Head": "Progressive Totem Pole B",
+  "Totem Pole B 3rd Head": "Progressive Totem Pole B",
+
+  "Totem Pole C": "Progressive Totem Pole C",
+  "Totem Pole C 2nd Head": "Progressive Totem Pole C",
+  "Totem Pole C 3rd Head": "Progressive Totem Pole C",
+
+  "Oasis": "Progressive Oasis",
+  "Oasis Tree 1": "Progressive Oasis",
+  "Oasis Tree 2": "Progressive Oasis",
+  "Oasis Tree 3": "Progressive Oasis",
+
+
+  "Parts HD": "Progressive Parts HD",
+  "Crown (HD)": "Progressive Parts HD",
+  "Eye (HD)": "Progressive Parts HD",
+
+  "Parts AMR": "Progressive Parts AMR",
+  "Elephant Emblem (AMR)": "Progressive Parts AMR",
+  "Mammoth Tusk (AMR)": "Progressive Parts AMR",
+  "Finger (AMR)": "Progressive Parts AMR",
+  "Ammonite (AMR)": "Progressive Parts AMR",
+  "Twisted Horn (AMR)": "Progressive Parts AMR",
+
+  "Parts AML": "Progressive Parts AML",
+  "Elephant Emblem (AML)": "Progressive Parts AML",
+  "Mammoth Tusk (AML)": "Progressive Parts AML",
+  "Finger (AML)": "Progressive Parts AML",
+  "Ammonite (AML)": "Progressive Parts AML",
+  "Twisted Horn (AML)": "Progressive Parts AML",
+
+  "Parts HGR": "Progressive Parts HGR",
+  "Big Urn (HGR)": "Progressive Parts HGR",
+  "Eagle Head (HGR)": "Progressive Parts HGR",
+  "Eagle Feather (HGR)": "Progressive Parts HGR",
+  "Amuleo": "Progressive Parts HGR",
+
+  "Parts HGL": "Progressive Parts HGL",
+  "Big Urn (HGL)": "Progressive Parts HGL",
+  "Eagle Head (HGL)": "Progressive Parts HGL",
+  "Eagle Feather (HGL)": "Progressive Parts HGL",
+  "Gotch": "Progressive Parts HGL",
+
+  "Parts HGR2": "Progressive Parts HGR2",
+  "Urn (HGR2)": "Progressive Parts HGR2",
+
+  "Parts HGL2": "Progressive Parts HGL2",
+  "Urn (HGL2)": "Progressive Parts HGL2",
+
+  "Parts CT": "Progressive Parts CT",
+  "Scale (CT)": "Progressive Parts CT",
+  "Crest Armor (CT)": "Progressive Parts CT",
+
+  "Parts WT": "Progressive Parts WT",
+  "Skirt (WT)": "Progressive Parts WT",
+  "Skull (WT)": "Progressive Parts WT",
+  "Buffalo's Horn (WT)": "Progressive Parts WT",
+
+  "Parts TIR": "Progressive Parts TIR",
+  "Urn (TIR)": "Progressive Parts TIR",
+  "Tomahon": "Progressive Parts TIR",
+
+  "Parts TIL": "Progressive Parts TIL",
+  "Urn (TIL)": "Progressive Parts TIL",
+  "Boon": "Progressive Parts TIL",
+
+  "Parts FTR": "Progressive Parts FTR",
+  "Big Urn (FTR)": "Progressive Parts FTR",
+  "Turtle Shell (FTR)": "Progressive Parts FTR",
+  "Spine of Shell (FTR)": "Progressive Parts FTR",
+  "Nail (FTR)": "Progressive Parts FTR",
+
+  "Parts FTL": "Progressive Parts FTL",
+  "Big Urn (FTL)": "Progressive Parts FTL",
+  "Turtle Shell (FTL)": "Progressive Parts FTL",
+  "Spine of Shell (FTL)": "Progressive Parts FTL",
+  "Nail (FTL)": "Progressive Parts FTL",
+
+  "Lookout": "Progressive Lookout",
+  "Lookout Ladder 1": "Progressive Lookout",
+  "Lookout Second Floor": "Progressive Lookout",
+  "Lookout Ladder 2": "Progressive Lookout",
+
+
+
+  "Crowning Day": "Progressive Crowning Day",
+  "Bed (Crowning Day)": "Progressive Crowning Day",
+  "Father (Crowning Day)": "Progressive Crowning Day",
+  "Crown (Crowning Day)": "Progressive Crowning Day",
+
+  "Night of the Ceremony": "Progressive Ceremony",
+  "Moon (Ceremony)": "Progressive Ceremony",
+  "Castle (Ceremony)": "Progressive Ceremony",
+  "Torch (Ceremony)": "Progressive Ceremony",
+  "Crown (Ceremony)": "Progressive Ceremony",
+  "Sophia (Ceremony)": "Progressive Ceremony",
+
+  "Reunion in the Storm": "Progressive Reunion",
+  "Bed (Reunion)": "Progressive Reunion",
+  "Minister (Reunion)": "Progressive Reunion",
+  "Sophia (Reunion)": "Progressive Reunion",
+  "Buggy (Reunion)": "Progressive Reunion",
+
+  "First Campaign": "Progressive Campaign",
+  "Horserider (Campaign)": "Progressive Campaign",
+  "Sword (Campaign)": "Progressive Campaign",
+  "Wizard (Campaign)": "Progressive Campaign",
+  "Father (Campaign)": "Progressive Campaign",
+  "Crown (Campaign)": "Progressive Campaign",
+
+  "Menace of the West": "Progressive Menace",
+  "Wizard (Menace)": "Progressive Menace",
+  "The Broken Sword (Menace)": "Progressive Menace",
+  "Horserider (Menace)": "Progressive Menace",
+  "Castle (Menace)": "Progressive Menace",
+  "Sophia (Menace)": "Progressive Menace",
+
+  "The Deal": "Progressive The Deal",
+  "Fort (The Deal)": "Progressive The Deal",
+  "The Broken Sword (The Deal)": "Progressive The Deal",
+  "Black Robed Man (The Deal)": "Progressive The Deal",
+  "Bloody Agreement (The Deal)": "Progressive The Deal",
+
+  "Dark Power": "Progressive Dark Power",
+  "Black Blood (Dark Power)": "Progressive Dark Power",
+  "Light (Dark Power)": "Progressive Dark Power",
+  "Wizard (Dark Power)": "Progressive Dark Power",
+  "Castle (Dark Power)": "Progressive Dark Power",
+  "Sophia (Dark Power)": "Progressive Dark Power",
+
+  "The Assassin": "Progressive Assassin",
+  "Castle (Assassin)": "Progressive Assassin",
+  "Wine (Assassin)": "Progressive Assassin",
+  "Moon (Assassin)": "Progressive Assassin",
+  "Sophia (Assassin)": "Progressive Assassin",
+  "Door (Assassin)": "Progressive Assassin",
+  "Assassin (Assassin)": "Progressive Assassin",
+
+  "Must be Protected": "Progressive Protected",
+  "Sophia (Protected)": "Progressive Protected",
+  "Knife (Protected)": "Progressive Protected",
+  "Bloody Dress (Protected)": "Progressive Protected",
+
+  "Birth of the Demon": "Progressive Demon",
+  "Castle (Demon)": "Progressive Demon",
+  "Dark Cloud (Demon)": "Progressive Demon",
+  "Black Blood (Demon)": "Progressive Demon",
+
+  "Things Lost": "Progressive Things Lost",
+  "Ruined Castle (Things Lost)": "Progressive Things Lost",
+  "Grave (Things Lost)": "Progressive Things Lost",
+  "The Broken Sword (Things Lost)": "Progressive Things Lost",
+
+  "Departure": "Progressive Departure",
+  "Sandglass (Departure)": "Progressive Departure",
+  "Prophet (Departure)": "Progressive Departure",
+  "Sword (Departure)": "Progressive Departure",
+  "Book of Curses (Departure)": "Progressive Departure"
 }

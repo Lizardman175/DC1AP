@@ -93,11 +93,6 @@ namespace DC1AP.Threads
 
                     CheckAtla();
 
-                    /*
-                     * Dungeon checks TODO:
-                     *  Atla collected: keep a map and compare against it. If an atla gets collected, send it out.  If a reload happens and the atla is already collected, clear it.
-                     *  Adjust atla height based on item quality
-                     */
                     if (Memory.ReadByte(MiscAddrs.InDungeonFlag) != 0xFF)
                     {
                         byte curDungeon = Memory.ReadByte(MiscAddrs.CurDungeon);
@@ -155,7 +150,6 @@ namespace DC1AP.Threads
                 byte curDun = Memory.ReadByte(MiscAddrs.CurDungeon);
                 if (curDun < Options.Goal && atlaMap[curDun] != null)
                 {
-                    // TODO this doesn't have empty entries for each floor yet
                     List<Atla> dunAtla = atlaMap[curDun];
                     foreach (Atla atla in dunAtla)
                     {
@@ -274,45 +268,17 @@ namespace DC1AP.Threads
                 }
 
                 // Set floor count based on dungeon flag/char recruits
-                // TODO should CharFuncs.cs do this instead? Probably not for front floor counts?
-                // TODO loop once char bools are in an array
-                if (Memory.ReadByte(MiscAddrs.FloorCountAddrs[dun]) == 0 && Options.OpenDungeon)
+                if (Memory.ReadByte(MiscAddrs.FloorCountAddrs[dun]) == 0 && Options.OpenDungeon && Options.Goal > dun)
                 {
-                    if (dun == (int)Towns.Norune)
+                    if (CharFuncs.HaveChar(dun))
                     {
-                        if (CharFuncs.Xiao)
-                            Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], MiscAddrs.FloorCountRear[dun]);
-                        else
-                            Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], MiscAddrs.FloorCountFront[dun]);
+                        byte floorCount = MiscAddrs.FloorCountRear[dun];
+                        if (dun == (int)Towns.Queens)
+                            floorCount--;
+                        Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], floorCount);
                     }
-                    else if (dun == (int)Towns.Matataki)
-                    {
-                        if (CharFuncs.Goro)
-                            Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], MiscAddrs.FloorCountRear[dun]);
-                        else
-                            Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], MiscAddrs.FloorCountFront[dun]);
-                    }
-                    else if (Options.Goal > 2 && dun == (int)Towns.Queens)
-                    {
-                        if (CharFuncs.Ruby)
-                            Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], MiscAddrs.FloorCountRear[dun]);
-                        else
-                            Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], MiscAddrs.FloorCountFront[dun]);
-                    }
-                    else if (Options.Goal > 3 && dun == (int)Towns.Muska)
-                    {
-                        if (CharFuncs.Ungaga)
-                            Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], MiscAddrs.FloorCountRear[dun]);
-                        else
-                            Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], MiscAddrs.FloorCountFront[dun]);
-                    }
-                    else if (Options.Goal > 4 && dun == (int)Towns.Factory)
-                    {
-                        if (CharFuncs.Osmond)
-                            Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], MiscAddrs.FloorCountRear[dun]);
-                        else
-                            Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], MiscAddrs.FloorCountFront[dun]);
-                    }
+                    else
+                        Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], MiscAddrs.FloorCountFront[dun]);
                 }
 
                 atlaMap[dun] = dunAtla;

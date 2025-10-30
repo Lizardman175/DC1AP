@@ -25,20 +25,30 @@ class RuleManager:
             self.ruby_available(state, player)
 
     def ungaga_available(self, state: CollectionState, player: int) -> bool:
-        return False
+        return state.has("Sisters' Odds & Ends", player) and self.ruby_available(state, player)
 
     def curse_accessible(self, state: CollectionState, player: int) -> bool:
-        return False
+        return state.has("Chief Bonka's Cabin 2", player) and state.has("Zabo's Hay", player) and \
+            state.has("Enga's Roof", player) and self.ungaga_available(state, player)
 
     def osmond_available(self, state: CollectionState, player: int) -> bool:
-        return False
+        return self.ungaga_available(state, player)
 
     def joe_accessible(self, state: CollectionState, player: int) -> bool:
-        return False
+        # Just need to finish the head for the admission ticket.
+        return state.has("Eye (HD)", player) and self.ungaga_available(state, player)
 
     def got_accessible(self, state: CollectionState, player: int) -> bool:
-        return False
+        return self.osmond_available(state, player)
 
     def genie_accessible(self, state: CollectionState, player: int) -> bool:
-        # return items_available(state, player, DHCGeoItems.ids.keys()) and self.got_accessible(state, player, options)
-        return False
+        return state.has("Book of Curses (Departure)", player) \
+            and state.has("The Broken Sword (Things Lost)", player) \
+            and state.has("Black Blood (Demon)", player) and state.has("Bloody Dress (Protected)", player) \
+            and state.has("Assassin (Assassin)", player) and state.has("Sophia (Dark Power)", player) \
+            and state.has("Bloody Agreement (The Deal)", player) and state.has("Sophia (Menace)", player) \
+            and state.has("Crown (Campaign)", player) and state.has("Buggy (Reunion)", player) \
+            and state.has("Sophia (Ceremony)", player) and state.has("Crown (Crowning Day)", player) \
+            and self.osmond_available(state, player)
+
+
