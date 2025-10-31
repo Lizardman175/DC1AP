@@ -7,7 +7,7 @@ namespace DC1AP.Items
     {
         private const uint InvMaxAddr = 0x01CDD8AC;  // Byte.  Can't exceed 100 or we run past the buffer.
         private const uint InvCurAddr = 0x01CDD8AD;  // Byte.  Next byte starts the active item shorts, followed by 3 shorts giving count of the active items per slot, then shorts for the other items.
-        private const short FeatureDuration = 0x42cc;
+        private const short FeatherDuration = 0x42cc;
 
         /*
          *  0 for most items. Duration for things like feathers, amulets. Gives value item restores as well for curatives
@@ -62,7 +62,7 @@ namespace DC1AP.Items
             // TODO magic number for Dran's Feather. Create a constant when doing the miracle chests update.
             int index = GiveItem(235);
             if (index != -1)
-                Memory.Write(FirstItemDurationAddr + (uint)(sizeof(short) * index), FeatureDuration);
+                Memory.Write(FirstItemDurationAddr + (uint)(sizeof(short) * index), FeatherDuration);
         }
 
         internal static bool RemoveInvItem(short itemId)
