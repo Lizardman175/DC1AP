@@ -32,11 +32,10 @@ namespace DC1AP.Georama
         private Towns town;
 
         /// <summary>
-        /// Pull values from the addresses above and set them locally to compare when checking against the server's values.
+        /// Pull values from the addresses above and set them locally to compare when checking against the game's values.
         /// </summary>
-        internal void ReadValues(int townId)
+        internal void ReadValues()
         {
-            town = (Towns)townId;
             buildingValue = Memory.ReadShort(BaseAddr);
             placedCountAddr = BaseAddr + sizeof(short);
             BuildingCountAddr = BaseAddr + sizeof(int);
@@ -49,9 +48,9 @@ namespace DC1AP.Georama
             return Memory.ReadShort(BuildingCountAddr) != 0;
         }
 
-        internal void Init()
+        internal void Init(Towns townId)
         {
-            town = (Towns)t;
+            town = townId;
 
             if (!HasBuilding())
             {
