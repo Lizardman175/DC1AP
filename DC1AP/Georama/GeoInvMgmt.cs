@@ -1,3 +1,4 @@
+using DC1AP.Constants;
 using DC1AP.Threads;
 using Serilog;
 using System.Text.Json;
@@ -41,9 +42,11 @@ namespace DC1AP.Georama
                 GeoBuilding[]? buildings = GeoBuilding.buildings[i];
                 if (buildings == null) continue;
 
+                Towns town = (Towns)i;
+
                 foreach (GeoBuilding building in buildings)
                 {
-                    building.Init(i);
+                    building.Init(town);
                     building.ReadValues();
                 }
             }
