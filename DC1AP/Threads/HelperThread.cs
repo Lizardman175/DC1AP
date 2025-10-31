@@ -228,7 +228,7 @@ namespace DC1AP.Threads
                 for (int floor = 0; floor < MiscAddrs.FloorCountRear[dun]; floor++)
                 {
                     // Adjust value for back half of a dungeon
-                    if (dunAtla.Count == GeoAddrs.AtlaHalfwayCounts[dun])
+                    if (dunAtla.Count == GeoAddrs.AtlaHalfwayCounts[dun] && dun != (int)Towns.Castle)
                         atlaId = MiscConstants.BaseId + 201 + 1000 * (dun + 1);
 
                     for (int slot = 0; slot < MiscConstants.MaxAtlaPerFloor; slot++)
