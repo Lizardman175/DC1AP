@@ -7,6 +7,14 @@ namespace DC1AP.Items
     {
         private const uint InvMaxAddr = 0x01CDD8AC;  // Byte.  Can't exceed 100 or we run past the buffer.
         private const uint InvCurAddr = 0x01CDD8AD;  // Byte.  Next byte starts the active item shorts, followed by 3 shorts giving count of the active items per slot, then shorts for the other items.
+        private const short FeatureDuration = 0x42cc;
+
+        /*
+         *  0 for most items. Duration for things like feathers, amulets. Gives value item restores as well for curatives
+         *  but doesn't seem to do anything if changed. -1 or 0 for no item (sometimes ghost values as well. Seems to be
+         *  from moving items from the active list with square?)
+         */
+        internal const uint FirstItemDurationAddr = 0x01CDD988; // Short
 
         /*
          *  0 for most items. Duration for things like feathers, amulets. Gives value item restores as well for curatives
@@ -26,10 +34,8 @@ namespace DC1AP.Items
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns></returns>
-        internal static bool GiveItem(short itemId)
+        internal static int GiveItem(short itemId)
         {
-            bool success = false;
-
             byte maxInv = Memory.ReadByte(InvMaxAddr);
             byte curInv = Memory.ReadByte(InvCurAddr);
 
@@ -43,20 +49,20 @@ namespace DC1AP.Items
                     if (item == -1)
                     {
                         Memory.Write(addr, itemId);
-                        success = true;
-                        break;
+                        return i;
                     }
                 }
             }
 
-            return success;
+            return -1;
         }
 
         internal static void GiveFreeFeather()
         {
             // TODO magic number for Dran's Feather. Create a constant when doing the miracle chests update.
-            GiveItem(235);
-            Memory.Write(FirstItemDurationAddr, (short)0x42cc);
+            int index = GiveItem(235);
+            if (index != -1)
+                Memory.Write(FirstItemDurationAddr + (uint)(sizeof(short) * index), FeatureDuration);
         }
 
         internal static bool RemoveInvItem(short itemId)
