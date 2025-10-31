@@ -16,13 +16,6 @@ namespace DC1AP.Items
          */
         internal const uint FirstItemDurationAddr = 0x01CDD988; // Short
 
-        /*
-         *  0 for most items. Duration for things like feathers, amulets. Gives value item restores as well for curatives
-         *  but doesn't seem to do anything if changed. -1 or 0 for no item (sometimes ghost values as well. Seems to be
-         *  from moving items from the active list with square?)
-         */
-        internal const uint FirstItemDurationAddr = 0x01CDD988; // Short
-
         // Add 1 byte for the CurAddr field, then 2 for each short past the first addr
         //private static uint[] ActiveItemAddrs = [InvCurAddr + 1, InvCurAddr + 3, InvCurAddr + 5];
         //private static uint[] ActiveItemCountAddrs = [InvCurAddr + 7, InvCurAddr + 9, InvCurAddr + 11];
