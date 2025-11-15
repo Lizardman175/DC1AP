@@ -54,7 +54,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="Georama\**\*">
+		<Content Include="Georama\**\*.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Items\**\*.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
