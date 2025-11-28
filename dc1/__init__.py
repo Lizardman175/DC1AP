@@ -46,15 +46,11 @@ class DarkCloudWorld(World):
     for i in dungeon_locations:
         location_name_to_id.update(i)
 
-    geo_items = []
-
-    origin_region_name = "Norune"  # Not sure if this should change?
-
+    origin_region_name = "Norune"
+  
     def generate_early(self) -> None:
         for i in range(self.options.boss_goal):
-            self.geo_items.extend(geo_funcs[i](self.options, self.player))
-
-        self.multiworld.itempool.extend(self.geo_items)
+            self.multiworld.itempool.extend(geo_funcs[i](self.options, self.player))
 
     def create_items(self):
         pass
