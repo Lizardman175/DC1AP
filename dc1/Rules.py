@@ -3,7 +3,6 @@ from BaseClasses import CollectionState
 class RuleManager:
 
     def xiao_available(self, state: CollectionState, player: int) -> bool:
-        #TODO might be able to remove the collect_item implementation using state.count("Progressive...")?
         return state.has("Stray Cat", player) and state.has("Gaffer's Lamp", player) and state.has("Pike", player)
 
     def dran_accessible(self, state: CollectionState, player: int) -> bool:
@@ -11,7 +10,7 @@ class RuleManager:
             self.xiao_available(state, player)
 
     def goro_available(self, state: CollectionState, player: int) -> bool:
-        return state.has("Matataki River E", player) and state.has("Cacao's Laundry", player) and \
+        return state.has("Matataki River H", player) and state.has("Cacao's Laundry", player) and \
             self.xiao_available(state, player)
 
     def utan_accessible(self, state: CollectionState, player: int) -> bool:
@@ -50,5 +49,3 @@ class RuleManager:
             and state.has("Crown (Campaign)", player) and state.has("Buggy (Reunion)", player) \
             and state.has("Sophia (Ceremony)", player) and state.has("Crown (Crowning Day)", player) \
             and self.osmond_available(state, player)
-
-
