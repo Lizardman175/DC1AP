@@ -69,7 +69,6 @@ river_ids = ["Progressive Matataki River", "Progressive Matataki River", "Progre
 other_ids = ["Matataki Trees", "Matataki Trees", "Matataki Bridge"]
 
 
-# TODO split these lists into 2 based on items that spawn from the first half of a dungeon or the second
 # Atla that give MCs by content quality (unless handled otherwise). If MC shuffle is on, these all need to be required
 mc_useful = ["Progressive Owl Shop", "Progressive Owl Shop",
              "Progressive Bunbuku's House",
@@ -91,9 +90,9 @@ def create_matataki_atla(options: DarkCloudOptions, player: int) -> list["DarkCl
 
     items = []
 
-    matataki_required = required
-    matataki_useful = useful
-    matataki_filler = filler
+    matataki_required = required.copy()
+    matataki_useful = useful.copy()
+    matataki_filler = filler.copy()
 
     # Mush house is only full required if Utan is required
     if options.all_bosses or options.boss_goal == 2:
