@@ -11,17 +11,17 @@
         "SlotId": 3
       },
       {
-        "Name": "Pushcart (Fish)",
+        "Name": "Pushcart (Fish) 1",
         "ItemId": 2,
         "SlotId": 0
       },
       {
-        "Name": "Pushcart (Fish)",
+        "Name": "Pushcart (Fish) 2",
         "ItemId": 2,
         "SlotId": 1
       },
       {
-        "Name": "Pushcart (Fish)",
+        "Name": "Pushcart (Fish) 3",
         "ItemId": 2,
         "SlotId": 2
       }
@@ -91,12 +91,12 @@
     "BuildingId": 2,
     "Items": [
       {
-        "Name": "Pushcart (Fruit)",
+        "Name": "Pushcart (Fruit) 2",
         "ItemId": 21,
         "SlotId": 1
       },
       {
-        "Name": "Pushcart (Fruit)",
+        "Name": "Pushcart (Fruit) 3",
         "ItemId": 21,
         "SlotId": 2
       },
@@ -106,7 +106,7 @@
         "SlotId": 3
       },
       {
-        "Name": "Pushcart (Fruit)",
+        "Name": "Pushcart (Fruit) 1",
         "ItemId": 21,
         "SlotId": 0
       }
@@ -226,7 +226,7 @@
     "BuildingId": 5,
     "Items": [
       {
-        "Name": "Snake",
+        "Name": "Divining House Snake",
         "ItemId": 7,
         "SlotId": 0
       },
@@ -236,7 +236,7 @@
         "SlotId": 2
       },
       {
-        "Name": "Yaya's Sign",
+        "Name": "Divining House Sign",
         "ItemId": 5,
         "SlotId": 1
       }
@@ -266,7 +266,7 @@
         "SlotId": 3
       },
       {
-        "Name": "Hat Shaped Roof",
+        "Name": "Cathedral's Hat Shaped Roof",
         "ItemId": 9,
         "SlotId": 0
       },
@@ -276,7 +276,7 @@
         "SlotId": 1
       },
       {
-        "Name": "Holy Mark",
+        "Name": "Cathedral's Holy Mark",
         "ItemId": 11,
         "SlotId": 2
       }
