@@ -1,18 +1,18 @@
 {
   "971111132": {
-    "Name": "Antifreeze Amulet",
+    "Name": "Anti-Freeze Amulet",
     "ItemID": 132,
     "ValueMin": 6,
     "ValueMax": 8
   },
   "971111133": {
-    "Name": "Anticurse Amulet",
+    "Name": "Anti-Curse Amulet",
     "ItemID": 133,
     "ValueMin": 6,
     "ValueMax": 8
   },
   "971111134": {
-    "Name": "Antigoo Amulet",
+    "Name": "Anti-Goo Amulet",
     "ItemID": 134,
     "ValueMin": 6,
     "ValueMax": 8
