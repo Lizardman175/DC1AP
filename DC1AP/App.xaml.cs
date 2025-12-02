@@ -125,6 +125,7 @@ namespace DC1AP
 
             // Pull out options from AP
             Options.ParseOptions(Client.Options);
+            InventoryMgmt.InitInventoryMgmt();
 
             if (reconnectThread == null)
             {
@@ -382,8 +383,13 @@ namespace DC1AP
         {
             LogItem(e.Item);
 
-            // TODO miracle chests: test the item id and add inventory item instead of geo
-            GeoInvMgmt.GiveItem(e.Item.Id);
+            long id = e.Item.Id;
+            if (id >= 971112000)
+                ItemQueue.AddAttachment(id);
+            else if (id >= 971111000)
+                ItemQueue.AddItem(id);
+            else
+                GeoInvMgmt.GiveGeorama(id);
         }
 
         private void Client_MessageReceived(object? sender, MessageReceivedEventArgs e)
