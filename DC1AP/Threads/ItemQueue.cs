@@ -103,7 +103,7 @@ namespace DC1AP.Threads
                         found = InventoryMgmt.RemoveInvItem(itemId);
                         break;
                     case ItemCategory.FactoryGeo:
-                        found = InventoryMgmt.RemoveGeoItem(itemId, (int)Towns.Factory);
+                        found = GeoInvMgmt.RemoveGeoItem(itemId, (int)Towns.Factory);
                         break;
                     default:
                         found = true;
