@@ -22,9 +22,9 @@ namespace DC1AP.Constants
         private const uint T1GeoBldStart = 0x01CD4828; // Norune georama buildings (houses etc.; left pane)
         private const uint T2GeoBldStart = 0x01CD53E0; // Matataki Georama
         private const uint T3GeoBldStart = 0x01CD5F98; // Queens georama
-        private const uint T4GeoBldStart = 0x01CD6B4C; // Muska georama
+        private const uint T4GeoBldStart = 0x01CD6B50; // Muska georama
         private const uint T5GeoBldStart = 0x01CD7708; // Factory georama
-        private const uint T6GeoBldStart = 0x01CD82C4; // Castle georama
+        private const uint T6GeoBldStart = 0x01CD82C0; // Castle georama
 
         internal static readonly uint[] TownBldInv = [T1GeoBldStart, T2GeoBldStart, T3GeoBldStart, T4GeoBldStart, T5GeoBldStart, T6GeoBldStart];
 

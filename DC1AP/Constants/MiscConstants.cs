@@ -58,10 +58,13 @@ namespace DC1AP.Constants
         internal const short MatatakiBridgeRiverCount = 6;
         internal const short NoruneBridgeRiverCount = 3;
 
-        // TODO temp until we have all item IDs
         internal const short SunSphereItemId = 0x0F;
         internal const short MoonOrbItemId = 0xF2;
 
+        // Building indexes for the 4 pilots to skip their cutscenes
         internal static int[] FactoryEventSkips = [3, 4, 9, 10];
+
+        internal static int AttachIdBase = 971_112_000;
+        internal static int ItemIdBase = 971_111_000;
     }
 }

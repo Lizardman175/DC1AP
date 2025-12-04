@@ -125,6 +125,7 @@ namespace DC1AP
 
             // Pull out options from AP
             Options.ParseOptions(Client.Options);
+            InventoryMgmt.InitInventoryMgmt();
 
             if (reconnectThread == null)
             {
@@ -175,6 +176,24 @@ namespace DC1AP
             }
 
             Context.ConnectButtonEnabled = true;
+
+            ReadGameState();
+            MessageFuncs.InitOverlay();
+        }
+
+        private static void ReadGameState()
+        {
+            while (App.Client.GameState.ReceivedItems.TryDequeue(out Item? item))
+            {
+                long id = item.Id;
+
+                //if (id >= MiscConstants.AttachIdBase)
+                //else if (id >= MiscConstants.ItemIdBase)
+                //else
+                int value = 1;
+                GeoInvMgmt.buildingCounts.TryGetValue(id, out value);
+                GeoInvMgmt.buildingCounts[id] = value + 1;
+            }
         }
 
         #region PS2
@@ -269,7 +288,6 @@ namespace DC1AP
                 App.Client.SendLocation(loc);
             else
                 locationQueue.Enqueue(loc);
-
         }
 
         private static void WatchGoal()
@@ -375,15 +393,20 @@ namespace DC1AP
 
         private void _deathlinkService_OnDeathLinkReceived(DeathLink deathLink)
         {
-            // TODO kill player :(
+            // TODO kill player x_x
         }
 
         private static void Client_ItemReceived(object? sender, ItemReceivedEventArgs e)
         {
             LogItem(e.Item);
 
-            // TODO miracle chests: test the item id and add inventory item instead of geo
-            GeoInvMgmt.GiveItem(e.Item.Id);
+            long id = e.Item.Id;
+            if (id >= MiscConstants.AttachIdBase)
+                ItemQueue.AddAttachment(id);
+            else if (id >= MiscConstants.ItemIdBase)
+                ItemQueue.AddItem(id);
+            else
+                GeoInvMgmt.GiveGeorama(id);
         }
 
         private void Client_MessageReceived(object? sender, MessageReceivedEventArgs e)

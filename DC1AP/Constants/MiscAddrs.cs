@@ -71,13 +71,20 @@ namespace DC1AP.Constants
         internal const uint CurDungeon = 0x002A3594;    // 0 index
         //internal const uint CurDungeon = 0x1CD954C;     // 0 index - I don't think this is correct, sometimes it is not the correct dungeon value
         internal const uint CurFloor = 0x01CD954E;      // 0 index
-        internal const uint InDungeonFlag = 0x1CD954F;  // -1 if not in dungeon, 0 if in dungeon
+        internal const uint InDungeonFlag = 0x01CD954F;  // -1 if not in dungeon, 0 if in dungeon
         internal const uint BackFloorFlag = 0x002A34B4;  // 0 or 1
 
         // Player state.  0 is main title, 1 is demo reel, 2 is town, 3 is dungeon
         internal const uint PlayerState = 0x002A2534;
 
-        // Technically these are the kill counts on the boss floors, but can only be 1
+        // 0x01 and 0x0C are in town/interior respectively.  Other values we don't care.
+        internal const uint PlayerTownState = 0x002A1F50;
+        internal const byte PlayerTownOverworld = 0x01;
+        internal const byte PlayerTownInterior = 0x0C;
+
+        internal const uint PlayerInteriorState = 0x002A2A84;
+
+        // Kill counts on the boss floors
         //internal const uint DranFlag = 0x01CDD200;
         internal const uint UtanFlag = 0x01CDD2CC;
         //internal const uint SaiaFlag = 0x01CE47A9;  // Others are using the kill count but we can't here as her shield counts as a kill
@@ -110,8 +117,11 @@ namespace DC1AP.Constants
         internal const uint AtlaOpeningFlagAddr = 0x002A3524;  // Byte. 0 when normally moving around dungeon, 1 when in opening Atla animation, 2 for atla item message box
         internal const uint LoadingIntoDungeonFlagAddr = 0x002A347C;  // Byte.  1 when on dungeon floor select and while character is entering the dungeon floor.  0 otherwise.
 
-        internal const uint DunMsgAddr = 0x00998BB8;     //The address pointing to the text of the 10th dungeon message. 157 Byte array
-        internal const uint DunMsgDurAddr = 0x01EA7694;  //How long to show the message
+        internal const uint DunMsgAddr = 0x00998BB8;     // The address pointing to the text of the 10th dungeon message. 157 Byte array
+        internal const uint DunMsgDurAddr = 0x01EA7694;  // How long to show the message
         internal const uint DunMsgIdAddr = 0x01EA76B4;
+
+        // -1 means dialog not active.  Can freeze/set at -1 when player is opening a chest to ignore?
+        internal const uint MCOpenDialogFlag = 0x01CFCCEC;
     }
 }

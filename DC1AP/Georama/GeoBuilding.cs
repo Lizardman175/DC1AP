@@ -161,16 +161,7 @@ namespace DC1AP.Georama
         /// <returns></returns>
         private int CountThisBuilding()
         {
-            int count = 0;
-            for (int i = 0; i < App.Client.GameState.ReceivedItems.Count; i++)
-            {
-                if (App.Client.GameState.ReceivedItems[i].Id == ApId)
-                {
-                    count++;
-                }
-            }
-
-            return count;
+            return GeoInvMgmt.buildingCounts.ContainsKey(ApId) ? GeoInvMgmt.buildingCounts[ApId] : 0;
         }
 
         #region TownBuilding

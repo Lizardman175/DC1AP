@@ -224,7 +224,6 @@ namespace DC1AP.Threads
                 int atlaId = MiscConstants.BaseId + 101 + 1000 * (dun + 1);
                 List<Atla> dunAtla = [];
 
-                // TODO D6: make sure this behaves
                 for (int floor = 0; floor < MiscAddrs.FloorCountRear[dun]; floor++)
                 {
                     // Adjust value for back half of a dungeon
