@@ -30,6 +30,7 @@ using Archipelago.Core.Models;
 using Archipelago.Core.Util;
 using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using Archipelago.MultiClient.Net.MessageLog.Messages;
+using Archipelago.MultiClient.Net.Models;
 using DC1AP.Constants;
 using DC1AP.Georama;
 using DC1AP.Items;
@@ -72,6 +73,8 @@ namespace DC1AP
             //Context.Slot = "DC1";
             MainPage = new MainPage(Context);
             Context.ConnectButtonEnabled = true;
+
+            InventoryMgmt.InitInventoryMgmt();
         }
 
         private async void Context_ConnectClicked(object? sender, ConnectClickedEventArgs e)
@@ -125,7 +128,6 @@ namespace DC1AP
 
             // Pull out options from AP
             Options.ParseOptions(Client.Options);
-            InventoryMgmt.InitInventoryMgmt();
 
             if (reconnectThread == null)
             {
@@ -183,16 +185,16 @@ namespace DC1AP
 
         private static void ReadGameState()
         {
-            while (App.Client.GameState.ReceivedItems.TryDequeue(out Item? item))
+            foreach (ItemInfo item in Client.CurrentSession.Items.AllItemsReceived)
             {
-                long id = item.Id;
+                long id = item.ItemId;
 
-                //if (id >= MiscConstants.AttachIdBase)
-                //else if (id >= MiscConstants.ItemIdBase)
-                //else
-                int value = 1;
-                GeoInvMgmt.buildingCounts.TryGetValue(id, out value);
-                GeoInvMgmt.buildingCounts[id] = value + 1;
+                if (id >= MiscConstants.AttachIdBase)
+                    InventoryMgmt.IncAttachCount(id);
+                else if (id >= MiscConstants.ItemIdBase)
+                    InventoryMgmt.IncItemCount(id);
+                else
+                    GeoInvMgmt.IncGeoCount(id);
             }
         }
 
@@ -245,7 +247,7 @@ namespace DC1AP
                 EventMasks.InitMasks();
 
                 Weapons.GiveCharWeapon(0);
-                InventoryMgmt.GiveFreeFeather();
+                    InventoryMgmt.GiveFreeFeather();
             }
             else if (currSlot != slotName)
             {
@@ -260,6 +262,7 @@ namespace DC1AP
 
             // Check for any missing items after a connect/reconnect
             ItemQueue.checkItems = true;
+
             // Skip needing Yaya to dance on your head if doing Saia once the building event viewed flag is set.
             if (Options.Goal >= 3 && !EventMasks.YayaDone())
             {
@@ -274,7 +277,8 @@ namespace DC1AP
         private void PlayerNotReady(string slotName)
         {
             PlayerState.ValidGameState = false;
-            Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerReady(slotName), (o) => { return o > 1; });
+            ItemQueue.ClearQueues();
+            Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerReady(slotName), (o) => { return o == 2; });
         }
 
         internal static async Task SendLocation(int locId)
@@ -402,11 +406,19 @@ namespace DC1AP
 
             long id = e.Item.Id;
             if (id >= MiscConstants.AttachIdBase)
+            {
+                InventoryMgmt.IncAttachCount(id);
                 ItemQueue.AddAttachment(id);
+            }
             else if (id >= MiscConstants.ItemIdBase)
+            {
+                InventoryMgmt.IncItemCount(id);
                 ItemQueue.AddItem(id);
+            }
             else
+            {
                 GeoInvMgmt.GiveGeorama(id);
+            }
         }
 
         private void Client_MessageReceived(object? sender, MessageReceivedEventArgs e)
@@ -422,8 +434,8 @@ namespace DC1AP
         {
             var messageToLog = new LogListItem(
             [
-                new TextSpan(){Text = $"[{item.Id.ToString()}] -", TextColor = Color.FromRgb(255, 255, 255)},
-                new TextSpan(){Text = $"{item.Name}", TextColor = Color.FromRgb(200, 255, 200)},
+                new TextSpan(){Text = $"[{item.Id.ToString()}] -", TextColor = Microsoft.Maui.Graphics.Color.FromRgb(255, 255, 255)},
+                new TextSpan(){Text = $"{item.Name}", TextColor = Microsoft.Maui.Graphics.Color.FromRgb(200, 255, 200)},
                 //new TextSpan(){Text = $"x{item.Quantity.ToString()}", TextColor = Color.FromRgb(200, 255, 200)}
             ]);
             lock (_lockObject)
@@ -446,7 +458,7 @@ namespace DC1AP
             List<TextSpan> spans = [];
             foreach (var part in message.Parts)
             {
-                spans.Add(new TextSpan() { Text = part.Text, TextColor = Color.FromRgb(part.Color.R, part.Color.G, part.Color.B) });
+                spans.Add(new TextSpan() { Text = part.Text, TextColor = Microsoft.Maui.Graphics.Color.FromRgb(part.Color.R, part.Color.G, part.Color.B) });
             }
             lock (_lockObject)
             {

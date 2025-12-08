@@ -1,4 +1,6 @@
-﻿using Archipelago.Core.Util;
+﻿using Archipelago.Core.Models;
+using Archipelago.Core.Util;
+using DC1AP.Constants;
 using DC1AP.Mem;
 using DC1AP.Threads;
 using Serilog;
@@ -15,8 +17,10 @@ namespace DC1AP.Items
         private const uint InvMaxAddr = 0x01CDD8AC;  // Byte.  Can't exceed 100 or we run past the buffer.
         private const uint InvCurAddr = 0x01CDD8AD;  // Byte.  Next byte starts the active item shorts, followed by 3 shorts giving count of the active items per slot, then shorts for the other items.
         private const uint FirstAttchAddr = 0x01CE1A48;
-        private const short FeatherDuration = 0x42cc;
-        private static Random random = new Random();
+        private static readonly Random random = new();
+
+        private static readonly Dictionary<long, int> itemCounts = [];
+        private static readonly Dictionary<long, int> attachCounts = [];
 
         /*
          *  0 for most items. Duration for things like feathers, amulets. Gives value item restores as well for curatives
@@ -46,6 +50,8 @@ namespace DC1AP.Items
             filename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Items", "Attachments.json");
             json = File.ReadAllText(filename);
             AttachmentData = JsonSerializer.Deserialize<Dictionary<long, Attachment>>(json, jOptions);
+
+            OpenMem.InitItemCountAddrs(ItemData.Keys.ToArray(), AttachmentData.Keys.ToArray());
         }
 
         /// <summary>
@@ -53,7 +59,7 @@ namespace DC1AP.Items
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns></returns>
-        internal static bool GiveItem(long itemId)
+        internal static bool GiveItem(long itemId, bool updateFlag=true)
         {
             byte maxInv = Memory.ReadByte(InvMaxAddr);
             byte curInv = Memory.ReadByte(InvCurAddr);
@@ -95,6 +101,9 @@ namespace DC1AP.Items
                             Log.Logger.Information(msg);
                             App.Client.AddOverlayMessage(msg);
                         }
+
+                        if (updateFlag)
+                            OpenMem.IncItemCountValue(itemId);
                         return true;
                     }
                 }
@@ -103,7 +112,7 @@ namespace DC1AP.Items
             return false;
         }
 
-        internal static bool GiveAttachment(long itemId)
+        internal static bool GiveAttachment(long itemId, bool updateFlag = true)
         {
             Attachment item = AttachmentData[itemId];
 
@@ -132,6 +141,9 @@ namespace DC1AP.Items
                         Log.Logger.Information(msg);
                         App.Client.AddOverlayMessage(msg);
                     }
+
+                    if (updateFlag)
+                        OpenMem.IncItemCountValue(itemId);
                     return true;
                 }
             }
@@ -140,8 +152,7 @@ namespace DC1AP.Items
 
         internal static void GiveFreeFeather()
         {
-            // TODO magic number for Dran's Feather. Create a constant when doing the miracle chests update.
-            GiveItem(971111235);
+            GiveItem(MiscConstants.FeatherId, false);
         }
 
         internal static bool RemoveInvItem(short itemId)
@@ -169,6 +180,44 @@ namespace DC1AP.Items
         {
             // TODO
             return true;
+        }
+
+        internal static void IncItemCount(long itemId)
+        {
+            itemCounts.TryGetValue(itemId, out int value);
+            itemCounts[itemId] = value + 1;
+        }
+
+        internal static void IncAttachCount(long itemId)
+        {
+            attachCounts.TryGetValue(itemId, out int value);
+            attachCounts[itemId] = value + 1;
+        }
+
+        /// <summary>
+        /// Compares the GameState item counts to how many of each item are saved to memory, giving the player the difference.
+        /// </summary>
+        internal static void VerifyItems()
+        {
+            foreach (var itemId in itemCounts.Keys)
+            {
+                byte value = OpenMem.ReadItemCountValue(itemId);
+                if (itemCounts[itemId] > value)
+                {
+                    for (int i = value; i < itemCounts[itemId]; i++)
+                        ItemQueue.AddItem(itemId);
+                }
+            }
+
+            foreach (var attachId in attachCounts.Keys)
+            {
+                byte value = OpenMem.ReadItemCountValue(attachId);
+                if (attachCounts[attachId] > value)
+                {
+                    for (int i = value; i < attachCounts[attachId]; i++)
+                        ItemQueue.AddAttachment(attachId);
+                }
+            }
         }
     }
 }

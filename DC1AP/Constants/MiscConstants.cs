@@ -66,5 +66,8 @@ namespace DC1AP.Constants
 
         internal static int AttachIdBase = 971_112_000;
         internal static int ItemIdBase = 971_111_000;
+
+        internal static long MoonOrbId = 971_111_242;
+        internal static long FeatherId = 971_111_235;
     }
 }

@@ -115,17 +115,20 @@ namespace DC1AP.Threads
                     attachmentReceived = false;
 
                     // Don't add to the queue if items are already in it to reduce collisions.
-                    if (checkItems && GeoBuildingQueue.Count == 0)
+                    if (checkItems)
                     {
-                        GeoInvMgmt.VerifyItems();
+                        // TODO need to revisit the IsEmpty check and why.  It seems to work though
+                        if (GeoBuildingQueue.IsEmpty)
+                            GeoInvMgmt.VerifyItems();
+                        if (InventoryQueue.IsEmpty && AttachmentQueue.IsEmpty)
+                            InventoryMgmt.VerifyItems();
                         checkItems = false;
                     }
                 }
                 // Player hasn't started the game, or has reset so clear the queues.
                 else
                 {
-                    GeoBuildingQueue.Clear();
-                    MsgQueue.Clear();
+                    ClearQueues();
                 }
             }
         }
@@ -157,6 +160,14 @@ namespace DC1AP.Threads
                 }
                 Thread.Sleep(500);
             }
+        }
+
+        internal static void ClearQueues()
+        {
+            GeoBuildingQueue.Clear();
+            InventoryQueue.Clear();
+            AttachmentQueue.Clear();
+            MsgQueue.Clear();
         }
     }
 }

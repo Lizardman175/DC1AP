@@ -17,19 +17,22 @@ namespace DC1AP.Mem
         internal static readonly uint GoalAddr = (uint)(SlotNameAddr + SlotNameLen);
 
         // Short
-        internal static readonly uint IndexAddr = GoalAddr + 1;
+        private static readonly uint IndexAddr = GoalAddr + 1;
 
         // Short
-        internal static readonly uint CollectedCountAddr = (uint)(IndexAddr + 2);
+        private static readonly uint CollectedCountAddr = (uint)(IndexAddr + 2);
 
-        // Prep for future bytes. Going to need double the above bytes for MCs, and then some
-        //private static readonly uint NextByte = CollectedCountAddr + 1;
+        // Add other bytes to be used before this one!
+        private static readonly uint CountBytesStart = CollectedCountAddr + 1;
+
+        // Map of item IDs to addresses
+        private static readonly Dictionary<long, uint> itemCountAddrs = [];
 
         /// <summary>
         /// Returns the stored slot name, or empty string if unset.
         /// </summary>
         /// <returns></returns>
-        public static string GetSlotName()
+        internal static string GetSlotName()
         {
             System.Text.Encoding? encoding = System.Text.Encoding.UTF8;
 
@@ -52,7 +55,7 @@ namespace DC1AP.Mem
         /// Write the given slot name to memory.  Must be <= 16 chars.
         /// </summary>
         /// <param name="s"></param>
-        public static void SetSlotName(String s)
+        internal static void SetSlotName(String s)
         {
             if (s.Length > SlotNameLen)
             {
@@ -63,19 +66,45 @@ namespace DC1AP.Mem
                 Memory.WriteString(SlotNameAddr, s);
         }
 
-        public static short GetIndex()
+        internal static short GetIndex()
         {
             return Memory.ReadShort(IndexAddr);
         }
 
-        public static void SetIndex(short value)
+        internal static void SetIndex(short value)
         {
             Memory.Write(IndexAddr, value);
         }
 
-        public static void IncIndex()
+        internal static void IncIndex()
         {
             Memory.Write(IndexAddr, (short)(GetIndex() + 1));
+        }
+
+        internal static void InitItemCountAddrs(long[] itemKeys, long[] attachKeys)
+        {
+            uint addr = CountBytesStart;
+            foreach (var key in itemKeys.Order())
+            {
+                itemCountAddrs[key] = addr;
+                addr++;
+            }
+            foreach (var attachKey in attachKeys.Order())
+            {
+                itemCountAddrs[attachKey] = addr;
+                addr++;
+            }
+        }
+
+        internal static byte ReadItemCountValue(long itemId)
+        {
+            return Memory.ReadByte(itemCountAddrs[itemId]);
+        }
+
+        internal static void IncItemCountValue(long itemId)
+        {
+            byte value = (byte)(Memory.ReadByte(itemCountAddrs[itemId]) + 1);
+            Memory.WriteByte(itemCountAddrs[itemId], value);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace DC1AP.Georama
         private static readonly List<string> buildingFiles = ["NoruneBuildings.json", "MatatakiBuildings.json", "QueensBuildings.json",
                                                               "MuskaBuildings.json",  "FactoryBuildings.json",  "CastleBuildings.json"];
 
-        internal static Dictionary<long, int> buildingCounts = [];
+        internal static readonly Dictionary<long, int> buildingCounts = [];
 
         /// <summary>
         /// Reads the .json for the building data
@@ -70,11 +70,11 @@ namespace DC1AP.Georama
                 {
                     if (building.ApId == itemId)
                     {
+                        IncGeoCount(itemId);
                         ItemQueue.AddGeorama(building);
                         added = true;
+                        break;
                     }
-
-                    if (added) break;
                 }
 
                 if (added) break;
@@ -114,6 +114,12 @@ namespace DC1AP.Georama
             }
 
             return success;
+        }
+
+        internal static void IncGeoCount(long itemId)
+        {
+            buildingCounts.TryGetValue(itemId, out int value);
+            buildingCounts[itemId] = value + 1;
         }
     }
 }
