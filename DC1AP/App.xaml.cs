@@ -404,20 +404,23 @@ namespace DC1AP
         {
             LogItem(e.Item);
 
-            long id = e.Item.Id;
-            if (id >= MiscConstants.AttachIdBase)
+            long itemId = e.Item.Id;
+            if (itemId >= MiscConstants.AttachIdBase)
             {
-                InventoryMgmt.IncAttachCount(id);
-                ItemQueue.AddAttachment(id);
+                InventoryMgmt.IncAttachCount(itemId);
+                ItemQueue.AddAttachment(itemId);
             }
-            else if (id >= MiscConstants.ItemIdBase)
+            else if (itemId >= MiscConstants.ItemIdBase)
             {
-                InventoryMgmt.IncItemCount(id);
-                ItemQueue.AddItem(id);
+                if (InventoryMgmt.CanGiveItem(itemId))
+                {
+                    InventoryMgmt.IncItemCount(itemId);
+                    ItemQueue.AddItem(itemId);
+                }
             }
             else
             {
-                GeoInvMgmt.GiveGeorama(id);
+                GeoInvMgmt.GiveGeorama(itemId);
             }
         }
 

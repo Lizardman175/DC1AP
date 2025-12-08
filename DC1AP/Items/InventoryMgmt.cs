@@ -1,5 +1,4 @@
-﻿using Archipelago.Core.Models;
-using Archipelago.Core.Util;
+﻿using Archipelago.Core.Util;
 using DC1AP.Constants;
 using DC1AP.Mem;
 using DC1AP.Threads;
@@ -67,7 +66,6 @@ namespace DC1AP.Items
 
             if (curInv < maxInv)
             {
-                // TODO not accouting for the items in the active bar?  Managed to set 51/50 items
                 for (int i = 0; i < maxInv; i++)
                 {
                     uint addr = (uint)(FirstInvAddr + sizeof(short) * i);
@@ -104,6 +102,11 @@ namespace DC1AP.Items
 
                         if (updateFlag)
                             OpenMem.IncItemCountValue(itemId);
+
+                        // The game doesn't update this until you open the inventory again
+                        // so we need to update it ourselves so we don't fail to give the
+                        // player an item or give them more than max if the active bar has items.
+                        Memory.WriteByte(InvCurAddr, (byte)(curInv + 1));
                         return true;
                     }
                 }
@@ -205,7 +208,11 @@ namespace DC1AP.Items
                 if (itemCounts[itemId] > value)
                 {
                     for (int i = value; i < itemCounts[itemId]; i++)
-                        ItemQueue.AddItem(itemId);
+                    {
+                        // Don't give defense buff items until the char is recruited
+                        if (CanGiveItem(itemId))
+                            ItemQueue.AddItem(itemId);
+                    }
                 }
             }
 
@@ -218,6 +225,39 @@ namespace DC1AP.Items
                         ItemQueue.AddAttachment(attachId);
                 }
             }
+        }
+
+        internal static bool CanGiveItem(long itemId)
+        {
+            bool result = true;
+
+            // Don't give defense buff items until the char is recruited
+            if ((itemId == MiscConstants.CookieId && !CharFuncs.Osmond) ||
+                    (itemId == MiscConstants.JerkyId && !CharFuncs.Ungaga) ||
+                    (itemId == MiscConstants.ParfaitId && !CharFuncs.Ruby) ||
+                    (itemId == MiscConstants.GrassCakeId && !CharFuncs.Goro) ||
+                    (itemId == MiscConstants.FishCandyId && !CharFuncs.Xiao))
+                result = false;
+            else if (itemId == MiscConstants.GourdId || itemId == MiscConstants.FruitOfEdenId)
+            {
+                byte count = OpenMem.ReadItemCountValue(itemId);
+                byte max = 7;
+
+                if (CharFuncs.Osmond)
+                    return true;
+                else if (CharFuncs.Ungaga)
+                    max *= 5;
+                else if (CharFuncs.Ruby)
+                    max *= 4;
+                else if (CharFuncs.Goro)
+                    max *= 3;
+                else if (CharFuncs.Xiao)
+                    max *= 2;
+
+                result = max > count;
+            }
+
+            return result;
         }
     }
 }

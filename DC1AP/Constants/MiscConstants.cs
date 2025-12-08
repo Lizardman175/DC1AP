@@ -64,10 +64,19 @@ namespace DC1AP.Constants
         // Building indexes for the 4 pilots to skip their cutscenes
         internal static int[] FactoryEventSkips = [3, 4, 9, 10];
 
-        internal static int AttachIdBase = 971_112_000;
-        internal static int ItemIdBase = 971_111_000;
+        internal const int AttachIdBase = 971_112_000;
+        internal const int ItemIdBase = 971_111_000;
 
-        internal static long MoonOrbId = 971_111_242;
-        internal static long FeatherId = 971_111_235;
+        internal const long MoonOrbId = 971_111_242;
+        internal const long FeatherId = 971_111_235;
+
+        internal const long FishCandyId = 971_111_137;
+        internal const long GrassCakeId = 971_111_138;
+        internal const long ParfaitId = 971_111_139;
+        internal const long JerkyId = 971_111_140;
+        internal const long CookieId = 971_111_141;
+
+        internal const long FruitOfEdenId = 971_111_180;
+        internal const long GourdId = 971_111_182;
     }
 }
