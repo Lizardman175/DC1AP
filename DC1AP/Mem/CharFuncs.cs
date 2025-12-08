@@ -20,6 +20,12 @@ namespace DC1AP.Mem
         private static uint UngagaSlotAddr = 0x01CDD890;
         private static uint OsmondSlotAddr = 0x01CDD891;
 
+        public static bool Xiao { get => xiao; set => xiao = value; }
+        public static bool Goro { get => goro; set => goro = value; }
+        public static bool Ruby { get => ruby; set => ruby = value; }
+        public static bool Ungaga { get => ungaga; set => ungaga = value; }
+        public static bool Osmond { get => osmond; set => osmond = value; }
+
         internal static bool HaveChar(int index)
         {
             switch (index)
@@ -99,6 +105,8 @@ namespace DC1AP.Mem
                 Memory.WriteByte(MiscAddrs.MapFlagAddr, 0x01);
 
                 Weapons.GiveCharWeapon((int)Towns.Norune + 1);
+                if (Options.MiracleSanity)
+                    InventoryMgmt.VerifyItems();
             }
             else
                 Memory.MonitorAddressForAction<Byte>(XiaoSlotAddr, () => XiaoGained(), (o) => { return o != 0xff; });
@@ -121,6 +129,8 @@ namespace DC1AP.Mem
                 }
 
                 Weapons.GiveCharWeapon((int)Towns.Matataki + 1);
+                if (Options.MiracleSanity)
+                    InventoryMgmt.VerifyItems();
             }
             else
                 Memory.MonitorAddressForAction<Byte>(GoroSlotAddr, () => GoroGained(), (o) => { return o != 0xff; });
@@ -144,6 +154,8 @@ namespace DC1AP.Mem
                 }
 
                 Weapons.GiveCharWeapon((int)Towns.Queens + 1);
+                if (Options.MiracleSanity)
+                    InventoryMgmt.VerifyItems();
             }
             else
                 Memory.MonitorAddressForAction<Byte>(RubySlotAddr, () => RubyGained(), (o) => { return o != 0xff; });
@@ -166,6 +178,8 @@ namespace DC1AP.Mem
                 }
 
                 Weapons.GiveCharWeapon((int)Towns.Muska + 1);
+                if (Options.MiracleSanity)
+                    InventoryMgmt.VerifyItems();
             }
             else
                 Memory.MonitorAddressForAction<Byte>(UngagaSlotAddr, () => UngagaGained(), (o) => { return o != 0xff; });
@@ -187,6 +201,8 @@ namespace DC1AP.Mem
                 }
 
                 Weapons.GiveCharWeapon((int)Towns.Factory + 1);
+                if (Options.MiracleSanity)
+                    InventoryMgmt.VerifyItems();
             }
             else
                 Memory.MonitorAddressForAction<Byte>(OsmondSlotAddr, () => OsmondGained(), (o) => { return o != 0xff; });

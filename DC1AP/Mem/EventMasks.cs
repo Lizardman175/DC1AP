@@ -5,6 +5,7 @@ namespace DC1AP.Mem
     internal class EventMasks
     {
         internal static uint DialogAddr1 = 0x01CE43A8;
+        // 0x80: skip pre-SMT dialog
         internal static uint DialogAddr2 = 0x01CE43A9;
         internal static uint DialogAddr3 = 0x01CE43AC;
         internal static uint DialogAddr4 = 0x01CE43AD;  // 0x02 is releated to end game cutscenes
@@ -65,7 +66,6 @@ namespace DC1AP.Mem
             OrMask(DialogAddr6, 0xB0);
             // More of the dungeon tutorials I believe.  4 is the lock-on tutorial, 1 is charge attack upgrade
             OrMask(DialogAddr7, 0x07);
-            // TODO need to track down more flags for the first few convos.
             // Muska Lacka dialog.  0x04 and 0x08 are the Theo/Ungaga dialogs. 0x10 is the gol/sil convo on floor 9, 0x20 and 0x40 are gol and sil being dead respectively.
             OrMask(DialogAddr8, 0x0C);
             // Addr8+1 goes to 0x10 for Osmond scene

@@ -1,4 +1,10 @@
 {
+  "971111101": {
+    "Name": "Pocket",
+    "ItemID": 179,
+    "ValueMin": 10,
+    "ValueMax": 10
+  },
   "971111132": {
     "Name": "Anti-Freeze Amulet",
     "ItemID": 132,
@@ -226,12 +232,6 @@
     "ItemID": 178,
     "ValueMin": 0,
     "ValueMax": 0
-  },
-  "971111179": {
-    "Name": "Pocket",
-    "ItemID": 179,
-    "ValueMin": 10,
-    "ValueMax": 10
   },
   "971111180": {
     "Name": "Fruit of Eden",
