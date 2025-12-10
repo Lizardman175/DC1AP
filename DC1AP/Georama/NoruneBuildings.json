@@ -11,6 +11,11 @@
         "SlotId": 2
       },
       {
+        "Name": "Player's Keg",
+        "ItemId": 18,
+        "SlotId": 0
+      },
+      {
         "Name": "Renee",
         "ItemId": 52,
         "SlotId": 3
@@ -19,11 +24,6 @@
         "Name": "Player's Llama",
         "ItemId": 40,
         "SlotId": 4
-      },
-      {
-        "Name": "Player's Keg",
-        "ItemId": 18,
-        "SlotId": 0
       },
       {
         "Name": "Player's Chimney",
