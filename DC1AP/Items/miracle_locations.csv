@@ -3,7 +3,7 @@ Mayor's House Bed chest,971111002,0,,,0x01CE4849,0x40,Gourd
 Mayor's House Chair chest,971111003,0,xiao,,0x01CE484A,0x02,Anti-Curse Amulet
 Mayor's House Closet chest,971111004,0,xiao,,0x01CE484A,0x01,Pocket
 Player's House inside chest (storage),971111005,0,,Player's Storage,0x01CE4835,0x40,Repair Powder
-Player's House inside chest (bed),971111006,0,xiao,Player's House,0x01CE4835,0x80,Attack+1
+Player's House inside chest (bed),971111006,0,xiao,Player's House,0x01CE4835,0x80,Attack+
 Player's House inside chest (table),971111007,0,xiao,Player's House,0x01CE4836,0x01,Bread
 Player's House inside chest (sink),971111008,0,xiao,Player's House,0x01CE4836,0x02,Tasty Water
 Player's House Barn chest (rake),971111009,0,,Player's House,0x01CE4837,0x01,Bread
@@ -12,24 +12,24 @@ Player's House Barn chest (trough),971111011,0,xiao,Player's House,0x01CE4837,0x
 Player's House outside chest (barrels),971111012,0,,Player's Keg,0x01CE4834,0x10,Bread
 Player's House outside chest (fence),971111013,0,xiao,Player's House,0x01CE4834,0x20,Gourd
 Player's House outside chest (stairs),971111014,0,xiao,Player's House,0x01CE4834,0x40,Fruit of Eden
-Macho's House inside chest (cabinet),971111015,0,,Macho's Annex,0x01CE4839,0x20,Speed+1
-Macho's House inside chest (punching bag),971111016,0,,Macho's Annex,0x01CE4839,0x10,Attack+1
-Macho's House inside chest (bed),971111017,0,xiao,Macho's House,0x01CE4839,0x40,Endurance+1
-Macho's House inside chest (table),971111018,0,xiao,Macho's House,0x01CE4839,0x80,Endurance+1
+Macho's House inside chest (cabinet),971111015,0,,Macho's Annex,0x01CE4839,0x20,Speed+
+Macho's House inside chest (punching bag),971111016,0,,Macho's Annex,0x01CE4839,0x10,Attack+
+Macho's House inside chest (bed),971111017,0,xiao,Macho's House,0x01CE4839,0x40,Endurance+
+Macho's House inside chest (table),971111018,0,xiao,Macho's House,0x01CE4839,0x80,Endurance+
 Macho's House outside chest (left side),971111019,0,,Macho's House,0x01CE4838,0x04,Bread
 Macho's House outside chest (behind),971111020,0,,Macho's House,0x01CE4838,0x08,Tasty Water
 Laura's House inside chest (shelf),971111021,0,xiao,Laura's House,0x01CE483C,0x04,Fruit of Eden
 Laura's House inside chest (bed),971111022,0,xiao,Laura's House,0x01CE483C,0x08,Powerup Powder
 Laura's House inside chest (sink),971111023,0,xiao,Laura's House,0x01CE483C,0x02,Tasty Water
 Laura's House inside chest (cabin),971111024,0,xiao,Laura's Cabin,0x01CE483C,0x01,Bread
-Laura's House outside chest (tricycle),971111025,0,xiao,Laura's House,0x01CE483A,0x80,Speed+1
+Laura's House outside chest (tricycle),971111025,0,xiao,Laura's House,0x01CE483A,0x80,Speed+
 Laura's House outside chest (right),971111026,0,xiao,Laura's House,0x01CE483A,0x40,Gourd
 Paige's House Inside chest (cabin),971111027,0,,Paige's Cabin,0x01CE483E,0x20,Sky Hunter
 Paige's House Inside chest (upstairs),971111028,0,,Paige's House,0x01CE483E,0x40,Stone Breaker
 Paige's House Inside chest (bed),971111029,0,xiao,Paige's House,0x01CE483E,0x10,Repair Powder
 Paige's House Outside chest (behind),971111030,0,,Paige's House,0x01CE483D,0x04,Beast Buster
 Paige's House Outside chest (wheel),971111031,0,xiao,Paige's House,0x01CE483D,0x08,Undead Buster
-Claude's House Inside chest (bed),971111032,0,,Claude's House,0x01CE4841,0x04,Speed+1
+Claude's House Inside chest (bed),971111032,0,,Claude's House,0x01CE4841,0x04,Speed+
 Claude's House Inside chest (corner),971111033,0,,Claude's House,0x01CE4841,0x01,Beast Buster
 Claude's House Inside chest (cabin),971111034,0,,Claude's Cabin,0x01CE4841,0x02,Bomb
 Claude's House Inside chest (sink),971111035,0,xiao,Claude's House,0x01CE4841,0x08,Cheese
@@ -38,7 +38,7 @@ Claude's House Outside chest (candy box),971111037,0,,Claude's Candy Box,0x01CE4
 Hag's House Inside chest (table),971111038,0,xiao,Hag's House,0x01CE4842,0x80,Repair Powder
 Hag's House Inside chest (fireplace),971111039,0,xiao,Hag's House,0x01CE4842,0x40,Powerup Powder
 Hag's House Inside chest (sink),971111040,0,,Hag's House,0x01CE4842,0x20,Undead Buster
-Hag's House Inside chest (cabin),971111041,0,,Hag's Cabin,0x01CE4842,0x10,Magic+1
+Hag's House Inside chest (cabin),971111041,0,,Hag's Cabin,0x01CE4842,0x10,Magic+
 Hag's House Outside chest (front),971111042,0,,Hag's House,0x01CE4842,0x08,Dragon Slayer
 Hag's House Outside chest (jars),971111043,0,xiao,Hag's Jar,0x01CE4842,0x04,Gourd
 Alnet's House inside chest (sink),971111044,0,xiao,Alnet's Stairway,0x01CE4844,0x80,Dragon Slayer
@@ -49,10 +49,10 @@ Alnet's House Barn chest (trough),971111048,0,,Alnet's House,0x01CE4848,0x10,Gou
 Alnet's House Barn chest (cabin),971111049,0,,Alnet's Cabin,0x01CE4848,0x80,Repair Powder
 Alnet's House outside chest (barrels),971111050,0,,Alnet's House,0x01CE4843,0x10,Tasty Water
 Alnet's House outside chest (barn door),971111051,0,,Alnet's House,0x01CE4843,0x20,Prickly
-Gaffer's Buggy chest (front),971111052,0,,Gaffer's Buggy,0x01CE4846,0x01,Speed+1
+Gaffer's Buggy chest (front),971111052,0,,Gaffer's Buggy,0x01CE4846,0x01,Speed+
 Gaffer's Buggy chest (behind),971111053,0,,Gaffer's Buggy,0x01CE4846,0x02,Fluffy Doughnut
-Dran's Windmill inside chest (front barrels),971111056,0,,Dran's Windmill,0x01CE4847,0x04,Magic+1
-Dran's Windmill inside chest (back barrel),971111057,0,xiao,Dran's Windmill,0x01CE4847,0x10,Attack+1
+Dran's Windmill inside chest (front barrels),971111056,0,,Dran's Windmill,0x01CE4847,0x04,Magic+
+Dran's Windmill inside chest (back barrel),971111057,0,xiao,Dran's Windmill,0x01CE4847,0x10,Attack+
 Dran's Windmill inside chest (pillar),971111058,0,,Dran's Windmill,0x01CE4847,0x08,Fire
 Dran's Windmill inside chest (closet),971111059,0,xiao,Dran's Windmill,0x01CE4847,0x20,Fruit of Eden
 Dran's Windmill inside chest (stairs mid),971111060,0,xiao,Dran's Windmill,0x01CE4847,0x40,Wind
@@ -199,7 +199,7 @@ King's Hideout outside chest (car),971113060,2,,King's Car,0x01CE48C4,0x80,Holy
 King's Hideout outside chest (umbrella right),971113061,2,,King's Sunshade,0x01CE48C4,0x40,Fruit of Eden
 King's Hideout outside chest (umbrella left),971113062,2,ruby,King's Sunshade,0x01CE48C5,0x01,Witch Parfait
 Sheriff's Office inside chest (deputy desk),971113063,2,,Sheriff's Office,0x01CE48C8,0x10,Fruit of Eden
-Sheriff's Office inside chest (sheriff desk),971113064,2,,Sheriff's Office,0x01CE48C8,0x20,Attack+1
+Sheriff's Office inside chest (sheriff desk),971113064,2,,Sheriff's Office,0x01CE48C8,0x20,Attack+
 Sheriff's Office inside chest (corner),971113065,2,ruby,Sheriff's Office,0x01CE48C8,0x40,Sea Killer
 Sheriff's Office outside chest (left),971113066,2,,Sheriff's Office,0x01CE48C7,0x04,Mimic Breaker
 Sheriff's Office outside chest (behind),971113067,2,,Sheriff's Office,0x01CE48C7,0x08,Holy Gem
@@ -232,7 +232,7 @@ Jibubu's House outside chest (behind),971114011,3,,Jibubu's House,0x01CE48F7,0x0
 Brooke's House inside chest (bench),971114019,3,,Brooke's House,0x01CE48FF,0x40,Fruit of Eden
 Brooke's House inside chest (jug),971114020,3,,Brooke's House,0x01CE48FF,0x80,Premium Chicken
 Brooke's House inside chest (boomerangs),971114021,3,ungaga,Brooke's House,0x01CE4900,0x01,Beast Buster
-Brooke's House inside chest (crates),971114022,3,ungaga,Brooke's House,0x01CE4900,0x02,Attack+1
+Brooke's House inside chest (crates),971114022,3,ungaga,Brooke's House,0x01CE4900,0x02,Attack+
 Brooke's House outside chest (front),971114023,3,,Brooke's House,0x01CE48FE,0x10,Gourd
 Brooke's House outside chest (rear right),971114024,3,,Brooke's House,0x01CE48FE,0x40,Repair Powder
 Brooke's House outside chest (rear left),971114025,3,,Brooke's House,0x01CE48FE,0x20,Sky Hunter
@@ -319,11 +319,11 @@ Parts AMR chest 2,971115029,4,,Parts AMR,0x01CE4935,0x80,Fire Gem
 Parts AML chest 1,971115030,4,osmond,Parts AML,0x01CE4937,0x01,Stone Breaker
 Parts AML chest 2,971115031,4,osmond,Parts AML,0x01CE4937,0x02,Powerup Powder
 Parts HGR chest 1,971115032,4,,Parts HGR,0x01CE4938,0x04,Metal Breaker
-Parts HGR chest 2,971115033,4,,Parts HGR,0x01CE4938,0x08,Attack+1
+Parts HGR chest 2,971115033,4,,Parts HGR,0x01CE4938,0x08,Attack+
 Parts HGL chest 1,971115034,4,osmond,Parts HGL,0x01CE4939,0x10,Sky Hunter
 Parts HGL chest 2,971115035,4,osmond,Parts HGL,0x01CE4939,0x20,Holy Water
 Parts HGR2 chest 1,971115036,4,,Parts HGR2,0x01CE493A,0x40,Wind
-Parts HGR2 chest 2,971115037,4,,Parts HGR2,0x01CE493A,0x80,Magic+1
+Parts HGR2 chest 2,971115037,4,,Parts HGR2,0x01CE493A,0x80,Magic+
 Parts HGL2 chest 1,971115038,4,osmond,Parts HGL2,0x01CE493C,0x01,Antidote Amulet
 Parts HGL2 chest 2,971115039,4,osmond,Parts HGL2,0x01CE493C,0x02,Wind Gem
 Parts CT chest 1,971115040,4,osmond,Parts CT,0x01CE493D,0x04,Gourd
@@ -333,11 +333,11 @@ Parts WT chest 2,971115043,4,osmond,Parts WT,0x01CE493E,0x20,Mighty Healing
 Parts TIR chest 1,971115044,4,osmond,Parts TIR,0x01CE493F,0x40,Fire
 Parts TIR chest 2,971115045,4,osmond,Parts TIR,0x01CE493F,0x80,Stamina Drink
 Parts TIL chest 1,971115046,4,osmond,Parts TIL,0x01CE4941,0x01,Ice
-Parts TIL chest 2,971115047,4,osmond,Parts TIL,0x01CE4941,0x02,Attack+1
+Parts TIL chest 2,971115047,4,osmond,Parts TIL,0x01CE4941,0x02,Attack+
 Parts FTR chest 1,971115048,4,osmond,Parts FTR,0x01CE4942,0x04,Thunder
-Parts FTR chest 2,971115049,4,osmond,Parts FTR,0x01CE4942,0x08,Endurance+1
+Parts FTR chest 2,971115049,4,osmond,Parts FTR,0x01CE4942,0x08,Endurance+
 Parts FTL chest 1,971115050,4,osmond,Parts FTL,0x01CE4943,0x10,Holy
-Parts FTL chest 2,971115051,4,osmond,Parts FTL,0x01CE4943,0x20,Speed+1
+Parts FTL chest 2,971115051,4,osmond,Parts FTL,0x01CE4943,0x20,Speed+
 Factory Lookout chest (ground),971115052,4,,Lookout,0x01CE4944,0x40,Gourd
 Factory Lookout chest (1st level),971115053,4,osmond,Lookout Ladder 1,0x01CE4944,0x80,Fruit of Eden
 Factory Lookout chest (2nd level),971115054,4,osmond,Lookout Ladder 2,0x01CE4945,0x01,Metal Breaker
