@@ -1,8 +1,8 @@
 ﻿/*
  * MIT License
-
+ *
  * Copyright (c) 2025 ArsonAssassin
-
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -157,8 +157,6 @@ namespace DC1AP
             //    // TODO listen for player death
             //}
 
-            WatchGoal();
-
             if (queueThread == null)
             {
                 queueThread = new Thread(new ParameterizedThreadStart(ItemQueue.ThreadLoop))
@@ -189,11 +187,7 @@ namespace DC1AP
             {
                 long id = item.ItemId;
 
-                if (id >= MiscConstants.AttachIdBase)
-                    InventoryMgmt.IncAttachCount(id);
-                else if (id >= MiscConstants.ItemIdBase)
-                    InventoryMgmt.IncItemCount(id);
-                else
+                if (id < MiscConstants.ItemIdBase)
                     GeoInvMgmt.IncGeoCount(id);
             }
         }
@@ -247,7 +241,7 @@ namespace DC1AP
                 EventMasks.InitMasks();
 
                 Weapons.GiveCharWeapon(0);
-                    InventoryMgmt.GiveFreeFeather();
+                InventoryMgmt.GiveFreeFeather();
             }
             else if (currSlot != slotName)
             {
@@ -256,8 +250,9 @@ namespace DC1AP
                 return;
             }
 
+            InventoryMgmt.CheckAttachments(true);
+            MiracleChestMgmt.Init();
             GeoInvMgmt.InitBuildings();
-
             CharFuncs.Init();
 
             // Check for any missing items after a connect/reconnect
@@ -272,6 +267,7 @@ namespace DC1AP
             PlayerState.ValidGameState = true;
             // Watch for the player to reset the game, then change the valid state flag and ready up to connect again.
             Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerNotReady(slotName), (o) => { return o <= 1; });
+            WatchGoal();
         }
 
         private void PlayerNotReady(string slotName)

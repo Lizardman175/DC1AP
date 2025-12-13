@@ -57,7 +57,7 @@ namespace DC1AP.Threads
             // Clean out the queues before stopping
             while (RunThread)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
 
                 if (PlayerState.PlayerReady())
                 {
