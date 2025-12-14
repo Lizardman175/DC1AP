@@ -229,6 +229,7 @@ namespace DC1AP
 
         private void PlayerReady(string slotName)
         {
+            Thread.Sleep(50);
             string currSlot = OpenMem.GetSlotName();
 
             // First load for this save, so do extra stuff
