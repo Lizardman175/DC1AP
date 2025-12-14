@@ -8,19 +8,19 @@
   "971111132": {
     "Name": "Anti-Freeze Amulet",
     "ItemID": 132,
-    "ValueMin": 6,
+    "ValueMin": 3,
     "ValueMax": 8
   },
   "971111133": {
     "Name": "Anti-Curse Amulet",
     "ItemID": 133,
-    "ValueMin": 6,
+    "ValueMin": 3,
     "ValueMax": 8
   },
   "971111134": {
     "Name": "Anti-Goo Amulet",
     "ItemID": 134,
-    "ValueMin": 6,
+    "ValueMin": 3,
     "ValueMax": 8
   },
   "971111135": {
@@ -162,13 +162,13 @@
     "ValueMax": 0
   },
   "971111164": {
-    "Name": "Wind gem",
+    "Name": "Wind Gem",
     "ItemID": 164,
     "ValueMin": 0,
     "ValueMax": 0
   },
   "971111165": {
-    "Name": "Holy gem",
+    "Name": "Holy Gem",
     "ItemID": 165,
     "ValueMin": 0,
     "ValueMax": 0
@@ -422,7 +422,7 @@
   "971111235": {
     "Name": "Dran's Feather",
     "ItemID": 235,
-    "ValueMin": 13380,
+    "ValueMin": 12780,
     "ValueMax": 20940
   },
   "971111236": {
