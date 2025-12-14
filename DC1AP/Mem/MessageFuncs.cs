@@ -40,11 +40,11 @@ namespace DC1AP.Mem
             {
                 FontSize = 24,
                 XOffset = 50,
-                YOffset = 50,
+                YOffset = 150,
                 FadeDuration = 5.0f,
                 DefaultTextColor = Color.White
             });
-
+            
             App.Client.IntializeOverlayService(overlayService);
         }
 

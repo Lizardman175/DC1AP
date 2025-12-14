@@ -145,7 +145,7 @@ namespace DC1AP.Items
                 uint addr = (uint)(FirstAttchAddr + AttachmentSize * ii);
                 short itemValue = Memory.ReadShort(addr);
 
-                if (itemValue == -1)
+                if (itemValue == -1 || itemValue == 0)
                 {
                     Memory.Write(addr, item.ItemID);
 

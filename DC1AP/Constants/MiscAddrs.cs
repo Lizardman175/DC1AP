@@ -87,7 +87,7 @@ namespace DC1AP.Constants
         /// Tracks the current/previous zone value.
         /// 00 == Norune, 01 == Matataki, 02 == Queens, 0x03 == ML, 0x04 == Factory, 0x17 == Yellow Drops, 0x26 == DHC, 0x28 == DHC Ext
         /// 13 == Queen's Dock, 23 == SW entrance, 27 == Sub ride cutscene
-        /// 0B == Goro's treehouse ext, 0C == dead tree? 0D == Revived Tree
+        /// 0B == Goro's treehouse ext, 21 == dead tree 0D == Revived Tree
         /// 0x0E == Brownboo, SMT exterior == 0x2A, 0x3C == Demon Shaft ext, 3D == DS interior
         /// C8 == DBC, C9 == WOF, CA == SW, CB == SMT, 0xCC == Moon Sea, CD == Gallery, CE == Demon Shaft dungeon
         internal const uint CurZoneAddr = 0x002A2518;
