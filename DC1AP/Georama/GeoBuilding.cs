@@ -44,7 +44,6 @@ namespace DC1AP.Georama
 
         private bool HasBuilding()
         {
-            // TODO junk data might make this not evaluate to true? Leaving TODO until all buildings tested.
             return Memory.ReadShort(BuildingCountAddr) != 0;
         }
 

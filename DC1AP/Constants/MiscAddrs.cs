@@ -84,6 +84,26 @@ namespace DC1AP.Constants
 
         internal const uint PlayerInteriorState = 0x002A2A84;
 
+        /// Tracks the current/previous zone value.
+        /// 00 == Norune, 01 == Matataki, 02 == Queens, 0x03 == ML, 0x04 == Factory, 0x17 == Yellow Drops, 0x26 == DHC, 0x28 == DHC Ext
+        /// 13 == Queen's Dock, 23 == SW entrance, 27 == Sub ride cutscene
+        /// 0B == Goro's treehouse ext, 21 == dead tree 0D == Revived Tree
+        /// 0x0E == Brownboo, SMT exterior == 0x2A, 0x3C == Demon Shaft ext, 3D == DS interior
+        /// C8 == DBC, C9 == WOF, CA == SW, CB == SMT, 0xCC == Moon Sea, CD == Gallery, CE == Demon Shaft dungeon
+        internal const uint CurZoneAddr = 0x002A2518;
+        //internal const uint PrevZoneAddr = 0x002A251C;  Not likely useful, but here for reference
+        internal const int NoruneZone = 0x00;
+        internal const int MatatakiZone = 0x01;
+        internal const int GoroZone = 0x0B;
+        internal const int DeadTreeZone = 0x0C;
+        internal const int TreeZone = 0x0D;
+        internal const int QueensZone = 0x02;
+        internal const int QueensDockZone = 0x13;
+        internal const int MuskaZone = 0x03;
+        internal const int SMTExtZone = 0x2A;
+        internal const int FactoryZone = 0x04;
+        internal const int YellowDropsZone = 0x17;
+
         // Kill counts on the boss floors
         //internal const uint DranFlag = 0x01CDD200;
         internal const uint UtanFlag = 0x01CDD2CC;
@@ -93,8 +113,6 @@ namespace DC1AP.Constants
         //internal const uint GenieFlag = 0x01CDD5FC;
 
         internal const uint BossKillAddr = 0x01CE47A8;  // Sets to 100 x boss number (except for Utan?)
-
-        //internal static readonly uint[] BossKillFlags = [DranFlag, UtanFlag, SaiaFlag, CurseFlag, JoeFlag, GenieFlag];
 
         // Curiously, there are 11 weapon slots in memory, but only 10 in game?
         internal const uint WeaponOffset = 0xF8;

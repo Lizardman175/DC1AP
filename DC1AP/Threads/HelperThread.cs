@@ -1,5 +1,6 @@
 ﻿using Archipelago.Core.Util;
 using DC1AP.Constants;
+using DC1AP.Items;
 using DC1AP.Mem;
 
 namespace DC1AP.Threads
@@ -13,9 +14,9 @@ namespace DC1AP.Threads
         private const int CatFloor = 7;
         private const int EmptyFloor1 = 3;
         private const int EmptyFloor2 = 10;
-        private const short GarbageGeo = 0x21fa;  // Garbage value of 0x2222 - 0x0028, builtin offset for items vs atla loot table
+        private const short GarbageGeo = 0x21FA;  // Garbage value of 0x2222 - 0x0028, builtin offset for items vs atla loot table
 
-        private static object _lock = new();
+        private static readonly object _lock = new();
         private static List<Atla>[] atlaMap = new List<Atla>[6];
         private static bool[] dungeonsMapped = [false, false, false, false, false, false];
 
@@ -114,25 +115,38 @@ namespace DC1AP.Threads
 
                         // Hide the stray cat atla if present.  There is special code around it in game so we can't use it.
                         if (curDungeon == 0 && curFloor == CatFloor && Memory.ReadInt(GeoAddrs.AtlaCollectedFlag) != 0)
-                        {
                             Memory.Write(GeoAddrs.AtlaCollectedFlag, 0);
-                        }
 
                         if (isBackFloor != curBackFloor || curFloor != mostRecentFloor)
-                        {
                             Enemies.MultiplyABS();
-                        }
 
                         mostRecentDungeon = curDungeon;
                         mostRecentFloor = curFloor;
                         isBackFloor = curBackFloor;
                     }
                     // Reset dungeon values if player is not in a dungeon.
-                    else
+                    else if (mostRecentFloor != -1)
                     {
                         mostRecentFloor = -1;
                         mostRecentDungeon = -1;
                         isBackFloor = false;
+                    }
+                    
+                    InventoryMgmt.CheckAttachments(false);
+
+                    if (PlayerState.IsPlayerInTown())
+                    {
+                        int zoneId = Memory.ReadInt(MiscAddrs.CurZoneAddr);
+                        if (zoneId == MiscAddrs.NoruneZone)
+                            MiracleChestMgmt.CheckTown(Towns.Norune);
+                        else if (zoneId == MiscAddrs.MatatakiZone || zoneId == MiscAddrs.GoroZone || zoneId == MiscAddrs.TreeZone)
+                            MiracleChestMgmt.CheckTown(Towns.Matataki);
+                        else if (zoneId == MiscAddrs.QueensZone || zoneId == MiscAddrs.QueensDockZone)
+                            MiracleChestMgmt.CheckTown(Towns.Queens);
+                        else if (zoneId == MiscAddrs.MuskaZone || zoneId == MiscAddrs.SMTExtZone)
+                            MiracleChestMgmt.CheckTown(Towns.Muska);
+                        else if (zoneId == MiscAddrs.YellowDropsZone || zoneId == MiscAddrs.FactoryZone)
+                            MiracleChestMgmt.CheckTown(Towns.Factory);
                     }
                 }
 
@@ -156,12 +170,12 @@ namespace DC1AP.Threads
                         if (!atla.Collected && Memory.ReadInt(atla.Address) == MiscConstants.AtlaClaimed)
                         {
                             atla.Collected = true;
-                            App.SendLocation(atla.LocationId);
+
+                            if (!App.Client.CurrentSession.Locations.AllLocationsChecked.Contains(atla.LocationId))
+                                App.SendLocation(atla.LocationId);
                         }
                         else
-                        {
                             CheckForCollectedAtla(atla);
-                        }
                     }
                 }
             }
@@ -241,13 +255,10 @@ namespace DC1AP.Threads
                             {
                                 newAtla.Collected = true;
                                 if (!App.Client.CurrentSession.Locations.AllLocationsChecked.Contains(atlaId))
-                                {
                                     App.SendLocation(atlaId);
-                                }
                             }
 
                             dunAtla.Add(newAtla);
-
                             atlaId++;
                         }
                         // Place the stray cat's atla in the first available slot and remove it from floor 8. 3rd floor can't have atla for first dun
