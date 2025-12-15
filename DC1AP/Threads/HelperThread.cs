@@ -2,6 +2,8 @@
 using DC1AP.Constants;
 using DC1AP.Items;
 using DC1AP.Mem;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace DC1AP.Threads
 {

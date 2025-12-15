@@ -1,0 +1,301 @@
+<Window xmlns="https://github.com/avaloniaui"
+		ExtendClientAreaToDecorationsHint="True"
+		ExtendClientAreaTitleBarHeightHint="-1"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:vm="using:DC1AP.ViewModels"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:views="clr-namespace:DC1AP.Views"
+		xmlns:models="using:DC1AP.Models"
+		mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="700"
+		Width="600" Height="700"
+		x:Class="DC1AP.Views.MainWindow"
+		x:DataType="vm:MainWindowViewModel"
+		Icon="/Assets/avalonia-logo.ico"
+		Title="Dark Cloud 1 Rando" CornerRadius="{StaticResource WindowCornerRadius}" Background="Transparent" TransparencyLevelHint="Transparent">
+	<Window.Resources>
+		<Color x:Key="BackgroundDark">#202020</Color>
+		<Color x:Key="BackgroundDarker">#101010</Color>
+		<Color x:Key="BackgroundMedium">#373737</Color>
+		<Color x:Key="BackgroundLight">DarkGray</Color>
+		<Color x:Key="ForegroundWhite">White</Color>
+		<Color x:Key="ForegroundBlack">Black</Color>
+		<Color x:Key="ShadowColor">#40000000</Color>
+		<Color x:Key="ActiveControl">#269FFF</Color>
+		<Color x:Key="Transparent">#00000000</Color>
+		<Color x:Key="Test">#FF0000</Color>
+		<CornerRadius x:Key="WindowCornerRadius">10</CornerRadius>
+		<CornerRadius x:Key="WindowTopCornerRadius">10,10,0,0</CornerRadius>
+		<CornerRadius x:Key="WindowBottomCornerRadius">0,0,10,10</CornerRadius>
+
+		<SolidColorBrush x:Key="BrushBackgroundDark" Color="{StaticResource BackgroundDark}"/>
+		<SolidColorBrush x:Key="BrushBackgroundDarker" Color="{StaticResource BackgroundDarker}"/>
+		<SolidColorBrush x:Key="BrushBackgroundMedium" Color="{StaticResource BackgroundMedium}"/>
+		<SolidColorBrush x:Key="BrushBackgroundLight" Color="{StaticResource BackgroundLight}"/>
+		<SolidColorBrush x:Key="BrushForegroundWhite" Color="{StaticResource ForegroundWhite}"/>
+		<SolidColorBrush x:Key="BrushForegroundBlack" Color="{StaticResource ForegroundBlack}"/>
+		<SolidColorBrush x:Key="BrushShadow" Color="{StaticResource ShadowColor}"/>
+
+		<SolidColorBrush x:Key="ButtonBackground" Color="{StaticResource BackgroundLight}"/>
+		<SolidColorBrush x:Key="ButtonForeground" Color="{StaticResource ForegroundBlack}"/>
+		<SolidColorBrush x:Key="ButtonForegroundDisabled" Color="{StaticResource BackgroundDark}" />
+		<SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="{StaticResource BackgroundDarker}" />
+
+		<SolidColorBrush x:Key="TextControlBackgroundDisabled" Color="{StaticResource Transparent}"/>
+		<SolidColorBrush x:Key="TextControlForegroundDisabled" Color="{StaticResource ForegroundWhite}"/>
+		<SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="{StaticResource Transparent}"/>
+
+		<SolidColorBrush x:Key="TextControlBackground" Color="{StaticResource BackgroundMedium}"/>
+		<SolidColorBrush x:Key="TextControlBorderBrush" Color="{StaticResource Transparent}"/>
+		<SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{StaticResource BackgroundLight}"/>
+		<SolidColorBrush x:Key="TextControlPlaceholderForegroundFocused" Color="{StaticResource BackgroundLight}"/>
+		<SolidColorBrush x:Key="TextControlBackgroundFocused" Color="{StaticResource BackgroundMedium}"/>
+
+		<SolidColorBrush x:Key="ToggleSwitchContentForeground" Color="{StaticResource ForegroundWhite}"/>
+		<SolidColorBrush x:Key="ToggleSwitchFillOn" Color="{StaticResource ActiveControl}"/>
+		<SolidColorBrush x:Key="ToggleSwitchFillOff" Color="{StaticResource BackgroundDark}"/>
+		<SolidColorBrush x:Key="ToggleSwitchKnobFillOn" Color="{StaticResource ForegroundWhite}"/>
+		<SolidColorBrush x:Key="ToggleSwitchKnobFillOff" Color="{StaticResource ForegroundWhite}"/>
+
+		<SolidColorBrush x:Key="ComboBoxBackground" Color="{StaticResource BackgroundMedium}"/>
+
+		<SolidColorBrush x:Key="MenuFlyoutItemBackground" Color="{StaticResource BackgroundDark}"/>
+
+		<SolidColorBrush x:Key="TabControlBackground" Color="{StaticResource BackgroundDark}"/>
+		<SolidColorBrush x:Key="TabItemHeaderForegroundSelected" Color="{StaticResource ForegroundWhite}"/>
+		<SolidColorBrush x:Key="TabItemHeaderForegroundUnselected" Color="{StaticResource ForegroundWhite}"/>
+	</Window.Resources>
+	<Window.Styles>
+		<Style Selector="TextBox">
+			<Setter Property="FontSize" Value="12"/>
+			<Setter Property="Margin" Value="5,10,5,10"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="HorizontalAlignment" Value="Stretch"/>
+		</Style>
+		<Style Selector="SplitView">
+			<Setter Property="PaneBackground" Value="{StaticResource Transparent}"/>
+			<Setter Property="DisplayMode" Value="Overlay"/>
+			<Setter Property="OpenPaneLength" Value="300"/>
+
+		</Style>
+		<Style Selector="ListBoxItem">
+			<Setter Property="Padding" Value="2" />
+		</Style>
+		<Style Selector="Button">
+			<Setter Property="HorizontalAlignment" Value="Stretch" />
+		</Style>
+		<Style Selector="ListBox">
+			<Setter Property="Background" Value="{StaticResource BackgroundMedium}" />
+		</Style>
+		<Style Selector="DockPanel > Border" >
+			<Setter Property="Background" Value="{StaticResource BackgroundMedium}" />
+			<Setter Property="Height" Value="40" />
+		</Style>
+		<Style Selector="Grid > Border" >
+			<Setter Property="Background" Value="{StaticResource BackgroundMedium}" />
+			<Setter Property="Padding" Value="0" />
+			<Setter Property="Margin" Value="0"/>
+		</Style>
+		<Style Selector="ListBox Border" >
+			<Setter Property="Background" Value="{StaticResource BackgroundMedium}" />
+			<Setter Property="Padding" Value="5" />
+			<Setter Property="Margin" Value="0"/>
+			<Setter Property="BoxShadow" Value="0 2 4 0 #40000000"/>
+		</Style>
+
+	</Window.Styles>
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+	<Border BorderThickness="1" BorderBrush="{StaticResource BackgroundMedium}" CornerRadius="10">
+		<DockPanel Name="TitleBarPanel">
+			<!-- Header bar -->
+			<Border Name="HeaderBar" DockPanel.Dock="Top" CornerRadius="{StaticResource WindowTopCornerRadius}">
+				<Grid >
+					<Button HorizontalAlignment="Left"
+							Width="40"
+							Height="40"
+							Background="Transparent"
+							Command="{Binding TogglePaneCommand}">
+						<Path Data="M3,6 L21,6 M3,12 L21,12 M3,18 L21,18"
+							  Stroke="White"
+							  StrokeThickness="2"
+							  Margin="4"/>
+					</Button>
+					<TextBox Text="Archipelago Client" FontSize="16" IsEnabled="False"
+							 HorizontalAlignment="Center"/>
+				</Grid>
+			</Border>
+
+
+			<SplitView IsPaneOpen="{Binding IsPaneOpen}"  CornerRadius="{StaticResource WindowBottomCornerRadius}">
+
+				<!-- Flyout Panel (Settings) -->
+				<SplitView.Pane>
+					<Border CornerRadius="{StaticResource WindowBottomCornerRadius}"
+							ClipToBounds="True"
+							Background="{StaticResource BackgroundDark}">
+						<Grid RowDefinitions="Auto,*,Auto">
+							<Border Grid.Row="0" >
+								<TextBox IsEnabled="False" Text="Settings" FontSize="16"/>
+							</Border>
+							<Grid RowDefinitions="*,*,*,*,*,*,*"
+								  ColumnDefinitions="*,2*"
+								  Margin="10,20,10,10"
+								  VerticalAlignment="Top" Grid.Row="1" >
+
+								<TextBox IsEnabled="False" Grid.Row="0" Grid.Column="0"
+										 Text="Host: "/>
+								<TextBox Grid.Row="0" Grid.Column="1"
+										 Watermark="Enter Host e.g. archipelago.gg:38281"
+										 Text="{Binding Host}"/>
+
+								<TextBox IsEnabled="False" Grid.Row="1" Grid.Column="0"
+										 Text="Slot: "/>
+								<TextBox Grid.Row="1" Grid.Column="1"
+										 Watermark="Enter Slot e.g. Player1"
+										 Text="{Binding Slot}"/>
+
+								<TextBox IsEnabled="False" Grid.Row="2" Grid.Column="0"
+										 Text="Password: "/>
+								<TextBox Grid.Row="2" Grid.Column="1"
+										 Watermark="Enter Password"
+										 PasswordChar="*"
+										 Text="{Binding Password}"/>
+
+								<Button Grid.Row="3"
+										Grid.Column="0"
+										Grid.ColumnSpan="2"
+										Content="Connect"
+										Command="{Binding ConnectClickedCommand}"
+										IsEnabled="{Binding ConnectButtonEnabled}" HorizontalContentAlignment="Center"/>
+
+								<TextBox IsEnabled="False" Grid.Row="4" Grid.Column="0"
+										 Text="Autoscroll&#x0a; Enabled: " MaxLines="2" AcceptsReturn="True"/>
+								<ToggleSwitch Grid.Row="4" Grid.Column="1" IsChecked="{Binding AutoscrollEnabled}"/>
+
+
+								<TextBox IsEnabled="False" Grid.Row="5" Grid.Column="0"
+										 Text="Log Level: "/>
+								<ComboBox Grid.Row="5" Grid.Column="1"
+										  ItemsSource="{Binding LogEventLevels}"
+										  SelectedItem="{Binding SelectedLogLevel}" Margin="5"/>
+
+								<Button Grid.Row="6"
+										Grid.Column="0"
+										Grid.ColumnSpan="2"
+										Content="UNSTUCK"
+										Command="{Binding UnstuckClickedCommand}"
+										IsEnabled="{Binding UnstuckButtonEnabled}"
+										HorizontalContentAlignment="Center"/>
+							</Grid>
+
+							<StackPanel VerticalAlignment="Bottom" Spacing="5" Grid.Row="2" >
+								<TextBox IsEnabled="False"
+										 HorizontalAlignment="Center"
+										 Text="{Binding ClientVersion, StringFormat='Client Version: {0}', Mode=OneWay}"/>
+								<TextBox IsEnabled="False"
+										 HorizontalAlignment="Center"
+										 Text="{Binding ArchipelagoVersion, StringFormat='Archipelago Version: {0}', Mode=OneWay}"/>
+							</StackPanel>
+						</Grid>
+					</Border>
+				</SplitView.Pane>
+
+				<!-- Main Content -->
+				<SplitView.Content>
+					<TabControl  CornerRadius="{StaticResource WindowBottomCornerRadius}">
+						<!-- Log Tab -->
+						<TabItem Header="Log">
+							<Grid RowDefinitions="*,Auto">
+								<ListBox Name="Log" Grid.Row="0"
+										 ItemsSource="{Binding LogList}">
+									<ListBox.ItemTemplate>
+										<DataTemplate DataType="models:LogListItem">
+											<Border>
+												<ItemsControl ItemsSource="{Binding TextSpans}">
+													<ItemsControl.ItemsPanel>
+														<ItemsPanelTemplate>
+															<StackPanel Orientation="Horizontal" Spacing="2"/>
+														</ItemsPanelTemplate>
+													</ItemsControl.ItemsPanel>
+													<ItemsControl.ItemTemplate>
+														<DataTemplate DataType="models:TextSpan">
+															<TextBox IsEnabled="False" Text="{Binding Text}"
+																	 Foreground="{Binding TextColor}"
+																	 TextWrapping="Wrap"/>
+														</DataTemplate>
+													</ItemsControl.ItemTemplate>
+												</ItemsControl>
+											</Border>
+										</DataTemplate>
+									</ListBox.ItemTemplate>
+								</ListBox>
+								<Grid Grid.Row="1"
+									  ColumnDefinitions="*,Auto" Margin="5">
+									<TextBox Grid.Column="0"
+											 Text="{Binding CommandText}"/>
+									<Button Grid.Column="1" HorizontalAlignment="Center"
+											Content="Send"
+											Command="{Binding CommandSentCommand}"/>
+								</Grid>
+							</Grid>
+						</TabItem>
+
+						<!-- Hints Tab -->
+						<TabItem Header="Hints">
+							<ListBox ItemsSource="{Binding HintList}" Name="HintList" Margin="0,0,0,10">
+								<ListBox.ItemTemplate>
+									<DataTemplate DataType="models:LogListItem">
+										<Border>
+											<ItemsControl ItemsSource="{Binding TextSpans}">
+												<ItemsControl.ItemsPanel>
+													<ItemsPanelTemplate>
+														<StackPanel Orientation="Horizontal"/>
+													</ItemsPanelTemplate>
+												</ItemsControl.ItemsPanel>
+												<ItemsControl.ItemTemplate>
+													<DataTemplate DataType="models:TextSpan">
+														<TextBox IsEnabled="False" Text="{Binding Text}"
+																 Foreground="{Binding TextColor}"
+																 TextWrapping="Wrap"/>
+													</DataTemplate>
+												</ItemsControl.ItemTemplate>
+											</ItemsControl>
+										</Border>
+									</DataTemplate>
+								</ListBox.ItemTemplate>
+							</ListBox>
+						</TabItem>
+
+						<!-- Received Items Tab -->
+						<TabItem Header="Received Items">
+							<ListBox ItemsSource="{Binding ItemList}" Name="ItemList" Margin="0,0,0,10">
+								<ListBox.ItemTemplate>
+									<DataTemplate DataType="models:LogListItem">
+										<Border>
+											<ItemsControl ItemsSource="{Binding TextSpans}">
+												<ItemsControl.ItemsPanel>
+													<ItemsPanelTemplate>
+														<StackPanel Orientation="Horizontal"/>
+													</ItemsPanelTemplate>
+												</ItemsControl.ItemsPanel>
+												<ItemsControl.ItemTemplate>
+													<DataTemplate DataType="models:TextSpan">
+														<TextBox IsEnabled="False" Text="{Binding Text}"
+																 Foreground="{Binding TextColor}"
+																 TextWrapping="Wrap"/>
+													</DataTemplate>
+												</ItemsControl.ItemTemplate>
+											</ItemsControl>
+										</Border>
+									</DataTemplate>
+								</ListBox.ItemTemplate>
+							</ListBox>
+						</TabItem>
+					</TabControl>
+				</SplitView.Content>
+			</SplitView>
+		</DockPanel>
+	</Border>
+</Window>

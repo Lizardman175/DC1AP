@@ -1,5 +1,6 @@
 using Archipelago.Core.Util;
 using DC1AP.Constants;
+using System.Collections.Generic;
 
 namespace DC1AP.Mem
 {

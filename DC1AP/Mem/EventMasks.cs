@@ -84,7 +84,7 @@ namespace DC1AP.Mem
             OrMask(DialogAddr2, yayaMask);
         }
 
-        internal static Boolean YayaDone()
+        internal static bool YayaDone()
         {
             return (Memory.ReadByte(DialogAddr2) & yayaMask) == yayaMask;
         }

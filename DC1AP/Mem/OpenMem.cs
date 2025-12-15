@@ -1,4 +1,7 @@
 using Archipelago.Core.Util;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DC1AP.Mem
 {
@@ -55,7 +58,7 @@ namespace DC1AP.Mem
         /// Write the given slot name to memory.  Must be <= 16 chars.
         /// </summary>
         /// <param name="s"></param>
-        internal static void SetSlotName(String s)
+        internal static void SetSlotName(string s)
         {
             if (s.Length > SlotNameLen)
             {

@@ -5,6 +5,7 @@ using DC1AP.Items;
 using DC1AP.Mem;
 using Serilog;
 using System.Collections.Concurrent;
+using System.Threading;
 
 namespace DC1AP.Threads
 {

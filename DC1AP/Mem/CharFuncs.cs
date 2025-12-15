@@ -56,34 +56,34 @@ namespace DC1AP.Mem
 
             if (Memory.ReadByte(XiaoSlotAddr) == 0xff)
             {
-                Memory.MonitorAddressForAction<Byte>(XiaoSlotAddr, () => XiaoGained(), (o) => { return o != 0xff; });
+                Memory.MonitorAddressForAction<byte>(XiaoSlotAddr, () => XiaoGained(), (o) => { return o != 0xff; });
             }
             else xiao = true;
 
             if (Memory.ReadByte(GoroSlotAddr) == 0xff)
             {
-                Memory.MonitorAddressForAction<Byte>(GoroSlotAddr, () => GoroGained(), (o) => { return o != 0xff; });
+                Memory.MonitorAddressForAction<byte>(GoroSlotAddr, () => GoroGained(), (o) => { return o != 0xff; });
             }
             else goro = true;
 
             if (Memory.ReadByte(RubySlotAddr) == 0xff)
             {
                 if (Options.Goal >= (int) Towns.Queens + 1)
-                    Memory.MonitorAddressForAction<Byte>(RubySlotAddr, () => RubyGained(), (o) => { return o != 0xff; });
+                    Memory.MonitorAddressForAction<byte>(RubySlotAddr, () => RubyGained(), (o) => { return o != 0xff; });
             }
             else ruby = true;
 
             if (Memory.ReadByte(UngagaSlotAddr) == 0xff)
             {
                 if (Options.Goal >= (int) Towns.Muska + 1)
-                    Memory.MonitorAddressForAction<Byte>(UngagaSlotAddr, () => UngagaGained(), (o) => { return o != 0xff; });
+                    Memory.MonitorAddressForAction<byte>(UngagaSlotAddr, () => UngagaGained(), (o) => { return o != 0xff; });
             }
             else ungaga = true;
 
             if (Memory.ReadByte(OsmondSlotAddr) == 0xff)
             {
                 if (Options.Goal >= (int)Towns.Factory + 1)
-                    Memory.MonitorAddressForAction<Byte>(OsmondSlotAddr, () => OsmondGained(), (o) => { return o != 0xff; });
+                    Memory.MonitorAddressForAction<byte>(OsmondSlotAddr, () => OsmondGained(), (o) => { return o != 0xff; });
             }
             else osmond = true;
         }
@@ -109,7 +109,7 @@ namespace DC1AP.Mem
                     InventoryMgmt.VerifyItems();
             }
             else
-                Memory.MonitorAddressForAction<Byte>(XiaoSlotAddr, () => XiaoGained(), (o) => { return o != 0xff; });
+                Memory.MonitorAddressForAction<byte>(XiaoSlotAddr, () => XiaoGained(), (o) => { return o != 0xff; });
 
         }
 
@@ -133,7 +133,7 @@ namespace DC1AP.Mem
                     InventoryMgmt.VerifyItems();
             }
             else
-                Memory.MonitorAddressForAction<Byte>(GoroSlotAddr, () => GoroGained(), (o) => { return o != 0xff; });
+                Memory.MonitorAddressForAction<byte>(GoroSlotAddr, () => GoroGained(), (o) => { return o != 0xff; });
         }
 
         private static void RubyGained()
@@ -158,7 +158,7 @@ namespace DC1AP.Mem
                     InventoryMgmt.VerifyItems();
             }
             else
-                Memory.MonitorAddressForAction<Byte>(RubySlotAddr, () => RubyGained(), (o) => { return o != 0xff; });
+                Memory.MonitorAddressForAction<byte>(RubySlotAddr, () => RubyGained(), (o) => { return o != 0xff; });
         }
 
         private static void UngagaGained()
@@ -182,7 +182,7 @@ namespace DC1AP.Mem
                     InventoryMgmt.VerifyItems();
             }
             else
-                Memory.MonitorAddressForAction<Byte>(UngagaSlotAddr, () => UngagaGained(), (o) => { return o != 0xff; });
+                Memory.MonitorAddressForAction<byte>(UngagaSlotAddr, () => UngagaGained(), (o) => { return o != 0xff; });
         }
 
         private static void OsmondGained()
@@ -205,7 +205,7 @@ namespace DC1AP.Mem
                     InventoryMgmt.VerifyItems();
             }
             else
-                Memory.MonitorAddressForAction<Byte>(OsmondSlotAddr, () => OsmondGained(), (o) => { return o != 0xff; });
+                Memory.MonitorAddressForAction<byte>(OsmondSlotAddr, () => OsmondGained(), (o) => { return o != 0xff; });
         }
         #endregion
     }

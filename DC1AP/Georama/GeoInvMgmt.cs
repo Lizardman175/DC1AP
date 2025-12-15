@@ -2,6 +2,9 @@ using Archipelago.Core.Util;
 using DC1AP.Constants;
 using DC1AP.Threads;
 using Serilog;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 
 namespace DC1AP.Georama
