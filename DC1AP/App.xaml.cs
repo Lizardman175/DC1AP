@@ -62,7 +62,7 @@ namespace DC1AP
         private static MainWindowViewModel Context;
         private static readonly object _lockObject = new();
 
-        private static readonly ConcurrentQueue<Archipelago.Core.Models.Location> locationQueue = new();
+        private static readonly ConcurrentQueue<Location> locationQueue = new();
 
         //private DeathLinkService _deathlinkService;
         private Thread queueThread;
@@ -317,7 +317,7 @@ namespace DC1AP
 
         internal static async Task SendLocation(int locId)
         {
-            Archipelago.Core.Models.Location loc = new()
+            Location loc = new()
             {
                 Id = locId
             };
@@ -551,7 +551,7 @@ namespace DC1AP
                 }
                 else
                 {
-                    while (locationQueue.TryDequeue(out Archipelago.Core.Models.Location? loc))
+                    while (locationQueue.TryDequeue(out Location? loc))
                     {
                         Client.SendLocation(loc);
                     }

@@ -36,7 +36,7 @@ namespace DC1AP.ViewModels
         private bool _connectButtonEnabled;
         private ObservableCollection<LogListItem> _hintList = new ObservableCollection<LogListItem>();
         private ObservableCollection<LogListItem> _itemList = new ObservableCollection<LogListItem>();
-        private bool _autoscrollEnabled;
+        private bool _autoscrollEnabled = true;
         private bool _unstuckButtonEnabled;
         private readonly System.Timers.Timer _processingTimer;
         private readonly object _processingLock = new();
