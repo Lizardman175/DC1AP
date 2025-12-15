@@ -1,4 +1,6 @@
 
+using System.Collections.Generic;
+
 namespace DC1AP.Constants
 {
     internal static class GeoAddrs

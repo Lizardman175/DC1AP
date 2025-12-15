@@ -1,5 +1,7 @@
 ﻿
 using DC1AP.Constants;
+using System;
+using System.Collections.Generic;
 
 namespace DC1AP
 {
@@ -23,7 +25,7 @@ namespace DC1AP
         public static bool SundewChest { get => sundewChest; }
         internal static AutobuildFlags Autobuild { get => autobuild; }
 
-        public static void ParseOptions(Dictionary<string, object> options)
+        internal static void ParseOptions(Dictionary<string, object> options)
         {
             goal = Int32.Parse(options["goal"].ToString());  // What dungeon to randomize through
             absMultiplier = (Int32.Parse(options["abs_multiplier"].ToString()) + 1.0f) / 2;

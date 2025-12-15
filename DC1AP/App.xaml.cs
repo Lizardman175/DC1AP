@@ -23,31 +23,43 @@
  */
 using Archipelago.Core;
 using Archipelago.Core.GameClients;
-using Archipelago.Core.MauiGUI;
-using Archipelago.Core.MauiGUI.Models;
-using Archipelago.Core.MauiGUI.ViewModels;
 using Archipelago.Core.Models;
 using Archipelago.Core.Util;
 using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using Archipelago.MultiClient.Net.MessageLog.Messages;
 using Archipelago.MultiClient.Net.Models;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Markup.Xaml;
+using Avalonia.Media;
 using DC1AP.Constants;
 using DC1AP.Georama;
 using DC1AP.Items;
 using DC1AP.Mem;
+using DC1AP.Models;
 using DC1AP.Threads;
+using DC1AP.ViewModels;
+using DC1AP.Views;
 using Newtonsoft.Json;
+using ReactiveUI;
 using Serilog;
+using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reactive.Concurrency;
+using System.Threading;
+using System.Threading.Tasks;
+using Color = Avalonia.Media.Color;
 
-// Adapted from github.com/ArsonAssassin/Archipelago-Maui-Template
+// Adapted from github.com/ArsonAssassin/Archipelago-Avalonia-Template
 namespace DC1AP
 {
     public partial class App : Application
     {
         internal static ArchipelagoClient Client { get; set; }
 
-        private static MainPageViewModel Context;
+        private static MainWindowViewModel Context;
         private static readonly object _lockObject = new();
 
         private static readonly ConcurrentQueue<Archipelago.Core.Models.Location> locationQueue = new();
@@ -58,23 +70,48 @@ namespace DC1AP
         private Thread reconnectThread;
         private GenericGameClient? ps2Client;
 
-        public App()
+        public override void Initialize()
         {
-            InitializeComponent();
+            AvaloniaXamlLoader.Load(this);
 
-            Context = new MainPageViewModel();
+            Context = new MainWindowViewModel() { ConnectButtonEnabled = true };
             Context.ConnectClicked += Context_ConnectClicked;
-            Context.CommandReceived += (e, a) =>
-            {
-                Client?.SendMessage(a.Command);
-            };
+            Context.CommandReceived += (_, a) => Client?.SendMessage(a.Command);
+
+            //InitializeComponent();
+
+            //Context = new MainPageViewModel();
+            //Context.ConnectClicked += Context_ConnectClicked;
+            //Context.CommandReceived += (e, a) =>
+            //{
+            //    Client?.SendMessage(a.Command);
+            //};
             // TODO save last used host/slot?
             Context.Host = "localhost:38281";
             //Context.Slot = "DC1";
-            MainPage = new MainPage(Context);
-            Context.ConnectButtonEnabled = true;
+            //MainPage = new MainPage(Context);
+            //Context.ConnectButtonEnabled = true;
 
             InventoryMgmt.InitInventoryMgmt();
+        }
+
+        public override void OnFrameworkInitializationCompleted()
+        {
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.MainWindow = new MainWindow
+                {
+                    DataContext = Context
+                };
+            }
+            else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
+            {
+                singleViewPlatform.MainView = new MainWindow
+                {
+                    DataContext = Context
+                };
+            }
+            base.OnFrameworkInitializationCompleted();
         }
 
         private async void Context_ConnectClicked(object? sender, ConnectClickedEventArgs e)
@@ -399,8 +436,6 @@ namespace DC1AP
 
         private static void Client_ItemReceived(object? sender, ItemReceivedEventArgs e)
         {
-            LogItem(e.Item);
-
             long itemId = e.Item.Id;
             if (itemId >= MiscConstants.AttachIdBase)
             {
@@ -430,23 +465,6 @@ namespace DC1AP
             Log.Logger.Information(JsonConvert.SerializeObject(e.Message));
         }
 
-        private static void LogItem(Item item)
-        {
-            var messageToLog = new LogListItem(
-            [
-                new TextSpan(){Text = $"[{item.Id.ToString()}] -", TextColor = Microsoft.Maui.Graphics.Color.FromRgb(255, 255, 255)},
-                new TextSpan(){Text = $"{item.Name}", TextColor = Microsoft.Maui.Graphics.Color.FromRgb(200, 255, 200)},
-                //new TextSpan(){Text = $"x{item.Quantity.ToString()}", TextColor = Color.FromRgb(200, 255, 200)}
-            ]);
-            lock (_lockObject)
-            {
-                Application.Current.Dispatcher.DispatchAsync(() =>
-                {
-                    Context.ItemList.Add(messageToLog);
-                });
-            }
-        }
-
         private static void LogHint(LogMessage message)
         {
             var newMessage = message.Parts.Select(x => x.Text);
@@ -455,14 +473,14 @@ namespace DC1AP
             {
                 return; //Hint already in list
             }
-            List<TextSpan> spans = [];
+            List<TextSpan> spans = new List<TextSpan>();
             foreach (var part in message.Parts)
             {
-                spans.Add(new TextSpan() { Text = part.Text, TextColor = Microsoft.Maui.Graphics.Color.FromRgb(part.Color.R, part.Color.G, part.Color.B) });
+                spans.Add(new TextSpan() { Text = part.Text, TextColor = new SolidColorBrush(Color.FromRgb(part.Color.R, part.Color.G, part.Color.B)) });
             }
             lock (_lockObject)
             {
-                Application.Current.Dispatcher.DispatchAsync(() =>
+                RxApp.MainThreadScheduler.Schedule(() =>
                 {
                     Context.HintList.Add(new LogListItem(spans));
                 });
@@ -478,18 +496,6 @@ namespace DC1AP
         private static void OnDisconnected(object? sender, EventArgs? args)
         {
             Log.Logger.Information("Disconnected from Archipelago");
-        }
-
-        protected override Window CreateWindow(IActivationState activationState)
-        {
-            var window = base.CreateWindow(activationState);
-            if (DeviceInfo.Current.Platform == DevicePlatform.WinUI)
-            {
-                window.Title = "Dark Cloud 1 Archipelago Randomizer";
-            }
-            window.Width = 600;
-
-            return window;
         }
 
         private async void Reconnect(object? parameters)
@@ -517,7 +523,7 @@ namespace DC1AP
                         //    _deathlinkService = null;
                         //}
                         Client.CancelMonitors();
-                        Client.Dispose();
+                        //Client.Dispose();
                     }
 
                     // Connect to archipelago server
