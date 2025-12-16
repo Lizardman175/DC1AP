@@ -78,19 +78,9 @@ namespace DC1AP
             Context.ConnectClicked += Context_ConnectClicked;
             Context.CommandReceived += (_, a) => Client?.SendMessage(a.Command);
 
-            //InitializeComponent();
-
-            //Context = new MainPageViewModel();
-            //Context.ConnectClicked += Context_ConnectClicked;
-            //Context.CommandReceived += (e, a) =>
-            //{
-            //    Client?.SendMessage(a.Command);
-            //};
             // TODO save last used host/slot?
             Context.Host = "localhost:38281";
             //Context.Slot = "DC1";
-            //MainPage = new MainPage(Context);
-            //Context.ConnectButtonEnabled = true;
 
             InventoryMgmt.InitInventoryMgmt();
         }
@@ -272,18 +262,19 @@ namespace DC1AP
             // First load for this save, so do extra stuff
             if (currSlot == "")
             {
-                // Store player's slot name into memcard
-                OpenMem.SetSlotName(slotName);
-                OpenMem.SetIndex(0);
-
+                OpenMem.SetSlotData(slotName);
                 EventMasks.InitMasks();
-
                 Weapons.GiveCharWeapon(0);
                 InventoryMgmt.GiveFreeFeather();
             }
             else if (currSlot != slotName)
             {
                 Log.Logger.Error("Wrong slot name. Current save is using slot \"" + currSlot + "\".");
+                PlayerState.ValidGameState = false;
+                return;
+            }
+            else if (!OpenMem.TestRoomSeed())
+            {
                 PlayerState.ValidGameState = false;
                 return;
             }
