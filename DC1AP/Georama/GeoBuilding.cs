@@ -136,7 +136,6 @@ namespace DC1AP.Georama
             {
                 Memory.Write(BaseAddr, buildingValue);
                 ItemQueue.AddMsg(msg);
-                OpenMem.IncIndex();
             }
         }
 
