@@ -283,6 +283,7 @@ namespace DC1AP
             MiracleChestMgmt.Init();
             GeoInvMgmt.InitBuildings();
             CharFuncs.Init();
+            Enemies.MultiplyABS();
 
             // Check for any missing items after a connect/reconnect
             ItemQueue.checkItems = true;

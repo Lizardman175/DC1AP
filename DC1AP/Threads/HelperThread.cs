@@ -74,11 +74,6 @@ namespace DC1AP.Threads
         {
             runThread = true;
 
-            // TODO not sure if these are useful yet.  If so, move them out of the method and add reset to Startup()
-            int mostRecentFloor = -1;
-            int mostRecentDungeon = -1;
-            bool isBackFloor = false;
-
             Startup();
 
             while (runThread)
@@ -100,7 +95,6 @@ namespace DC1AP.Threads
                     {
                         byte curDungeon = Memory.ReadByte(MiscAddrs.CurDungeon);
                         byte curFloor = Memory.ReadByte(MiscAddrs.CurFloor);
-                        bool curBackFloor = Memory.ReadByte(MiscAddrs.BackFloorFlag) != 0;
 
                         // Clear out junk georama pieces if collected
                         // TODO could probably be a reaction to the player looting atla?
@@ -118,20 +112,6 @@ namespace DC1AP.Threads
                         // Hide the stray cat atla if present.  There is special code around it in game so we can't use it.
                         if (curDungeon == 0 && curFloor == CatFloor && Memory.ReadInt(GeoAddrs.AtlaCollectedFlag) != 0)
                             Memory.Write(GeoAddrs.AtlaCollectedFlag, 0);
-
-                        if (isBackFloor != curBackFloor || curFloor != mostRecentFloor)
-                            Enemies.MultiplyABS();
-
-                        mostRecentDungeon = curDungeon;
-                        mostRecentFloor = curFloor;
-                        isBackFloor = curBackFloor;
-                    }
-                    // Reset dungeon values if player is not in a dungeon.
-                    else if (mostRecentFloor != -1)
-                    {
-                        mostRecentFloor = -1;
-                        mostRecentDungeon = -1;
-                        isBackFloor = false;
                     }
                     
                     InventoryMgmt.CheckAttachments(false);
@@ -192,8 +172,6 @@ namespace DC1AP.Threads
             }
         }
 
-        /// <summary>
-        /// </summary>
         private static void InitAtla()
         {
             for (int dun = 0; dun < Options.Goal; dun++)

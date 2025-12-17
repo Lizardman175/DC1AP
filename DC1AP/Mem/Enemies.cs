@@ -6,15 +6,13 @@ namespace DC1AP.Mem
 {
     internal class Enemies
     {
-        private static uint EnemyOffset = 0x0190;
-        private static uint ABSOffset = 0xb0;
+        private static uint EnemyOffset = 0x9C;
+        private static uint ABSOffset = 0x2C;
+        //private static uint EnemyIdOffset = 0x3C;
 
-        private static uint FirstEnemy = 0x01E16BA0;  // This field is an int. -1 if no enemy (or mimic?)
-        //2A34B4
+        private static uint FirstEnemy = 0x0027FB40;  // some text indicator of the enemy.  probably a filename reference
+        //2A34B4 (what is this?)
 
-        /// <summary>
-        /// Expects caller to know if this was already done to not do it multiple times.
-        /// </summary>
         internal static void MultiplyABS()
         {
             float mult = Options.AbsMultiplier;
@@ -22,24 +20,26 @@ namespace DC1AP.Mem
             if (mult == 1)
                 return;
 
-            // Brief sleep as we are fighting the game initializing the dungeon.
-            Thread.Sleep(2000);
-
             uint enemyAddr = FirstEnemy;
-            uint enemyAbsAddr = enemyAddr + ABSOffset;
+            uint enemyAbsAddr = FirstEnemy + ABSOffset;
+            byte enemyText;
 
-            for (int i = 0; i < 15; i++)
+            do
             {
-                if (Memory.ReadInt(enemyAddr) != -1)
+                enemyText = Memory.ReadByte(enemyAddr);
+
+                // Letter 'e'.
+                // Some enemy data begins with 'c' but isn't actually enemies? This might be skipping bosses
+                if (enemyText == 0x65)
                 {
                     int tempAbs = Memory.ReadInt(enemyAbsAddr);
-                    tempAbs = (int) MathF.Round(mult * tempAbs);
+                    tempAbs = (int)MathF.Round(mult * tempAbs);
                     Memory.Write(enemyAbsAddr, tempAbs);
                 }
 
                 enemyAddr += EnemyOffset;
                 enemyAbsAddr += EnemyOffset;
-            }
+            } while (enemyText > 0);
         }
     }
 }
