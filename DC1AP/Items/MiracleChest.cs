@@ -3,12 +3,11 @@
 
 namespace DC1AP.Items
 {
-    internal class MiracleChest(long locationId, uint addr, byte mask, string defaultItem)
+    internal class MiracleChest(long locationId, uint addr, byte mask)
     {
         private readonly long locationId = locationId;
         private readonly uint addr = addr;
         private readonly byte mask = mask;
-        private readonly string defaultItem = defaultItem;
         private bool collected = false;
 
         /// <summary>
@@ -25,19 +24,6 @@ namespace DC1AP.Items
                 if ((testByte & mask) > 0)
                 {
                     collected = true;
-                    if (removeDefaultItem)
-                    {
-                        if (InventoryMgmt.ItemDataByName.TryGetValue(defaultItem, out InvItem? item))
-                        {
-                            InventoryMgmt.RemoveInvItem(item.ItemID);
-                        }
-                        else
-                        {
-                            Attachment attc = InventoryMgmt.AttachmentDataByName[defaultItem];
-                            InventoryMgmt.RemoveAttchItem(attc.ItemID);
-                            //while (!InventoryMgmt.RemoveAttchItem(attc.ItemID)) ;
-                        }
-                    }
 
                     if (!App.Client.CurrentSession.Locations.AllLocationsChecked.Contains(locationId))
                     {

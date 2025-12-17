@@ -38,10 +38,15 @@ namespace DC1AP.Mem
         /// <returns>True if safe to give the player an item.</returns>
         public static bool CanGiveItem()
         {
-            byte townState = Memory.ReadByte(MiscAddrs.PlayerTownState);
             return PlayerReady() && ((IsPlayerInDungeon() && Memory.ReadByte(MiscAddrs.DungeonMode) == 1) ||
-                townState == MiscAddrs.PlayerTownOverworld ||
-                (townState == MiscAddrs.PlayerTownInterior && Memory.ReadByte(MiscAddrs.PlayerInteriorState) == 0x00));
+                                     PlayerMovableTown());
+        }
+
+        public static bool PlayerMovableTown()
+        {
+            byte townState = Memory.ReadByte(MiscAddrs.PlayerTownState);
+            return townState == MiscAddrs.PlayerTownOverworld ||
+                (townState == MiscAddrs.PlayerTownInterior && Memory.ReadByte(MiscAddrs.PlayerInteriorState) == 0x00);
         }
         
         public static bool IsPlayerInDungeon()

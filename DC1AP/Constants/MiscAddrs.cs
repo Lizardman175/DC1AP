@@ -90,12 +90,12 @@ namespace DC1AP.Constants
         /// 0B == Goro's treehouse ext, 21 == dead tree 0D == Revived Tree
         /// 0x0E == Brownboo, SMT exterior == 0x2A, 0x3C == Demon Shaft ext, 3D == DS interior
         /// C8 == DBC, C9 == WOF, CA == SW, CB == SMT, 0xCC == Moon Sea, CD == Gallery, CE == Demon Shaft dungeon
-        internal const uint CurZoneAddr = 0x002A2518;
+        //internal const uint CurZoneAddr = 0x002A2518;  Redundant with below value it seems?
         //internal const uint PrevZoneAddr = 0x002A251C;  Not likely useful, but here for reference
         internal const int NoruneZone = 0x00;
         internal const int MatatakiZone = 0x01;
         internal const int GoroZone = 0x0B;
-        internal const int DeadTreeZone = 0x0C;
+        internal const int DeadTreeZone = 0x21;
         internal const int TreeZone = 0x0D;
         internal const int QueensZone = 0x02;
         internal const int QueensDockZone = 0x13;
@@ -103,6 +103,22 @@ namespace DC1AP.Constants
         internal const int SMTExtZone = 0x2A;
         internal const int FactoryZone = 0x04;
         internal const int YellowDropsZone = 0x17;
+
+        internal const uint CurZoneAddr = 0x002A2810;
+
+        // 1 for inside.  Necessary for Yellow Drops to double check the interior chest map as it only uses the interior block.
+        internal const uint InInteriorFlagAddr = 0x002A281C;
+
+        // Matches the building IDs for the current town.
+        internal const uint InteriorIdAddr = 0x002A2820;
+        // 1 For alternate building ID, such as Alnet or Player barns
+        internal const uint InteriorSubIdAddr = 0x002A2824;
+
+        // Interior ID for non-geo buildings.  InteriorIdAddr will be -1 if this gets set.  Changing towns sets both to -1
+        // Does not set to -1 when entering a geo building.
+        // 1 == Mayor, 2 == Goro's treehouse, 3 == Rando's shop, 4 == Ungaga's House
+        // F == inside Yellow Drops buildings.  All of them.  Need to test against the interior flag if in YD.
+        internal const uint AlternateIntIdAddr = 0x002A2830;
 
         // Kill counts on the boss floors
         //internal const uint DranFlag = 0x01CDD200;
