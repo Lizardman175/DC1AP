@@ -294,6 +294,12 @@ namespace DC1AP
             }
 
             PlayerState.ValidGameState = true;
+
+            new Thread(new ParameterizedThreadStart(MiracleChestMgmt.DoLoop))
+            {
+                IsBackground = true
+            }.Start();
+
             // Watch for the player to reset the game, then change the valid state flag and ready up to connect again.
             Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerNotReady(slotName), (o) => { return o <= 1; });
             WatchGoal();

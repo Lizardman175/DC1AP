@@ -135,21 +135,6 @@ namespace DC1AP.Threads
                     }
                     
                     InventoryMgmt.CheckAttachments(false);
-
-                    if (PlayerState.IsPlayerInTown())
-                    {
-                        int zoneId = Memory.ReadInt(MiscAddrs.CurZoneAddr);
-                        if (zoneId == MiscAddrs.NoruneZone)
-                            MiracleChestMgmt.CheckTown(Towns.Norune);
-                        else if (zoneId == MiscAddrs.MatatakiZone || zoneId == MiscAddrs.GoroZone || zoneId == MiscAddrs.TreeZone)
-                            MiracleChestMgmt.CheckTown(Towns.Matataki);
-                        else if (zoneId == MiscAddrs.QueensZone || zoneId == MiscAddrs.QueensDockZone)
-                            MiracleChestMgmt.CheckTown(Towns.Queens);
-                        else if (zoneId == MiscAddrs.MuskaZone || zoneId == MiscAddrs.SMTExtZone)
-                            MiracleChestMgmt.CheckTown(Towns.Muska);
-                        else if (zoneId == MiscAddrs.YellowDropsZone || zoneId == MiscAddrs.FactoryZone)
-                            MiracleChestMgmt.CheckTown(Towns.Factory);
-                    }
                 }
 
                 Thread.Sleep(500);
