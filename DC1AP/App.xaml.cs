@@ -458,7 +458,8 @@ namespace DC1AP
         {
             if (e.Message.Parts.Any(x => x.Text == "[Hint]: "))
             {
-                LogHint(e.Message);
+                //LogHint(e.Message);
+                // TODO fix hint logging with Avalonia
             }
             Log.Logger.Information(JsonConvert.SerializeObject(e.Message));
         }
