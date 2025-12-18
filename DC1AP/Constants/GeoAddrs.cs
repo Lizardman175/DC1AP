@@ -95,8 +95,6 @@ namespace DC1AP.Constants
                                                                    (QueensTableAddr, QueensTableCount), (MuskaTableAddr, MuskaTableCount),
                                                                    (FactoryTableAddr, FactoryTableCount), (CastleTableAddr, CastleTableCount)]);
 
-        // TODO how should the last dungeon be handled?
-        // TODO better name? first half of each dungeon count.
         internal static readonly List<int> AtlaHalfwayCounts = new([DBC1Count, WOF1Count, SW1Count, SMT1Count, MS1Count, CastleTableCount]);
 
         internal const uint CatlaAddr = 0x01CD98A4;  // Cat's Atla
@@ -118,18 +116,8 @@ namespace DC1AP.Constants
         // Space between atla as above
         internal static int FloorAtlaOffset = 0x20;
 
-        // Base ID for the divining house - int
+        // Points to the completion event flag for these buildings
         internal static uint YayaBldEventFlag = 30236688 - sizeof(int);
+        internal static uint CathedralBldEventFlag = 30236712 - sizeof(int);
     }
 }
-
-/*
- * TODO Info for 0.3 when autobuilding towns:
- * 
- * 1CD4A64: Seems to be start of first building placed in Norune.  Short.  building ID (ordered in finished list: 00 is player house, 01 is Macho house, 0d is a tree etc.)
- * 1CD4A66: Orientation of building.  00 == faces towards Mayor, 02 == faces away.  values outside 0-3 or -3-0 cause Bad Things
- * Next 3 are F32 coords: XYZ (Y is unused outside of Queens).  Putting a building outside the allowed bounds seems to just reset it in your inventory
- * 1CD4A68: 4 byte float
- * 1CD4A6C: 4 bytes of 0 for most towns, used in queens, possibly in Matatki for the Earth A/B plots
- * 1CD4A70: 4 byte float
- */

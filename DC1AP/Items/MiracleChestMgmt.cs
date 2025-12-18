@@ -59,14 +59,6 @@ namespace DC1AP.Items
                     if (!mc.CheckChest(false))
                         chests[townInt].Add(mc);
                 }
-
-                if (Options.SundewChest)
-                {
-                    MiracleChest sundewChest = new(971_112_075,
-                        uint.Parse("01CE4887", System.Globalization.NumberStyles.HexNumber), 8);
-                    if (!sundewChest.CheckChest(false))
-                        chests[(int)Towns.Matataki].Add(sundewChest);
-                }
             }
         }
 
@@ -121,8 +113,6 @@ namespace DC1AP.Items
                             // Bunbuku's House
                             else if (zoneId == 1 && interiorId == 2)
                                 EmptyMiracleChests(InteriorChestDataAddr, bunbuku: true);
-                            else if (zoneId == 1 && interiorId == 7 && !Options.SundewChest)
-                                EmptyMiracleChests(InteriorChestDataAddr, ignoreSundew: true);
                             else
                                 EmptyMiracleChests(InteriorChestDataAddr);
                         }
@@ -152,7 +142,7 @@ namespace DC1AP.Items
             }
         }
 
-        private static void EmptyMiracleChests(uint addr, bool mayor = false, bool bunbuku = false, bool ignoreSundew = false)
+        private static void EmptyMiracleChests(uint addr, bool mayor = false, bool bunbuku = false)
         {
             // Some of this area is apparently protected so I can't read a full struct of data at once. We don't need most of it anyway.
             int chestFlag = Memory.ReadInt(addr);
@@ -165,8 +155,7 @@ namespace DC1AP.Items
                 {
                     if (bunbuku && skipCount < 2)
                         skipCount++;
-                    // Optionally skip sundew chest, and skip the horned key for D's windmill
-                    else if (!(ignoreSundew && itemId == 225) && itemId != 0xCF)
+                    else
                         Memory.Write(addr + ChestItemIdOffset, -1);
                 }
                 addr += InteractableOffset;

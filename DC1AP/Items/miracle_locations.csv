@@ -60,8 +60,9 @@ Dran's Windmill Inside chest (stairs top),971111061,0,xiao,Dran's Windmill,0x01C
 Dran's Windmill Inside chest (under stairs),971111062,0,xiao,Dran's Windmill,0x01CE4848,0x01,Thunder
 Dran's Windmill Outside chest (right),971111054,0,xiao,Dran's Windmill,0x01CE484C,0x04,Fish Candy
 Dran's Windmill Outside chest (left),971111055,0,xiao,Dran's Windmill,0x01CE484C,0x08,Fluffy Doughnut
-Norune Pond chest,971111063,0,xiao,Norune Pond,0x01CE484B,0x01,Fish Candy
-Mr. Prickles' Gift,971111064,0,,,0x01CE43AE,0x02,Prickly
+Dran's Windmill Horned Key chest,971111063,0,xiao,Dran's Sign,0x01CE4828,0x10,Horned Key
+Norune Pond chest,971111064,0,xiao,Norune Pond,0x01CE484B,0x01,Fish Candy
+Mr. Prickles' Gift,971111065,0,,,0x01CE43AE,0x02,Prickly
 Matataki Treant chest 1,971112001,1,,Matataki River H,0x01CE4B95,0x01,Gourd
 Matataki Treant chest 2,971112002,1,,Matataki River H,0x01CE4B95,0x02,Fruit of Eden
 Matataki Treant chest 3,971112003,1,,Matataki River H,0x01CE4B95,0x04,Beast Buster
@@ -91,51 +92,52 @@ Cacao's House Outside chest (ground 1),971112026,1,,Cacao's House,0x01CE4877,0x0
 Cacao's House Outside chest (ground 2),971112027,1,,Cacao's House,0x01CE4877,0x02,Thunder
 Cacao's House Outside chest (laundry),971112028,1,goro,,0x01CE4877,0x04,Throbbing Cherry
 Bunbuku's House Inside chest (downstairs),971112029,1,,Bunbuku's Stairway,0x01CE487A,0x40,Bread
-Bunbuku's House Outside chest (behind),971112030,1,,Bunbuku's Stairway,0x01CE4879,0x10,Fruit of Eden
-Bunbuku's House Outside chest (barrels),971112031,1,goro,Bunbuku's House,0x01CE4879,0x20,Wind
-Kye's House Inside chest (sink),971112032,1,goro,Kye's Stairway,0x01CE487D,0x08,Cheese
-Kye's House Inside chest (upper bunk),971112033,1,,Kye's Stairway,0x01CE487D,0x10,Mimic Breaker
-Kye's House Inside chest (cabin),971112034,1,goro,Kye's Stairway,0x01CE487D,0x04,Fruit of Eden
-Kye's House Outside chest (lower deck),971112035,1,goro,Kye's House,0x01CE487C,0x02,Ice
-Kye's House Outside chest (behind),971112036,1,goro,Kye's Stairway,0x01CE487C,0x01,Mage Slayer
-Baron's House Inside chest (table),971112037,1,,Baron's House,0x01CE4880,0x01,Soap
-Baron's House Inside chest (throne),971112038,1,,Baron's House,0x01CE487F,0x80,Beast Buster
-Baron's House Inside chest (curtain),971112039,1,goro,Baron's House,0x01CE487F,0x40,Gourd
-Baron's House Outside chest (ground),971112040,1,,Baron's House,0x01CE487E,0x10,Plant Buster
-Baron's House Outside chest (behind),971112041,1,,Baron's House,0x01CE487E,0x20,Powerup Powder
-Couscous's House Inside chest (table),971112042,1,goro,Couscous's House,0x01CE4882,0x04,Gourd
-Couscous's House Inside chest (bonsai),971112043,1,goro,Couscous's House,0x01CE4882,0x08,Plant Buster
-Couscous's House Outside chest (left),971112044,1,,Couscous's House,0x01CE4881,0x02,Prickly
-Couscous's House Outside chest (right),971112045,1,goro,Couscous's House,0x01CE4881,0x01,Fruit of Eden
-Gob's House Inside chest (bones),971112046,1,goro,Gob's House,0x01CE4884,0x80,Premium Chicken
-Gob's House Inside chest (bed),971112047,1,goro,Gob's House,0x01CE4884,0x40,Fruit of Eden
-Gob's House Inside chest (firewood),971112048,1,goro,Gob's House,0x01CE4885,0x01,Sea Killer
-Gob's House Outside chest (bones),971112049,1,goro,Gob's House,0x01CE4883,0x10,Beast Buster
-Gob's House Outside chest (behind),971112050,1,goro,Gob's House,0x01CE4883,0x20,Sky Hunter
-Mushroom House Inside chest (behind ladder),971112051,1,,Mushroom House,0x01CE4887,0x10,Stone Breaker
-Mushroom House Inside chest (by ladder),971112052,1,goro,Mushroom House,0x01CE4887,0x20,Mimic Breaker
-Mushroom House Inside chest (up ladder),971112053,1,goro,Mushroom House,0x01CE4887,0x40,Metal Breaker
-Mushroom House Inside chest (top floor),971112054,1,goro,Mushroom Second Floor,0x01CE4887,0x04,Fruit of Eden
-Mushroom House Outside chest (behind),971112055,1,goro,Mushroom House,0x01CE4886,0x01,Bread
-Mushroom House Outside chest (ladder),971112056,1,goro,Mushroom House,0x01CE4886,0x02,Mage Slayer
-Watermill 1 Inside chest (right),971112057,1,,Watermill 1&Matataki River A,0x01CE4889,0x40,Gourd
-Watermill 1 Inside chest (left),971112058,1,,Watermill 1&Matataki River A,0x01CE4889,0x80,Plant Buster
-Watermill 1 Outside chest (right),971112059,1,goro,Watermill 1&Matataki River A,0x01CE4888,0x20,Antidote Amulet
-Watermill 1 Outside chest (left),971112060,1,,Watermill 1&Matataki River A,0x01CE4888,0x10,Cheese
-Watermill 2 Inside chest (right),971112061,1,goro,Watermill 2&Matataki River B,0x01CE488C,0x08,Sea Killer
-Watermill 2 Inside chest (left),971112062,1,,Watermill 2&Matataki River B,0x01CE488C,0x04,Gourd
-Watermill 2 Outside chest (right),971112063,1,goro,Watermill 2&Matataki River B,0x01CE488B,0x02,Anti-Goo Amulet
-Watermill 2 Outside chest (left),971112064,1,goro,Watermill 2&Matataki River B,0x01CE488B,0x01,Mage Slayer
-Watermill 3 Inside chest (right),971112065,1,goro,Watermill 3&Matataki River B,0x01CE488E,0x40,Gourd
-Watermill 3 Inside chest (left),971112066,1,goro,Watermill 3&Matataki River B,0x01CE488E,0x80,Beast Buster
-Watermill 3 Outside chest (right),971112067,1,goro,Watermill 3&Matataki River B,0x01CE488D,0x20,Anti-Curse Amulet
-Watermill 3 Outside chest (left),971112068,1,goro,Watermill 3&Matataki River B,0x01CE488D,0x10,Cheese
-Wise Owl Shop Inside chest (stools),971112069,1,,Wise Owl Shop Entrance,0x01CE4891,0x04,Gourd
-Wise Owl Shop Inside chest (counter),971112070,1,,Wise Owl Shop Entrance,0x01CE4891,0x08,Cheese
-Wise Owl Shop Inside chest (trash left),971112071,1,,Wise Owl Shop Entrance,0x01CE4891,0x10,Plant Buster
-Wise Owl Shop Inside chest (trash right),971112072,1,goro,Wise Owl Shop Entrance,0x01CE4891,0x20,Antidote Drink
-Wise Owl Shop Outside chest (right),971112073,1,,Wise Owl Shop,0x01CE4890,0x01,Bread
-Wise Owl Shop Outside chest (behind),971112074,1,,Wise Owl Shop,0x01CE4890,0x02,Fire Gem
+Bunbuku's House Outside chest (behind),971112032,1,,Bunbuku's Stairway,0x01CE4879,0x10,Fruit of Eden
+Bunbuku's House Outside chest (barrels),971112033,1,goro,Bunbuku's House,0x01CE4879,0x20,Wind
+Kye's House Inside chest (sink),971112034,1,goro,Kye's Stairway,0x01CE487D,0x08,Cheese
+Kye's House Inside chest (upper bunk),971112035,1,,Kye's Stairway,0x01CE487D,0x10,Mimic Breaker
+Kye's House Inside chest (cabin),971112036,1,goro,Kye's Stairway,0x01CE487D,0x04,Fruit of Eden
+Kye's House Outside chest (lower deck),971112037,1,goro,Kye's House,0x01CE487C,0x02,Ice
+Kye's House Outside chest (behind),971112038,1,goro,Kye's Stairway,0x01CE487C,0x01,Mage Slayer
+Baron's House Inside chest (table),971112039,1,,Baron's House,0x01CE4880,0x01,Soap
+Baron's House Inside chest (throne),971112040,1,,Baron's House,0x01CE487F,0x80,Beast Buster
+Baron's House Inside chest (curtain),971112041,1,goro,Baron's House,0x01CE487F,0x40,Gourd
+Baron's House Outside chest (ground),971112042,1,,Baron's House,0x01CE487E,0x10,Plant Buster
+Baron's House Outside chest (behind),971112043,1,,Baron's House,0x01CE487E,0x20,Powerup Powder
+Couscous's House Inside chest (table),971112044,1,goro,Couscous's House,0x01CE4882,0x04,Gourd
+Couscous's House Inside chest (bonsai),971112045,1,goro,Couscous's House,0x01CE4882,0x08,Plant Buster
+Couscous's House Outside chest (left),971112046,1,,Couscous's House,0x01CE4881,0x02,Prickly
+Couscous's House Outside chest (right),971112047,1,goro,Couscous's House,0x01CE4881,0x01,Fruit of Eden
+Gob's House Inside chest (bones),971112048,1,goro,Gob's House,0x01CE4884,0x80,Premium Chicken
+Gob's House Inside chest (bed),971112049,1,goro,Gob's House,0x01CE4884,0x40,Fruit of Eden
+Gob's House Inside chest (firewood),971112050,1,goro,Gob's House,0x01CE4885,0x01,Sea Killer
+Gob's House Outside chest (bones),971112051,1,goro,Gob's House,0x01CE4883,0x10,Beast Buster
+Gob's House Outside chest (behind),971112052,1,goro,Gob's House,0x01CE4883,0x20,Sky Hunter
+Mushroom House Inside chest (behind ladder),971112053,1,,Mushroom House,0x01CE4887,0x10,Stone Breaker
+Mushroom House Inside chest (by ladder),971112054,1,goro,Mushroom House,0x01CE4887,0x20,Mimic Breaker
+Mushroom House Inside chest (up ladder),971112055,1,goro,Mushroom House,0x01CE4887,0x40,Metal Breaker
+Mushroom House Inside chest (top floor),971112056,1,goro,Mushroom Second Floor,0x01CE4887,0x04,Fruit of Eden
+Mushroom House Inside chest (sundew),971112057,1,goro,Mushroom House,0x01CE4887,0x08,Sundew
+Mushroom House Outside chest (behind),971112058,1,goro,Mushroom House,0x01CE4886,0x01,Bread
+Mushroom House Outside chest (ladder),971112059,1,goro,Mushroom House,0x01CE4886,0x02,Mage Slayer
+Watermill 1 Inside chest (right),971112060,1,,Watermill 1&Matataki River A,0x01CE4889,0x40,Gourd
+Watermill 1 Inside chest (left),971112061,1,,Watermill 1&Matataki River A,0x01CE4889,0x80,Plant Buster
+Watermill 1 Outside chest (right),971112062,1,goro,Watermill 1&Matataki River A,0x01CE4888,0x20,Antidote Amulet
+Watermill 1 Outside chest (left),971112063,1,,Watermill 1&Matataki River A,0x01CE4888,0x10,Cheese
+Watermill 2 Inside chest (right),971112064,1,goro,Watermill 2&Matataki River B,0x01CE488C,0x08,Sea Killer
+Watermill 2 Inside chest (left),971112065,1,,Watermill 2&Matataki River B,0x01CE488C,0x04,Gourd
+Watermill 2 Outside chest (right),971112066,1,goro,Watermill 2&Matataki River B,0x01CE488B,0x02,Anti-Goo Amulet
+Watermill 2 Outside chest (left),971112067,1,goro,Watermill 2&Matataki River B,0x01CE488B,0x01,Mage Slayer
+Watermill 3 Inside chest (right),971112068,1,goro,Watermill 3&Matataki River B,0x01CE488E,0x40,Gourd
+Watermill 3 Inside chest (left),971112069,1,goro,Watermill 3&Matataki River B,0x01CE488E,0x80,Beast Buster
+Watermill 3 Outside chest (right),971112070,1,goro,Watermill 3&Matataki River B,0x01CE488D,0x20,Anti-Curse Amulet
+Watermill 3 Outside chest (left),971112071,1,goro,Watermill 3&Matataki River B,0x01CE488D,0x10,Cheese
+Wise Owl Shop Inside chest (stools),971112072,1,,Wise Owl Shop Entrance,0x01CE4891,0x04,Gourd
+Wise Owl Shop Inside chest (counter),971112073,1,,Wise Owl Shop Entrance,0x01CE4891,0x08,Cheese
+Wise Owl Shop Inside chest (trash left),971112074,1,,Wise Owl Shop Entrance,0x01CE4891,0x10,Plant Buster
+Wise Owl Shop Inside chest (trash right),971112075,1,goro,Wise Owl Shop Entrance,0x01CE4891,0x20,Antidote Drink
+Wise Owl Shop Outside chest (right),971112076,1,,Wise Owl Shop,0x01CE4890,0x01,Bread
+Wise Owl Shop Outside chest (behind),971112077,1,,Wise Owl Shop,0x01CE4890,0x02,Fire Gem
 Queens river bridge chest,971113001,2,ruby,,0x01CE48CE,0x80,Fish Candy
 Queens wall near entrance chest,971113002,2,,,0x01CE48CF,0x01,Grass Cake
 Queens south area wall chest,971113003,2,,,0x01CE48CE,0x40,Fluffy Doughnut
