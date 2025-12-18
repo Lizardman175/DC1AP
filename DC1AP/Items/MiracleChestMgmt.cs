@@ -101,7 +101,7 @@ namespace DC1AP.Items
                     int altInteriorId = Memory.ReadByte(MiscAddrs.AlternateIntIdAddr);
                     bool inInterior = Memory.ReadByte(MiscAddrs.InInteriorFlagAddr) != 0;
 
-                    if (zoneId <= (int)Towns.Castle && zoneId < Options.Goal)
+                    if ((zoneId <= (int)Towns.Castle && zoneId < Options.Goal) || zoneId > (int)Towns.Castle)
                     {
                         if (zoneId != currZoneId)
                         {
@@ -110,13 +110,13 @@ namespace DC1AP.Items
                                 EmptyMiracleChests(TownChestDataAddr);
                         }
                         // Small case when connecting if the player is in town the interior ID will still be the last interior value
-                        else if (inInterior && (interiorId != currInteriorId || altInteriorId != currAltInteriorId))
+                        if (inInterior && (interiorId != currInteriorId || altInteriorId != currAltInteriorId))
                         {
                             currInteriorId = interiorId;
                             currAltInteriorId = altInteriorId;
 
                             // Mayor's House
-                            if (zoneId == 0 && altInteriorId == 1)
+                            if (currZoneId == 0 && currInteriorId == 255)
                                 EmptyMiracleChests(InteriorChestDataAddr, mayor: true);
                             // Bunbuku's House
                             else if (zoneId == 1 && interiorId == 2)
@@ -165,7 +165,8 @@ namespace DC1AP.Items
                 {
                     if (bunbuku && skipCount < 2)
                         skipCount++;
-                    else if (!(ignoreSundew && itemId == 225))
+                    // Optionally skip sundew chest, and skip the horned key for D's windmill
+                    else if (!(ignoreSundew && itemId == 225) && itemId != 0xCF)
                         Memory.Write(addr + ChestItemIdOffset, -1);
                 }
                 addr += InteractableOffset;

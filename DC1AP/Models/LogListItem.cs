@@ -50,13 +50,20 @@ namespace DC1AP.Models
             TextSpans = new ObservableCollection<TextSpan>();
             RxApp.MainThreadScheduler.Schedule(() =>
             {
+                // TODO Issue #56: better solution than the text string here to fix the GUI issues.
+                string text = "";
                 foreach (var part in message.Parts)
                 {
-                    var span = new TextSpan();
-                    span.Text = part.Text;
-                    span.TextColor = new SolidColorBrush(Color.FromRgb((byte)part.Color.R, (byte)part.Color.G, (byte)part.Color.B));
-                    TextSpans.Add(span);
+                    //var span = new TextSpan();
+                    //span.Text = part.Text;
+                    //span.TextColor = new SolidColorBrush(Color.FromRgb((byte)part.Color.R, (byte)part.Color.G, (byte)part.Color.B));
+                    //TextSpans.Add(span);
+                    text += part.Text;
                 }
+                var span = new TextSpan();
+                span.Text = text;
+                span.TextColor = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                TextSpans.Add(span);
             });
         }
     }
