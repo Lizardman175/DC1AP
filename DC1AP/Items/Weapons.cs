@@ -45,7 +45,7 @@ namespace DC1AP.Items
 
         // Hard coded weapons for now
         // Shamshir
-        private static Weapon toan = new(0x010E, 20, 30, 70, 6, 32, 1, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0);
+        private static Weapon toan = new(0x010E, 20, 30, 70, 6, 32, 2, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0);
         // Steel slingshot
         private static Weapon xiao = new(0x012d, 14, 40, 43, 0, 48, 5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 5, 5, 0, 0);
         // Steel Hammer

@@ -16,8 +16,7 @@ namespace DC1AP.Items
     {
         private static Dictionary<long, InvItem>? ItemData;
         private static Dictionary<long, Attachment>? AttachmentData;
-        internal static readonly Dictionary<string, InvItem> ItemDataByName = [];
-        internal static readonly Dictionary<string, Attachment> AttachmentDataByName = [];
+        internal static readonly Dictionary<short, Attachment> AttachmentDataByGameId = [];
         private static readonly Random random = new();
 
         private static readonly Dictionary<long, int> itemCounts = [];
@@ -45,6 +44,38 @@ namespace DC1AP.Items
         private static readonly List<(short, short)> attachChanges = []; // (index, item ID)
         private static List<short> attachmentInv = new(MaxAttachCount);
 
+        private struct attachmentStr()
+        {
+            short id = -1;
+            // These shorts contain data about how many levels and what boons/banes the attach provides (for synthspheres)
+            short ignored1 = 0;
+            short ignored2 = 0;
+            short ignored3 = 0;
+
+            short attack = 0;
+            short endurance = 0;
+            short speed = 0;
+            short magic = 0;
+
+            byte fire = 0;
+            byte ice = 0;
+            byte thunder = 0;
+            byte wind = 0;
+            byte holy = 0;
+            
+            byte drag = 0;
+            byte undead = 0;
+            byte fish = 0;
+            byte rock = 0;
+            byte plant = 0;
+            byte beast = 0;
+            byte sky = 0;
+            byte metal = 0;
+            byte mimic = 0;
+            byte mage = 0;
+            private byte padding = 0;
+        }
+
         internal static void InitInventoryMgmt()
         {
             JsonSerializerOptions jOptions = new(JsonSerializerDefaults.Web)
@@ -56,14 +87,12 @@ namespace DC1AP.Items
             string filename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Items", "Items.json");
             string json = File.ReadAllText(filename);
             ItemData = JsonSerializer.Deserialize<Dictionary<long, InvItem>>(json, jOptions);
-            foreach (var item in ItemData)
-                ItemDataByName[item.Value.Name] = item.Value;
 
             filename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Items", "Attachments.json");
             json = File.ReadAllText(filename);
             AttachmentData = JsonSerializer.Deserialize<Dictionary<long, Attachment>>(json, jOptions);
             foreach (var item in AttachmentData)
-                AttachmentDataByName[item.Value.Name] = item.Value;
+                AttachmentDataByGameId[item.Value.ItemID] = item.Value;
 
             OpenMem.InitItemCountAddrs(ItemData.Keys.ToArray(), AttachmentData.Keys.ToArray());
         }
@@ -151,6 +180,8 @@ namespace DC1AP.Items
 
                 if (itemValue == -1 || itemValue == 0)
                 {
+                    // Game sometimes leaves junk data in the attachments, need to clear that before adding our own
+                    Memory.WriteStruct<attachmentStr>(addr, new attachmentStr());
                     Memory.Write(addr, item.ItemID);
 
                     // TODO future update to the server side to determine if attack etc. should be +1/2/3 rather than this.
@@ -158,7 +189,10 @@ namespace DC1AP.Items
                     {
                         for (int val = 0; val < item.ValueOffsets.Length; val++)
                         {
-                            Memory.WriteByte((ulong)(addr + item.ValueOffsets[val]), (byte)random.Next(1, 4));
+                            byte value = (byte)random.Next(1, 4);
+                            if (Options.AttachMultConfig > 0)
+                                value = (byte)Math.Ceiling(value * Options.AttachMultiplier);
+                            Memory.WriteByte((ulong)(addr + item.ValueOffsets[val]), value);
                         }
                     }
                     else
@@ -166,7 +200,10 @@ namespace DC1AP.Items
                         // Some of these fields are actually shorts but we shouldn't be setting large enough values to matter.
                         for (int val = 0; val < item.ValueOffsets.Length; val++)
                         {
-                            Memory.WriteByte((ulong)(addr + item.ValueOffsets[val]), (byte)item.Values[val]);
+                            byte value = (byte)item.Values[val];
+                            if (Options.AttachMultConfig > 0)
+                                value = (byte)Math.Ceiling(value * Options.AttachMultiplier);
+                            Memory.WriteByte((ulong)(addr + item.ValueOffsets[val]), value);
                         }
                     }
 
@@ -211,27 +248,28 @@ namespace DC1AP.Items
             return success;
         }
 
-        internal static bool RemoveAttchItem(short itemId)
-        {
-            uint addr;
-            bool result = false;
+        // Now unused, holding onto in case we find a reason to use it.
+        //internal static bool RemoveAttchItem(short itemId)
+        //{
+        //    uint addr;
+        //    bool result = false;
 
-            for (int ii = 0; ii < attachChanges.Count; ii++)
-            {
-                (short, short) item = attachChanges[ii];
-                if (item.Item2 == itemId)
-                {
-                    addr = (uint)(FirstAttchAddr + (item.Item1 * AttachmentSize));
-                    Memory.Write(addr, 0x0000FFFF);
-                    for (int x = 4; x < AttachmentSize; x += 4)
-                        Memory.Write((ulong)(addr + x), 0);
-                    result = true;
-                    break;
-                }
-            }
+        //    for (int ii = 0; ii < attachChanges.Count; ii++)
+        //    {
+        //        (short, short) item = attachChanges[ii];
+        //        if (item.Item2 == itemId)
+        //        {
+        //            addr = (uint)(FirstAttchAddr + (item.Item1 * AttachmentSize));
+        //            Memory.Write(addr, 0x0000FFFF);
+        //            for (int x = 4; x < AttachmentSize; x += 4)
+        //                Memory.Write((ulong)(addr + x), 0);
+        //            result = true;
+        //            break;
+        //        }
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
         internal static void GiveFreeFeather()
         {
@@ -344,7 +382,25 @@ namespace DC1AP.Items
 
             for (int ii = 0; ii < MaxAttachCount; ii++)
             {
-                newAttachmentInv.Add(Memory.ReadShort(addr));
+                short attachId = Memory.ReadShort(addr);
+                // Since we can't always know if a speed/attack/end/magic attachment was multiplied already, skip those
+                if (Options.AttachMultConfig == AttachMultConfig.All && attachId != 0 && attachId != -1 && (attachId > 94 || attachId < 91))
+                {
+                    Attachment attch = AttachmentDataByGameId[attachId];
+                    for (int val = 0; val < attch.ValueOffsets.Length; val++)
+                    {
+                        uint tempAddr = (uint)(addr + attch.ValueOffsets[val]);
+                        byte b = Memory.ReadByte(tempAddr);
+                        if (b == attch.Values[val])
+                        {
+                            b = (byte)Math.Ceiling(b * Options.AttachMultiplier);
+                            Memory.Write(tempAddr, b);
+                        }
+                        else
+                            break;
+                    }
+                }
+                newAttachmentInv.Add(attachId);
                 addr += AttachmentSize;
             }
 

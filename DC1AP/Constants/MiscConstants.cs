@@ -11,6 +11,13 @@ namespace DC1AP.Constants
         Castle
     }
 
+    internal enum AttachMultConfig
+    {
+        None = 1,
+        MwOnly = 2,
+        All = 3
+    }
+
     internal enum AutobuildFlags
     {
         Off = 0,
