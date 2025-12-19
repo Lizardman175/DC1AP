@@ -114,7 +114,7 @@ namespace DC1AP.Threads
                             Memory.Write(GeoAddrs.AtlaCollectedFlag, 0);
                     }
                     
-                    InventoryMgmt.CheckAttachments(false);
+                    //InventoryMgmt.CheckAttachments(false);
                 }
 
                 Thread.Sleep(500);

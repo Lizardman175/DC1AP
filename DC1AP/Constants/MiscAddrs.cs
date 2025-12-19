@@ -157,5 +157,7 @@ namespace DC1AP.Constants
 
         // -1 means dialog not active.  Can freeze/set at -1 when player is opening a chest to ignore?
         internal const uint MCOpenDialogFlag = 0x01CFCCEC;
+
+        internal const uint FirstAttachmentDataAddr = 0x0027CA60;
     }
 }

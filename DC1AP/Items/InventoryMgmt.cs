@@ -5,22 +5,24 @@ using DC1AP.Mem;
 using DC1AP.Threads;
 using Serilog;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
 
+
 namespace DC1AP.Items
 {
     internal class InventoryMgmt
     {
-        private static Dictionary<long, InvItem>? ItemData;
-        private static Dictionary<long, Attachment>? AttachmentData;
+        private static ConcurrentDictionary<long, InvItem>? ItemData;
+        private static ConcurrentDictionary<long, Attachment>? AttachmentData;
         internal static readonly Dictionary<short, Attachment> AttachmentDataByGameId = [];
         private static readonly Random random = new();
 
-        private static readonly Dictionary<long, int> itemCounts = [];
-        private static readonly Dictionary<long, int> attachCounts = [];
+        private static readonly ConcurrentDictionary<long, int> itemCounts = [];
+        private static readonly ConcurrentDictionary<long, int> attachCounts = [];
 
         private const uint InvMaxAddr = 0x01CDD8AC;  // Byte.  Can't exceed 100 or we run past the buffer.
         private const uint InvCurAddr = 0x01CDD8AD;  // Byte.  Next byte starts the active item shorts, followed by 3 shorts giving count of the active items per slot, then shorts for the other items.
@@ -40,15 +42,16 @@ namespace DC1AP.Items
         private const uint FirstAttchAddr = 0x01CE1A48;
         private const int MaxAttachCount = 40;
         private const uint AttachmentSize = 0x20;
+        private const uint FirstAttachAttrOffset = 0x08;
 
-        private static readonly List<(short, short)> attachChanges = []; // (index, item ID)
+        //private static readonly List<(short, short)> attachChanges = []; // (index, item ID)
         private static List<short> attachmentInv = new(MaxAttachCount);
 
         private struct attachmentStr()
         {
             short id = -1;
+            short synthedWeaponId = 0;  // Matches weapon ID for id 5A, synthsphere
             // These shorts contain data about how many levels and what boons/banes the attach provides (for synthspheres)
-            short ignored1 = 0;
             short ignored2 = 0;
             short ignored3 = 0;
 
@@ -86,11 +89,11 @@ namespace DC1AP.Items
 
             string filename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Items", "Items.json");
             string json = File.ReadAllText(filename);
-            ItemData = JsonSerializer.Deserialize<Dictionary<long, InvItem>>(json, jOptions);
+            ItemData = JsonSerializer.Deserialize<ConcurrentDictionary<long, InvItem>>(json, jOptions);
 
             filename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Items", "Attachments.json");
             json = File.ReadAllText(filename);
-            AttachmentData = JsonSerializer.Deserialize<Dictionary<long, Attachment>>(json, jOptions);
+            AttachmentData = JsonSerializer.Deserialize<ConcurrentDictionary<long, Attachment>>(json, jOptions);
             foreach (var item in AttachmentData)
                 AttachmentDataByGameId[item.Value.ItemID] = item.Value;
 
@@ -375,46 +378,52 @@ namespace DC1AP.Items
         /// an attachment, we only remove the new one.  This is due to atk/spd/mg/end attachments all having the same ID but different values.
         /// </summary>
         /// <param name="firstInit">Don't compare against the existing data, this is an initialization call.</param>
-        internal static void CheckAttachments(bool firstInit)
+        //internal static void CheckAttachments(bool firstInit)
+        //{
+        //    uint addr = FirstAttchAddr;
+        //    List<short> newAttachmentInv = new(MaxAttachCount);
+
+        //    for (int ii = 0; ii < MaxAttachCount; ii++)
+        //    {
+        //        newAttachmentInv.Add(Memory.ReadShort(addr));
+        //        addr += AttachmentSize;
+        //    }
+
+        //    if (!firstInit)
+        //    {
+        //        attachChanges.Clear();
+        //        for (short ii = 0; ii < attachmentInv.Count; ii++)
+        //        {
+        //            if (attachmentInv[ii] != newAttachmentInv[ii])
+        //            {
+        //                attachChanges.Add((ii, newAttachmentInv[ii]));
+        //            }
+        //        }
+        //        attachmentInv = newAttachmentInv;
+        //    }
+        //}
+
+        internal static void MultiplyAttachments()
         {
-            uint addr = FirstAttchAddr;
-            List<short> newAttachmentInv = new(MaxAttachCount);
+            uint addr = MiscAddrs.FirstAttachmentDataAddr;
+            short id = Memory.ReadByte(addr);
 
-            for (int ii = 0; ii < MaxAttachCount; ii++)
+            while (id != 0)
             {
-                short attachId = Memory.ReadShort(addr);
-                // Since we can't always know if a speed/attack/end/magic attachment was multiplied already, skip those
-                if (Options.AttachMultConfig == AttachMultConfig.All && attachId != 0 && attachId != -1 && (attachId > 94 || attachId < 91))
+                // Index of first attribute we want to multiply
+                uint addr2 = addr + FirstAttachAttrOffset;
+                for (uint i = 0; i < AttachmentSize - FirstAttachAttrOffset; i++)
                 {
-                    Attachment attch = AttachmentDataByGameId[attachId];
-                    for (int val = 0; val < attch.ValueOffsets.Length; val++)
+                    byte b = Memory.ReadByte(addr2+i);
+                    if (b > 0)
                     {
-                        uint tempAddr = (uint)(addr + attch.ValueOffsets[val]);
-                        byte b = Memory.ReadByte(tempAddr);
-                        if (b == attch.Values[val])
-                        {
-                            b = (byte)Math.Ceiling(b * Options.AttachMultiplier);
-                            Memory.Write(tempAddr, b);
-                        }
-                        else
-                            break;
+                        b = (byte)Math.Ceiling(b * Options.AttachMultiplier);
+                        Memory.WriteByte(addr2+i, b);
                     }
                 }
-                newAttachmentInv.Add(attachId);
+
                 addr += AttachmentSize;
-            }
-
-            if (!firstInit)
-            {
-                attachChanges.Clear();
-                for (short ii = 0; ii < attachmentInv.Count; ii++)
-                {
-                    if (attachmentInv[ii] != newAttachmentInv[ii])
-                    {
-                        attachChanges.Add((ii, newAttachmentInv[ii]));
-                    }
-                }
-                attachmentInv = newAttachmentInv;
+                id = Memory.ReadByte(addr);
             }
         }
     }

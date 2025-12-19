@@ -281,11 +281,13 @@ namespace DC1AP
                 return;
             }
 
-            InventoryMgmt.CheckAttachments(true);
+            //InventoryMgmt.CheckAttachments(true);
             MiracleChestMgmt.Init();
             GeoInvMgmt.InitBuildings();
             CharFuncs.Init();
             Enemies.MultiplyABS();
+            if (Options.AttachMultConfig == AttachMultConfig.All)
+                InventoryMgmt.MultiplyAttachments();
 
             // Check for any missing items after a connect/reconnect
             ItemQueue.checkItems = true;
