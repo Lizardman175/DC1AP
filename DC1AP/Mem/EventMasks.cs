@@ -19,7 +19,7 @@ namespace DC1AP.Mem
         private static uint ShipwreckKeyAddr = 0x01CE43AB;
         private const byte ShipwreckKeyValue = 0xFF - 0x10;
 
-        // 01CE43AF Boss kill flag for Joe: sets to 0x01
+        // 01CE43AF Boss kill flag for Joe?: sets to 0x01
 
         // Flags for last dungeon events viewed.
         // 0x40 = crowning day, 0x80 = ceremony

@@ -1,72 +1,72 @@
 {
   "971112001": {
-    "Name": "Attack+",
+    "Name": "Attack+1",
     "ItemID": 91,
     "Values": [ 1 ],
     "ValueOffsets": [ 8 ]
   },
   "971112002": {
-    "Name": "Attack+",
+    "Name": "Attack+2",
     "ItemID": 91,
     "Values": [ 2 ],
     "ValueOffsets": [ 8 ]
   },
   "971112003": {
-    "Name": "Attack+",
+    "Name": "Attack+3",
     "ItemID": 91,
     "Values": [ 3 ],
     "ValueOffsets": [ 8 ]
   },
   "971112011": {
-    "Name": "Endurance+",
+    "Name": "Endurance+1",
     "ItemID": 92,
     "Values": [ 1 ],
     "ValueOffsets": [ 10 ]
   },
   "971112012": {
-    "Name": "Endurance+",
+    "Name": "Endurance+2",
     "ItemID": 92,
     "Values": [ 2 ],
     "ValueOffsets": [ 10 ]
   },
   "971112013": {
-    "Name": "Endurance+",
+    "Name": "Endurance+3",
     "ItemID": 92,
     "Values": [ 3 ],
     "ValueOffsets": [ 10 ]
   },
   "971112021": {
-    "Name": "Speed+",
+    "Name": "Speed+1",
     "ItemID": 93,
     "Values": [ 1 ],
     "ValueOffsets": [ 12 ]
   },
   "971112022": {
-    "Name": "Speed+",
+    "Name": "Speed+2",
     "ItemID": 93,
     "Values": [ 2 ],
     "ValueOffsets": [ 12 ]
   },
   "971112023": {
-    "Name": "Speed+",
+    "Name": "Speed+3",
     "ItemID": 93,
     "Values": [ 3 ],
     "ValueOffsets": [ 12 ]
   },
   "971112031": {
-    "Name": "Magic+",
+    "Name": "Magic+1",
     "ItemID": 94,
     "Values": [ 1 ],
     "ValueOffsets": [ 14 ]
   },
   "971112032": {
-    "Name": "Magic+",
+    "Name": "Magic+2",
     "ItemID": 94,
     "Values": [ 2 ],
     "ValueOffsets": [ 14 ]
   },
   "971112033": {
-    "Name": "Magic+",
+    "Name": "Magic+3",
     "ItemID": 94,
     "Values": [ 3 ],
     "ValueOffsets": [ 14 ]

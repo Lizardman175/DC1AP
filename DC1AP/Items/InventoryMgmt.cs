@@ -183,34 +183,20 @@ namespace DC1AP.Items
 
                 if (itemValue == -1 || itemValue == 0)
                 {
+                    string msg = "Received " + item.Name + ".";
+
                     // Game sometimes leaves junk data in the attachments, need to clear that before adding our own
                     Memory.WriteStruct<attachmentStr>(addr, new attachmentStr());
                     Memory.Write(addr, item.ItemID);
-
-                    // TODO future update to the server side to determine if attack etc. should be +1/2/3 rather than this.
-                    if (item.ItemID == 91 || item.ItemID == 92 || item.ItemID == 93 || item.ItemID == 94)
+                    
+                    // Some of these fields are actually shorts but we shouldn't be setting large enough values to matter.
+                    for (int val = 0; val < item.ValueOffsets.Length; val++)
                     {
-                        for (int val = 0; val < item.ValueOffsets.Length; val++)
-                        {
-                            byte value = (byte)random.Next(1, 4);
-                            if (Options.AttachMultConfig > 0)
-                                value = (byte)Math.Ceiling(value * Options.AttachMultiplier);
-                            Memory.WriteByte((ulong)(addr + item.ValueOffsets[val]), value);
-                        }
+                        byte value = (byte)item.Values[val];
+                        if (Options.AttachMultConfig > 0)
+                            value = (byte)Math.Ceiling(value * Options.AttachMultiplier);
+                        Memory.WriteByte((ulong)(addr + item.ValueOffsets[val]), value);
                     }
-                    else
-                    {
-                        // Some of these fields are actually shorts but we shouldn't be setting large enough values to matter.
-                        for (int val = 0; val < item.ValueOffsets.Length; val++)
-                        {
-                            byte value = (byte)item.Values[val];
-                            if (Options.AttachMultConfig > 0)
-                                value = (byte)Math.Ceiling(value * Options.AttachMultiplier);
-                            Memory.WriteByte((ulong)(addr + item.ValueOffsets[val]), value);
-                        }
-                    }
-
-                    string msg = "Received " + item.Name + ".";
                     if (PlayerState.IsPlayerInDungeon())
                     {
                         ItemQueue.AddMsg(msg);

@@ -69,7 +69,7 @@ namespace DC1AP
         private Thread helperThread;
         private Thread reconnectThread;
         private GenericGameClient? ps2Client;
-        private bool divingingHouseDone = false;
+        private bool diviningHouseDone = false;
         private bool cathedralDone = false;
 
         public override void Initialize()
@@ -295,7 +295,7 @@ namespace DC1AP
             // Skip needing Yaya to dance on your head if doing Saia once the building event viewed flag is set.
             if (Options.Goal >= 3 && !EventMasks.YayaDone())
             {
-                divingingHouseDone = false;
+                diviningHouseDone = false;
                 cathedralDone = false;
 
                 Memory.MonitorAddressForAction<short>(GeoAddrs.YayaBldEventFlag, AckDivHouse, (o) => { return o >= 1; });
@@ -321,10 +321,9 @@ namespace DC1AP
             Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerReady(slotName), (o) => { return o == 2; });
         }
 
-
         private void AckDivHouse()
         {
-            divingingHouseDone = true;
+            diviningHouseDone = true;
             if (cathedralDone)
                 EventMasks.SkipYaya();
         }
@@ -332,7 +331,7 @@ namespace DC1AP
         private void AckCathedral()
         {
             cathedralDone = true;
-            if (divingingHouseDone)
+            if (diviningHouseDone)
                 EventMasks.SkipYaya();
         }
 
