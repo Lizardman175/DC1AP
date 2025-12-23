@@ -5,27 +5,46 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-
-		<Product>DC1AP</Product>
-		<PackageId>DC1AP</PackageId>
-		<Version>0.4.0</Version>
-		<Authors>Lizardman175</Authors>
-		<Description></Description>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	<!--PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	  <DebugType>pdbonly</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	  <DebugType>none</DebugType>
-	</PropertyGroup>
+	</PropertyGroup-->
 
 	<ItemGroup>
 		<AvaloniaResource Include="Assets\**" />
 	</ItemGroup>
-
+	
+	<ItemGroup>
+		<None Remove="Georama\NoruneBuildings.json" />
+		<None Remove="Georama\MatatakiBuildings.json" />
+		<None Remove="Georama\QueensBuildings.json" />
+		<None Remove="Georama\MuskaBuildings.json" />
+		<None Remove="Georama\FactoryBuildings.json" />
+		<None Remove="Georama\CastleBuildings.json" />
+		<None Remove="Items\Items.json" />
+		<None Remove="Items\Attachments.json" />
+		<None Remove="Items\miracle_locations.csv" />
+	    <None Remove="App.xaml" />
+	</ItemGroup>
+	  
+	<ItemGroup>
+		<EmbeddedResource Include="Georama\NoruneBuildings.json" />
+		<EmbeddedResource Include="Georama\MatatakiBuildings.json" />
+		<EmbeddedResource Include="Georama\QueensBuildings.json" />
+		<EmbeddedResource Include="Georama\MuskaBuildings.json" />
+		<EmbeddedResource Include="Georama\FactoryBuildings.json" />
+		<EmbeddedResource Include="Georama\CastleBuildings.json" />
+		<EmbeddedResource Include="Items\Items.json" />
+		<EmbeddedResource Include="Items\Attachments.json" />
+		<EmbeddedResource Include="Items\miracle_locations.csv" />
+	    <AvaloniaResource Include="App.xaml" />
+	</ItemGroup>
+	  
 	<ItemGroup>
 		<PackageReference Include="Archipelago.Core" Version="1.1.14" />
 		<PackageReference Include="Avalonia" Version="11.3.9" />
@@ -37,24 +56,5 @@
 		<PackageReference Include="Serilog" Version="4.2.0" />
 	</ItemGroup>
 	  
-	<ItemGroup>
-		<Content Include="Georama\**\*.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Items\**\*.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Items\**\*.csv">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-	  
-	<ItemGroup>
-	  <None Remove="App.xaml" />
-	</ItemGroup>
-	  
-	<ItemGroup>
-	  <AvaloniaResource Include="App.xaml" />
-	</ItemGroup>
 
 </Project>

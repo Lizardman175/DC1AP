@@ -1,9 +1,9 @@
 ﻿using Archipelago.Core.Util;
 using DC1AP.Constants;
 using DC1AP.Mem;
+using DC1AP.Utils;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 
 
@@ -44,10 +44,9 @@ namespace DC1AP.Items
             if (Options.MiracleSanity)
             {
                 chests = [[], [], [], [], []];
-                StreamReader reader = new(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Items", "miracle_locations.csv"));
-                string? line;
+                string[] lines = Resources.Embedded.MiracleChests.Split('\n');
 
-                while ((line = reader.ReadLine()) != null)
+                foreach (string line in lines)
                 {
                     string[] split = line.Split(',');
                     int townInt = Int32.Parse(split[2]);

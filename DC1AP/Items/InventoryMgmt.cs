@@ -3,13 +3,12 @@ using Archipelago.MultiClient.Net.Models;
 using DC1AP.Constants;
 using DC1AP.Mem;
 using DC1AP.Threads;
+using DC1AP.Utils;
 using Serilog;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text.Json;
 
 
 namespace DC1AP.Items
@@ -85,21 +84,8 @@ namespace DC1AP.Items
 
         internal static void InitInventoryMgmt()
         {
-            JsonSerializerOptions jOptions = new(JsonSerializerDefaults.Web)
-            {
-                AllowOutOfOrderMetadataProperties = true,
-                IncludeFields = true
-            };
-
-            string filename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Items", "Items.json");
-            string json = File.ReadAllText(filename);
-            ItemData = JsonSerializer.Deserialize<ConcurrentDictionary<long, InvItem>>(json, jOptions);
-
-            filename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Items", "Attachments.json");
-            json = File.ReadAllText(filename);
-            AttachmentData = JsonSerializer.Deserialize<ConcurrentDictionary<long, Attachment>>(json, jOptions);
-            foreach (var item in AttachmentData)
-                AttachmentDataByGameId[item.Value.ItemID] = item.Value;
+            ItemData = Resources.Embedded.Items;
+            AttachmentData = Resources.Embedded.Attachments;
 
             OpenMem.InitItemCountAddrs(ItemData.Keys.ToArray(), AttachmentData.Keys.ToArray());
         }

@@ -122,7 +122,7 @@
 							  StrokeThickness="2"
 							  Margin="4"/>
 					</Button>
-					<TextBox Text="Archipelago Client" FontSize="16" IsEnabled="False"
+					<TextBox Text="Dark Cloud 1 AP Client" FontSize="16" IsEnabled="False"
 							 HorizontalAlignment="Center"/>
 				</Grid>
 			</Border>

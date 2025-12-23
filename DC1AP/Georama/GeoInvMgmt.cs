@@ -1,18 +1,19 @@
 using Archipelago.Core.Util;
 using DC1AP.Constants;
 using DC1AP.Threads;
-using Serilog;
-using System;
+using DC1AP.Utils;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 
 namespace DC1AP.Georama
 {
     internal class GeoInvMgmt
     {
-        private static readonly List<string> buildingFiles = ["NoruneBuildings.json", "MatatakiBuildings.json", "QueensBuildings.json",
-                                                              "MuskaBuildings.json",  "FactoryBuildings.json",  "CastleBuildings.json"];
+        private static readonly List<GeoBuilding[]> buildingFiles = [Resources.Embedded.Norune, Resources.Embedded.Matataki,
+                                                                     Resources.Embedded.Queens, Resources.Embedded.Muska,
+                                                                     Resources.Embedded.Factory, Resources.Embedded.Castle];
+
+        internal static readonly Dictionary<long, int> buildingCounts = [];
 
         internal static readonly Dictionary<long, int> buildingCounts = [];
 
@@ -28,14 +29,7 @@ namespace DC1AP.Georama
             };
 
             for (int i = 0; i < Options.Goal; i++)
-            {
-                string filename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Georama", buildingFiles[i]);
-                string json = File.ReadAllText(filename);
-                GeoBuilding[]? jsonBuildings = JsonSerializer.Deserialize<GeoBuilding[]>(json, jOptions);
-
-                if (jsonBuildings != null) GeoBuilding.buildings[i] = jsonBuildings;
-                else Log.Logger.Error("Failed to read " + buildingFiles[i]);
-            }
+                GeoBuilding.buildings[i] = buildingFiles[i];
         }
 
         /// <summary>
