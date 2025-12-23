@@ -34,6 +34,7 @@ namespace DC1AP.Items
          *  but doesn't seem to do anything if changed. -1 or 0 for no item (sometimes ghost values as well caused by moving items from the active list)
          */
         private const uint FirstItemDurationAddr = 0x01CDD988; // Short
+        private const uint FirstActiveItemCountAddr = 0x01CDD8B4;
 
         // Add 1 byte for the CurAddr field, then 2 for each short past the first addr
         //private static uint[] ActiveItemAddrs = [InvCurAddr + 1, InvCurAddr + 3, InvCurAddr + 5];
@@ -43,12 +44,14 @@ namespace DC1AP.Items
         private const int MaxAttachCount = 40;
         private const uint AttachmentSize = 0x20;
         private const uint FirstAttachAttrOffset = 0x08;
+        private const int FirstAttachDefaultValue = 3;
 
         //private static readonly List<(short, short)> attachChanges = []; // (index, item ID)
         private static List<short> attachmentInv = new(MaxAttachCount);
 
-        private struct attachmentStr()
+        private struct AttachmentStr()
         {
+#pragma warning disable IDE0044 // Add readonly modifier
             short id = -1;
             short synthedWeaponId = 0;  // Matches weapon ID for id 5A, synthsphere
             // These shorts contain data about how many levels and what boons/banes the attach provides (for synthspheres)
@@ -77,6 +80,7 @@ namespace DC1AP.Items
             byte mimic = 0;
             byte mage = 0;
             private byte padding = 0;
+#pragma warning restore IDE0044 // Add readonly modifier
         }
 
         internal static void InitInventoryMgmt()
@@ -101,6 +105,34 @@ namespace DC1AP.Items
         }
 
         /// <summary>
+        /// The game is very unreliable about counting the player's inventory.  Manually count here to account for hotbar items.
+        /// </summary>
+        /// <returns></returns>
+        private static bool HasAvailableInventory()
+        {
+            byte invCount = 0;
+            byte maxCount = Memory.ReadByte(InvMaxAddr);
+
+            byte activeCount = (byte)(Memory.ReadByte(FirstActiveItemCountAddr) + Memory.ReadByte(FirstActiveItemCountAddr
+                + sizeof(short)) + Memory.ReadByte(FirstActiveItemCountAddr + 2 * sizeof(short)));
+
+            invCount += activeCount;
+
+            for (int ii = 0; ii < maxCount; ii++)
+            {
+                uint addr = (uint)(FirstInvAddr + IDSize * ii);
+                short itemValue = Memory.ReadShort(addr);
+
+                if (itemValue != -1 && itemValue != 0)
+                {
+                    invCount++;
+                }
+            }
+
+            return invCount < maxCount;
+        }
+
+        /// <summary>
         /// Searches for an empty inventory slot and gives the player the item supplied.  Returns true if successful, false if inventory is full.
         /// </summary>
         /// <param name="itemId"></param>
@@ -108,7 +140,6 @@ namespace DC1AP.Items
         internal static bool GiveItem(long itemId, bool updateFlag=true)
         {
             byte maxInv = Memory.ReadByte(InvMaxAddr);
-            byte curInv = Memory.ReadByte(InvCurAddr);
             InvItem item = ItemData[itemId];
 
             if (itemCounts.ContainsKey(itemId) && itemCounts[itemId] <= OpenMem.ReadItemCountValue(itemId))
@@ -116,14 +147,14 @@ namespace DC1AP.Items
                 return true;
             }
 
-            if (curInv < maxInv)
+            if (HasAvailableInventory())
             {
                 for (int ii = 0; ii < maxInv; ii++)
                 {
                     uint addr = (uint)(FirstInvAddr + IDSize * ii);
                     short itemValue = Memory.ReadShort(addr);
 
-                    if (itemValue == -1)
+                    if (itemValue == -1 || itemValue == 0)
                     {
                         Memory.Write(addr, item.ItemID);
                         uint durationAddr = FirstItemDurationAddr + (uint)(IDSize * ii);
@@ -155,10 +186,6 @@ namespace DC1AP.Items
                         if (updateFlag)
                             OpenMem.IncItemCountValue(itemId);
 
-                        // The game doesn't update this until you open the inventory again
-                        // so we need to update it ourselves so we don't fail to give the
-                        // player an item or give them more than max if the active bar has items.
-                        Memory.WriteByte(InvCurAddr, (byte)(curInv + 1));
                         return true;
                     }
                 }
@@ -186,7 +213,7 @@ namespace DC1AP.Items
                     string msg = "Received " + item.Name + ".";
 
                     // Game sometimes leaves junk data in the attachments, need to clear that before adding our own
-                    Memory.WriteStruct<attachmentStr>(addr, new attachmentStr());
+                    Memory.WriteStruct<AttachmentStr>(addr, new AttachmentStr());
                     Memory.Write(addr, item.ItemID);
                     
                     // Some of these fields are actually shorts but we shouldn't be setting large enough values to matter.
@@ -197,6 +224,7 @@ namespace DC1AP.Items
                             value = (byte)Math.Ceiling(value * Options.AttachMultiplier);
                         Memory.WriteByte((ulong)(addr + item.ValueOffsets[val]), value);
                     }
+
                     if (PlayerState.IsPlayerInDungeon())
                     {
                         ItemQueue.AddMsg(msg);
@@ -359,6 +387,7 @@ namespace DC1AP.Items
             return result;
         }
 
+        // Now unused, holding onto in case we find a reason to use it.
         /// <summary>
         /// Checks the player's current attachment inventory and optionally compares it against the most recent inventory so when we remove 
         /// an attachment, we only remove the new one.  This is due to atk/spd/mg/end attachments all having the same ID but different values.
@@ -391,6 +420,10 @@ namespace DC1AP.Items
 
         internal static void MultiplyAttachments()
         {
+            if (Options.AttachMultConfig != AttachMultConfig.All || Options.AttachMultiplier == 1.0f)
+                return;
+
+            bool checkIfMultiplied = true;
             uint addr = MiscAddrs.FirstAttachmentDataAddr;
             short id = Memory.ReadByte(addr);
 
@@ -403,6 +436,13 @@ namespace DC1AP.Items
                     byte b = Memory.ReadByte(addr2+i);
                     if (b > 0)
                     {
+                        // Don't multiply if already multiplied
+                        if (checkIfMultiplied)
+                        {
+                            if (b != FirstAttachDefaultValue)
+                                return;
+                            checkIfMultiplied = false;
+                        }
                         b = (byte)Math.Ceiling(b * Options.AttachMultiplier);
                         Memory.WriteByte(addr2+i, b);
                     }
