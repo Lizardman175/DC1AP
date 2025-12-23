@@ -286,8 +286,7 @@ namespace DC1AP
             GeoInvMgmt.InitBuildings();
             CharFuncs.Init();
             Enemies.MultiplyABS();
-            if (Options.AttachMultConfig == AttachMultConfig.All)
-                InventoryMgmt.MultiplyAttachments();
+            InventoryMgmt.MultiplyAttachments();
 
             // Check for any missing items after a connect/reconnect
             ItemQueue.checkItems = true;
@@ -310,7 +309,7 @@ namespace DC1AP
             }.Start();
 
             // Watch for the player to reset the game, then change the valid state flag and ready up to connect again.
-            Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerNotReady(slotName), (o) => { return o <= 1; });
+            Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerNotReady(slotName), (o) => { return o <= 1 || o > 3; });
             WatchGoal();
         }
 
@@ -318,7 +317,7 @@ namespace DC1AP
         {
             PlayerState.ValidGameState = false;
             ItemQueue.ClearQueues();
-            Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerReady(slotName), (o) => { return o == 2; });
+            Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerReady(slotName), (o) => { return o == 2 || o == 3; });
         }
 
         private void AckDivHouse()
