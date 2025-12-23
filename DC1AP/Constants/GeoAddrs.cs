@@ -111,13 +111,13 @@ namespace DC1AP.Constants
         //internal static uint AtlaCoordX = 0x01DD0860;
         //internal static uint AtlaCoordY = 0x01DD0864;
         //internal static uint AtlaCoordZ = 0x01DD0868;
-        internal static uint AtlaCollectedFlag = 0x01DD0874;
+        internal const uint AtlaCollectedFlag = 0x01DD0874;
 
         // Space between atla as above
-        internal static int FloorAtlaOffset = 0x20;
+        internal const int FloorAtlaOffset = 0x20;
 
         // Points to the completion event flag for these buildings
-        internal static uint YayaBldEventFlag = 30236688 - sizeof(int);
-        internal static uint CathedralBldEventFlag = 30236712 - sizeof(int);
+        internal const uint YayaBldEventFlag = 30236688 - sizeof(int);
+        internal const uint CathedralBldEventFlag = 30236712 - sizeof(int);
     }
 }

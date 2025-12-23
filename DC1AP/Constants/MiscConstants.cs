@@ -69,7 +69,7 @@ namespace DC1AP.Constants
         internal const short MoonOrbItemId = 0xF2;
 
         // Building indexes for the 4 pilots to skip their cutscenes
-        internal static int[] FactoryEventSkips = [3, 4, 9, 10];
+        internal static readonly int[] FactoryEventSkips = [3, 4, 9, 10];
 
         internal const int AttachIdBase = 971_112_000;
         internal const int ItemIdBase = 971_111_000;
@@ -85,5 +85,7 @@ namespace DC1AP.Constants
 
         internal const long FruitOfEdenId = 971_111_180;
         internal const long GourdId = 971_111_182;
+
+        internal const long HornedKeyChestId = 971_111_063;
     }
 }

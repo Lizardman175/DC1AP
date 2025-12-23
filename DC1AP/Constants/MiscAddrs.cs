@@ -159,5 +159,13 @@ namespace DC1AP.Constants
         internal const uint MCOpenDialogFlag = 0x01CFCCEC;
 
         internal const uint FirstAttachmentDataAddr = 0x0027CA60;
+
+        // Indicates which weapon slot is equipped by the char 0-9.  FF for no weapon/not recruited.
+        //internal const uint ToanWeaponSlot = 0x01CDD88C;  // Never sets to FF, even at title screen
+        internal const uint XiaoSlotAddr = 0x01CDD88D;
+        internal const uint GoroSlotAddr = 0x01CDD88E;
+        internal const uint RubySlotAddr = 0x01CDD88F;
+        internal const uint UngagaSlotAddr = 0x01CDD890;
+        internal const uint OsmondSlotAddr = 0x01CDD891;
     }
 }
