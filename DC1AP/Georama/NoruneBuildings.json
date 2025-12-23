@@ -6,14 +6,14 @@
     "BuildingId": 0,
     "Items": [
       {
-        "Name": "Player's Storage",
-        "ItemId": 20,
-        "SlotId": 2
-      },
-      {
         "Name": "Player's Keg",
         "ItemId": 18,
         "SlotId": 0
+      },
+      {
+        "Name": "Player's Storage",
+        "ItemId": 20,
+        "SlotId": 2
       },
       {
         "Name": "Renee",
@@ -316,14 +316,14 @@
         "SlotId": 1
       },
       {
-        "Name": "Alnet",
-        "ItemId": 48,
-        "SlotId": 3
-      },
-      {
         "Name": "Carl",
         "ItemId": 47,
         "SlotId": 4
+      },
+      {
+        "Name": "Alnet",
+        "ItemId": 48,
+        "SlotId": 3
       },
       {
         "Name": "Alnet's Llama",

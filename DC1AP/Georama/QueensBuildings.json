@@ -306,6 +306,11 @@
         "SlotId": 3
       },
       {
+        "Name": "Basker",
+        "ItemId": 45,
+        "SlotId": 5
+      },
+      {
         "Name": "Basker's Chimney",
         "ItemId": 3,
         "SlotId": 0
@@ -314,11 +319,6 @@
         "Name": "Basker's Sunshade",
         "ItemId": 4,
         "SlotId": 1
-      },
-      {
-        "Name": "Basker",
-        "ItemId": 45,
-        "SlotId": 5
       },
       {
         "Name": "Basker's Sign",
@@ -366,14 +366,14 @@
         "SlotId": 3
       },
       {
-        "Name": "Stu",
-        "ItemId": 47,
-        "SlotId": 4
-      },
-      {
         "Name": "King",
         "ItemId": 46,
         "SlotId": 5
+      },
+      {
+        "Name": "Stu",
+        "ItemId": 47,
+        "SlotId": 4
       },
       {
         "Name": "King's Lamp",
