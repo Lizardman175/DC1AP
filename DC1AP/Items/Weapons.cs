@@ -11,6 +11,7 @@ namespace DC1AP.Items
                               byte drag, byte undead, byte fish, byte rock, byte plant,
                               byte beast, byte sky, byte metal, byte mimic, byte mage)
         {
+#pragma warning disable IDE0044 // Add readonly modifier.  These are used but not directly.
             private short id = id;
             private short level = 0;
 
@@ -41,39 +42,24 @@ namespace DC1AP.Items
             private byte metal = metal;
             private byte mimic = mimic;
             private byte mage = mage;
+#pragma warning restore IDE0044 // Add readonly modifier
         }
 
         // Hard coded weapons for now
         // Shamshir
-        private static Weapon toan = new(0x010E, 20, 30, 70, 6, 32, 1, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0);
+        private static Weapon toan = new(0x010E, 20, 30, 70, 6, 32, 2, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0);
         // Steel slingshot
         private static Weapon xiao = new(0x012d, 14, 40, 43, 0, 48, 5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 5, 5, 0, 0);
         // Steel Hammer
         private static Weapon goro = new(0x013c, 25, 40, 20, 0, 50, 5, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0, 0, 0, 10, 10, 0);
         // Platinum ring
-        private static Weapon ruby = new(0x014f, 17, 40, 66, 40, 55, 1, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        private static Weapon ruby = new(0x014f, 17, 40, 66, 40, 55, 1, 1, 20, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         // Halberd
         private static Weapon ungaga = new(0x015e, 44, 28, 75, 0, 52, 3, 0, 10, 0, 15, 0, 0, 0, 0, 0, 0, 8, 5, 8, 0, 0);
         // Snail
         private static Weapon osmond = new(0x0176, 34, 50, 60, 10, 45, 0, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
         private static readonly Weapon[] starterWeapons = [toan, xiao, goro, ruby, ungaga, osmond];
-
-        // TODO remove or comment out before checkin!
-        // Chronicle2 Sword
-        //private static Weapon cheatToan = new(0x012A, 350, 99, 99, 99, 99, 5, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99);
-        // Angel Gear slingshot
-        //private static Weapon cheatXiao = new(0x0139, 256, 99, 99, 99, 99, 4, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99);
-        // Inferno
-        //private static Weapon cheatGoro = new(0x0149, 350, 99, 99, 99, 99, 3, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99);
-        // Secret Armlet
-        //private static Weapon cheatRuby = new(0x0159, 155, 99, 99, 99, 99, 2, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99);
-        // Hercule's Wrath
-        //private static Weapon cheatUngaga = new(0x0164, 256, 99, 99, 50, 99, 1, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99);
-        // Supernova
-        //private static Weapon cheatOsmond = new(0x0175, 256, 99, 99, 99, 99, 0, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99);
-
-        //private static readonly Weapon[] cheatWeapons = [cheatToan, cheatXiao, cheatGoro, cheatRuby, cheatUngaga, cheatOsmond];
 
         internal static void GiveCharWeapon(int character)
         {

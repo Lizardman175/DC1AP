@@ -336,14 +336,14 @@
         "SlotId": 2
       },
       {
-        "Name": "Ro",
-        "ItemId": 50,
-        "SlotId": 4
-      },
-      {
         "Name": "Annie",
         "ItemId": 51,
         "SlotId": 5
+      },
+      {
+        "Name": "Ro",
+        "ItemId": 50,
+        "SlotId": 4
       },
       {
         "Name": "Mushroom Torch",

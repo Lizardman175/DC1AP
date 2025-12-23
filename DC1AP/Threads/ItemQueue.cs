@@ -5,6 +5,7 @@ using DC1AP.Items;
 using DC1AP.Mem;
 using Serilog;
 using System.Collections.Concurrent;
+using System.Threading;
 
 namespace DC1AP.Threads
 {
@@ -14,17 +15,28 @@ namespace DC1AP.Threads
         //private static int MsToCs = 10;  // Convert 1000ths of a second to 100ths
 
         private static ConcurrentQueue<GeoBuilding> GeoBuildingQueue = new();
+        private static ConcurrentQueue<long> InventoryQueue = new();
+        private static ConcurrentQueue<long> AttachmentQueue = new();
         private static ConcurrentQueue<string> MsgQueue = new();
 
         internal static bool checkItems = false;
 
-        // TODO not currently used
         internal static bool RunThread = true;
 
         internal static void AddGeorama(GeoBuilding geoBuilding)
         {
             if (PlayerState.PlayerReady())
                 GeoBuildingQueue.Enqueue(geoBuilding);
+        }
+
+        internal static void AddItem(long apId)
+        {
+            InventoryQueue.Enqueue(apId);
+        }
+
+        internal static void AddAttachment(long apId)
+        {
+            AttachmentQueue.Enqueue(apId);
         }
 
         internal static void AddMsg(string msg)
@@ -39,11 +51,14 @@ namespace DC1AP.Threads
         internal static void ThreadLoop(object? parameters)
         {
             RunThread = true;
+            bool result = true;
+            bool itemReceived = false;
+            bool attachmentReceived = false;
 
             // Clean out the queues before stopping
-            while (RunThread || !GeoBuildingQueue.IsEmpty || !MsgQueue.IsEmpty)
+            while (RunThread)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
 
                 if (PlayerState.PlayerReady())
                 {
@@ -65,27 +80,62 @@ namespace DC1AP.Threads
                             MsgQueue.TryDequeue(out string? msg))
                             // TODO nums
                             MessageFuncs.DisplayMessageDungeon(msg, 1, 20, DisplayTime);
-                        
                     }
 
-                    // Don't add to the queue if items are already in it to reduce collisions.
-                    if (checkItems && GeoBuildingQueue.Count == 0)
+                    result = true;
+                    while (result && PlayerState.CanGiveItem() && InventoryQueue.TryDequeue(out long apId))
                     {
-                        GeoInvMgmt.VerifyItems();
+                        result = InventoryMgmt.GiveItem(apId);
+                        // If we fail to give the item because inventory is full, requeue it
+                        if (!result)
+                            InventoryQueue.Enqueue(apId);
+                        else
+                            itemReceived = true;
+                    }
+                    // Extra flag so we don't spam the player with messages.
+                    if (!result && itemReceived)
+                    {
+                        AddMsg(InventoryQueue.Count + " item(s) remain in queue but inventory is full.");
+                    }
+                    itemReceived = false;
+
+                    result = true;
+                    while (result && PlayerState.CanGiveItem() && AttachmentQueue.TryDequeue(out long apId))
+                    {
+                        result = InventoryMgmt.GiveAttachment(apId);
+                        // If we fail to give the item because inventory is full, requeue it
+                        if (!result)
+                            AttachmentQueue.Enqueue(apId);
+                        else
+                            attachmentReceived = true;
+                    }
+                    if (!result && attachmentReceived)
+                    {
+                        AddMsg(AttachmentQueue.Count + " attachment(s) remain in queue but inventory is full.");
+                    }
+                    attachmentReceived = false;
+
+                    // Don't add to the queue if items are already in it to reduce collisions.
+                    if (checkItems)
+                    {
+                        // TODO need to revisit the IsEmpty check and why.  It seems to work though
+                        if (GeoBuildingQueue.IsEmpty)
+                            GeoInvMgmt.VerifyItems();
+                        if (InventoryQueue.IsEmpty && AttachmentQueue.IsEmpty)
+                            InventoryMgmt.VerifyItems();
                         checkItems = false;
                     }
                 }
                 // Player hasn't started the game, or has reset so clear the queues.
                 else
                 {
-                    GeoBuildingQueue.Clear();
-                    MsgQueue.Clear();
+                    ClearQueues();
                 }
             }
         }
 
         /// <summary>
-        /// Waits until the player has the specified item then removes it from their inventory and exits.f
+        /// Waits until the player has the specified item then removes it from their inventory and exits.
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="itemCat"></param>
@@ -103,7 +153,7 @@ namespace DC1AP.Threads
                         found = InventoryMgmt.RemoveInvItem(itemId);
                         break;
                     case ItemCategory.FactoryGeo:
-                        found = InventoryMgmt.RemoveGeoItem(itemId, (int)Towns.Factory);
+                        found = GeoInvMgmt.RemoveGeoItem(itemId, (int)Towns.Factory);
                         break;
                     default:
                         found = true;
@@ -111,6 +161,14 @@ namespace DC1AP.Threads
                 }
                 Thread.Sleep(500);
             }
+        }
+
+        internal static void ClearQueues()
+        {
+            GeoBuildingQueue.Clear();
+            InventoryQueue.Clear();
+            AttachmentQueue.Clear();
+            MsgQueue.Clear();
         }
     }
 }

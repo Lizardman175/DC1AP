@@ -25,30 +25,38 @@ namespace DC1AP.Mem
         ///  Can't receive in georama menu as it will conditionally overwrite our changes.
         ///  Want to be out of menus to show a dialogue as well.
         /// </summary>
-        /// <returns>True if safe to give the player an item & message.</returns>
+        /// <returns>True if safe to give the player an item.</returns>
         public static bool CanGiveItemDungeon()
         {
-            // TODO currently only know how to display messages in dungeons.  Similar idea for towns I assume, but still working it out.  Limiting messages to in dungeon for now.
-            // TODO need better check for player entering dungeon floor animation
-            return ValidGameState && IsPlayerInDungeon() && Memory.ReadByte(MiscAddrs.DungeonMode) == 1;
+            return PlayerReady() && IsPlayerInDungeon() && Memory.ReadByte(MiscAddrs.DungeonMode) == 1;
         }
 
         /// <summary>
-        /// Determines if the player is in a state in a town that we can give an item/display a message.
-        ///  Can't receive in georama menu as it will conditionally overwrite our changes.
+        /// Determines if the player is in a state in a town or dungeon that we can give an item/display a message.
         ///  Want to be out of menus to show a dialogue as well.
         /// </summary>
-        /// <returns>True if safe to give the player an item & message.</returns>
-        public static bool CanGiveItemTown()
+        /// <returns>True if safe to give the player an item.</returns>
+        public static bool CanGiveItem()
         {
-            // TODO figure out how to give a message in town.  Probably some code in DC Improved
-            //return Memory.ReadByte(MiscAddr.IN_DUNGEON) == -1 && 
-            return false;
+            return PlayerReady() && ((IsPlayerInDungeon() && Memory.ReadByte(MiscAddrs.DungeonMode) == 1) ||
+                                     PlayerMovableTown());
+        }
+
+        public static bool PlayerMovableTown()
+        {
+            byte townState = Memory.ReadByte(MiscAddrs.PlayerTownState);
+            return townState == MiscAddrs.PlayerTownOverworld ||
+                (townState == MiscAddrs.PlayerTownInterior && Memory.ReadByte(MiscAddrs.PlayerInteriorState) == 0x00);
         }
         
         public static bool IsPlayerInDungeon()
         {
             return Memory.ReadByte(MiscAddrs.InDungeonFlag) != 0xFF;
+        }
+
+        public static bool IsPlayerInTown()
+        {
+            return PlayerReady() && Memory.ReadByte(MiscAddrs.PlayerState) == 2;
         }
     }
 }

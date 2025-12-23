@@ -1,4 +1,6 @@
 
+using System.Collections.Generic;
+
 namespace DC1AP.Constants
 {
     internal static class GeoAddrs
@@ -22,9 +24,9 @@ namespace DC1AP.Constants
         private const uint T1GeoBldStart = 0x01CD4828; // Norune georama buildings (houses etc.; left pane)
         private const uint T2GeoBldStart = 0x01CD53E0; // Matataki Georama
         private const uint T3GeoBldStart = 0x01CD5F98; // Queens georama
-        private const uint T4GeoBldStart = 0x01CD6B4C; // Muska georama
+        private const uint T4GeoBldStart = 0x01CD6B50; // Muska georama
         private const uint T5GeoBldStart = 0x01CD7708; // Factory georama
-        private const uint T6GeoBldStart = 0x01CD82C4; // Castle georama
+        private const uint T6GeoBldStart = 0x01CD82C0; // Castle georama
 
         internal static readonly uint[] TownBldInv = [T1GeoBldStart, T2GeoBldStart, T3GeoBldStart, T4GeoBldStart, T5GeoBldStart, T6GeoBldStart];
 
@@ -93,8 +95,6 @@ namespace DC1AP.Constants
                                                                    (QueensTableAddr, QueensTableCount), (MuskaTableAddr, MuskaTableCount),
                                                                    (FactoryTableAddr, FactoryTableCount), (CastleTableAddr, CastleTableCount)]);
 
-        // TODO how should the last dungeon be handled?
-        // TODO better name? first half of each dungeon count.
         internal static readonly List<int> AtlaHalfwayCounts = new([DBC1Count, WOF1Count, SW1Count, SMT1Count, MS1Count, CastleTableCount]);
 
         internal const uint CatlaAddr = 0x01CD98A4;  // Cat's Atla
@@ -111,23 +111,13 @@ namespace DC1AP.Constants
         //internal static uint AtlaCoordX = 0x01DD0860;
         //internal static uint AtlaCoordY = 0x01DD0864;
         //internal static uint AtlaCoordZ = 0x01DD0868;
-        internal static uint AtlaCollectedFlag = 0x01DD0874;
+        internal const uint AtlaCollectedFlag = 0x01DD0874;
 
         // Space between atla as above
-        internal static int FloorAtlaOffset = 0x20;
+        internal const int FloorAtlaOffset = 0x20;
 
-        // Base ID for the divining house - int
-        internal static uint YayaBldEventFlag = 30236688 - sizeof(int);
+        // Points to the completion event flag for these buildings
+        internal const uint YayaBldEventFlag = 30236688 - sizeof(int);
+        internal const uint CathedralBldEventFlag = 30236712 - sizeof(int);
     }
 }
-
-/*
- * TODO Info for 0.3 when autobuilding towns:
- * 
- * 1CD4A64: Seems to be start of first building placed in Norune.  Short.  building ID (ordered in finished list: 00 is player house, 01 is Macho house, 0d is a tree etc.)
- * 1CD4A66: Orientation of building.  00 == faces towards Mayor, 02 == faces away.  values outside 0-3 or -3-0 cause Bad Things
- * Next 3 are F32 coords: XYZ (Y is unused outside of Queens).  Putting a building outside the allowed bounds seems to just reset it in your inventory
- * 1CD4A68: 4 byte float
- * 1CD4A6C: 4 bytes of 0 for most towns, used in queens, possibly in Matatki for the Earth A/B plots
- * 1CD4A70: 4 byte float
- */

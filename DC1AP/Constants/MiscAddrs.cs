@@ -71,13 +71,56 @@ namespace DC1AP.Constants
         internal const uint CurDungeon = 0x002A3594;    // 0 index
         //internal const uint CurDungeon = 0x1CD954C;     // 0 index - I don't think this is correct, sometimes it is not the correct dungeon value
         internal const uint CurFloor = 0x01CD954E;      // 0 index
-        internal const uint InDungeonFlag = 0x1CD954F;  // -1 if not in dungeon, 0 if in dungeon
+        internal const uint InDungeonFlag = 0x01CD954F;  // -1 if not in dungeon, 0 if in dungeon
         internal const uint BackFloorFlag = 0x002A34B4;  // 0 or 1
 
         // Player state.  0 is main title, 1 is demo reel, 2 is town, 3 is dungeon
         internal const uint PlayerState = 0x002A2534;
 
-        // Technically these are the kill counts on the boss floors, but can only be 1
+        // 0x01 and 0x0C are in town/interior respectively.  Other values we don't care.
+        internal const uint PlayerTownState = 0x002A1F50;
+        internal const byte PlayerTownOverworld = 0x01;
+        internal const byte PlayerTownInterior = 0x0C;
+
+        internal const uint PlayerInteriorState = 0x002A2A84;
+
+        /// Tracks the current/previous zone value.
+        /// 00 == Norune, 01 == Matataki, 02 == Queens, 0x03 == ML, 0x04 == Factory, 0x17 == Yellow Drops, 0x26 == DHC, 0x28 == DHC Ext
+        /// 13 == Queen's Dock, 23 == SW entrance, 27 == Sub ride cutscene
+        /// 0B == Goro's treehouse ext, 21 == dead tree 0D == Revived Tree
+        /// 0x0E == Brownboo, SMT exterior == 0x2A, 0x3C == Demon Shaft ext, 3D == DS interior
+        /// C8 == DBC, C9 == WOF, CA == SW, CB == SMT, 0xCC == Moon Sea, CD == Gallery, CE == Demon Shaft dungeon
+        //internal const uint CurZoneAddr = 0x002A2518;  Redundant with below value it seems?
+        //internal const uint PrevZoneAddr = 0x002A251C;  Not likely useful, but here for reference
+        internal const int NoruneZone = 0x00;
+        internal const int MatatakiZone = 0x01;
+        internal const int GoroZone = 0x0B;
+        internal const int DeadTreeZone = 0x21;
+        internal const int TreeZone = 0x0D;
+        internal const int QueensZone = 0x02;
+        internal const int QueensDockZone = 0x13;
+        internal const int MuskaZone = 0x03;
+        internal const int SMTExtZone = 0x2A;
+        internal const int FactoryZone = 0x04;
+        internal const int YellowDropsZone = 0x17;
+
+        internal const uint CurZoneAddr = 0x002A2810;
+
+        // 1 for inside.  Necessary for Yellow Drops to double check the interior chest map as it only uses the interior block.
+        internal const uint InInteriorFlagAddr = 0x002A281C;
+
+        // Matches the building IDs for the current town.
+        internal const uint InteriorIdAddr = 0x002A2820;
+        // 1 For alternate building ID, such as Alnet or Player barns
+        internal const uint InteriorSubIdAddr = 0x002A2824;
+
+        // Interior ID for non-geo buildings.  InteriorIdAddr will be -1 if this gets set.  Changing towns sets both to -1
+        // Does not set to -1 when entering a geo building.
+        // 1 == Mayor, 2 == Goro's treehouse, 3 == Rando's shop, 4 == Ungaga's House
+        // F == inside Yellow Drops buildings.  All of them.  Need to test against the interior flag if in YD.
+        internal const uint AlternateIntIdAddr = 0x002A2830;
+
+        // Kill counts on the boss floors
         //internal const uint DranFlag = 0x01CDD200;
         internal const uint UtanFlag = 0x01CDD2CC;
         //internal const uint SaiaFlag = 0x01CE47A9;  // Others are using the kill count but we can't here as her shield counts as a kill
@@ -86,8 +129,6 @@ namespace DC1AP.Constants
         //internal const uint GenieFlag = 0x01CDD5FC;
 
         internal const uint BossKillAddr = 0x01CE47A8;  // Sets to 100 x boss number (except for Utan?)
-
-        //internal static readonly uint[] BossKillFlags = [DranFlag, UtanFlag, SaiaFlag, CurseFlag, JoeFlag, GenieFlag];
 
         // Curiously, there are 11 weapon slots in memory, but only 10 in game?
         internal const uint WeaponOffset = 0xF8;
@@ -110,8 +151,21 @@ namespace DC1AP.Constants
         internal const uint AtlaOpeningFlagAddr = 0x002A3524;  // Byte. 0 when normally moving around dungeon, 1 when in opening Atla animation, 2 for atla item message box
         internal const uint LoadingIntoDungeonFlagAddr = 0x002A347C;  // Byte.  1 when on dungeon floor select and while character is entering the dungeon floor.  0 otherwise.
 
-        internal const uint DunMsgAddr = 0x00998BB8;     //The address pointing to the text of the 10th dungeon message. 157 Byte array
-        internal const uint DunMsgDurAddr = 0x01EA7694;  //How long to show the message
+        internal const uint DunMsgAddr = 0x00998BB8;     // The address pointing to the text of the 10th dungeon message. 157 Byte array
+        internal const uint DunMsgDurAddr = 0x01EA7694;  // How long to show the message
         internal const uint DunMsgIdAddr = 0x01EA76B4;
+
+        // -1 means dialog not active.  Can freeze/set at -1 when player is opening a chest to ignore?
+        internal const uint MCOpenDialogFlag = 0x01CFCCEC;
+
+        internal const uint FirstAttachmentDataAddr = 0x0027CA60;
+
+        // Indicates which weapon slot is equipped by the char 0-9.  FF for no weapon/not recruited.
+        //internal const uint ToanWeaponSlot = 0x01CDD88C;  // Never sets to FF, even at title screen
+        internal const uint XiaoSlotAddr = 0x01CDD88D;
+        internal const uint GoroSlotAddr = 0x01CDD88E;
+        internal const uint RubySlotAddr = 0x01CDD88F;
+        internal const uint UngagaSlotAddr = 0x01CDD890;
+        internal const uint OsmondSlotAddr = 0x01CDD891;
     }
 }

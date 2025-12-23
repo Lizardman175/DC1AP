@@ -12,13 +12,11 @@ namespace DC1AP.Mem
         private static bool ungaga = false;
         private static bool osmond = false;
 
-        // Indicates which weapon slot is equipped by the char 0-9.  FF for no weapon/not recruited.
-        //private static uint ToanWeaponSlot = 0x01CDD88C;  // Never sets to FF, even at title screen
-        private static uint XiaoSlotAddr = 0x01CDD88D;
-        private static uint GoroSlotAddr = 0x01CDD88E;
-        private static uint RubySlotAddr = 0x01CDD88F;
-        private static uint UngagaSlotAddr = 0x01CDD890;
-        private static uint OsmondSlotAddr = 0x01CDD891;
+        public static bool Xiao { get => xiao; set => xiao = value; }
+        public static bool Goro { get => goro; set => goro = value; }
+        public static bool Ruby { get => ruby; set => ruby = value; }
+        public static bool Ungaga { get => ungaga; set => ungaga = value; }
+        public static bool Osmond { get => osmond; set => osmond = value; }
 
         internal static bool HaveChar(int index)
         {
@@ -42,44 +40,40 @@ namespace DC1AP.Mem
 
         internal static void Init()
         {
-            xiao = false;
-            goro = false;
-            ruby = false;
-            ungaga = false;
-            osmond = false;
+            xiao = Memory.ReadByte(MiscAddrs.XiaoSlotAddr) != 0xff;
+            goro = Memory.ReadByte(MiscAddrs.GoroSlotAddr) != 0xff;
+            ruby = Memory.ReadByte(MiscAddrs.RubySlotAddr) != 0xff;
+            ungaga = Memory.ReadByte(MiscAddrs.UngagaSlotAddr) != 0xff;
+            osmond = Memory.ReadByte(MiscAddrs.OsmondSlotAddr) != 0xff;
+        }
 
-            if (Memory.ReadByte(XiaoSlotAddr) == 0xff)
+        internal static void CheckForChars()
+        {
+            if (!xiao)
             {
-                Memory.MonitorAddressForAction<Byte>(XiaoSlotAddr, () => XiaoGained(), (o) => { return o != 0xff; });
+                if (Memory.ReadByte(MiscAddrs.XiaoSlotAddr) != 0xff)
+                    XiaoGained();
             }
-            else xiao = true;
-
-            if (Memory.ReadByte(GoroSlotAddr) == 0xff)
+            else if (!goro)
             {
-                Memory.MonitorAddressForAction<Byte>(GoroSlotAddr, () => GoroGained(), (o) => { return o != 0xff; });
+                if (Memory.ReadByte(MiscAddrs.GoroSlotAddr) != 0xff)
+                    GoroGained();
             }
-            else goro = true;
-
-            if (Memory.ReadByte(RubySlotAddr) == 0xff)
+            else if (!ruby)
             {
-                if (Options.Goal >= (int) Towns.Queens + 1)
-                    Memory.MonitorAddressForAction<Byte>(RubySlotAddr, () => RubyGained(), (o) => { return o != 0xff; });
+                if (Memory.ReadByte(MiscAddrs.RubySlotAddr) != 0xff)
+                    RubyGained();
             }
-            else ruby = true;
-
-            if (Memory.ReadByte(UngagaSlotAddr) == 0xff)
+            else if (!ungaga)
             {
-                if (Options.Goal >= (int) Towns.Muska + 1)
-                    Memory.MonitorAddressForAction<Byte>(UngagaSlotAddr, () => UngagaGained(), (o) => { return o != 0xff; });
+                if (Memory.ReadByte(MiscAddrs.UngagaSlotAddr) != 0xff)
+                    UngagaGained();
             }
-            else ungaga = true;
-
-            if (Memory.ReadByte(OsmondSlotAddr) == 0xff)
+            else if (!osmond)
             {
-                if (Options.Goal >= (int)Towns.Factory + 1)
-                    Memory.MonitorAddressForAction<Byte>(OsmondSlotAddr, () => OsmondGained(), (o) => { return o != 0xff; });
+                if (Memory.ReadByte(MiscAddrs.OsmondSlotAddr) != 0xff)
+                    OsmondGained();
             }
-            else osmond = true;
         }
 
         #region CharUnlocks
@@ -99,9 +93,9 @@ namespace DC1AP.Mem
                 Memory.WriteByte(MiscAddrs.MapFlagAddr, 0x01);
 
                 Weapons.GiveCharWeapon((int)Towns.Norune + 1);
+                if (Options.MiracleSanity)
+                    InventoryMgmt.VerifyItems();
             }
-            else
-                Memory.MonitorAddressForAction<Byte>(XiaoSlotAddr, () => XiaoGained(), (o) => { return o != 0xff; });
 
         }
 
@@ -121,9 +115,9 @@ namespace DC1AP.Mem
                 }
 
                 Weapons.GiveCharWeapon((int)Towns.Matataki + 1);
+                if (Options.MiracleSanity)
+                    InventoryMgmt.VerifyItems();
             }
-            else
-                Memory.MonitorAddressForAction<Byte>(GoroSlotAddr, () => GoroGained(), (o) => { return o != 0xff; });
         }
 
         private static void RubyGained()
@@ -144,9 +138,9 @@ namespace DC1AP.Mem
                 }
 
                 Weapons.GiveCharWeapon((int)Towns.Queens + 1);
+                if (Options.MiracleSanity)
+                    InventoryMgmt.VerifyItems();
             }
-            else
-                Memory.MonitorAddressForAction<Byte>(RubySlotAddr, () => RubyGained(), (o) => { return o != 0xff; });
         }
 
         private static void UngagaGained()
@@ -166,9 +160,9 @@ namespace DC1AP.Mem
                 }
 
                 Weapons.GiveCharWeapon((int)Towns.Muska + 1);
+                if (Options.MiracleSanity)
+                    InventoryMgmt.VerifyItems();
             }
-            else
-                Memory.MonitorAddressForAction<Byte>(UngagaSlotAddr, () => UngagaGained(), (o) => { return o != 0xff; });
         }
 
         private static void OsmondGained()
@@ -187,9 +181,9 @@ namespace DC1AP.Mem
                 }
 
                 Weapons.GiveCharWeapon((int)Towns.Factory + 1);
+                if (Options.MiracleSanity)
+                    InventoryMgmt.VerifyItems();
             }
-            else
-                Memory.MonitorAddressForAction<Byte>(OsmondSlotAddr, () => OsmondGained(), (o) => { return o != 0xff; });
         }
         #endregion
     }

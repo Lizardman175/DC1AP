@@ -2,6 +2,8 @@ using Archipelago.Core.Util;
 using DC1AP.Constants;
 using DC1AP.Mem;
 using DC1AP.Threads;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DC1AP.Georama
 {
@@ -44,7 +46,6 @@ namespace DC1AP.Georama
 
         private bool HasBuilding()
         {
-            // TODO junk data might make this not evaluate to true? Leaving TODO until all buildings tested.
             return Memory.ReadShort(BuildingCountAddr) != 0;
         }
 
@@ -135,7 +136,6 @@ namespace DC1AP.Georama
             {
                 Memory.Write(BaseAddr, buildingValue);
                 ItemQueue.AddMsg(msg);
-                OpenMem.IncIndex();
             }
         }
 
@@ -161,16 +161,7 @@ namespace DC1AP.Georama
         /// <returns></returns>
         private int CountThisBuilding()
         {
-            int count = 0;
-            for (int i = 0; i < App.Client.GameState.ReceivedItems.Count; i++)
-            {
-                if (App.Client.GameState.ReceivedItems[i].Id == ApId)
-                {
-                    count++;
-                }
-            }
-
-            return count;
+            return GeoInvMgmt.buildingCounts.ContainsKey(ApId) ? GeoInvMgmt.buildingCounts[ApId] : 0;
         }
 
         #region TownBuilding

@@ -11,6 +11,13 @@ namespace DC1AP.Constants
         Castle
     }
 
+    internal enum AttachMultConfig
+    {
+        None = 1,
+        MwOnly = 2,
+        All = 3
+    }
+
     internal enum AutobuildFlags
     {
         Off = 0,
@@ -58,10 +65,27 @@ namespace DC1AP.Constants
         internal const short MatatakiBridgeRiverCount = 6;
         internal const short NoruneBridgeRiverCount = 3;
 
-        // TODO temp until we have all item IDs
         internal const short SunSphereItemId = 0x0F;
         internal const short MoonOrbItemId = 0xF2;
 
-        internal static int[] FactoryEventSkips = [3, 4, 9, 10];
+        // Building indexes for the 4 pilots to skip their cutscenes
+        internal static readonly int[] FactoryEventSkips = [3, 4, 9, 10];
+
+        internal const int AttachIdBase = 971_112_000;
+        internal const int ItemIdBase = 971_111_000;
+
+        internal const long MoonOrbId = 971_111_242;
+        internal const long FeatherId = 971_111_235;
+
+        internal const long FishCandyId = 971_111_137;
+        internal const long GrassCakeId = 971_111_138;
+        internal const long ParfaitId = 971_111_139;
+        internal const long JerkyId = 971_111_140;
+        internal const long CookieId = 971_111_141;
+
+        internal const long FruitOfEdenId = 971_111_180;
+        internal const long GourdId = 971_111_182;
+
+        internal const long HornedKeyChestId = 971_111_063;
     }
 }

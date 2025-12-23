@@ -6,6 +6,11 @@
     "BuildingId": 0,
     "Items": [
       {
+        "Name": "Player's Keg",
+        "ItemId": 18,
+        "SlotId": 0
+      },
+      {
         "Name": "Player's Storage",
         "ItemId": 20,
         "SlotId": 2
@@ -19,11 +24,6 @@
         "Name": "Player's Llama",
         "ItemId": 40,
         "SlotId": 4
-      },
-      {
-        "Name": "Player's Keg",
-        "ItemId": 18,
-        "SlotId": 0
       },
       {
         "Name": "Player's Chimney",
@@ -181,7 +181,7 @@
         "SlotId": 1
       },
       {
-        "Name": "Wheels",
+        "Name": "Paige's Wheels",
         "ItemId": 7,
         "SlotId": 3
       }
@@ -211,7 +211,7 @@
         "SlotId": 2
       },
       {
-        "Name": "Candy Box",
+        "Name": "Claude's Candy Box",
         "ItemId": 9,
         "SlotId": 4
       },
@@ -316,14 +316,14 @@
         "SlotId": 1
       },
       {
-        "Name": "Alnet",
-        "ItemId": 48,
-        "SlotId": 3
-      },
-      {
         "Name": "Carl",
         "ItemId": 47,
         "SlotId": 4
+      },
+      {
+        "Name": "Alnet",
+        "ItemId": 48,
+        "SlotId": 3
       },
       {
         "Name": "Alnet's Llama",

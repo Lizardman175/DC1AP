@@ -1,6 +1,10 @@
+using Archipelago.Core.Util;
 using DC1AP.Constants;
 using DC1AP.Threads;
 using Serilog;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 
 namespace DC1AP.Georama
@@ -9,6 +13,8 @@ namespace DC1AP.Georama
     {
         private static readonly List<string> buildingFiles = ["NoruneBuildings.json", "MatatakiBuildings.json", "QueensBuildings.json",
                                                               "MuskaBuildings.json",  "FactoryBuildings.json",  "CastleBuildings.json"];
+
+        internal static readonly Dictionary<long, int> buildingCounts = [];
 
         /// <summary>
         /// Reads the .json for the building data
@@ -54,7 +60,7 @@ namespace DC1AP.Georama
             VerifyItems();
         }
 
-        internal static bool GiveItem(long itemId)
+        internal static bool GiveGeorama(long itemId)
         {
             bool added = false;
 
@@ -65,14 +71,13 @@ namespace DC1AP.Georama
 
                 foreach (GeoBuilding building in list)
                 {
-                    // TODO test if the player has the item in question first in the event of syncing with the server.
                     if (building.ApId == itemId)
                     {
+                        IncGeoCount(itemId);
                         ItemQueue.AddGeorama(building);
                         added = true;
+                        break;
                     }
-
-                    if (added) break;
                 }
 
                 if (added) break;
@@ -92,6 +97,32 @@ namespace DC1AP.Georama
                 foreach (GeoBuilding building in buildingList)
                     building.CheckItems();
             }
+        }
+
+        internal static bool RemoveGeoItem(short itemId, int dungeon)
+        {
+            bool success = false;
+            uint addr = GeoAddrs.TownGeoInv[dungeon];
+
+            for (int i = 0; i < MiscConstants.GeoMaxItemCount; i++)
+            {
+                short id = Memory.ReadShort(addr);
+                if (id == itemId)
+                {
+                    Memory.Write(addr, (short)-1);
+                    success = true;
+                    break;
+                }
+                addr += sizeof(short);
+            }
+
+            return success;
+        }
+
+        internal static void IncGeoCount(long itemId)
+        {
+            buildingCounts.TryGetValue(itemId, out int value);
+            buildingCounts[itemId] = value + 1;
         }
     }
 }

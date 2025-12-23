@@ -25,17 +25,31 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 using Archipelago.Core.Util;
+using Archipelago.Core.Util.Overlay;
 using DC1AP.Constants;
 using System.Text;
+using Color = Archipelago.Core.Util.Overlay.Color;
 
 namespace DC1AP.Mem
 {
-    /// <summary>
-    /// Adapted from Dark Cloud Enhanced project Dayuppy.cs:DisplayMessageProcess()
-    /// </summary>
     public class MessageFuncs
     {
+        internal static void InitOverlay()
+        {
+            var overlayService = new WindowsOverlayService(new OverlayOptions
+            {
+                FontSize = 24,
+                XOffset = 50,
+                YOffset = 150,
+                FadeDuration = 5.0f,
+                DefaultTextColor = Color.White
+            });
+            
+            App.Client.IntializeOverlayService(overlayService);
+        }
+
         /// 
+        /// Adapted from Dark Cloud Enhanced project Dayuppy.cs:DisplayMessageProcess()
         /// <param name="message"></param>
         /// <param name="height"></param>
         /// <param name="width"></param>

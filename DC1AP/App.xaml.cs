@@ -1,8 +1,8 @@
 ﻿/*
  * MIT License
-
+ *
  * Copyright (c) 2025 ArsonAssassin
-
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -23,55 +23,87 @@
  */
 using Archipelago.Core;
 using Archipelago.Core.GameClients;
-using Archipelago.Core.MauiGUI;
-using Archipelago.Core.MauiGUI.Models;
-using Archipelago.Core.MauiGUI.ViewModels;
 using Archipelago.Core.Models;
 using Archipelago.Core.Util;
 using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using Archipelago.MultiClient.Net.MessageLog.Messages;
+using Archipelago.MultiClient.Net.Models;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Markup.Xaml;
+using Avalonia.Media;
 using DC1AP.Constants;
 using DC1AP.Georama;
 using DC1AP.Items;
 using DC1AP.Mem;
+using DC1AP.Models;
 using DC1AP.Threads;
+using DC1AP.ViewModels;
+using DC1AP.Views;
 using Newtonsoft.Json;
+using ReactiveUI;
 using Serilog;
+using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reactive.Concurrency;
+using System.Threading;
+using System.Threading.Tasks;
+using Color = Avalonia.Media.Color;
 
-// Adapted from github.com/ArsonAssassin/Archipelago-Maui-Template
+// Adapted from github.com/ArsonAssassin/Archipelago-Avalonia-Template
 namespace DC1AP
 {
     public partial class App : Application
     {
         internal static ArchipelagoClient Client { get; set; }
 
-        private static MainPageViewModel Context;
+        private static MainWindowViewModel Context;
         private static readonly object _lockObject = new();
 
-        private static readonly ConcurrentQueue<Archipelago.Core.Models.Location> locationQueue = new();
+        private static readonly ConcurrentQueue<Location> locationQueue = new();
 
         //private DeathLinkService _deathlinkService;
         private Thread queueThread;
         private Thread helperThread;
         private Thread reconnectThread;
         private GenericGameClient? ps2Client;
+        private bool diviningHouseDone = false;
+        private bool cathedralDone = false;
 
-        public App()
+        public override void Initialize()
         {
-            InitializeComponent();
+            AvaloniaXamlLoader.Load(this);
 
-            Context = new MainPageViewModel();
+            Context = new MainWindowViewModel() { ConnectButtonEnabled = true };
             Context.ConnectClicked += Context_ConnectClicked;
-            Context.CommandReceived += (e, a) =>
-            {
-                Client?.SendMessage(a.Command);
-            };
+            Context.CommandReceived += (_, a) => Client?.SendMessage(a.Command);
+
             // TODO save last used host/slot?
             Context.Host = "localhost:38281";
             //Context.Slot = "DC1";
-            MainPage = new MainPage(Context);
-            Context.ConnectButtonEnabled = true;
+
+            InventoryMgmt.InitInventoryMgmt();
+        }
+
+        public override void OnFrameworkInitializationCompleted()
+        {
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.MainWindow = new MainWindow
+                {
+                    DataContext = Context
+                };
+            }
+            else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
+            {
+                singleViewPlatform.MainView = new MainWindow
+                {
+                    DataContext = Context
+                };
+            }
+            base.OnFrameworkInitializationCompleted();
         }
 
         private async void Context_ConnectClicked(object? sender, ConnectClickedEventArgs e)
@@ -154,8 +186,6 @@ namespace DC1AP
             //    // TODO listen for player death
             //}
 
-            WatchGoal();
-
             if (queueThread == null)
             {
                 queueThread = new Thread(new ParameterizedThreadStart(ItemQueue.ThreadLoop))
@@ -175,6 +205,20 @@ namespace DC1AP
             }
 
             Context.ConnectButtonEnabled = true;
+
+            ReadGameState();
+            MessageFuncs.InitOverlay();
+        }
+
+        private static void ReadGameState()
+        {
+            foreach (ItemInfo item in Client.CurrentSession.Items.AllItemsReceived)
+            {
+                long id = item.ItemId;
+
+                if (id < MiscConstants.ItemIdBase)
+                    GeoInvMgmt.IncGeoCount(id);
+            }
         }
 
         #region PS2
@@ -214,17 +258,14 @@ namespace DC1AP
 
         private void PlayerReady(string slotName)
         {
+            Thread.Sleep(50);
             string currSlot = OpenMem.GetSlotName();
 
             // First load for this save, so do extra stuff
             if (currSlot == "")
             {
-                // Store player's slot name into memcard
-                OpenMem.SetSlotName(slotName);
-                OpenMem.SetIndex(0);
-
+                OpenMem.SetSlotData(slotName);
                 EventMasks.InitMasks();
-
                 Weapons.GiveCharWeapon(0);
                 InventoryMgmt.GiveFreeFeather();
             }
@@ -234,33 +275,68 @@ namespace DC1AP
                 PlayerState.ValidGameState = false;
                 return;
             }
+            else if (!OpenMem.TestRoomSeed())
+            {
+                PlayerState.ValidGameState = false;
+                return;
+            }
 
+            //InventoryMgmt.CheckAttachments(true);
+            MiracleChestMgmt.Init();
             GeoInvMgmt.InitBuildings();
-
             CharFuncs.Init();
+            Enemies.MultiplyABS();
+            InventoryMgmt.MultiplyAttachments();
 
             // Check for any missing items after a connect/reconnect
             ItemQueue.checkItems = true;
+
             // Skip needing Yaya to dance on your head if doing Saia once the building event viewed flag is set.
             if (Options.Goal >= 3 && !EventMasks.YayaDone())
             {
-                Memory.MonitorAddressForAction<short>(GeoAddrs.YayaBldEventFlag, EventMasks.SkipYaya, (o) => { return o >= 1; });
+                diviningHouseDone = false;
+                cathedralDone = false;
+
+                Memory.MonitorAddressForAction<short>(GeoAddrs.YayaBldEventFlag, AckDivHouse, (o) => { return o >= 1; });
+                Memory.MonitorAddressForAction<short>(GeoAddrs.CathedralBldEventFlag, AckCathedral, (o) => { return o >= 1; });
             }
 
             PlayerState.ValidGameState = true;
+
+            new Thread(new ParameterizedThreadStart(MiracleChestMgmt.DoLoop))
+            {
+                IsBackground = true
+            }.Start();
+
             // Watch for the player to reset the game, then change the valid state flag and ready up to connect again.
-            Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerNotReady(slotName), (o) => { return o <= 1; });
+            Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerNotReady(slotName), (o) => { return o <= 1 || o > 3; });
+            WatchGoal();
         }
 
         private void PlayerNotReady(string slotName)
         {
             PlayerState.ValidGameState = false;
-            Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerReady(slotName), (o) => { return o > 1; });
+            ItemQueue.ClearQueues();
+            Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerReady(slotName), (o) => { return o == 2 || o == 3; });
+        }
+
+        private void AckDivHouse()
+        {
+            diviningHouseDone = true;
+            if (cathedralDone)
+                EventMasks.SkipYaya();
+        }
+
+        private void AckCathedral()
+        {
+            cathedralDone = true;
+            if (diviningHouseDone)
+                EventMasks.SkipYaya();
         }
 
         internal static async Task SendLocation(int locId)
         {
-            Archipelago.Core.Models.Location loc = new()
+            Location loc = new()
             {
                 Id = locId
             };
@@ -269,7 +345,6 @@ namespace DC1AP
                 App.Client.SendLocation(loc);
             else
                 locationQueue.Enqueue(loc);
-
         }
 
         private static void WatchGoal()
@@ -375,41 +450,39 @@ namespace DC1AP
 
         private void _deathlinkService_OnDeathLinkReceived(DeathLink deathLink)
         {
-            // TODO kill player :(
+            // TODO kill player x_x
         }
 
         private static void Client_ItemReceived(object? sender, ItemReceivedEventArgs e)
         {
-            LogItem(e.Item);
-
-            // TODO miracle chests: test the item id and add inventory item instead of geo
-            GeoInvMgmt.GiveItem(e.Item.Id);
+            long itemId = e.Item.Id;
+            if (itemId >= MiscConstants.AttachIdBase)
+            {
+                InventoryMgmt.IncAttachCount(itemId);
+                ItemQueue.AddAttachment(itemId);
+            }
+            else if (itemId >= MiscConstants.ItemIdBase)
+            {
+                if (InventoryMgmt.CanGiveItem(itemId))
+                {
+                    InventoryMgmt.IncItemCount(itemId);
+                    ItemQueue.AddItem(itemId);
+                }
+            }
+            else
+            {
+                GeoInvMgmt.GiveGeorama(itemId);
+            }
         }
 
         private void Client_MessageReceived(object? sender, MessageReceivedEventArgs e)
         {
             if (e.Message.Parts.Any(x => x.Text == "[Hint]: "))
             {
-                LogHint(e.Message);
+                //LogHint(e.Message);
+                // TODO fix hint logging with Avalonia
             }
             Log.Logger.Information(JsonConvert.SerializeObject(e.Message));
-        }
-
-        private static void LogItem(Item item)
-        {
-            var messageToLog = new LogListItem(
-            [
-                new TextSpan(){Text = $"[{item.Id.ToString()}] -", TextColor = Color.FromRgb(255, 255, 255)},
-                new TextSpan(){Text = $"{item.Name}", TextColor = Color.FromRgb(200, 255, 200)},
-                //new TextSpan(){Text = $"x{item.Quantity.ToString()}", TextColor = Color.FromRgb(200, 255, 200)}
-            ]);
-            lock (_lockObject)
-            {
-                Application.Current.Dispatcher.DispatchAsync(() =>
-                {
-                    Context.ItemList.Add(messageToLog);
-                });
-            }
         }
 
         private static void LogHint(LogMessage message)
@@ -420,14 +493,14 @@ namespace DC1AP
             {
                 return; //Hint already in list
             }
-            List<TextSpan> spans = [];
+            List<TextSpan> spans = new List<TextSpan>();
             foreach (var part in message.Parts)
             {
-                spans.Add(new TextSpan() { Text = part.Text, TextColor = Color.FromRgb(part.Color.R, part.Color.G, part.Color.B) });
+                spans.Add(new TextSpan() { Text = part.Text, TextColor = new SolidColorBrush(Color.FromRgb(part.Color.R, part.Color.G, part.Color.B)) });
             }
             lock (_lockObject)
             {
-                Application.Current.Dispatcher.DispatchAsync(() =>
+                RxApp.MainThreadScheduler.Schedule(() =>
                 {
                     Context.HintList.Add(new LogListItem(spans));
                 });
@@ -443,18 +516,6 @@ namespace DC1AP
         private static void OnDisconnected(object? sender, EventArgs? args)
         {
             Log.Logger.Information("Disconnected from Archipelago");
-        }
-
-        protected override Window CreateWindow(IActivationState activationState)
-        {
-            var window = base.CreateWindow(activationState);
-            if (DeviceInfo.Current.Platform == DevicePlatform.WinUI)
-            {
-                window.Title = "Dark Cloud 1 Archipelago Randomizer";
-            }
-            window.Width = 600;
-
-            return window;
         }
 
         private async void Reconnect(object? parameters)
@@ -482,7 +543,7 @@ namespace DC1AP
                         //    _deathlinkService = null;
                         //}
                         Client.CancelMonitors();
-                        Client.Dispose();
+                        //Client.Dispose();
                     }
 
                     // Connect to archipelago server
@@ -510,7 +571,7 @@ namespace DC1AP
                 }
                 else
                 {
-                    while (locationQueue.TryDequeue(out Archipelago.Core.Models.Location? loc))
+                    while (locationQueue.TryDequeue(out Location? loc))
                     {
                         Client.SendLocation(loc);
                     }

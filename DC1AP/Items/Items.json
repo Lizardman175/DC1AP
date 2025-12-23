@@ -1,0 +1,506 @@
+{
+  "971111101": {
+    "Name": "Pocket",
+    "ItemID": 179,
+    "ValueMin": 10,
+    "ValueMax": 10
+  },
+  "971111132": {
+    "Name": "Anti-Freeze Amulet",
+    "ItemID": 132,
+    "ValueMin": 3,
+    "ValueMax": 8
+  },
+  "971111133": {
+    "Name": "Anti-Curse Amulet",
+    "ItemID": 133,
+    "ValueMin": 3,
+    "ValueMax": 8
+  },
+  "971111134": {
+    "Name": "Anti-Goo Amulet",
+    "ItemID": 134,
+    "ValueMin": 3,
+    "ValueMax": 8
+  },
+  "971111135": {
+    "Name": "Antidote Amulet",
+    "ItemID": 135,
+    "ValueMin": 6,
+    "ValueMax": 8
+  },
+  "971111136": {
+    "Name": "Fluffy Doughnut",
+    "ItemID": 136,
+    "ValueMin": 5,
+    "ValueMax": 5
+  },
+  "971111137": {
+    "Name": "Fish Candy",
+    "ItemID": 137,
+    "ValueMin": 5,
+    "ValueMax": 5
+  },
+  "971111138": {
+    "Name": "Grass Cake",
+    "ItemID": 138,
+    "ValueMin": 5,
+    "ValueMax": 5
+  },
+  "971111139": {
+    "Name": "Witch Parfait",
+    "ItemID": 139,
+    "ValueMin": 5,
+    "ValueMax": 5
+  },
+  "971111140": {
+    "Name": "Scorpion Jerky",
+    "ItemID": 140,
+    "ValueMin": 5,
+    "ValueMax": 5
+  },
+  "971111141": {
+    "Name": "Carrot Cookie",
+    "ItemID": 141,
+    "ValueMin": 5,
+    "ValueMax": 5
+  },
+  "971111145": {
+    "Name": "Regular Water",
+    "ItemID": 145,
+    "ValueMin": 30,
+    "ValueMax": 30
+  },
+  "971111146": {
+    "Name": "Tasty Water",
+    "ItemID": 146,
+    "ValueMin": 50,
+    "ValueMax": 50
+  },
+  "971111147": {
+    "Name": "Premium Water",
+    "ItemID": 147,
+    "ValueMin": 100,
+    "ValueMax": 100
+  },
+  "971111148": {
+    "Name": "Bread",
+    "ItemID": 148,
+    "ValueMin": 50,
+    "ValueMax": 50
+  },
+  "971111149": {
+    "Name": "Premium Chicken",
+    "ItemID": 149,
+    "ValueMin": 200,
+    "ValueMax": 200
+  },
+  "971111150": {
+    "Name": "Stamina Drink",
+    "ItemID": 150,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111151": {
+    "Name": "Antidote Drink",
+    "ItemID": 151,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111152": {
+    "Name": "Holy Water",
+    "ItemID": 152,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111153": {
+    "Name": "Soap",
+    "ItemID": 153,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111154": {
+    "Name": "Mighty Healing",
+    "ItemID": 154,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111155": {
+    "Name": "Cheese",
+    "ItemID": 155,
+    "ValueMin": 80,
+    "ValueMax": 80
+  },
+  "971111159": {
+    "Name": "Bomb",
+    "ItemID": 159,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111160": {
+    "Name": "Stone",
+    "ItemID": 160,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111161": {
+    "Name": "Fire Gem",
+    "ItemID": 161,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111162": {
+    "Name": "Ice Gem",
+    "ItemID": 162,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111163": {
+    "Name": "Thunder Gem",
+    "ItemID": 163,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111164": {
+    "Name": "Wind Gem",
+    "ItemID": 164,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111165": {
+    "Name": "Holy Gem",
+    "ItemID": 165,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111166": {
+    "Name": "Throbbing Cherry",
+    "ItemID": 166,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111167": {
+    "Name": "Gooey Peach",
+    "ItemID": 167,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111168": {
+    "Name": "Bomb Nuts",
+    "ItemID": 168,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111169": {
+    "Name": "Poisonous Apple",
+    "ItemID": 169,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111170": {
+    "Name": "Mellow Banana",
+    "ItemID": 170,
+    "ValueMin": 200,
+    "ValueMax": 200
+  },
+  "971111174": {
+    "Name": "Stand-in Powder",
+    "ItemID": 174,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111175": {
+    "Name": "Escape Powder",
+    "ItemID": 175,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111176": {
+    "Name": "Revival Powder",
+    "ItemID": 176,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111177": {
+    "Name": "Repair Powder",
+    "ItemID": 177,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111178": {
+    "Name": "Powerup Powder",
+    "ItemID": 178,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111180": {
+    "Name": "Fruit of Eden",
+    "ItemID": 180,
+    "ValueMin": 10,
+    "ValueMax": 10
+  },
+  "971111181": {
+    "Name": "Treasure Chest Key",
+    "ItemID": 181,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111182": {
+    "Name": "Gourd",
+    "ItemID": 182,
+    "ValueMin": 10,
+    "ValueMax": 10
+  },
+  "971111183": {
+    "Name": "Auto-repair Powder",
+    "ItemID": 183,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111185": {
+    "Name": "Fishing Rod",
+    "ItemID": 185,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111186": {
+    "Name": "Carrot",
+    "ItemID": 186,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111187": {
+    "Name": "Potato Cake",
+    "ItemID": 187,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111188": {
+    "Name": "Minon",
+    "ItemID": 188,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111189": {
+    "Name": "Battan",
+    "ItemID": 189,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111190": {
+    "Name": "Petite Fish",
+    "ItemID": 190,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111192": {
+    "Name": "Gold Bullion",
+    "ItemID": 192,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111193": {
+    "Name": "Evy",
+    "ItemID": 193,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111197": {
+    "Name": "Mimi",
+    "ItemID": 197,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111199": {
+    "Name": "Prickly",
+    "ItemID": 199,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111200": {
+    "Name": "Candy",
+    "ItemID": 200,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111207": {
+    "Name": "Horned Key",
+    "ItemID": 207,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111208": {
+    "Name": "Moongrass Seed",
+    "ItemID": 208,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111209": {
+    "Name": "Musicbox Key",
+    "ItemID": 209,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111210": {
+    "Name": "Sun Signet",
+    "ItemID": 210,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111211": {
+    "Name": "Moon Signet",
+    "ItemID": 211,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111212": {
+    "Name": "Admission Ticket",
+    "ItemID": 212,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111217": {
+    "Name": "Mustache Key",
+    "ItemID": 217,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111222": {
+    "Name": "Silver Key",
+    "ItemID": 222,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111224": {
+    "Name": "Tram Oil",
+    "ItemID": 224,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111225": {
+    "Name": "Sundew",
+    "ItemID": 225,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111226": {
+    "Name": "Flapping Fish",
+    "ItemID": 226,
+    "ValueMin": 600,
+    "ValueMax": 600
+  },
+  "971111227": {
+    "Name": "Rotten Fish",
+    "ItemID": 227,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111228": {
+    "Name": "Secret Path Key",
+    "ItemID": 228,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111229": {
+    "Name": "Bravery Launch",
+    "ItemID": 229,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111230": {
+    "Name": "Flapping Duster",
+    "ItemID": 230,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111231": {
+    "Name": "Crystal Eyeball",
+    "ItemID": 231,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111235": {
+    "Name": "Dran's Feather",
+    "ItemID": 235,
+    "ValueMin": 12780,
+    "ValueMax": 20940
+  },
+  "971111236": {
+    "Name": "Cave Key",
+    "ItemID": 236,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111237": {
+    "Name": "Changing Potion",
+    "ItemID": 237,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111239": {
+    "Name": "Bone Pendant",
+    "ItemID": 239,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111240": {
+    "Name": "Oddtone Flute",
+    "ItemID": 240,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111242": {
+    "Name": "Moon Orb",
+    "ItemID": 242,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111244": {
+    "Name": "Search Warrant",
+    "ItemID": 244,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111245": {
+    "Name": "Ice Block",
+    "ItemID": 245,
+    "ValueMin": 200,
+    "ValueMax": 200
+  },
+  "971111246": {
+    "Name": "Small Ice",
+    "ItemID": 246,
+    "ValueMin": 200,
+    "ValueMax": 200
+  },
+  "971111247": {
+    "Name": "Tiny Ice",
+    "ItemID": 247,
+    "ValueMin": 200,
+    "ValueMax": 200
+  },
+  "971111249": {
+    "Name": "Hunter's Earring",
+    "ItemID": 249,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111250": {
+    "Name": "Ointment Leaf",
+    "ItemID": 250,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111251": {
+    "Name": "Foundation",
+    "ItemID": 251,
+    "ValueMin": 0,
+    "ValueMax": 0
+  },
+  "971111252": {
+    "Name": "Clay Doll",
+    "ItemID": 252,
+    "ValueMin": 0,
+    "ValueMax": 0
+  }
+}

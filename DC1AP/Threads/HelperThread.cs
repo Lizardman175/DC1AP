@@ -1,6 +1,8 @@
 ﻿using Archipelago.Core.Util;
 using DC1AP.Constants;
 using DC1AP.Mem;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace DC1AP.Threads
 {
@@ -13,9 +15,9 @@ namespace DC1AP.Threads
         private const int CatFloor = 7;
         private const int EmptyFloor1 = 3;
         private const int EmptyFloor2 = 10;
-        private const short GarbageGeo = 0x21fa;  // Garbage value of 0x2222 - 0x0028, builtin offset for items vs atla loot table
+        private const short GarbageGeo = 0x21FA;  // Garbage value of 0x2222 - 0x0028, builtin offset for items vs atla loot table
 
-        private static object _lock = new();
+        private static readonly object _lock = new();
         private static List<Atla>[] atlaMap = new List<Atla>[6];
         private static bool[] dungeonsMapped = [false, false, false, false, false, false];
 
@@ -71,11 +73,6 @@ namespace DC1AP.Threads
         {
             runThread = true;
 
-            // TODO not sure if these are useful yet.  If so, move them out of the method and add reset to Startup()
-            int mostRecentFloor = -1;
-            int mostRecentDungeon = -1;
-            bool isBackFloor = false;
-
             Startup();
 
             while (runThread)
@@ -97,7 +94,6 @@ namespace DC1AP.Threads
                     {
                         byte curDungeon = Memory.ReadByte(MiscAddrs.CurDungeon);
                         byte curFloor = Memory.ReadByte(MiscAddrs.CurFloor);
-                        bool curBackFloor = Memory.ReadByte(MiscAddrs.BackFloorFlag) != 0;
 
                         // Clear out junk georama pieces if collected
                         // TODO could probably be a reaction to the player looting atla?
@@ -114,26 +110,14 @@ namespace DC1AP.Threads
 
                         // Hide the stray cat atla if present.  There is special code around it in game so we can't use it.
                         if (curDungeon == 0 && curFloor == CatFloor && Memory.ReadInt(GeoAddrs.AtlaCollectedFlag) != 0)
-                        {
                             Memory.Write(GeoAddrs.AtlaCollectedFlag, 0);
-                        }
-
-                        if (isBackFloor != curBackFloor || curFloor != mostRecentFloor)
-                        {
-                            Enemies.MultiplyABS();
-                        }
-
-                        mostRecentDungeon = curDungeon;
-                        mostRecentFloor = curFloor;
-                        isBackFloor = curBackFloor;
                     }
-                    // Reset dungeon values if player is not in a dungeon.
-                    else
+                    else if (PlayerState.IsPlayerInTown())
                     {
-                        mostRecentFloor = -1;
-                        mostRecentDungeon = -1;
-                        isBackFloor = false;
+                        CharFuncs.CheckForChars();
                     }
+                    
+                    //InventoryMgmt.CheckAttachments(false);
                 }
 
                 Thread.Sleep(500);
@@ -156,12 +140,12 @@ namespace DC1AP.Threads
                         if (!atla.Collected && Memory.ReadInt(atla.Address) == MiscConstants.AtlaClaimed)
                         {
                             atla.Collected = true;
-                            App.SendLocation(atla.LocationId);
+
+                            if (!App.Client.CurrentSession.Locations.AllLocationsChecked.Contains(atla.LocationId))
+                                App.SendLocation(atla.LocationId);
                         }
                         else
-                        {
                             CheckForCollectedAtla(atla);
-                        }
                     }
                 }
             }
@@ -191,8 +175,6 @@ namespace DC1AP.Threads
             }
         }
 
-        /// <summary>
-        /// </summary>
         private static void InitAtla()
         {
             for (int dun = 0; dun < Options.Goal; dun++)
@@ -224,7 +206,6 @@ namespace DC1AP.Threads
                 int atlaId = MiscConstants.BaseId + 101 + 1000 * (dun + 1);
                 List<Atla> dunAtla = [];
 
-                // TODO D6: make sure this behaves
                 for (int floor = 0; floor < MiscAddrs.FloorCountRear[dun]; floor++)
                 {
                     // Adjust value for back half of a dungeon
@@ -242,13 +223,10 @@ namespace DC1AP.Threads
                             {
                                 newAtla.Collected = true;
                                 if (!App.Client.CurrentSession.Locations.AllLocationsChecked.Contains(atlaId))
-                                {
                                     App.SendLocation(atlaId);
-                                }
                             }
 
                             dunAtla.Add(newAtla);
-
                             atlaId++;
                         }
                         // Place the stray cat's atla in the first available slot and remove it from floor 8. 3rd floor can't have atla for first dun
