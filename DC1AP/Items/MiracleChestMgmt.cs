@@ -56,7 +56,7 @@ namespace DC1AP.Items
                         uint.Parse(split[5].Remove(0, 2), System.Globalization.NumberStyles.HexNumber),
                         Byte.Parse(split[6].Remove(0, 2), System.Globalization.NumberStyles.HexNumber));
                     // Only track chests the player hasn't opened yet.
-                    if (!mc.CheckChest(false))
+                    if (!mc.CheckChest())
                         chests[townInt].Add(mc);
                 }
             }
@@ -68,8 +68,8 @@ namespace DC1AP.Items
         /// <param name="town"></param>
         internal static void CheckTown(Towns town)
         {
-            if (town < Towns.Castle)
-                chests[(int)town].RemoveAll(mc => mc.CheckChest(true));
+            if (town < Towns.Castle && PlayerState.PlayerMovableTown())
+                chests[(int)town].RemoveAll(mc => mc.CheckChest());
         }
 
         internal static void DoLoop(object? parameters)
