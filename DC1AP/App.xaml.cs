@@ -81,9 +81,9 @@ namespace DC1AP
             Context.CommandReceived += (_, a) => Client?.SendMessage(a.Command);
 
             // TODO save last used host/slot?
-            Context.Host = "localhost:38281";
+            //Context.Host = "localhost:38281";
             //Context.Slot = "DC1";
-
+            
             InventoryMgmt.InitInventoryMgmt();
         }
 
