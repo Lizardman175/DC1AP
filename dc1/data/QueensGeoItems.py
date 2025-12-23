@@ -66,9 +66,9 @@ def create_queens_atla(options: DarkCloudOptions, player: int) -> list["DarkClou
     """Create atla items for Norune Village based on option settings."""
     items = []
 
-    queens_required = required
-    queens_useful = useful
-    queens_filler = filler
+    queens_required = required.copy()
+    queens_useful = useful.copy()
+    queens_filler = filler.copy()
 
     if options.boss_goal == 3 or options.all_bosses:
         queens_required.extend(["Progressive Divining House", "Progressive Divining House", "Progressive Divining House", "Progressive Divining House"])

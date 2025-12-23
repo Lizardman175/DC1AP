@@ -44,7 +44,7 @@
 		<EmbeddedResource Include="Items\miracle_locations.csv" />
 	    <AvaloniaResource Include="App.xaml" />
 	</ItemGroup>
-
+	  
 	<ItemGroup>
 		<PackageReference Include="Archipelago.Core" Version="1.1.14" />
 		<PackageReference Include="Avalonia" Version="11.3.9" />

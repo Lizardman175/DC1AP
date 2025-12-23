@@ -63,10 +63,10 @@ filler = prisoner_ids + oasis_ids + totem_ids + misc_ids
 
 def create_muska_atla(options: DarkCloudOptions, player: int) -> List["DarkCloudItem"]:
     items = []
-
-    muska_required = required + mc_required
-    muska_useful = useful
-    muska_filler = filler
+    
+    muska_required = required.copy() + mc_required.copy()
+    muska_useful = useful.copy()
+    muska_filler = filler.copy()
 
     if options.boss_goal == 4 or options.all_bosses:
         muska_required.extend(chief_ids + zabo_ids + enga_ids + ["Progressive Zabo's House"])
@@ -98,3 +98,4 @@ def create_muska_atla(options: DarkCloudOptions, player: int) -> List["DarkCloud
     # print(len(items))
     # print (items)
     return items
+

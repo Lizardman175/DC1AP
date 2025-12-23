@@ -63,7 +63,6 @@ windmill_ids = ["Progressive Windmill 1", "Progressive Windmill 1", "Progressive
 other_ids = ["Norune Trees", "Norune Trees", "Norune Bridge", "Norune Road", "Norune Road", "Norune Road",
              "Norune Road", "Norune Road", "Norune River", "Norune River", "Norune River", "Norune River"]
 
-# TODO split these lists into 2 based on items that spawn from the first half of a dungeon or the second
 # Atla that give MCs by content quality (unless handled otherwise). If MC shuffle is on, these all need to be required
 mc_useful = []
 mc_filler = ["Progressive Macho's House", "Progressive Macho's House", "Progressive Claude's House",
@@ -87,29 +86,29 @@ def create_norune_atla(options: DarkCloudOptions, player: int) -> list["DarkClou
     """Create atla items for Norune Village based on option settings."""
     items = []
 
-    norune_required = required
-    norune_useful = useful
-    norune_filler = filler
+    norune_progression = required.copy()
+    norune_useful = useful.copy()
+    norune_filler = filler.copy()
 
     # Dran's windmill is only full required if Dran is required
     if options.all_bosses:
-        norune_required.extend(d_windmill_ids)
+        norune_progression.extend(d_windmill_ids)
     else:
         norune_useful.extend(d_windmill_ids)
 
     # Add miracle chests as progression if chests are shuffled
     if options.miracle_sanity:
-        norune_required.extend(mc_useful)
-        norune_required.extend(mc_useful_2)
-        norune_required.extend(mc_filler)
-        norune_required.extend(mc_filler_2)
+        norune_progression.extend(mc_useful)
+        norune_progression.extend(mc_useful_2)
+        norune_progression.extend(mc_filler)
+        norune_progression.extend(mc_filler_2)
     else:
         norune_useful.extend(mc_useful_2)
         norune_useful.extend(mc_useful)
         norune_filler.extend(mc_filler)
         norune_filler.extend(mc_filler_2)
-                 
-    for i in norune_required:
+
+    for i in norune_progression:
         items.append(DarkCloudItem(i, ItemClassification.progression, ids[i], player))
 
     for i in norune_useful:
@@ -118,4 +117,6 @@ def create_norune_atla(options: DarkCloudOptions, player: int) -> list["DarkClou
     for i in norune_filler:
         items.append(DarkCloudItem(i, ItemClassification.filler, ids[i], player))
 
+    # print(len(items))
+    # print (items)
     return items

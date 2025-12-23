@@ -18,5 +18,6 @@ Home of Dark Cloud 1 randomizer for Archipelago
 - Click the burger icon in the client, put in host/slot/password info and click connect. Make sure to connect before entering the dungeon!
 
 ## Things of note
+- Save states are not fully supported yet, make sure to use normal saves as well.
 - For multiworlds, consider forcing "Progressive Gaffer's Buggy" and "Progressive Paige's House" local.  These are logically required for Xiao so this will ensure they're always in the first half of the DBC so you don't have to wait for a shop.
 - Due to game mechanics, items can only be received in dungeons.  If you are waiting for an item from another world, hang out in a dungeon floor for a bit.

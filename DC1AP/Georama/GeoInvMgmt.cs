@@ -15,6 +15,8 @@ namespace DC1AP.Georama
 
         internal static readonly Dictionary<long, int> buildingCounts = [];
 
+        internal static readonly Dictionary<long, int> buildingCounts = [];
+
         /// <summary>
         /// Reads the .json for the building data
         /// </summary>

@@ -52,7 +52,7 @@ def create_factory_atla(options: DarkCloudOptions, player: int) -> List["DarkClo
 
   factory_required = []
   factory_useful = []
-  factory_filler = filler_ids
+  factory_filler = filler_ids.copy()
 
   if options.boss_goal == 5 or options.all_bosses:
     factory_required.extend(head_ids + ["Progressive Parts HD"])
@@ -82,3 +82,4 @@ def create_factory_atla(options: DarkCloudOptions, player: int) -> List["DarkClo
   # print(len(items))
   # print (items)
   return items
+
