@@ -2,9 +2,8 @@
 
 using Avalonia;
 using ReactiveUI.Avalonia;
-using DC1AP;
 
-namespace Archipelago.Core.AvaloniaGUI.Desktop;
+namespace DC1AP.Desktop;
 
 class Program
 {
