@@ -1,6 +1,5 @@
 ﻿using Archipelago.Core.Util;
 using DC1AP.Constants;
-using DC1AP.Items;
 using DC1AP.Mem;
 using System.Collections.Generic;
 using System.Threading;
@@ -112,6 +111,10 @@ namespace DC1AP.Threads
                         // Hide the stray cat atla if present.  There is special code around it in game so we can't use it.
                         if (curDungeon == 0 && curFloor == CatFloor && Memory.ReadInt(GeoAddrs.AtlaCollectedFlag) != 0)
                             Memory.Write(GeoAddrs.AtlaCollectedFlag, 0);
+                    }
+                    else if (PlayerState.IsPlayerInTown())
+                    {
+                        CharFuncs.CheckForChars();
                     }
                     
                     //InventoryMgmt.CheckAttachments(false);
