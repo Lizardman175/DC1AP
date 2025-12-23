@@ -1,25 +1,26 @@
 ﻿using Archipelago.Core.Util;
 using System;
-using System.Threading;
 
 namespace DC1AP.Mem
 {
     internal class Enemies
     {
-        private static uint EnemyOffset = 0x9C;
-        private static uint ABSOffset = 0x2C;
-        //private static uint EnemyIdOffset = 0x3C;
+        private const uint FirstEnemy = 0x0027FB00;  // Some text indicator of the enemy.  Probably a filename reference
+        private const char EnemyIndicator = 'e';  // First value of above address if an enemy we want to edit
 
-        private static uint FirstEnemy = 0x0027FB40;  // some text indicator of the enemy.  probably a filename reference
+        private const uint EnemyOffset = 0x9C;
+        private const uint ABSOffset = 0x6C;
+        //private const uint EnemyIdOffset = 0x7C;
         //2A34B4 (what is this?)
+
+        private const int FirstEnemyDefaultAbs = 5;
 
         internal static void MultiplyABS()
         {
-            float mult = Options.AbsMultiplier;
-
-            if (mult == 1)
+            if (Options.AbsMultiplier == 1.0f)
                 return;
 
+            bool checkIfMultiplied = true;
             uint enemyAddr = FirstEnemy;
             uint enemyAbsAddr = FirstEnemy + ABSOffset;
             byte enemyText;
@@ -28,12 +29,17 @@ namespace DC1AP.Mem
             {
                 enemyText = Memory.ReadByte(enemyAddr);
 
-                // Letter 'e'.
-                // Some enemy data begins with 'c' but isn't actually enemies? This might be skipping bosses
-                if (enemyText == 0x65)
+                if (enemyText == EnemyIndicator)
                 {
                     int tempAbs = Memory.ReadInt(enemyAbsAddr);
-                    tempAbs = (int)MathF.Round(mult * tempAbs);
+                    // Don't multiply if already multiplied
+                    if (checkIfMultiplied)
+                    {
+                        if (tempAbs != FirstEnemyDefaultAbs)
+                            return;
+                        checkIfMultiplied = false;
+                    }
+                    tempAbs = (int)MathF.Round(Options.AbsMultiplier * tempAbs);
                     Memory.Write(enemyAbsAddr, tempAbs);
                 }
 
