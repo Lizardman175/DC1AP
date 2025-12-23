@@ -26,7 +26,7 @@ Laura's House Outside chest (tricycle),971111025,0,xiao,Laura's House,0x01CE483A
 Laura's House Outside chest (behind),971111026,0,xiao,Laura's House,0x01CE483A,0x40,Gourd
 Paige's House Inside chest (cabin),971111027,0,,Paige's House,0x01CE483E,0x20,Sky Hunter
 Paige's House Inside chest (upstairs),971111028,0,,Paige's House,0x01CE483E,0x40,Stone Breaker
-Paige's House Inside chest (bed),971111029,0,xiao,Paige's House,0x01CE483E,0x10,Repair Powder
+Paige's House Inside chest (fireplace),971111029,0,xiao,Paige's House,0x01CE483E,0x10,Repair Powder
 Paige's House Outside chest (behind),971111030,0,,Paige's House,0x01CE483D,0x04,Beast Buster
 Paige's House Outside chest (wheel),971111031,0,xiao,Paige's House,0x01CE483D,0x08,Undead Buster
 Claude's House Inside chest (bed),971111032,0,,Claude's House,0x01CE4841,0x04,Speed+
@@ -87,7 +87,7 @@ Pao's House Outside chest (ground),971112021,1,,Pao's House,0x01CE4874,0x20,Plan
 Pao's House Outside chest (upstairs),971112022,1,,Pao's Stairway,0x01CE4874,0x10,Bread
 Pao's House Outside chest (laundry),971112023,1,,Pao's Stairway,0x01CE4874,0x40,Repair Powder
 Cacao's House Inside chest (wall shelf),971112024,1,,Cacao's Stairway,0x01CE4878,0x04,Cheese
-Cacao's House Inside chest (bench),971112025,1,,Cacao's Cabin,0x01CE4878,0x08,Plant Buster
+Cacao's House Inside chest (bench),971112025,1,goro,Cacao's Cabin,0x01CE4878,0x08,Plant Buster
 Cacao's House Outside chest (ground 1),971112026,1,,Cacao's House,0x01CE4877,0x01,Mage Slayer
 Cacao's House Outside chest (ground 2),971112027,1,,Cacao's House,0x01CE4877,0x02,Thunder
 Cacao's House Outside chest (laundry),971112028,1,goro,,0x01CE4877,0x04,Throbbing Cherry
@@ -96,7 +96,7 @@ Bunbuku's House Outside chest (behind),971112032,1,,Bunbuku's Stairway,0x01CE487
 Bunbuku's House Outside chest (barrels),971112033,1,goro,Bunbuku's House,0x01CE4879,0x20,Wind
 Kye's House Inside chest (sink),971112034,1,goro,Kye's Stairway,0x01CE487D,0x08,Cheese
 Kye's House Inside chest (upper bunk),971112035,1,,Kye's Stairway,0x01CE487D,0x10,Mimic Breaker
-Kye's House Inside chest (cabin),971112036,1,goro,Kye's Stairway,0x01CE487D,0x04,Fruit of Eden
+Kye's House Inside chest (cabin),971112036,1,goro,Kye's Cabin,0x01CE487D,0x04,Fruit of Eden
 Kye's House Outside chest (lower deck),971112037,1,goro,Kye's House,0x01CE487C,0x02,Ice
 Kye's House Outside chest (behind),971112038,1,goro,Kye's Stairway,0x01CE487C,0x01,Mage Slayer
 Baron's House Inside chest (table),971112039,1,,Baron's House,0x01CE4880,0x01,Soap
