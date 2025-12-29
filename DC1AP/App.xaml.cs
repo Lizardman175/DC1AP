@@ -309,7 +309,7 @@ namespace DC1AP
             }.Start();
 
             // Watch for the player to reset the game, then change the valid state flag and ready up to connect again.
-            Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerNotReady(slotName), (o) => { return o <= 1 || o > 3; });
+            Memory.MonitorAddressForAction<int>(MiscAddrs.TimeOfDayAddr, () => PlayerNotReady(slotName), (o) => { return o == 0; });
             WatchGoal();
         }
 
@@ -317,7 +317,7 @@ namespace DC1AP
         {
             PlayerState.ValidGameState = false;
             ItemQueue.ClearQueues();
-            Memory.MonitorAddressForAction<byte>(MiscAddrs.PlayerState, () => PlayerReady(slotName), (o) => { return o == 2 || o == 3; });
+            Memory.MonitorAddressForAction<int>(MiscAddrs.TimeOfDayAddr, () => PlayerReady(slotName), (o) => { return o != 0; });
         }
 
         private void AckDivHouse()
