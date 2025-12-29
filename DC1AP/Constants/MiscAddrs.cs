@@ -77,6 +77,8 @@ namespace DC1AP.Constants
         // Player state.  0 is main title, 1 is demo reel, 2 is town, 3 is dungeon
         internal const uint PlayerState = 0x002A2534;
 
+        internal const uint TimeOfDayAddr = 0x01CD4310;
+
         // 0x01 and 0x0C are in town/interior respectively.  Other values we don't care.
         internal const uint PlayerTownState = 0x002A1F50;
         internal const byte PlayerTownOverworld = 0x01;
