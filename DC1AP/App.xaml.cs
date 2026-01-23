@@ -72,6 +72,10 @@ namespace DC1AP
         private bool diviningHouseDone = false;
         private bool cathedralDone = false;
 
+        private DeathLinkService? _deathlinkService = null;
+        private bool deathFromDeathlink = false;
+        private string slotName = "";
+
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
@@ -120,11 +124,11 @@ namespace DC1AP
                 Client.ItemReceived -= Client_ItemReceived;
                 Client.MessageReceived -= Client_MessageReceived;
 
-                //if (_deathlinkService != null)
-                //{
-                //    _deathlinkService.OnDeathLinkReceived -= _deathlinkService_OnDeathLinkReceived;
-                //    _deathlinkService = null;
-                //}
+                if (_deathlinkService != null)
+                {
+                    _deathlinkService.OnDeathLinkReceived -= _deathlinkService_OnDeathLinkReceived;
+                    _deathlinkService = null;
+                }
                 Client.CancelMonitors();
             }
 
@@ -155,8 +159,19 @@ namespace DC1AP
                 return;
             }
 
+            slotName = e.Slot;
+
+            try
+            {
             // Pull out options from AP
             Options.ParseOptions(Client.Options);
+            }
+            catch (FormatException fe)
+            {
+                Log.Logger.Error("Failed to parse options");
+                Context.ConnectButtonEnabled = true;
+                return;
+            }
 
             if (reconnectThread == null)
             {
@@ -172,19 +187,19 @@ namespace DC1AP
             // Initialize things once the player is connected
             if (PlayerState.PlayerReady())
             {
-                PlayerReady(e.Slot);
+                PlayerReady(slotName);
             }
             else
             {
-                PlayerNotReady(e.Slot);
+                PlayerNotReady(slotName);
             }
 
-            //if (Client.Options.ContainsKey("EnableDeathlink") && (bool)Client.Options["EnableDeathlink"])
-            //{
-            //    var _deathlinkService = Client.EnableDeathLink();
-            //    _deathlinkService.OnDeathLinkReceived += _deathlinkService_OnDeathLinkReceived;
-            //    // TODO listen for player death
-            //}
+            if (Options.DeathLink)
+            {
+                _deathlinkService = Client.EnableDeathLink();
+                _deathlinkService.OnDeathLinkReceived += _deathlinkService_OnDeathLinkReceived;
+                ListenForDeath();
+            }
 
             if (queueThread == null)
             {
@@ -347,6 +362,42 @@ namespace DC1AP
                 locationQueue.Enqueue(loc);
         }
 
+        private void ListenForDeath()
+        {
+            for (int i = 0; i < MiscAddrs.HpAddrs.Length; i++)
+            {
+                uint addr = MiscAddrs.HpAddrs[i];
+                short curValue = Memory.ReadShort(addr);
+
+                // Connected while player is dead, don't send a death and wait for revive (or for the char to be recruited)
+                if (curValue <= 0)
+                    Memory.MonitorAddressForAction<short>(addr, () => HandleCharRevive(addr), (o) => { return o > 0; });
+                else
+                    Memory.MonitorAddressForAction<short>(addr, () => HandleCharDeath(addr), (o) => { return o <= 0; });
+            }
+        }
+
+        private void HandleCharDeath(uint addr)
+        {
+            // Don't death link on game reset
+            if (PlayerState.PlayerReady() && !deathFromDeathlink)
+            {
+                DeathLink dl = new(slotName);
+                _deathlinkService.SendDeathLink(dl);
+                Log.Logger.Information("DeathLink: Sending Death to your friends...");
+            }
+
+            deathFromDeathlink = false;
+
+            // Monitor for the char to be revived.
+            Memory.MonitorAddressForAction<short>(addr, () => HandleCharRevive(addr), (o) => { return o > 0; });
+        }
+
+        private void HandleCharRevive(uint addr)
+        {
+            Memory.MonitorAddressForAction<short>(addr, () => HandleCharDeath(addr), (o) => { return o <= 0; });
+        }
+
         private static void WatchGoal()
         {
             if (Options.AllBosses)
@@ -450,7 +501,14 @@ namespace DC1AP
 
         private void _deathlinkService_OnDeathLinkReceived(DeathLink deathLink)
         {
-            // TODO kill player x_x
+            // Kill player x_x
+            if (PlayerState.IsPlayerInDungeon())
+            {
+                deathFromDeathlink = true;
+                byte currChar = Memory.ReadByte(MiscAddrs.CurrCharAddr);
+                Memory.Write(MiscAddrs.HpAddrs[currChar], (short)-1);
+                Log.Logger.Information("DeathLink: Received from " + deathLink.Source);
+            }
         }
 
         private static void Client_ItemReceived(object? sender, ItemReceivedEventArgs e)
@@ -537,13 +595,12 @@ namespace DC1AP
                         Client.ItemReceived -= Client_ItemReceived;
                         Client.MessageReceived -= Client_MessageReceived;
 
-                        //if (_deathlinkService != null)
-                        //{
-                        //    _deathlinkService.OnDeathLinkReceived -= _deathlinkService_OnDeathLinkReceived;
-                        //    _deathlinkService = null;
-                        //}
+                        if (_deathlinkService != null)
+                        {
+                            _deathlinkService.OnDeathLinkReceived -= _deathlinkService_OnDeathLinkReceived;
+                            _deathlinkService = null;
+                        }
                         Client.CancelMonitors();
-                        //Client.Dispose();
                     }
 
                     // Connect to archipelago server

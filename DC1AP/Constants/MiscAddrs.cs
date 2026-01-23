@@ -169,5 +169,19 @@ namespace DC1AP.Constants
         internal const uint RubySlotAddr = 0x01CDD88F;
         internal const uint UngagaSlotAddr = 0x01CDD890;
         internal const uint OsmondSlotAddr = 0x01CDD891;
+
+        // 1 byte, 0-5 Toan-Osmond
+        internal const uint CurrCharAddr = 0x01CD9550;
+        // next byte is max char count.  Can remove chars from the wheel effectively
+
+        // All shorts
+        private const uint ToanHpAddr = 0x01CD955E;
+        private const uint XiaoHpAddr = 0x01CD9560;
+        private const uint GoroHpAddr = 0x01CD9562;
+        private const uint RubyHpAddr = 0x01CD9564;
+        private const uint UngagaHpAddr = 0x01CD9566;
+        private const uint OsmondHpAddr = 0x01CD9568;
+
+        internal static readonly uint[] HpAddrs = [ToanHpAddr, XiaoHpAddr, GoroHpAddr, RubyHpAddr, UngagaHpAddr, OsmondHpAddr];
     }
 }
