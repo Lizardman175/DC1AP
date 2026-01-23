@@ -24,7 +24,6 @@ namespace DC1AP.Mem
 
                     // Make floor-specific atla available on any floor otherwise the game freezes!
                     // Note: -1 here makes the atla appear in the front half of the dungeon.
-                    // TODO D6: special handling for final dungeon?
                     if (Memory.ReadInt(addr + GeoAddrs.GeoFloorOffset) > 0)
                         Memory.Write(addr + GeoAddrs.GeoFloorOffset, -1);
 
