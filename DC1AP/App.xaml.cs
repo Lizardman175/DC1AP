@@ -163,10 +163,10 @@ namespace DC1AP
 
             try
             {
-            // Pull out options from AP
-            Options.ParseOptions(Client.Options);
+                // Pull out options from AP
+                Options.ParseOptions(Client.Options);
             }
-            catch (FormatException fe)
+            catch (FormatException)
             {
                 Log.Logger.Error("Failed to parse options");
                 Context.ConnectButtonEnabled = true;
@@ -221,19 +221,7 @@ namespace DC1AP
 
             Context.ConnectButtonEnabled = true;
 
-            ReadGameState();
             MessageFuncs.InitOverlay();
-        }
-
-        private static void ReadGameState()
-        {
-            foreach (ItemInfo item in Client.CurrentSession.Items.AllItemsReceived)
-            {
-                long id = item.ItemId;
-
-                if (id < MiscConstants.ItemIdBase)
-                    GeoInvMgmt.IncGeoCount(id);
-            }
         }
 
         #region PS2
