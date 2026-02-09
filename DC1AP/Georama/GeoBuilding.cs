@@ -3,6 +3,7 @@ using Archipelago.MultiClient.Net.Models;
 using DC1AP.Constants;
 using DC1AP.Mem;
 using DC1AP.Threads;
+using Serilog;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -75,7 +76,6 @@ namespace DC1AP.Georama
             // Small chance of race condition giving us 2 items at the same time.  Double check the count before adding.
             // Also prevents trying to add too many of an item if /send was used on the server.
             if (buildingValue == CountThisBuilding()) return;
-            //else if (buildingValue >= Items.Length || (Multi > 0 && buildingValue >= Multi)) return;
 
             string? msg = null;
 
@@ -121,7 +121,13 @@ namespace DC1AP.Georama
 
                 // If there isn't an item set in the item's slot, put it there.  Otherwise, add it to the player's inventory.
                 if (Memory.ReadShort(itemAddr) == 0)
-                    Memory.Write(itemAddr, (short)1);
+                {
+                    if (!Memory.Write(itemAddr, (short)1))
+                    {
+                        Log.Logger.Error("Failed to add " + Name + ", please report with emulator version and reproduction steps.");
+                        return;
+                    }
+                }
                 else
                     MemFuncs.GiveGeoItem(town, (short)item.ItemId);
 
