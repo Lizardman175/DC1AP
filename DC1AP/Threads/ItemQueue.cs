@@ -88,7 +88,10 @@ namespace DC1AP.Threads
                         result = InventoryMgmt.GiveItem(apId);
                         // If we fail to give the item because inventory is full, requeue it
                         if (!result)
+                        {
                             InventoryQueue.Enqueue(apId);
+                            break;
+                        }
                         else
                             itemReceived = true;
                     }
@@ -97,15 +100,19 @@ namespace DC1AP.Threads
                     {
                         AddMsg(InventoryQueue.Count + " item(s) remain in queue but inventory is full.");
                     }
-                    itemReceived = false;
 
+                    itemReceived = false;
                     result = true;
+
                     while (result && PlayerState.CanGiveItem() && AttachmentQueue.TryDequeue(out long apId))
                     {
                         result = InventoryMgmt.GiveAttachment(apId);
                         // If we fail to give the item because inventory is full, requeue it
                         if (!result)
+                        {
                             AttachmentQueue.Enqueue(apId);
+                            break;
+                        }
                         else
                             attachmentReceived = true;
                     }
@@ -115,14 +122,10 @@ namespace DC1AP.Threads
                     }
                     attachmentReceived = false;
 
-                    // Don't add to the queue if items are already in it to reduce collisions.
                     if (checkItems)
                     {
-                        // TODO need to revisit the IsEmpty check and why.  It seems to work though
-                        if (GeoBuildingQueue.IsEmpty)
-                            GeoInvMgmt.VerifyItems();
-                        if (InventoryQueue.IsEmpty && AttachmentQueue.IsEmpty)
-                            InventoryMgmt.VerifyItems();
+                        GeoInvMgmt.VerifyItems();
+                        InventoryMgmt.VerifyItems();
                         checkItems = false;
                     }
                 }

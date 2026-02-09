@@ -13,8 +13,6 @@ namespace DC1AP.Georama
                                                                      Resources.Embedded.Queens, Resources.Embedded.Muska,
                                                                      Resources.Embedded.Factory, Resources.Embedded.Castle];
 
-        internal static readonly Dictionary<long, int> buildingCounts = [];
-
         /// <summary>
         /// Reads the .json for the building data
         /// </summary>
@@ -65,7 +63,6 @@ namespace DC1AP.Georama
                 {
                     if (building.ApId == itemId)
                     {
-                        IncGeoCount(itemId);
                         ItemQueue.AddGeorama(building);
                         added = true;
                         break;
@@ -109,12 +106,6 @@ namespace DC1AP.Georama
             }
 
             return success;
-        }
-
-        internal static void IncGeoCount(long itemId)
-        {
-            buildingCounts.TryGetValue(itemId, out int value);
-            buildingCounts[itemId] = value + 1;
         }
     }
 }

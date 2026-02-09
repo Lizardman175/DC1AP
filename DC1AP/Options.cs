@@ -16,6 +16,7 @@ namespace DC1AP
         private static bool starterWeapons = false;
         private static bool miracleSanity = false;
         private static AutobuildFlags autobuild = AutobuildFlags.Off;
+        private static bool deathLink = false;
 
         public static int Goal { get => goal; }
         public static AttachMultConfig AttachMultConfig { get => attachMultConfig; }
@@ -26,6 +27,7 @@ namespace DC1AP
         public static bool StarterWeapons { get => starterWeapons; }
         public static bool MiracleSanity { get => miracleSanity; }
         internal static AutobuildFlags Autobuild { get => autobuild; }
+        internal static bool DeathLink { get => deathLink; }
 
         internal static void ParseOptions(Dictionary<string, object> options)
         {
@@ -40,6 +42,7 @@ namespace DC1AP
             starterWeapons = options["starter_weapons"].ToString() != "0";  // All floors logically accessible will be unlocked
             autobuild = (AutobuildFlags)Int32.Parse(options["auto_build"].ToString());
             miracleSanity = options["miracle_sanity"].ToString() != "0";  // Shuffle in miracle chests
+            deathLink = options["death_link"].ToString() != "0";
 #pragma warning restore CS8604 // Possible null reference argument.
         }
     }

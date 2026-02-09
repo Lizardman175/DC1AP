@@ -1,7 +1,9 @@
 using Archipelago.Core.Util;
+using Archipelago.MultiClient.Net.Models;
 using DC1AP.Constants;
 using DC1AP.Mem;
 using DC1AP.Threads;
+using Serilog;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -106,7 +108,7 @@ namespace DC1AP.Georama
                 // Skip the dialog only events for the 4 pilots
                 if (town == Towns.Factory && MiscConstants.FactoryEventSkips.Contains(BuildingId))
                 {
-                    Memory.Write(BaseAddr - EventFlagOffset, (short)1);
+                    Memory.Write(BaseAddr - EventFlagOffset, 1);
                 }
 
                 msg = "Received " + Name + ".";
@@ -119,7 +121,13 @@ namespace DC1AP.Georama
 
                 // If there isn't an item set in the item's slot, put it there.  Otherwise, add it to the player's inventory.
                 if (Memory.ReadShort(itemAddr) == 0)
-                    Memory.Write(itemAddr, (short)1);
+                {
+                    if (!Memory.Write(itemAddr, (short)1))
+                    {
+                        Log.Logger.Error("Failed to add " + Name + ", please report with emulator version and reproduction steps.");
+                        return;
+                    }
+                }
                 else
                     MemFuncs.GiveGeoItem(town, (short)item.ItemId);
 
@@ -161,7 +169,12 @@ namespace DC1AP.Georama
         /// <returns></returns>
         private int CountThisBuilding()
         {
-            return GeoInvMgmt.buildingCounts.ContainsKey(ApId) ? GeoInvMgmt.buildingCounts[ApId] : 0;
+            int count = 0;
+            foreach (ItemInfo item in App.Client.CurrentSession.Items.AllItemsReceived)
+            {
+                if (item.ItemId == ApId) count++;
+            }
+            return count;
         }
 
         #region TownBuilding
