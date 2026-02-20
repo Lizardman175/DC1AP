@@ -46,27 +46,15 @@ namespace DC1AP.Georama
             //buildingCount = Memory.ReadShort(BuildingCountAddr);
         }
 
+        // Currently unused, keeping because it might become useful?
         private bool HasBuilding()
         {
-            return Memory.ReadShort(BuildingCountAddr) != 0;
+            return Memory.ReadShort(BaseAddr) != 0;
         }
 
         internal void Init(Towns townId)
         {
             town = townId;
-
-            if (!HasBuilding())
-            {
-                // Some entries have junk data by default, we want to clear that out
-                Memory.Write(placedCountAddr, (short)0);
-                Memory.Write(BuildingCountAddr, (short)1);
-
-                // We want to set all 6 item slots to zero to clear any junk values, rather than just the count of Items
-                for (uint i = ItemShortOffset; i < ItemShortOffset + MaxItemCount; i++)
-                {
-                    Memory.Write(BaseAddr + (i * sizeof(short)), (short)0);
-                }
-            }
         }
 
         /// <summary>
