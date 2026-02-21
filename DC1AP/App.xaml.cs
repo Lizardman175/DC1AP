@@ -159,7 +159,7 @@ namespace DC1AP
             }
 
             slotName = e.Slot;
-
+            
             try
             {
                 // Pull out options from AP
@@ -187,10 +187,19 @@ namespace DC1AP
             if (PlayerState.PlayerReady())
             {
                 PlayerReady(slotName);
+                
+                // Handle default names if the player connects while ready then resets the game at some point
+                Memory.MonitorAddressForAction<short>(MiscAddrs.ToanNameAddr, () => SetDefaultNames(true), (o) => { return o == 0; });
             }
             else
             {
                 PlayerNotReady(slotName);
+                
+                // Handle default names if the player connects while not ready
+                new Thread(() => SetDefaultNames(true))
+                {
+                    IsBackground = true
+                }.Start();
             }
 
             if (Options.DeathLink)
@@ -273,7 +282,7 @@ namespace DC1AP
             }
             else if (currSlot != slotName)
             {
-                Log.Logger.Error("Wrong slot name. Current save is using slot \"" + currSlot + "\".");
+                Log.Logger.Error("Wrong slot name. Current save is using slot " + currSlot + "    ");
                 PlayerState.ValidGameState = false;
                 return;
             }
@@ -284,6 +293,7 @@ namespace DC1AP
             }
 
             //InventoryMgmt.CheckAttachments(true);
+            SetDefaultNames(false);
             MiracleChestMgmt.Init();
             GeoInvMgmt.InitBuildings();
             CharFuncs.Init();
@@ -320,6 +330,22 @@ namespace DC1AP
             PlayerState.ValidGameState = false;
             ItemQueue.ClearQueues();
             Memory.MonitorAddressForAction<int>(MiscAddrs.TimeOfDayAddr, () => PlayerReady(slotName), (o) => { return o != 0; });
+        }
+
+        private static void SetDefaultNames(bool sleep)
+        {
+            if (sleep)
+                Thread.Sleep(3000);
+
+            CharFuncs.SetDefaultCharName(MiscAddrs.ToanNameAddr, Options.ToanName);
+            CharFuncs.SetDefaultCharName(MiscAddrs.XiaoNameAddr, Options.XiaoName);
+            CharFuncs.SetDefaultCharName(MiscAddrs.GoroNameAddr, Options.GoroName);
+            CharFuncs.SetDefaultCharName(MiscAddrs.RubyNameAddr, Options.RubyName);
+            CharFuncs.SetDefaultCharName(MiscAddrs.UngagaNameAddr, Options.UngagaName);
+            CharFuncs.SetDefaultCharName(MiscAddrs.OsmondNameAddr, Options.OsmondName);
+
+            if (sleep)
+                Memory.MonitorAddressForAction<short>(MiscAddrs.ToanNameAddr, () => SetDefaultNames(true), (o) => { return o == 0; });
         }
 
         private void AckDivHouse()

@@ -6,8 +6,18 @@ namespace DC1AP.Constants
     {
         internal const uint GameIdAddr = 0x0029E4F0;
 
+        // Char name addrs
         // These are blocks of shorts mapped to a table of allowable characters.
         // 0x00A2 is A, 0x00BC is a.  Go up from there to get other letters.  Before A2 is Japanese.
+        // See CharFuncs.cs for a mapping
+        internal const uint ToanNameAddr = 0x00295BD4;
+        internal const uint XiaoNameAddr = 0x00295BEA;
+        internal const uint GoroNameAddr = 0x00295C00;
+        internal const uint RubyNameAddr = 0x00295C16;
+        internal const uint UngagaNameAddr = 0x00295C2C;
+        internal const uint OsmondNameAddr = 0x00295C42;
+
+        // These are the addrs in the mem card.  Here for ref, but not used.
         //internal const uint ToanNameAddr = 0x1CD4188;
         //internal const uint XiaoNameAddr = 0x1CD41C8;
         //internal const uint GoroNameAddr = 0x1CD4208;
