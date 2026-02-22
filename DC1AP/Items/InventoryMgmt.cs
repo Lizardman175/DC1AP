@@ -24,6 +24,7 @@ namespace DC1AP.Items
         private static readonly ConcurrentDictionary<long, int> attachCounts = [];
 
         private const uint InvMaxAddr = 0x01CDD8AC;  // Byte.  Can't exceed 100 or we run past the buffer.
+        private const byte InvMaxLimit = 10;  // Subtract from the value at InvMaxAddr
         private const uint InvCurAddr = 0x01CDD8AD;  // Byte.  Next byte starts the active item shorts, followed by 3 shorts giving count of the active items per slot, then shorts for the other items.
         private const uint IDSize = sizeof(short);
 
@@ -41,12 +42,12 @@ namespace DC1AP.Items
 
         private const uint FirstAttchAddr = 0x01CE1A48;
         private const int MaxAttachCount = 40;
+        private const int AttachLimit = 35;  // this keeps us from flooding the player's inventory unmanagably.
         private const uint AttachmentSize = 0x20;
         private const uint FirstAttachAttrOffset = 0x08;
         private const int FirstAttachDefaultValue = 3;
 
         //private static readonly List<(short, short)> attachChanges = []; // (index, item ID)
-        private static List<short> attachmentInv = new(MaxAttachCount);
 
         private struct AttachmentStr()
         {
@@ -94,7 +95,7 @@ namespace DC1AP.Items
         /// The game is very unreliable about counting the player's inventory.  Manually count here to account for hotbar items.
         /// </summary>
         /// <returns></returns>
-        private static bool HasAvailableInventory()
+        private static bool HasAvailableInventory(short itemID)
         {
             byte invCount = 0;
             byte maxCount = Memory.ReadByte(InvMaxAddr);
@@ -115,6 +116,10 @@ namespace DC1AP.Items
                 }
             }
 
+            // Allow pockets and key items to be received even if the player is at the limited max items count.
+            if (!MiscConstants.KeyItemIds.Contains(itemID))
+                maxCount -= InvMaxLimit;
+
             return invCount < maxCount;
         }
 
@@ -133,7 +138,7 @@ namespace DC1AP.Items
                 return true;
             }
 
-            if (HasAvailableInventory())
+            if (HasAvailableInventory(item.ItemID))
             {
                 for (int ii = 0; ii < maxInv; ii++)
                 {
@@ -188,8 +193,9 @@ namespace DC1AP.Items
             {
                 return true;
             }
-
-            for (int ii = 0; ii < MaxAttachCount; ii++)
+            
+            int attachCount = 0;
+            for (int ii = 0; ii < MaxAttachCount && attachCount < AttachLimit; ii++)
             {
                 uint addr = (uint)(FirstAttchAddr + AttachmentSize * ii);
                 short itemValue = Memory.ReadShort(addr);
@@ -201,7 +207,7 @@ namespace DC1AP.Items
                     // Game sometimes leaves junk data in the attachments, need to clear that before adding our own
                     Memory.WriteStruct<AttachmentStr>(addr, new AttachmentStr());
                     Memory.Write(addr, item.ItemID);
-                    
+
                     // Some of these fields are actually shorts but we shouldn't be setting large enough values to matter.
                     for (int val = 0; val < item.ValueOffsets.Length; val++)
                     {
@@ -225,6 +231,8 @@ namespace DC1AP.Items
                         OpenMem.IncItemCountValue(itemId);
                     return true;
                 }
+                else
+                    attachCount++;
             }
             return false;
         }
@@ -279,13 +287,13 @@ namespace DC1AP.Items
             GiveItem(MiscConstants.FeatherId, false);
         }
 
-        internal static void IncItemCount(long apId)
+        private static void IncItemCount(long apId)
         {
             itemCounts.TryGetValue(apId, out int value);
             itemCounts[apId] = value + 1;
         }
 
-        internal static void IncAttachCount(long apId)
+        private static void IncAttachCount(long apId)
         {
             attachCounts.TryGetValue(apId, out int value);
             attachCounts[apId] = value + 1;
@@ -317,7 +325,10 @@ namespace DC1AP.Items
                     for (int ii = value; ii < itemCounts[itemId]; ii++)
                     {
                         if (CanGiveItem(itemId))
-                            ItemQueue.AddItem(itemId);
+                            if (MiscConstants.KeyItemApIds.Contains(itemId))
+                                ItemQueue.AddKeyItem(itemId);
+                            else
+                                ItemQueue.AddItem(itemId);
                     }
                 }
             }

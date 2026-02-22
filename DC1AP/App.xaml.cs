@@ -531,15 +531,16 @@ namespace DC1AP
             long itemId = e.Item.Id;
             if (itemId >= MiscConstants.AttachIdBase)
             {
-                InventoryMgmt.IncAttachCount(itemId);
                 ItemQueue.AddAttachment(itemId);
             }
             else if (itemId >= MiscConstants.ItemIdBase)
             {
                 if (InventoryMgmt.CanGiveItem(itemId))
                 {
-                    InventoryMgmt.IncItemCount(itemId);
-                    ItemQueue.AddItem(itemId);
+                    if (MiscConstants.KeyItemApIds.Contains(itemId))
+                        ItemQueue.AddKeyItem(itemId);
+                    else
+                        ItemQueue.AddItem(itemId);
                 }
             }
             else

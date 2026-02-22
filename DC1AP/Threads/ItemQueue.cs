@@ -14,29 +14,39 @@ namespace DC1AP.Threads
         private const int DisplayTime = 350; // cs, 3.5 seconds
         //private static int MsToCs = 10;  // Convert 1000ths of a second to 100ths
 
-        private static ConcurrentQueue<GeoBuilding> GeoBuildingQueue = new();
-        private static ConcurrentQueue<long> InventoryQueue = new();
-        private static ConcurrentQueue<long> AttachmentQueue = new();
-        private static ConcurrentQueue<string> MsgQueue = new();
+        private static ConcurrentQueue<GeoBuilding> geoBuildingQueue = new();
+        private static ConcurrentQueue<long> keyItemQueue = new();
+        private static ConcurrentQueue<long> inventoryQueue = new();
+        private static ConcurrentQueue<long> attachmentQueue = new();
+        private static ConcurrentQueue<string> msgQueue = new();
+
+        private static int oldKeyCount = 0;
+        private static int oldInvCount = 0;
+        private static int oldAttachCount = 0;
 
         internal static bool checkItems = false;
 
-        internal static bool RunThread = true;
+        internal static bool runThread = true;
 
         internal static void AddGeorama(GeoBuilding geoBuilding)
         {
             if (PlayerState.PlayerReady())
-                GeoBuildingQueue.Enqueue(geoBuilding);
+                geoBuildingQueue.Enqueue(geoBuilding);
+        }
+
+        internal static void AddKeyItem(long apId)
+        {
+            keyItemQueue.Enqueue(apId);
         }
 
         internal static void AddItem(long apId)
         {
-            InventoryQueue.Enqueue(apId);
+            inventoryQueue.Enqueue(apId);
         }
 
         internal static void AddAttachment(long apId)
         {
-            AttachmentQueue.Enqueue(apId);
+            attachmentQueue.Enqueue(apId);
         }
 
         internal static void AddMsg(string msg)
@@ -44,31 +54,31 @@ namespace DC1AP.Threads
             if (PlayerState.PlayerReady())
             {
                 Log.Logger.Information(msg);
-                MsgQueue.Enqueue(msg);
+                msgQueue.Enqueue(msg);
             }
         }
 
         internal static void ThreadLoop(object? parameters)
         {
-            RunThread = true;
+            runThread = true;
             bool result = true;
             bool itemReceived = false;
             bool attachmentReceived = false;
 
             // Clean out the queues before stopping
-            while (RunThread)
+            while (runThread)
             {
                 Thread.Sleep(100);
 
                 if (PlayerState.PlayerReady())
                 {
                     // Clear remaining messages once player leaves dungeon
-                    if (!PlayerState.IsPlayerInDungeon() && !MsgQueue.IsEmpty) MsgQueue.Clear();
+                    if (!PlayerState.IsPlayerInDungeon() && !msgQueue.IsEmpty) msgQueue.Clear();
 
                     // Geo items can only be received in dungeon
                     if (PlayerState.CanGiveItemDungeon())
                     {
-                        while (PlayerState.CanGiveItemDungeon() && GeoBuildingQueue.TryDequeue(out GeoBuilding geoBuilding))
+                        while (PlayerState.CanGiveItemDungeon() && geoBuildingQueue.TryDequeue(out GeoBuilding geoBuilding))
                         {
                             geoBuilding.GiveBuilding();
                         }
@@ -77,49 +87,73 @@ namespace DC1AP.Threads
                         if (Memory.ReadShort(MiscAddrs.DunMsgIdAddr) == -1 &&
                             Memory.ReadInt(MiscAddrs.AtlaOpeningFlagAddr) == 0 &&
                             Memory.ReadByte(MiscAddrs.LoadingIntoDungeonFlagAddr) == 0 &&
-                            MsgQueue.TryDequeue(out string? msg))
+                            msgQueue.TryDequeue(out string? msg))
                             // TODO nums
                             MessageFuncs.DisplayMessageDungeon(msg, 1, 20, DisplayTime);
                     }
 
+                    itemReceived = false;
                     result = true;
-                    while (result && PlayerState.CanGiveItem() && InventoryQueue.TryDequeue(out long apId))
+
+                    while (result && PlayerState.CanGiveItem() && keyItemQueue.TryDequeue(out long apId))
                     {
                         result = InventoryMgmt.GiveItem(apId);
                         // If we fail to give the item because inventory is full, requeue it
                         if (!result)
                         {
-                            InventoryQueue.Enqueue(apId);
+                            keyItemQueue.Enqueue(apId);
                             break;
                         }
                         else
                             itemReceived = true;
                     }
                     // Extra flag so we don't spam the player with messages.
-                    if (!result && itemReceived)
+                    if (!result && (itemReceived || oldKeyCount != keyItemQueue.Count))
                     {
-                        AddMsg(InventoryQueue.Count + " item(s) remain in queue but inventory is full.");
+                        AddMsg(keyItemQueue.Count + " key item(s) remain in queue but inventory is full.");
                     }
-
+                    oldKeyCount = keyItemQueue.Count;
                     itemReceived = false;
-                    result = true;
 
-                    while (result && PlayerState.CanGiveItem() && AttachmentQueue.TryDequeue(out long apId))
+                    result = true;
+                    while (result && PlayerState.CanGiveItem() && inventoryQueue.TryDequeue(out long apId))
+                    {
+                        result = InventoryMgmt.GiveItem(apId);
+                        // If we fail to give the item because inventory is full, requeue it
+                        if (!result)
+                        {
+                            inventoryQueue.Enqueue(apId);
+                            break;
+                        }
+                        else
+                            itemReceived = true;
+                    }
+                    // Extra flag so we don't spam the player with messages.
+                    if (!result && (itemReceived || oldInvCount != inventoryQueue.Count))
+                    {
+                        AddMsg(inventoryQueue.Count + " item(s) remain in queue but inventory is full.");
+                    }
+                    oldInvCount = inventoryQueue.Count;
+
+                    result = true;
+                    while (result && PlayerState.CanGiveItem() && attachmentQueue.TryDequeue(out long apId))
                     {
                         result = InventoryMgmt.GiveAttachment(apId);
                         // If we fail to give the item because inventory is full, requeue it
                         if (!result)
                         {
-                            AttachmentQueue.Enqueue(apId);
+                            attachmentQueue.Enqueue(apId);
                             break;
                         }
                         else
                             attachmentReceived = true;
                     }
-                    if (!result && attachmentReceived)
+                    if (!result && (attachmentReceived || oldAttachCount != attachmentQueue.Count))
                     {
-                        AddMsg(AttachmentQueue.Count + " attachment(s) remain in queue but inventory is full.");
+                        AddMsg(attachmentQueue.Count + " attachment(s) remain in queue but inventory is full.");
                     }
+
+                    oldAttachCount = attachmentQueue.Count;
                     attachmentReceived = false;
 
                     if (checkItems)
@@ -168,10 +202,11 @@ namespace DC1AP.Threads
 
         internal static void ClearQueues()
         {
-            GeoBuildingQueue.Clear();
-            InventoryQueue.Clear();
-            AttachmentQueue.Clear();
-            MsgQueue.Clear();
+            geoBuildingQueue.Clear();
+            keyItemQueue.Clear();
+            inventoryQueue.Clear();
+            attachmentQueue.Clear();
+            msgQueue.Clear();
         }
     }
 }
