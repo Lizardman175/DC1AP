@@ -18,12 +18,12 @@ namespace DC1AP.Constants
         internal const uint OsmondNameAddr = 0x00295C42;
 
         // These are the addrs in the mem card.  Here for ref, but not used.
-        //internal const uint ToanNameAddr = 0x1CD4188;
-        //internal const uint XiaoNameAddr = 0x1CD41C8;
-        //internal const uint GoroNameAddr = 0x1CD4208;
-        //internal const uint RubyNameAddr = 0x1CD4248;
-        //internal const uint UngagaNameAddr = 0x1CD4288;
-        //internal const uint OsmondNameAddr = 0x1CD42C8;
+        //internal const uint ToanNameAddr = 0x01CD4188;
+        //internal const uint XiaoNameAddr = 0x01CD41C8;
+        //internal const uint GoroNameAddr = 0x01CD4208;
+        //internal const uint RubyNameAddr = 0x01CD4248;
+        internal const uint UngagaNameSaveAddr = 0x01CD4288;
+        //internal const uint OsmondNameAddr = 0x01CD42C8;
 
         // 1CD4100 : B10B
 

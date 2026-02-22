@@ -342,6 +342,8 @@ namespace DC1AP
             CharFuncs.SetDefaultCharName(MiscAddrs.GoroNameAddr, Options.GoroName);
             CharFuncs.SetDefaultCharName(MiscAddrs.RubyNameAddr, Options.RubyName);
             CharFuncs.SetDefaultCharName(MiscAddrs.UngagaNameAddr, Options.UngagaName);
+            // Ungaga uses the mem card address since the player can't change his name in game
+            CharFuncs.SetDefaultCharName(MiscAddrs.UngagaNameSaveAddr, Options.UngagaName);
             CharFuncs.SetDefaultCharName(MiscAddrs.OsmondNameAddr, Options.OsmondName);
 
             if (sleep)
