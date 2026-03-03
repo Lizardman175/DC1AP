@@ -87,5 +87,17 @@ namespace DC1AP.Constants
         internal const long GourdId = 971_111_182;
 
         internal const long HornedKeyChestId = 971_111_063;
+
+        private const long HornedKeyApId = 971_111_207;
+        private const long PocketApId = 971_111_101;
+        private const long SundewApId = 971_111_225;
+
+        internal static readonly long[] KeyItemApIds = [HornedKeyApId, PocketApId, SundewApId];
+
+        private const short HornedKeyId = 207;
+        private const short PocketId = 179;
+        private const short SundewId = 225;
+
+        internal static readonly short[] KeyItemIds = [HornedKeyId, PocketId, SundewId];
     }
 }
