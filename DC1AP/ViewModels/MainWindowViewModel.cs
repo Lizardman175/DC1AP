@@ -154,7 +154,7 @@ namespace DC1AP.ViewModels
             CommandSentCommand = ReactiveCommand.Create(HandleCommandSent);
             TogglePaneCommand = ReactiveCommand.Create(HandleTogglePane);
             UnstuckClickedCommand = ReactiveCommand.Create(HandleUnstuck);
-            ClientVersion = "0.4.2";
+            ClientVersion = "0.4.3";
             ArchipelagoVersion = archipelagoVersion;
 
             _processingTimer = new Timer(TIMER_INTERVAL);
@@ -166,7 +166,7 @@ namespace DC1AP.ViewModels
         }
 
         //Parameterless constructor required for XAML design time compiler
-        public MainWindowViewModel() : this("0.6.4")
+        public MainWindowViewModel() : this("0.6.2")
         {}
 
         private void HandleTogglePane()
