@@ -133,11 +133,6 @@ namespace DC1AP.Items
             byte maxInv = Memory.ReadByte(InvMaxAddr);
             InvItem item = ItemData[itemId];
 
-            if (itemCounts.ContainsKey(itemId) && itemCounts[itemId] <= OpenMem.ReadItemCountValue(itemId))
-            {
-                return true;
-            }
-
             if (HasAvailableInventory(item.ItemID))
             {
                 for (int ii = 0; ii < maxInv; ii++)
@@ -188,11 +183,6 @@ namespace DC1AP.Items
         internal static bool GiveAttachment(long itemId, bool updateFlag = true)
         {
             Attachment item = AttachmentData[itemId];
-
-            if (attachCounts.ContainsKey(itemId) && attachCounts[itemId] <= OpenMem.ReadItemCountValue(itemId))
-            {
-                return true;
-            }
             
             int attachCount = 0;
             for (int ii = 0; ii < MaxAttachCount && attachCount < AttachLimit; ii++)

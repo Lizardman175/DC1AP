@@ -38,7 +38,7 @@ namespace DC1AP.Mem
         {
             Encoding? encoding = Encoding.Unicode;
 
-            byte[] bytes = Memory.ReadByteArray(SlotNameAddr, (int)SlotNameLen, Enums.Endianness.Little);
+            byte[] bytes = Memory.ReadByteArray(SlotNameAddr, (int)SlotNameLen);
 
             string s = encoding.GetString(bytes);
             string s2 = "";
