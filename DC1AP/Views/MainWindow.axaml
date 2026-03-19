@@ -11,7 +11,7 @@
 		Width="600" Height="700"
 		x:Class="DC1AP.Views.MainWindow"
 		x:DataType="vm:MainWindowViewModel"
-		Icon="/Assets/avalonia-logo.ico"
+		Icon="/Assets/DC1.ico"
 		Title="Dark Cloud 1 Rando" CornerRadius="{StaticResource WindowCornerRadius}" Background="Transparent" TransparencyLevelHint="Transparent">
 	<Window.Resources>
 		<Color x:Key="BackgroundDark">#202020</Color>
