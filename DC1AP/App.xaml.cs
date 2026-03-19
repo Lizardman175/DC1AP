@@ -418,10 +418,18 @@ namespace DC1AP
         {
             if (Options.AllBosses)
             {
+                byte currKills = Memory.ReadByte(OpenMem.GoalAddr);
+
+                if ((currKills & 32) == 0 & Options.Goal >= 6 && Client.CurrentSession.Locations.AllLocationsChecked.Contains(MiscConstants.DarkGenieApId))
+                {
+                    bossKillTest |= 32;
+                    currKills |= 32;
+                    Memory.WriteByte(OpenMem.GoalAddr, currKills);
+                }
+
                 for (int i = 0; i < Options.Goal; i++)
                 {
                     byte mask = (byte)(1 << i);
-                    byte currKills = Memory.ReadByte(OpenMem.GoalAddr);
                     bossKillTest |= mask;
 
                     if ((currKills & mask) == 0)
@@ -456,6 +464,14 @@ namespace DC1AP
             byte bb = Memory.ReadByte(OpenMem.GoalAddr);
             bb |= mask;
             Memory.WriteByte(OpenMem.GoalAddr, bb);
+
+            // Track on the server that the Dark Genie has been killed
+            if (mask == 32)
+            {
+                SendLocation(MiscConstants.DarkGenieApId);
+                // The game will reset after the credits but it doesn't clear the time of day field.  This will force PlayerNotReady() to be called to avoid issues.
+                Memory.Write(MiscAddrs.TimeOfDayAddr, 0);
+            }
 
             if (bb == bossKillTest)
             {
