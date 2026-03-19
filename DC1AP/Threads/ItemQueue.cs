@@ -158,8 +158,8 @@ namespace DC1AP.Threads
 
                     if (checkItems)
                     {
-                        GeoInvMgmt.VerifyItems();
                         InventoryMgmt.VerifyItems();
+                        GeoInvMgmt.VerifyItems();
                         checkItems = false;
                     }
                 }
@@ -203,10 +203,15 @@ namespace DC1AP.Threads
         internal static void ClearQueues()
         {
             geoBuildingQueue.Clear();
+            ClearItemQueues();
+            msgQueue.Clear();
+        }
+
+        internal static void ClearItemQueues()
+        {
             keyItemQueue.Clear();
             inventoryQueue.Clear();
             attachmentQueue.Clear();
-            msgQueue.Clear();
         }
     }
 }

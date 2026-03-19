@@ -546,6 +546,10 @@ namespace DC1AP
         private static void Client_ItemReceived(object? sender, ItemReceivedEventArgs e)
         {
             long itemId = e.Item.Id;
+
+            // Not a real item, so ignore
+            if (itemId == MiscConstants.DarkGenieApId) return;
+
             if (itemId >= MiscConstants.AttachIdBase)
             {
                 ItemQueue.AddAttachment(itemId);

@@ -295,6 +295,7 @@ namespace DC1AP.Items
         internal static void VerifyItems()
         {
             // Clear current values, check what the server thinks first, then compare that against the save file.
+            ItemQueue.ClearItemQueues();
             itemCounts.Clear();
             attachCounts.Clear();
 
@@ -309,6 +310,8 @@ namespace DC1AP.Items
 
             foreach (long itemId in itemCounts.Keys)
             {
+                if (itemId == MiscConstants.DarkGenieApId) continue;
+
                 byte value = OpenMem.ReadItemCountValue(itemId);
                 if (itemCounts[itemId] > value)
                 {
@@ -325,6 +328,8 @@ namespace DC1AP.Items
 
             foreach (long attachId in attachCounts.Keys)
             {
+                if (attachId == MiscConstants.DarkGenieApId) continue;
+
                 byte value = OpenMem.ReadItemCountValue(attachId);
                 if (attachCounts[attachId] > value)
                 {
