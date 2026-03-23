@@ -317,11 +317,10 @@ namespace DC1AP.Items
                 {
                     for (int ii = value; ii < itemCounts[itemId]; ii++)
                     {
-                        if (CanGiveItem(itemId))
-                            if (MiscConstants.KeyItemApIds.Contains(itemId))
-                                ItemQueue.AddKeyItem(itemId);
-                            else
-                                ItemQueue.AddItem(itemId);
+                        if (MiscConstants.KeyItemApIds.Contains(itemId))
+                            ItemQueue.AddKeyItem(itemId);
+                        else
+                            ItemQueue.AddItem(itemId);
                     }
                 }
             }
@@ -337,46 +336,6 @@ namespace DC1AP.Items
                         ItemQueue.AddAttachment(attachId);
                 }
             }
-        }
-
-        /// <summary>
-        /// Determines if we can give the given item to the player. Defense items are only given if the player has 
-        /// the relevant char, HP/Water items are given in multiples of 7 (for simplicity) based on char count.
-        /// </summary>
-        /// <param name="apId">Item ID to test</param>
-        /// <returns></returns>
-        internal static bool CanGiveItem(long apId)
-        {
-            bool result = true;
-
-            // Don't give defense buff items until the char is recruited
-            if ((apId == MiscConstants.CookieId && !CharFuncs.Osmond) ||
-                    (apId == MiscConstants.JerkyId && !CharFuncs.Ungaga) ||
-                    (apId == MiscConstants.ParfaitId && !CharFuncs.Ruby) ||
-                    (apId == MiscConstants.GrassCakeId && !CharFuncs.Goro) ||
-                    (apId == MiscConstants.FishCandyId && !CharFuncs.Xiao))
-                result = false;
-            // Limit FoE/Gourd based on recruited chars to avoid flooding inventory with unusable items.
-            else if (apId == MiscConstants.GourdId || apId == MiscConstants.FruitOfEdenId)
-            {
-                byte count = OpenMem.ReadItemCountValue(apId);
-                byte max = 7;
-
-                if (CharFuncs.Osmond)
-                    return true;
-                else if (CharFuncs.Ungaga)
-                    max *= 5;
-                else if (CharFuncs.Ruby)
-                    max *= 4;
-                else if (CharFuncs.Goro)
-                    max *= 3;
-                else if (CharFuncs.Xiao)
-                    max *= 2;
-
-                result = max > count;
-            }
-
-            return result;
         }
 
         // Now unused, holding onto in case we find a reason to use it.

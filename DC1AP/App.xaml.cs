@@ -182,7 +182,7 @@ namespace DC1AP
             }
 
             GeoInvMgmt.Init();
-            //PlayerState.ValidGameState = true;  TODO revisit state handling at startup
+            PlayerState.ValidGameState = true;
 
             // Initialize things once the player is connected
             if (PlayerState.PlayerReady())
@@ -283,7 +283,8 @@ namespace DC1AP
             }
             else if (currSlot != slotName)
             {
-                Log.Logger.Error("Wrong slot name. Current save is using slot " + currSlot + "    ");
+                // Padding because Avalonia keeps cutting things off...
+                Log.Logger.Error("Wrong slot name. Current save is using slot: " + currSlot + "      ");
                 PlayerState.ValidGameState = false;
                 return;
             }
@@ -556,14 +557,11 @@ namespace DC1AP
             }
             else if (itemId >= MiscConstants.ItemIdBase)
             {
-                if (InventoryMgmt.CanGiveItem(itemId))
-                {
                     if (MiscConstants.KeyItemApIds.Contains(itemId))
                         ItemQueue.AddKeyItem(itemId);
                     else
                         ItemQueue.AddItem(itemId);
                 }
-            }
             else
             {
                 GeoInvMgmt.GiveGeorama(itemId);

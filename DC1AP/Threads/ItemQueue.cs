@@ -5,6 +5,7 @@ using DC1AP.Items;
 using DC1AP.Mem;
 using Serilog;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading;
 
 namespace DC1AP.Threads
@@ -41,7 +42,8 @@ namespace DC1AP.Threads
 
         internal static void AddItem(long apId)
         {
-            inventoryQueue.Enqueue(apId);
+            if (CanQueueItem(apId))
+                inventoryQueue.Enqueue(apId);
         }
 
         internal static void AddAttachment(long apId)
@@ -56,6 +58,44 @@ namespace DC1AP.Threads
                 Log.Logger.Information(msg);
                 msgQueue.Enqueue(msg);
             }
+        }
+
+        /// <summary>
+        /// Tests if the given item can go into the queue based on recruited characters.
+        /// </summary>
+        /// <param name="apId"></param>
+        /// <returns></returns>
+        private static bool CanQueueItem(long apId)
+        {
+            if ((apId == MiscConstants.CookieId && !CharFuncs.Osmond) ||
+                    (apId == MiscConstants.JerkyId && !CharFuncs.Ungaga) ||
+                    (apId == MiscConstants.ParfaitId && !CharFuncs.Ruby) ||
+                    (apId == MiscConstants.GrassCakeId && !CharFuncs.Goro) ||
+                    (apId == MiscConstants.FishCandyId && !CharFuncs.Xiao))
+            {
+                return false;
+            }
+            // Limit FoE/Gourd based on recruited chars to avoid flooding inventory with unusable items.
+            else if (apId == MiscConstants.GourdId || apId == MiscConstants.FruitOfEdenId)
+            {
+                byte count = (byte)(OpenMem.ReadItemCountValue(apId) + inventoryQueue.Count(val => val == apId));
+                byte max = 7;
+
+                if (CharFuncs.Osmond)
+                    return true;
+                else if (CharFuncs.Ungaga)
+                    max *= 5;
+                else if (CharFuncs.Ruby)
+                    max *= 4;
+                else if (CharFuncs.Goro)
+                    max *= 3;
+                else if (CharFuncs.Xiao)
+                    max *= 2;
+
+                return max > count;
+            }
+
+            return true;
         }
 
         internal static void ThreadLoop(object? parameters)
