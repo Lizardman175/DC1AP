@@ -125,7 +125,7 @@ namespace DC1AP.Mem
             for (i = 0; i < nameArray.Length; i++)
             {
                 char c = nameArray[i];
-                int index = normalCharTable.IndexOf(c);
+                int index = Array.IndexOf(normalCharTable, c);
                 Memory.Write(addr, nameCharTable[index]);
                 addr += sizeof(short);
             }

@@ -133,11 +133,6 @@ namespace DC1AP.Items
             byte maxInv = Memory.ReadByte(InvMaxAddr);
             InvItem item = ItemData[itemId];
 
-            if (itemCounts.ContainsKey(itemId) && itemCounts[itemId] <= OpenMem.ReadItemCountValue(itemId))
-            {
-                return true;
-            }
-
             if (HasAvailableInventory(item.ItemID))
             {
                 for (int ii = 0; ii < maxInv; ii++)
@@ -188,11 +183,6 @@ namespace DC1AP.Items
         internal static bool GiveAttachment(long itemId, bool updateFlag = true)
         {
             Attachment item = AttachmentData[itemId];
-
-            if (attachCounts.ContainsKey(itemId) && attachCounts[itemId] <= OpenMem.ReadItemCountValue(itemId))
-            {
-                return true;
-            }
             
             int attachCount = 0;
             for (int ii = 0; ii < MaxAttachCount && attachCount < AttachLimit; ii++)
@@ -305,6 +295,7 @@ namespace DC1AP.Items
         internal static void VerifyItems()
         {
             // Clear current values, check what the server thinks first, then compare that against the save file.
+            ItemQueue.ClearItemQueues();
             itemCounts.Clear();
             attachCounts.Clear();
 
@@ -319,22 +310,25 @@ namespace DC1AP.Items
 
             foreach (long itemId in itemCounts.Keys)
             {
+                if (itemId == MiscConstants.DarkGenieApId) continue;
+
                 byte value = OpenMem.ReadItemCountValue(itemId);
                 if (itemCounts[itemId] > value)
                 {
                     for (int ii = value; ii < itemCounts[itemId]; ii++)
                     {
-                        if (CanGiveItem(itemId))
-                            if (MiscConstants.KeyItemApIds.Contains(itemId))
-                                ItemQueue.AddKeyItem(itemId);
-                            else
-                                ItemQueue.AddItem(itemId);
+                        if (MiscConstants.KeyItemApIds.Contains(itemId))
+                            ItemQueue.AddKeyItem(itemId);
+                        else
+                            ItemQueue.AddItem(itemId);
                     }
                 }
             }
 
             foreach (long attachId in attachCounts.Keys)
             {
+                if (attachId == MiscConstants.DarkGenieApId) continue;
+
                 byte value = OpenMem.ReadItemCountValue(attachId);
                 if (attachCounts[attachId] > value)
                 {
@@ -342,46 +336,6 @@ namespace DC1AP.Items
                         ItemQueue.AddAttachment(attachId);
                 }
             }
-        }
-
-        /// <summary>
-        /// Determines if we can give the given item to the player. Defense items are only given if the player has 
-        /// the relevant char, HP/Water items are given in multiples of 7 (for simplicity) based on char count.
-        /// </summary>
-        /// <param name="apId">Item ID to test</param>
-        /// <returns></returns>
-        internal static bool CanGiveItem(long apId)
-        {
-            bool result = true;
-
-            // Don't give defense buff items until the char is recruited
-            if ((apId == MiscConstants.CookieId && !CharFuncs.Osmond) ||
-                    (apId == MiscConstants.JerkyId && !CharFuncs.Ungaga) ||
-                    (apId == MiscConstants.ParfaitId && !CharFuncs.Ruby) ||
-                    (apId == MiscConstants.GrassCakeId && !CharFuncs.Goro) ||
-                    (apId == MiscConstants.FishCandyId && !CharFuncs.Xiao))
-                result = false;
-            // Limit FoE/Gourd based on recruited chars to avoid flooding inventory with unusable items.
-            else if (apId == MiscConstants.GourdId || apId == MiscConstants.FruitOfEdenId)
-            {
-                byte count = OpenMem.ReadItemCountValue(apId);
-                byte max = 7;
-
-                if (CharFuncs.Osmond)
-                    return true;
-                else if (CharFuncs.Ungaga)
-                    max *= 5;
-                else if (CharFuncs.Ruby)
-                    max *= 4;
-                else if (CharFuncs.Goro)
-                    max *= 3;
-                else if (CharFuncs.Xiao)
-                    max *= 2;
-
-                result = max > count;
-            }
-
-            return result;
         }
 
         // Now unused, holding onto in case we find a reason to use it.

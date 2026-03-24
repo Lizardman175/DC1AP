@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 using Archipelago.Core;
-using Archipelago.Core.GameClients;
+using Archipelago.Core.Helpers;
 using Archipelago.Core.Models;
 using Archipelago.Core.Util;
 using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
@@ -63,11 +63,10 @@ namespace DC1AP
 
         private static readonly ConcurrentQueue<Location> locationQueue = new();
 
-        //private DeathLinkService _deathlinkService;
         private Thread queueThread;
         private Thread helperThread;
         private Thread reconnectThread;
-        private GenericGameClient? ps2Client;
+        private GameClient? ps2Client;
         private bool diviningHouseDone = false;
         private bool cathedralDone = false;
 
@@ -86,7 +85,7 @@ namespace DC1AP
             // TODO save last used host/slot?
             //Context.Host = "localhost:38281";
             //Context.Slot = "DC1";
-            
+
             InventoryMgmt.InitInventoryMgmt();
         }
 
@@ -120,7 +119,6 @@ namespace DC1AP
             {
                 Client.Connected -= OnConnected;
                 Client.Disconnected -= OnDisconnected;
-                Client.ItemReceived -= Client_ItemReceived;
                 Client.MessageReceived -= Client_MessageReceived;
 
                 if (_deathlinkService != null)
@@ -128,7 +126,6 @@ namespace DC1AP
                     _deathlinkService.OnDeathLinkReceived -= _deathlinkService_OnDeathLinkReceived;
                     _deathlinkService = null;
                 }
-                Client.CancelMonitors();
             }
 
             ps2Client = PS2Connect();
@@ -146,10 +143,7 @@ namespace DC1AP
             Client.Disconnected += OnDisconnected;
 
             await Client.Connect(e.Host, "Dark Cloud 1");
-
-            Client.ItemReceived += Client_ItemReceived;
-            Client.MessageReceived += Client_MessageReceived;
-
+            
             await Client.Login(e.Slot, !string.IsNullOrWhiteSpace(e.Password) ? e.Password : null);
 
             if (!Client.IsConnected || !Client.IsLoggedIn)
@@ -157,6 +151,10 @@ namespace DC1AP
                 Context.ConnectButtonEnabled = true;
                 return;
             }
+
+            Client.ItemManager.ItemReceived += Client_ItemReceived;
+            Client.ItemManager.ReceiveReady(Client.CurrentSession);
+            Client.MessageReceived += Client_MessageReceived;
 
             slotName = e.Slot;
             
@@ -182,6 +180,7 @@ namespace DC1AP
             }
 
             GeoInvMgmt.Init();
+            PlayerState.ValidGameState = true;
 
             // Initialize things once the player is connected
             if (PlayerState.PlayerReady())
@@ -194,7 +193,7 @@ namespace DC1AP
             else
             {
                 PlayerNotReady(slotName);
-                
+
                 // Handle default names if the player connects while not ready
                 new Thread(() => SetDefaultNames(true))
                 {
@@ -235,11 +234,11 @@ namespace DC1AP
         #region PS2
         private static byte bossKillTest = 0;
 
-        private GenericGameClient? PS2Connect()
+        private GameClient? PS2Connect()
         {
             String gameId = "BASCUS-97111dkcloud";
 
-            GenericGameClient client = new("pcsx2-qt");
+            GameClient client = new("pcsx2-qt");
             try
             {
                 client.Connect();
@@ -282,7 +281,8 @@ namespace DC1AP
             }
             else if (currSlot != slotName)
             {
-                Log.Logger.Error("Wrong slot name. Current save is using slot " + currSlot + "    ");
+                // Padding because Avalonia keeps cutting things off...
+                Log.Logger.Error("Wrong slot name. Current save is using slot: " + currSlot + "      ");
                 PlayerState.ValidGameState = false;
                 return;
             }
@@ -346,8 +346,7 @@ namespace DC1AP
             CharFuncs.SetDefaultCharName(MiscAddrs.UngagaNameSaveAddr, Options.UngagaName);
             CharFuncs.SetDefaultCharName(MiscAddrs.OsmondNameAddr, Options.OsmondName);
 
-            if (sleep)
-                Memory.MonitorAddressForAction<short>(MiscAddrs.ToanNameAddr, () => SetDefaultNames(true), (o) => { return o == 0; });
+            Memory.MonitorAddressForAction<short>(MiscAddrs.ToanNameAddr, () => SetDefaultNames(true), (o) => { return o == 0; });
         }
 
         private void AckDivHouse()
@@ -372,7 +371,7 @@ namespace DC1AP
             };
 
             if (Client.CurrentSession != null && Client.CurrentSession.Socket.Connected) 
-                App.Client.SendLocation(loc);
+                App.Client.SendLocationAsync(loc);
             else
                 locationQueue.Enqueue(loc);
         }
@@ -417,10 +416,18 @@ namespace DC1AP
         {
             if (Options.AllBosses)
             {
+                byte currKills = Memory.ReadByte(OpenMem.GoalAddr);
+
+                if ((currKills & 32) == 0 & Options.Goal >= 6 && Client.CurrentSession.Locations.AllLocationsChecked.Contains(MiscConstants.DarkGenieApId))
+                {
+                    bossKillTest |= 32;
+                    currKills |= 32;
+                    Memory.WriteByte(OpenMem.GoalAddr, currKills);
+                }
+
                 for (int i = 0; i < Options.Goal; i++)
                 {
                     byte mask = (byte)(1 << i);
-                    byte currKills = Memory.ReadByte(OpenMem.GoalAddr);
                     bossKillTest |= mask;
 
                     if ((currKills & mask) == 0)
@@ -455,6 +462,14 @@ namespace DC1AP
             byte bb = Memory.ReadByte(OpenMem.GoalAddr);
             bb |= mask;
             Memory.WriteByte(OpenMem.GoalAddr, bb);
+
+            // Track on the server that the Dark Genie has been killed
+            if (mask == 32)
+            {
+                SendLocation(MiscConstants.DarkGenieApId);
+                // The game will reset after the credits but it doesn't clear the time of day field.  This will force PlayerNotReady() to be called to avoid issues.
+                Memory.Write(MiscAddrs.TimeOfDayAddr, 0);
+            }
 
             if (bb == bossKillTest)
             {
@@ -529,19 +544,20 @@ namespace DC1AP
         private static void Client_ItemReceived(object? sender, ItemReceivedEventArgs e)
         {
             long itemId = e.Item.Id;
+
+            // Not a real item, so ignore
+            if (itemId == MiscConstants.DarkGenieApId) return;
+
             if (itemId >= MiscConstants.AttachIdBase)
             {
                 ItemQueue.AddAttachment(itemId);
             }
             else if (itemId >= MiscConstants.ItemIdBase)
             {
-                if (InventoryMgmt.CanGiveItem(itemId))
-                {
-                    if (MiscConstants.KeyItemApIds.Contains(itemId))
-                        ItemQueue.AddKeyItem(itemId);
-                    else
-                        ItemQueue.AddItem(itemId);
-                }
+                if (MiscConstants.KeyItemApIds.Contains(itemId))
+                    ItemQueue.AddKeyItem(itemId);
+                else
+                    ItemQueue.AddItem(itemId);
             }
             else
             {
@@ -608,7 +624,6 @@ namespace DC1AP
 
                         Client.Connected -= OnConnected;
                         Client.Disconnected -= OnDisconnected;
-                        Client.ItemReceived -= Client_ItemReceived;
                         Client.MessageReceived -= Client_MessageReceived;
 
                         if (_deathlinkService != null)
@@ -616,7 +631,6 @@ namespace DC1AP
                             _deathlinkService.OnDeathLinkReceived -= _deathlinkService_OnDeathLinkReceived;
                             _deathlinkService = null;
                         }
-                        Client.CancelMonitors();
                     }
 
                     // Connect to archipelago server
@@ -633,10 +647,12 @@ namespace DC1AP
                     }
                     else if (Client.IsConnected)
                     {
-                        Client.ItemReceived += Client_ItemReceived;
                         Client.MessageReceived += Client_MessageReceived;
 
                         await Client.Login(Context.Slot, !string.IsNullOrWhiteSpace(Context.Password) ? Context.Password : null);
+
+                        Client.ItemManager.ItemReceived += Client_ItemReceived;
+                        Client.ItemManager.ReceiveReady(Client.CurrentSession);
 
                         Log.Logger.Information("Reconnected to Archipelago");
                         waitTime = 100;
@@ -646,7 +662,7 @@ namespace DC1AP
                 {
                     while (locationQueue.TryDequeue(out Location? loc))
                     {
-                        Client.SendLocation(loc);
+                        Client.SendLocationAsync(loc);
                     }
                 }
 

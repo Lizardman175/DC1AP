@@ -251,6 +251,7 @@ namespace DC1AP.Threads
                     if (CharFuncs.HaveChar(dun))
                     {
                         byte floorCount = MiscAddrs.FloorCountRear[dun];
+                        // Don't give free access to the boss room in Shipwreck
                         if (dun == (int)Towns.Queens)
                             floorCount--;
                         Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], floorCount);
