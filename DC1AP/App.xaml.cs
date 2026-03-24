@@ -186,6 +186,9 @@ namespace DC1AP
             if (PlayerState.PlayerReady())
             {
                 PlayerReady(slotName);
+                
+                // Handle default names if the player connects while ready then resets the game at some point
+                Memory.MonitorAddressForAction<short>(MiscAddrs.ToanNameAddr, () => SetDefaultNames(true), (o) => { return o == 0; });
             }
             else
             {
