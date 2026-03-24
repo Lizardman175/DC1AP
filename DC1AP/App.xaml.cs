@@ -120,7 +120,6 @@ namespace DC1AP
             {
                 Client.Connected -= OnConnected;
                 Client.Disconnected -= OnDisconnected;
-                Client.ItemManager.StopReceiving();
                 Client.MessageReceived -= Client_MessageReceived;
 
                 if (_deathlinkService != null)
@@ -627,7 +626,6 @@ namespace DC1AP
 
                         Client.Connected -= OnConnected;
                         Client.Disconnected -= OnDisconnected;
-                        Client.ItemManager.StopReceiving();
                         Client.MessageReceived -= Client_MessageReceived;
 
                         if (_deathlinkService != null)
@@ -651,10 +649,12 @@ namespace DC1AP
                     }
                     else if (Client.IsConnected)
                     {
-                        Client.ItemManager.ReceiveReady(Client.CurrentSession);
                         Client.MessageReceived += Client_MessageReceived;
 
                         await Client.Login(Context.Slot, !string.IsNullOrWhiteSpace(Context.Password) ? Context.Password : null);
+
+                        Client.ItemManager.ItemReceived += Client_ItemReceived;
+                        Client.ItemManager.ReceiveReady(Client.CurrentSession);
 
                         Log.Logger.Information("Reconnected to Archipelago");
                         waitTime = 100;
