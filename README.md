@@ -24,6 +24,7 @@ Play at your own risk: There is an uncommon but serious bug that can result in n
 - Save states are not 100% supported yet.  If you must use them, reset the game before loading the state.  Otherwise consider closing the client if save stating for perfect score on duels.
 - For multiworlds, consider forcing "Progressive Gaffer's Buggy" and "Progressive Paige's House" local.  These are logically required for Xiao so this will ensure they're always in the first half of the DBC so you don't have to wait for a shop.
 - Due to game mechanics, georama can only be received in dungeons.  If you are waiting for an item from another world, hang out in a dungeon floor for a bit.
+- The .pnach file is optional.  It contains a mod for pcsx2 to show all georama tabs regardless if the player has been to the town.
 - If you aren't seeing a miracle chest try these steps before posting:
   - Chests won't spawn until you've entered the local dungeon once, don't forget to do that first!
   - Use R2 for first person camera.  Some chests are tricky to find
