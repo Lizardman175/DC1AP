@@ -187,14 +187,11 @@ namespace DC1AP
             if (PlayerState.PlayerReady())
             {
                 PlayerReady(slotName);
-                
-                // Handle default names if the player connects while ready then resets the game at some point
-                Memory.MonitorAddressForAction<short>(MiscAddrs.ToanNameAddr, () => SetDefaultNames(true), (o) => { return o == 0; });
             }
             else
             {
                 PlayerNotReady(slotName);
-                
+
                 // Handle default names if the player connects while not ready
                 new Thread(() => SetDefaultNames(true))
                 {
@@ -347,8 +344,7 @@ namespace DC1AP
             CharFuncs.SetDefaultCharName(MiscAddrs.UngagaNameSaveAddr, Options.UngagaName);
             CharFuncs.SetDefaultCharName(MiscAddrs.OsmondNameAddr, Options.OsmondName);
 
-            if (sleep)
-                Memory.MonitorAddressForAction<short>(MiscAddrs.ToanNameAddr, () => SetDefaultNames(true), (o) => { return o == 0; });
+            Memory.MonitorAddressForAction<short>(MiscAddrs.ToanNameAddr, () => SetDefaultNames(true), (o) => { return o == 0; });
         }
 
         private void AckDivHouse()
@@ -556,11 +552,11 @@ namespace DC1AP
             }
             else if (itemId >= MiscConstants.ItemIdBase)
             {
-                    if (MiscConstants.KeyItemApIds.Contains(itemId))
-                        ItemQueue.AddKeyItem(itemId);
-                    else
-                        ItemQueue.AddItem(itemId);
-                }
+                if (MiscConstants.KeyItemApIds.Contains(itemId))
+                    ItemQueue.AddKeyItem(itemId);
+                else
+                    ItemQueue.AddItem(itemId);
+            }
             else
             {
                 GeoInvMgmt.GiveGeorama(itemId);
