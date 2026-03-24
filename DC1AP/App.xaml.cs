@@ -63,7 +63,6 @@ namespace DC1AP
 
         private static readonly ConcurrentQueue<Location> locationQueue = new();
 
-        //private DeathLinkService _deathlinkService;
         private Thread queueThread;
         private Thread helperThread;
         private Thread reconnectThread;
