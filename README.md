@@ -2,9 +2,6 @@
 
 Home of Dark Cloud 1 randomizer for Archipelago
 
-## Warning! (Note: I believe this to be fixed now, please let me know if it happens)
-Play at your own risk: There is an uncommon but serious bug that can result in not receiving some Georama.  If the game is saved with this bad data, there is no fix but to load an older save, restart, or /release the slot.
-
 ## Requirements
 - Windows only for now
 - Install PCSX2 1.7+
