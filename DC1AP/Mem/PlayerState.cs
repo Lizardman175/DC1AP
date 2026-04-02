@@ -58,5 +58,10 @@ namespace DC1AP.Mem
         {
             return PlayerReady() && Memory.ReadByte(MiscAddrs.PlayerState) == 2;
         }
+
+        public static bool PlayerMovableInTown()
+        {
+            return PlayerState.IsPlayerInTown() && PlayerState.PlayerMovableTown();
+        }
     }
 }

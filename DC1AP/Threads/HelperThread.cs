@@ -112,12 +112,10 @@ namespace DC1AP.Threads
                         if (curDungeon == 0 && curFloor == CatFloor && Memory.ReadInt(GeoAddrs.AtlaCollectedFlag) != 0)
                             Memory.Write(GeoAddrs.AtlaCollectedFlag, 0);
                     }
-                    else if (PlayerState.IsPlayerInTown())
+                    else if (PlayerState.PlayerMovableInTown())
                     {
                         CharFuncs.CheckForChars();
                     }
-                    
-                    //InventoryMgmt.CheckAttachments(false);
                 }
 
                 Thread.Sleep(500);

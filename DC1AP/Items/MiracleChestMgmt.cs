@@ -86,7 +86,7 @@ namespace DC1AP.Items
 
                 int zoneId = Memory.ReadInt(MiscAddrs.CurZoneAddr);
 
-                if (PlayerState.IsPlayerInTown() && PlayerState.PlayerMovableTown())
+                if (PlayerState.PlayerMovableInTown())
                 {
                     int interiorId = Memory.ReadByte(MiscAddrs.InteriorIdAddr);
                     int altInteriorId = Memory.ReadByte(MiscAddrs.AlternateIntIdAddr);
