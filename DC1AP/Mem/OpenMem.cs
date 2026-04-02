@@ -20,9 +20,13 @@ namespace DC1AP.Mem
 
         // Byte
         internal static readonly uint GoalAddr = SlotNameAddr + SlotNameLen;
+        // Note: currently a 1 byte gap after GoalAddr
+
+        // 1 byte each. Includes space for Toan
+        internal static readonly uint[] CharHandledAddrs = [GoalAddr + 2, GoalAddr + 3,  GoalAddr + 4, GoalAddr + 5, GoalAddr + 6, GoalAddr + 7];
 
         // Add other bytes to be used before this one! RoomSeedAddr will be initialized after the itemCountAddrs block and has dynamic size.
-        private static readonly uint CountBytesStart = GoalAddr + 2;
+        private static readonly uint CountBytesStart = GoalAddr + 8;
 
         // Map of item IDs to addresses
         private static readonly Dictionary<long, uint> ItemCountAddrs = [];
@@ -109,6 +113,16 @@ namespace DC1AP.Mem
         {
             byte value = (byte)(Memory.ReadByte(ItemCountAddrs[itemId]) + 1);
             Memory.WriteByte(ItemCountAddrs[itemId], value);
+        }
+
+        internal static void SetCharReceived(int charIndex)
+        {
+            Memory.WriteByte(CharHandledAddrs[charIndex], 1);
+        }
+
+        internal static bool CheckCharReceived(int charIndex)
+        {
+            return Memory.ReadByte(CharHandledAddrs[charIndex]) != 0;
         }
     }
 }

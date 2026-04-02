@@ -46,6 +46,13 @@ namespace DC1AP.Mem
             // just after the $.  Not sure if there is any difference
         ];
 
+        private const int ToanIndex = 0;  // Placeholder value since OpenMem supports a Toan flag
+        private const int XiaoIndex = 1;
+        private const int GoroIndex = 2;
+        private const int RubyIndex = 3;
+        private const int UngagaIndex = 4;
+        private const int OsmondIndex = 5;
+
         private static bool xiao = false;
         private static bool goro = false;
         private static bool ruby = false;
@@ -80,11 +87,11 @@ namespace DC1AP.Mem
 
         internal static void Init()
         {
-            xiao = Memory.ReadByte(MiscAddrs.XiaoSlotAddr) != 0xff;
-            goro = Memory.ReadByte(MiscAddrs.GoroSlotAddr) != 0xff;
-            ruby = Memory.ReadByte(MiscAddrs.RubySlotAddr) != 0xff;
-            ungaga = Memory.ReadByte(MiscAddrs.UngagaSlotAddr) != 0xff;
-            osmond = Memory.ReadByte(MiscAddrs.OsmondSlotAddr) != 0xff;
+            xiao = Memory.ReadByte(MiscAddrs.XiaoSlotAddr) != 0xff && OpenMem.CheckCharReceived(XiaoIndex);
+            goro = Memory.ReadByte(MiscAddrs.GoroSlotAddr) != 0xff && OpenMem.CheckCharReceived(GoroIndex);
+            ruby = Memory.ReadByte(MiscAddrs.RubySlotAddr) != 0xff && OpenMem.CheckCharReceived(RubyIndex);
+            ungaga = Memory.ReadByte(MiscAddrs.UngagaSlotAddr) != 0xff && OpenMem.CheckCharReceived(UngagaIndex);
+            osmond = Memory.ReadByte(MiscAddrs.OsmondSlotAddr) != 0xff && OpenMem.CheckCharReceived(OsmondIndex);
         }
 
         internal static void CheckForChars()
@@ -144,7 +151,7 @@ namespace DC1AP.Mem
         /// </summary>
         private static void XiaoGained()
         {
-            if (PlayerState.PlayerReady())
+            if (PlayerState.PlayerMovableInTown())
             {
                 xiao = true;
                 if (Options.OpenDungeon && Memory.ReadByte(MiscAddrs.FloorCountAddrs[(int)Towns.Norune]) != 0xFF)
@@ -157,13 +164,14 @@ namespace DC1AP.Mem
                 Weapons.GiveCharWeapon((int)Towns.Norune + 1);
                 if (Options.MiracleSanity)
                     InventoryMgmt.VerifyItems();
-            }
 
+                OpenMem.SetCharReceived(XiaoIndex);
+            }
         }
 
         private static void GoroGained()
         {
-            if (PlayerState.PlayerReady())
+            if (PlayerState.PlayerMovableInTown())
             {
                 goro = true;
                 if (Options.OpenDungeon && Memory.ReadByte(MiscAddrs.FloorCountAddrs[(int)Towns.Matataki]) != 0xFF)
@@ -179,12 +187,14 @@ namespace DC1AP.Mem
                 Weapons.GiveCharWeapon((int)Towns.Matataki + 1);
                 if (Options.MiracleSanity)
                     InventoryMgmt.VerifyItems();
+
+                OpenMem.SetCharReceived(GoroIndex);
             }
         }
 
         private static void RubyGained()
         {
-            if (PlayerState.PlayerReady())
+            if (PlayerState.PlayerMovableInTown())
             {
                 ruby = true;
                 if (Options.OpenDungeon && Memory.ReadByte(MiscAddrs.FloorCountAddrs[(int)Towns.Queens]) != 0xFF)
@@ -202,12 +212,14 @@ namespace DC1AP.Mem
                 Weapons.GiveCharWeapon((int)Towns.Queens + 1);
                 if (Options.MiracleSanity)
                     InventoryMgmt.VerifyItems();
+
+                OpenMem.SetCharReceived(RubyIndex);
             }
         }
 
         private static void UngagaGained()
         {
-            if (PlayerState.PlayerReady())
+            if (PlayerState.PlayerMovableInTown())
             {
                 ungaga = true;
                 if (Options.OpenDungeon && Memory.ReadByte(MiscAddrs.FloorCountAddrs[(int)Towns.Muska]) != 0xFF)
@@ -224,12 +236,14 @@ namespace DC1AP.Mem
                 Weapons.GiveCharWeapon((int)Towns.Muska + 1);
                 if (Options.MiracleSanity)
                     InventoryMgmt.VerifyItems();
+
+                OpenMem.SetCharReceived(UngagaIndex);
             }
         }
 
         private static void OsmondGained()
         {
-            if (PlayerState.PlayerReady())
+            if (PlayerState.PlayerMovableInTown())
             {
                 osmond = true;
                 if (Options.OpenDungeon && Memory.ReadByte(MiscAddrs.FloorCountAddrs[(int)Towns.Factory]) != 0xFF)
@@ -245,6 +259,8 @@ namespace DC1AP.Mem
                 Weapons.GiveCharWeapon((int)Towns.Factory + 1);
                 if (Options.MiracleSanity)
                     InventoryMgmt.VerifyItems();
+
+                OpenMem.SetCharReceived(OsmondIndex);
             }
         }
         #endregion
