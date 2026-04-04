@@ -326,14 +326,14 @@
         "SlotId": 3
       },
       {
-        "Name": "Alnet's Llama",
-        "ItemId": 55,
-        "SlotId": 5
-      },
-      {
         "Name": "Alnet's Lamp",
         "ItemId": 1,
         "SlotId": 0
+      },
+      {
+        "Name": "Alnet's Llama",
+        "ItemId": 55,
+        "SlotId": 5
       }
     ],
     "HundoCoords": {
