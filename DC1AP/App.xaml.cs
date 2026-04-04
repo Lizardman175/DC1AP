@@ -226,9 +226,9 @@ namespace DC1AP
                 helperThread.Start();
             }
 
-            Context.ConnectButtonEnabled = true;
-
             MessageFuncs.InitOverlay();
+
+            Context.ConnectButtonEnabled = true;
         }
 
         #region PS2
@@ -292,7 +292,6 @@ namespace DC1AP
                 return;
             }
 
-            //InventoryMgmt.CheckAttachments(true);
             SetDefaultNames(false);
             MiracleChestMgmt.Init();
             GeoInvMgmt.InitBuildings();
