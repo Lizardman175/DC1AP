@@ -4,7 +4,7 @@ Home of Dark Cloud 1 randomizer for Archipelago
 
 ## Requirements
 - Windows only for now
-- Install PCSX2 1.7+
+- Install PCSX2 1.7+  (2.6+ recommended)
 - Legally obtained copy of Dark Cloud 1 NTSC version
 - Install [Archipelago](https://archipelago.gg/tutorial/Archipelago/setup_en)
 - Download and install the dc1.apworld file from the latest release like normal ('run' the .apworld file)
