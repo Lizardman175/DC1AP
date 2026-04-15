@@ -92,7 +92,7 @@ namespace DC1AP.Threads
 
                     if (Memory.ReadByte(MiscAddrs.InDungeonFlag) != 0xFF)
                     {
-                        byte curDungeon = Memory.ReadByte(MiscAddrs.CurDungeon);
+                        byte curDungeon = PlayerState.GetCurDungeon();
                         byte curFloor = Memory.ReadByte(MiscAddrs.CurFloor);
 
                         // Clear out junk georama pieces if collected
@@ -129,7 +129,7 @@ namespace DC1AP.Threads
         {
             if (PlayerState.IsPlayerInDungeon())
             {
-                byte curDun = Memory.ReadByte(MiscAddrs.CurDungeon);
+                byte curDun = PlayerState.GetCurDungeon();
                 if (curDun < Options.Goal && atlaMap[curDun] != null)
                 {
                     List<Atla> dunAtla = atlaMap[curDun];
@@ -191,7 +191,8 @@ namespace DC1AP.Threads
                 // Skip current dungeon if already mapped out
                 // Don't read the atla until the player enters the first dungeon since we can't initialize it.
                 // Don't rerun or run if the game isn't in a valid state
-                if (dungeonsMapped[dun] || Memory.ReadInt(GeoAddrs.AtlaFlagAddrs[dun]) == MiscConstants.AtlaUnavailable || !PlayerState.ValidGameState) return;
+                if (!PlayerState.ValidGameState || dungeonsMapped[dun] ||
+                    (Memory.ReadInt(GeoAddrs.AtlaFlagAddrs[dun]) == MiscConstants.AtlaUnavailable && (!PlayerState.IsPlayerInDungeon() || PlayerState.GetCurDungeon() != dun))) return;
 
                 // Only bother checking if not updated yet.
                 if (!catPlaced && dun == 0)
