@@ -54,6 +54,11 @@ namespace DC1AP.Mem
             return Memory.ReadByte(MiscAddrs.InDungeonFlag) != 0xFF;
         }
 
+        public static byte GetCurDungeon()
+        {
+            return Memory.ReadByte(MiscAddrs.CurDungeon);
+        }
+
         public static bool IsPlayerInTown()
         {
             return PlayerReady() && Memory.ReadByte(MiscAddrs.PlayerState) == 2;
