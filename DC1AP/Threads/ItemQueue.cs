@@ -198,9 +198,7 @@ namespace DC1AP.Threads
 
                     if (checkItems)
                     {
-                        InventoryMgmt.VerifyItems();
-                        GeoInvMgmt.VerifyItems();
-                        checkItems = false;
+                        CheckItems();
                     }
                 }
                 // Player hasn't started the game, or has reset so clear the queues.
@@ -238,6 +236,14 @@ namespace DC1AP.Threads
                 }
                 Thread.Sleep(500);
             }
+        }
+
+        private static void CheckItems()
+        {
+            ClearQueues();
+            InventoryMgmt.VerifyItems();
+            GeoInvMgmt.VerifyItems();
+            checkItems = false;
         }
 
         internal static void ClearQueues()
