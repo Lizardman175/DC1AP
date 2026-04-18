@@ -2,6 +2,7 @@
 using DC1AP.Constants;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace DC1AP
 {
@@ -23,6 +24,7 @@ namespace DC1AP
         private static string rubyName = "Ruby";
         private static string ungagaName = "Ungaga";
         private static string osmondName = "Osmond";
+        private static List<List<int>>? atlaPerFloor = null;
 
         public static int Goal { get => goal; }
         public static AttachMultConfig AttachMultConfig { get => attachMultConfig; }
@@ -40,28 +42,36 @@ namespace DC1AP
         internal static string RubyName { get => rubyName; }
         internal static string UngagaName { get => ungagaName; }
         internal static string OsmondName { get => osmondName; }
+        internal static List<List<int>>? AtlaPerFloor { get => atlaPerFloor; }
 
         internal static void ParseOptions(Dictionary<string, object> options)
         {
 #pragma warning disable CS8604 // Possible null reference argument.
 #pragma warning disable CS8601 // Possible null reference.
-            goal = Int32.Parse(options["goal"].ToString());  // What dungeon to randomize through
-            attachMultConfig = (AttachMultConfig)Int32.Parse(options["attach_mult_config"].ToString());
+            goal = ((JsonElement)options["goal"]).Deserialize<int>();  // What dungeon to randomize through
+            attachMultConfig = (AttachMultConfig)((JsonElement)options["attach_mult_config"]).Deserialize<int>();
             if (attachMultConfig > 0)
-                attachMultiplier = (Int32.Parse(options["attach_multiplier"].ToString()) + 1.0f) / 2;
-            absMultiplier = (Int32.Parse(options["abs_multiplier"].ToString()) + 1.0f) / 2;
-            allBosses = options["all_bosses"].ToString() != "0";  // All bosses up to dungeon goal
-            openDungeon = options["open_dungeon"].ToString() != "0";  // All floors logically accessible will be unlocked
-            starterWeapons = options["starter_weapons"].ToString() != "0";  // All floors logically accessible will be unlocked
-            autobuild = (AutobuildFlags)Int32.Parse(options["auto_build"].ToString());
-            miracleSanity = options["miracle_sanity"].ToString() != "0";  // Shuffle in miracle chests
-            deathLink = options["death_link"].ToString() != "0";
-            toanName = options["toan_name"].ToString();
-            xiaoName = options["xiao_name"].ToString();
-            goroName = options["goro_name"].ToString();
-            rubyName = options["ruby_name"].ToString();
-            ungagaName = options["ungaga_name"].ToString();
-            osmondName = options["osmond_name"].ToString();
+                attachMultiplier = (((JsonElement)options["attach_multiplier"]).Deserialize<int>() + 1.0f) / 2;
+            absMultiplier = (((JsonElement)options["abs_multiplier"]).Deserialize<int>() + 1.0f) / 2;
+            allBosses = ((JsonElement)options["all_bosses"]).Deserialize<int>() != 0;  // All bosses up to dungeon goal
+            openDungeon = ((JsonElement)options["open_dungeon"]).Deserialize<int>() != 0;  // All floors logically accessible will be unlocked
+            starterWeapons = ((JsonElement)options["starter_weapons"]).Deserialize<int>() != 0;  // All floors logically accessible will be unlocked
+            autobuild = (AutobuildFlags)((JsonElement)options["auto_build"]).Deserialize<int>();
+            miracleSanity = ((JsonElement)options["miracle_sanity"]).Deserialize<int>() != 0;  // Shuffle in miracle chests
+            deathLink = ((JsonElement)options["death_link"]).Deserialize<int>() != 0;
+            toanName = ((JsonElement)options["toan_name"]).Deserialize<String>();
+            xiaoName = ((JsonElement)options["xiao_name"]).Deserialize<String>();
+            goroName = ((JsonElement)options["goro_name"]).Deserialize<String>();
+            rubyName = ((JsonElement)options["ruby_name"]).Deserialize<String>();
+            ungagaName = ((JsonElement)options["ungaga_name"]).Deserialize<String>();
+            osmondName = ((JsonElement)options["osmond_name"]).Deserialize<String>();
+            if (options.TryGetValue("apf", out object? value))
+            {
+                if (value != null)
+                {
+                    atlaPerFloor = ((JsonElement)value).Deserialize<List<List<int>>>();
+                }
+            }
 #pragma warning restore CS8601 // Possible null reference.
 #pragma warning restore CS8604 // Possible null reference argument.
         }
