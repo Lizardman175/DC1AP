@@ -284,11 +284,11 @@ Muska Lacka SMT entrance chest (left),971114068,3,,,0x01CE490E,0x40,Fluffy Dough
 Muska Lacka SMT entrance chest (right),971114069,3,,,0x01CE490F,0x01,Witch Parfait
 Muska Lacka entrance chest (left),971114070,3,,,0x01CE490E,0x80,Fish Candy
 Muska Lacka entrance chest (right),971114071,3,ungaga,,0x01CE490F,0x08,Grass Cake
-SMT (right of stairs),971114072,3,,,0x01CE52CD,0x10,Gourd
-SMT (right rock),971114073,3,,,0x01CE52CD,0x40,Stone Breaker
-SMT (right wall),971114074,3,ungaga,,0x01CE52CD,0x20,Fruit of Eden
-SMT (left wall),971114075,3,ungaga,,0x01CE52CE,0x01,Fire Gem
-SMT (far left),971114076,3,,,0x01CE52CD,0x80,Anti-Goo Amulet
+SMT exterior chest (right of stairs),971114072,3,,,0x01CE52CD,0x10,Gourd
+SMT exterior chest (right rock),971114073,3,,,0x01CE52CD,0x40,Stone Breaker
+SMT exterior chest (right wall),971114074,3,ungaga,,0x01CE52CD,0x20,Fruit of Eden
+SMT exterior chest (left wall),971114075,3,ungaga,,0x01CE52CE,0x01,Fire Gem
+SMT exterior chest (far left),971114076,3,,,0x01CE52CD,0x80,Anti-Goo Amulet
 Yellow Drops Shop room chest 1,971115001,4,,,0x01CE4E0B,0x02,Fruit of Eden
 Yellow Drops Shop room chest 2,971115002,4,,,0x01CE4E0B,0x04,Metal Breaker
 Yellow Drops Shop room chest 3,971115003,4,osmond,,0x01CE4E0B,0x01,Gourd
