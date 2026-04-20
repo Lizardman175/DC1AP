@@ -115,6 +115,7 @@ namespace DC1AP.Constants
         internal const int SMTExtZone = 0x2A;
         internal const int FactoryZone = 0x04;
         internal const int YellowDropsZone = 0x17;
+        internal const int DHCZone = 0x26;
 
         internal const uint CurZoneAddr = 0x002A2810;
 

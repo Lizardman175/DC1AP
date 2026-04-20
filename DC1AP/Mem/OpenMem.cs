@@ -20,7 +20,9 @@ namespace DC1AP.Mem
 
         // Byte
         internal static readonly uint GoalAddr = SlotNameAddr + SlotNameLen;
-        // Note: currently a 1 byte gap after GoalAddr
+
+        // Byte. Used by ProgCharBuilding.cs
+        internal static readonly uint ProgCharBldAddr = GoalAddr + 1;
 
         // 1 byte each. Includes space for Toan
         internal static readonly uint[] CharHandledAddrs = [GoalAddr + 2, GoalAddr + 3,  GoalAddr + 4, GoalAddr + 5, GoalAddr + 6, GoalAddr + 7];

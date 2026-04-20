@@ -49,18 +49,24 @@ namespace DC1AP.Constants
         internal const int AtlaClaimed = -3;
 
         // All building IDs are in the .json.  Some are needed for edge cases here.
-        internal const short NoruneRiverId = 15;
-        internal const short NoruneBridgeId = 16;
-        internal const short CouscousId = 5;
-        internal const short MushroomId = 7;
-        internal const short EarthAId = 18;
-        internal const short EarthBId = 19;
-        internal const short Watermill1Id = 11;
-        internal const short Watermill2Id = 12;
-        internal const short Watermill3Id = 13;
-        internal const short MatatakiRiverId = 16;
-        internal const short MatatakiBridgeId = 17;
+        internal const int NoruneRiverId = 971_110_115;
+        internal const int NoruneBridgeId = 971_110_116;
+        internal const int CouscousId = 971_110_205;
+        internal const int MushroomId = 971_110_207;
+        internal const int EarthAId = 971_110_218;
+        internal const int EarthBId = 971_110_219;
+        internal const int Watermill1Id = 971_110_211;
+        internal const int Watermill2Id = 971_110_212;
+        internal const int Watermill3Id = 971_110_213;
+        internal const int MatatakiRiverId = 971_110_216;
+        internal const int MatatakiBridgeId = 971_110_217;
 
+        internal const int ProgCharBldId = 971_110_000;
+        internal const int PlayerHouseId = 971_110_100;
+        internal const int CacaosHouseId = 971_110_201;
+        internal const int KingHideoutId = 971_110_308;
+        internal const int SisterHouseId = 971_110_403;
+        
         internal const short MatatakiReqRiverCount = 5;
         internal const short MatatakiBridgeRiverCount = 6;
         internal const short NoruneBridgeRiverCount = 3;

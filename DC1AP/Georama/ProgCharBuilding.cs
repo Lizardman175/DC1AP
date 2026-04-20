@@ -1,6 +1,5 @@
 ﻿using DC1AP.Constants;
 using DC1AP.Mem;
-using System.Collections.Generic;
 
 namespace DC1AP.Georama
 {
@@ -19,8 +18,6 @@ namespace DC1AP.Georama
 
             return charBuilding;
         }
-
-        private Dictionary<int, GeoBuilding> charBuildings = [];
 
         internal override Towns Town { get
             {
@@ -54,26 +51,21 @@ namespace DC1AP.Georama
             DetermineBuilding()?.GiveBuilding();
         }
 
-        internal void AddBuilding(int apId, GeoBuilding building)
-        {
-            charBuildings.Add(apId, building);
-        }
-
         private GeoBuilding? DetermineBuilding()
         {
-            if (charBuildings.TryGetValue(MiscConstants.PlayerHouseId, out GeoBuilding? playerHouse) && playerHouse.BuildingValue < 7)
+            if (buildings.TryGetValue(MiscConstants.PlayerHouseId, out GeoBuilding? playerHouse) && playerHouse.BuildingValue < 7)
             {
                 return playerHouse;
             }
-            else if (charBuildings.TryGetValue(MiscConstants.CacaosHouseId, out GeoBuilding? cacaoHouse) && cacaoHouse.BuildingValue < 7)
+            else if (buildings.TryGetValue(MiscConstants.CacaosHouseId, out GeoBuilding? cacaoHouse) && cacaoHouse.BuildingValue < 7)
             {
                 return cacaoHouse;
             }
-            else if (charBuildings.TryGetValue(MiscConstants.KingHideoutId, out GeoBuilding? kingsHideout) && kingsHideout.BuildingValue < 7)
+            else if (buildings.TryGetValue(MiscConstants.KingHideoutId, out GeoBuilding? kingsHideout) && kingsHideout.BuildingValue < 7)
             {
                 return kingsHideout;
             }
-            else if (charBuildings.TryGetValue(MiscConstants.SisterHouseId, out GeoBuilding? sisterHouse) && sisterHouse.BuildingValue < 7)
+            else if (buildings.TryGetValue(MiscConstants.SisterHouseId, out GeoBuilding? sisterHouse) && sisterHouse.BuildingValue < 7)
             {
                 return sisterHouse;
             }

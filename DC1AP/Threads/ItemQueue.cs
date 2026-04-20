@@ -5,6 +5,7 @@ using DC1AP.Items;
 using DC1AP.Mem;
 using Serilog;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
@@ -116,11 +117,22 @@ namespace DC1AP.Threads
                     if (!PlayerState.IsPlayerInDungeon() && !msgQueue.IsEmpty) msgQueue.Clear();
 
                     // Geo items can only be received in dungeon
-                    if (PlayerState.CanGiveItemDungeon())
+                    if (PlayerState.CanGiveGeorama())
                     {
-                        while (PlayerState.CanGiveItemDungeon() && geoBuildingQueue.TryDequeue(out GeoBuilding geoBuilding))
+                        Queue<GeoBuilding> tempQueue = new();
+                        while (PlayerState.CanGiveGeorama() && geoBuildingQueue.TryDequeue(out GeoBuilding? geoBuilding))
                         {
-                            geoBuilding.GiveBuilding();
+                            if (PlayerState.CanGiveGeoInTown() && (int)geoBuilding.Town == PlayerState.GetCurrentTown())
+                                //geoBuilding.GiveBuildingTown();  TODO see below
+                                tempQueue.Enqueue(geoBuilding);
+                            else
+                                geoBuilding.GiveBuilding();
+                        }
+
+                        // TODO temp handling of local town pieces until auto build is working for the local town with GiveBuildingTown().
+                        while (tempQueue.TryDequeue(out GeoBuilding? geoBuilding))
+                        {
+                            AddGeorama(geoBuilding);
                         }
 
                         // Display queued up messages after the last one fades.

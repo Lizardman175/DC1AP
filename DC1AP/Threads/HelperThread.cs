@@ -32,13 +32,9 @@ namespace DC1AP.Threads
         /// <summary>
         /// Handle startup and the player reloading from memory by zeroing out various values and reinitializing data.
         /// </summary>
-        private static void Startup()
+        internal static void Startup()
         {
-            atlaMap = new List<Atla>[6];
-            dungeonsMapped = [false, false, false, false, false, false];
-            catPlaced = false;
-            playableState = false;
-
+            Clear();
             InitAtla();
 
             // Can't use a loop here as InitAtla will only reference the loop counter's final value: Options.Goal
@@ -69,10 +65,16 @@ namespace DC1AP.Threads
             }
         }
 
+        internal static void Clear()
+        {
+            atlaMap = new List<Atla>[6];
+            dungeonsMapped = [false, false, false, false, false, false];
+            catPlaced = false;
+            playableState = false;
+        }
+
         internal static void DoLoop(object? parameters)
         {
-            runThread = true;
-
             Startup();
 
             while (runThread)
@@ -80,11 +82,12 @@ namespace DC1AP.Threads
                 bool playerReady = PlayerState.PlayerReady();
 
                 // Handle player resets
-                if (playableState && !playerReady)
-                {
-                    Startup();
-                }
-                else if (playerReady)
+                //if (playableState && !playerReady)
+                //{
+                //    Startup();
+                //}
+                //else 
+                if (playerReady)
                 {
                     if (!playableState) playableState = true;
 
@@ -120,6 +123,8 @@ namespace DC1AP.Threads
 
                 Thread.Sleep(500);
             }
+
+            Clear();
         }
 
         /// <summary>
