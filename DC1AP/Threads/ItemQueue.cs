@@ -28,8 +28,6 @@ namespace DC1AP.Threads
 
         internal static bool checkItems = false;
 
-        internal static bool runThread = true;
-
         internal static void AddGeorama(GeoBuilding geoBuilding)
         {
             if (PlayerState.PlayerReady())
@@ -101,13 +99,12 @@ namespace DC1AP.Threads
 
         internal static void ThreadLoop(object? parameters)
         {
-            runThread = true;
             bool result = true;
             bool itemReceived = false;
             bool attachmentReceived = false;
 
             // Clean out the queues before stopping
-            while (runThread)
+            while (PlayerState.ValidGameState)
             {
                 Thread.Sleep(100);
 
@@ -219,6 +216,8 @@ namespace DC1AP.Threads
                     ClearQueues();
                 }
             }
+
+            ClearQueues();
         }
 
         /// <summary>
@@ -258,14 +257,14 @@ namespace DC1AP.Threads
             checkItems = false;
         }
 
-        internal static void ClearQueues()
+        private static void ClearQueues()
         {
             geoBuildingQueue.Clear();
             ClearItemQueues();
             msgQueue.Clear();
         }
 
-        internal static void ClearItemQueues()
+        private static void ClearItemQueues()
         {
             keyItemQueue.Clear();
             inventoryQueue.Clear();

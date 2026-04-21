@@ -63,8 +63,6 @@ namespace DC1AP
 
         private static readonly ConcurrentQueue<Location> locationQueue = new();
 
-        private Thread queueThread;
-        private Thread helperThread;
         private Thread reconnectThread;
         private GameClient? ps2Client;
         private bool diviningHouseDone = false;
@@ -208,24 +206,6 @@ namespace DC1AP
                 ListenForDeath();
             }
 
-            if (queueThread == null)
-            {
-                queueThread = new Thread(new ParameterizedThreadStart(ItemQueue.ThreadLoop))
-                {
-                    IsBackground = true
-                };
-                queueThread.Start();
-            }
-
-            if (helperThread == null)
-            {
-                helperThread = new Thread(new ParameterizedThreadStart(HelperThread.DoLoop))
-                {
-                    IsBackground = true
-                };
-                helperThread.Start();
-            }
-
             MessageFuncs.InitOverlay();
 
             Context.ConnectButtonEnabled = true;
@@ -314,6 +294,16 @@ namespace DC1AP
 
             PlayerState.ValidGameState = true;
 
+            new Thread(new ParameterizedThreadStart(HelperThread.DoLoop))
+            {
+                IsBackground = true
+            }.Start();
+
+            new Thread(new ParameterizedThreadStart(ItemQueue.ThreadLoop))
+            {
+                IsBackground = true
+            }.Start();
+
             new Thread(new ParameterizedThreadStart(MiracleChestMgmt.DoLoop))
             {
                 IsBackground = true
@@ -327,7 +317,6 @@ namespace DC1AP
         private void PlayerNotReady(string slotName)
         {
             PlayerState.ValidGameState = false;
-            ItemQueue.ClearQueues();
             Memory.MonitorAddressForAction<int>(MiscAddrs.TimeOfDayAddr, () => PlayerReady(slotName), (o) => { return o != 0; });
         }
 

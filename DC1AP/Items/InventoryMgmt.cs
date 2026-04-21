@@ -295,7 +295,6 @@ namespace DC1AP.Items
         internal static void VerifyItems()
         {
             // Clear current values, check what the server thinks first, then compare that against the save file.
-            ItemQueue.ClearItemQueues();
             itemCounts.Clear();
             attachCounts.Clear();
 

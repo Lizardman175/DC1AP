@@ -21,18 +21,15 @@ namespace DC1AP.Threads
         private static List<Atla>[] atlaMap = new List<Atla>[6];
         private static bool[] dungeonsMapped = [false, false, false, false, false, false];
 
-        private static bool runThread = false;
         private static bool catPlaced = false;
 
         // Flag used to prevent re-running Startup() multiple times waiting for player to load game.
         private static bool playableState = true;
 
-        internal static bool RunThread { get => runThread; set => runThread = value; }
-
         /// <summary>
         /// Handle startup and the player reloading from memory by zeroing out various values and reinitializing data.
         /// </summary>
-        internal static void Startup()
+        private static void Startup()
         {
             Clear();
             InitAtla();
@@ -77,17 +74,9 @@ namespace DC1AP.Threads
         {
             Startup();
 
-            while (runThread)
+            while (PlayerState.ValidGameState)
             {
-                bool playerReady = PlayerState.PlayerReady();
-
-                // Handle player resets
-                //if (playableState && !playerReady)
-                //{
-                //    Startup();
-                //}
-                //else 
-                if (playerReady)
+                if (PlayerState.PlayerReady())
                 {
                     if (!playableState) playableState = true;
 
@@ -121,7 +110,7 @@ namespace DC1AP.Threads
                     }
                 }
 
-                Thread.Sleep(500);
+                Thread.Sleep(100);
             }
 
             Clear();
@@ -190,14 +179,14 @@ namespace DC1AP.Threads
         {
             lock (_lock)
             {
+                // Skip current dungeon if already mapped out
+                if (dungeonsMapped[dun]) return;
+
                 // Brief sleep to allow the game to initialize the dungeon
                 Thread.Sleep(500);
 
-                // Skip current dungeon if already mapped out
                 // Don't read the atla until the player enters the first dungeon since we can't initialize it.
-                // Don't rerun or run if the game isn't in a valid state
-                if (!PlayerState.ValidGameState || dungeonsMapped[dun] ||
-                    (Memory.ReadInt(GeoAddrs.AtlaFlagAddrs[dun]) == MiscConstants.AtlaUnavailable && (!PlayerState.IsPlayerInDungeon() || PlayerState.GetCurDungeon() != dun))) return;
+                if ((Memory.ReadInt(GeoAddrs.AtlaFlagAddrs[dun]) == MiscConstants.AtlaUnavailable && (!PlayerState.IsPlayerInDungeon() || PlayerState.GetCurDungeon() != dun))) return;
 
                 // Only bother checking if not updated yet.
                 if (!catPlaced && dun == 0)
@@ -206,7 +195,7 @@ namespace DC1AP.Threads
                 MemFuncs.ClearAtlaTable(dun);
 
                 uint addr = GeoAddrs.AtlaFlagAddrs[dun];
-                // TODO magic nums.  Atla values are likely to change soon, so not bothering yet.
+                // TODO magic nums.
                 int atlaId = MiscConstants.BaseId + 101 + 1000 * (dun + 1);
                 List<Atla> dunAtla = [];
 
