@@ -2,7 +2,7 @@
 using DC1AP.Constants;
 
 
-namespace DC1AP.Items
+namespace DC1AP.Locations
 {
     internal class MiracleChest(long locationId, uint addr, byte mask)
     {
