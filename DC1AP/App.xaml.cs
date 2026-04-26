@@ -273,7 +273,6 @@ namespace DC1AP
             }
 
             SetDefaultNames(false);
-            MiracleChestMgmt.Init();
             GeoInvMgmt.InitBuildings();
             CharFuncs.Init();
             Enemies.MultiplyABS();

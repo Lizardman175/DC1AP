@@ -147,7 +147,7 @@ namespace DC1AP.Mem
 
         #region CharUnlocks
         /// <summary>
-        /// When the player recruits Xiao, give them Matataki & Queens access, back of DBC (conditional)
+        /// When the player recruits Xiao, give them Matataki access, back of DBC (conditional)
         /// </summary>
         private static void XiaoGained()
         {
