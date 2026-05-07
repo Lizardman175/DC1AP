@@ -63,6 +63,9 @@ namespace DC1AP
 
         private static readonly ConcurrentQueue<Location> locationQueue = new();
 
+        private Thread queueThread;
+        private Thread helperThread;
+        private Thread chestThread;
         private Thread reconnectThread;
         private GameClient? ps2Client;
         private bool diviningHouseDone = false;
@@ -70,7 +73,8 @@ namespace DC1AP
 
         private DeathLinkService? _deathlinkService = null;
         private bool deathFromDeathlink = false;
-        private string slotName = "";
+        private static string slotName = string.Empty;
+        private static string seedName = string.Empty;
 
         public override void Initialize()
         {
@@ -206,6 +210,24 @@ namespace DC1AP
                 ListenForDeath();
             }
 
+            if (queueThread == null)
+            {
+                queueThread = new Thread(new ParameterizedThreadStart(ItemQueue.ThreadLoop))
+                {
+                    IsBackground = true
+                };
+                queueThread.Start();
+            }
+
+            if (helperThread == null)
+            {
+                helperThread = new Thread(new ParameterizedThreadStart(HelperThread.DoLoop))
+                {
+                    IsBackground = true
+                };
+                helperThread.Start();
+            }
+
             MessageFuncs.InitOverlay();
 
             Context.ConnectButtonEnabled = true;
@@ -258,6 +280,7 @@ namespace DC1AP
                 EventMasks.InitMasks();
                 Weapons.GiveCharWeapon(0);
                 InventoryMgmt.GiveFreeFeather();
+                seedName = Client.CurrentSession.RoomState.Seed;
             }
             else if (currSlot != slotName)
             {
@@ -266,7 +289,7 @@ namespace DC1AP
                 PlayerState.ValidGameState = false;
                 return;
             }
-            else if (!OpenMem.TestRoomSeed())
+            else if (!OpenMem.TestRoomSeed(Client.CurrentSession.RoomState.Seed))
             {
                 PlayerState.ValidGameState = false;
                 return;
@@ -291,22 +314,19 @@ namespace DC1AP
                 Memory.MonitorAddressForAction<short>(GeoAddrs.CathedralBldEventFlag, AckCathedral, (o) => { return o >= 1; });
             }
 
+            MiracleChestMgmt.Init();
+
             PlayerState.ValidGameState = true;
 
-            new Thread(new ParameterizedThreadStart(HelperThread.DoLoop))
+            // Other threads shouldn't stop, but if disconnecting from a slot without MC shuffle and connecting to one with MC shuffle, need to test thread state.
+            if (chestThread == null || chestThread.ThreadState == ThreadState.Stopped)
+            {
+                chestThread = new Thread(new ParameterizedThreadStart(MiracleChestMgmt.DoLoop))
             {
                 IsBackground = true
-            }.Start();
-
-            new Thread(new ParameterizedThreadStart(ItemQueue.ThreadLoop))
-            {
-                IsBackground = true
-            }.Start();
-
-            new Thread(new ParameterizedThreadStart(MiracleChestMgmt.DoLoop))
-            {
-                IsBackground = true
-            }.Start();
+                };
+                chestThread.Start();
+            }
 
             // Watch for the player to reset the game, then change the valid state flag and ready up to connect again.
             Memory.MonitorAddressForAction<int>(MiscAddrs.TimeOfDayAddr, () => PlayerNotReady(slotName), (o) => { return o == 0; });
@@ -316,6 +336,8 @@ namespace DC1AP
         private void PlayerNotReady(string slotName)
         {
             PlayerState.ValidGameState = false;
+            ItemQueue.ClearQueues();
+            HelperThread.Startup();
             Memory.MonitorAddressForAction<int>(MiscAddrs.TimeOfDayAddr, () => PlayerReady(slotName), (o) => { return o != 0; });
         }
 
@@ -352,6 +374,9 @@ namespace DC1AP
 
         internal static async Task SendLocation(int locId)
         {
+            // Test slot info before sending checks in case the player has loaded a save state to avoid releasing extra items.
+            if (PlayerState.ValidGameState && OpenMem.TestSlotInfo(slotName, seedName))
+            {
             Location loc = new()
             {
                 Id = locId
@@ -361,6 +386,11 @@ namespace DC1AP
                 App.Client.SendLocationAsync(loc);
             else
                 locationQueue.Enqueue(loc);
+        }
+            else
+            {
+                PlayerState.ValidGameState = false;
+            }
         }
 
         private void ListenForDeath()
