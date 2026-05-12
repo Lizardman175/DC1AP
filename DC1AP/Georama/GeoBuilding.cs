@@ -69,6 +69,21 @@ namespace DC1AP.Georama
             town = townId;
         }
 
+        internal bool EventSeen()
+        {
+            return Memory.ReadByte(BaseAddr - EventFlagOffset) != 0;
+        }
+
+        private void SeeEvent()
+        {
+            Memory.WriteByte(BaseAddr - EventFlagOffset, 1);
+        }
+
+        internal void UnseeEvent()
+        {
+            Memory.WriteByte(BaseAddr - EventFlagOffset, 0);
+        }
+
         /// <summary>
         /// Give player a building piece while they are in town.  Needs to update an extra table paged in based on current town.
         /// </summary>
@@ -143,7 +158,7 @@ namespace DC1AP.Georama
                 // Skip the dialog only events for the 4 pilots
                 if (town == Towns.Factory && MiscConstants.FactoryEventSkips.Contains(BuildingId))
                 {
-                    Memory.Write(BaseAddr - EventFlagOffset, 1);
+                    SeeEvent();
                 }
 
                 msg = "Received " + Name + ".";
@@ -168,7 +183,10 @@ namespace DC1AP.Georama
 
                 // Skip having to view the d6 events after getting the last item
                 if (town == Towns.Castle && buildingValue == Items.Length)
+                {
                     EventMasks.SetD6Flag(BuildingId);
+                    SeeEvent();
+                }
 
                 buildingValue++;
 

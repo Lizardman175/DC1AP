@@ -30,7 +30,7 @@ namespace DC1AP.Threads
         /// <summary>
         /// Handle startup and the player reloading from memory by zeroing out various values and reinitializing data.
         /// </summary>
-        private static void Startup()
+        internal static void Startup()
         {
             Clear();
             InitAtla();
@@ -63,7 +63,7 @@ namespace DC1AP.Threads
             }
         }
 
-        internal static void Clear()
+        private static void Clear()
         {
             atlaMap = new List<Atla>[6];
             dungeonsMapped = [false, false, false, false, false, false];
@@ -75,7 +75,7 @@ namespace DC1AP.Threads
         {
             Startup();
 
-            while (PlayerState.ValidGameState)
+            while (true)
             {
                 if (PlayerState.PlayerReady())
                 {
@@ -113,8 +113,6 @@ namespace DC1AP.Threads
 
                 Thread.Sleep(100);
             }
-
-            Clear();
         }
 
         /// <summary>
@@ -252,6 +250,8 @@ namespace DC1AP.Threads
                     }
                     else
                         Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], MiscAddrs.FloorCountFront[dun]);
+
+                    if (dun == (int)Towns.Castle) EventMasks.CheckD6Flags();
                 }
 
                 atlaMap[dun] = dunAtla;

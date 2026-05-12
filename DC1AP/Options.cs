@@ -9,6 +9,7 @@ namespace DC1AP
     internal static class Options
     {
         private static int goal = 6;
+        private static int memoryCount;
         private static AttachMultConfig attachMultConfig = 0;
         private static float attachMultiplier = 1f;
         private static float absMultiplier = 2f;
@@ -16,8 +17,8 @@ namespace DC1AP
         private static bool allBosses = false;
         private static bool starterWeapons = false;
         private static bool miracleSanity = false;
-        private static AutobuildFlags autobuild = AutobuildFlags.Off;
         private static bool deathLink = false;
+        private static AutobuildFlags autobuild = AutobuildFlags.Off;
         private static string toanName = "Toan";
         private static string xiaoName = "Xiao";
         private static string goroName = "Goro";
@@ -27,6 +28,7 @@ namespace DC1AP
         private static List<List<int>>? atlaPerFloor = null;
 
         public static int Goal { get => goal; }
+        public static int MemoryCount { get => memoryCount; }
         public static AttachMultConfig AttachMultConfig { get => attachMultConfig; }
         public static float AttachMultiplier { get => attachMultiplier; }
         public static float AbsMultiplier { get => absMultiplier; }
@@ -49,6 +51,7 @@ namespace DC1AP
 #pragma warning disable CS8604 // Possible null reference argument.
 #pragma warning disable CS8601 // Possible null reference.
             goal = ((JsonElement)options["goal"]).Deserialize<int>();  // What dungeon to randomize through
+            memoryCount = ((JsonElement)options["memory_count"]).Deserialize<int>();
             attachMultConfig = (AttachMultConfig)((JsonElement)options["attach_mult_config"]).Deserialize<int>();
             if (attachMultConfig > 0)
                 attachMultiplier = (((JsonElement)options["attach_multiplier"]).Deserialize<int>() + 1.0f) / 2;

@@ -1,23 +1,24 @@
 ﻿using Archipelago.Core.Util;
+using DC1AP.Constants;
 using System;
 
 namespace DC1AP.Mem
 {
     internal class EventMasks
     {
-        internal static uint DialogAddr1 = 0x01CE43A8;
+        internal const uint DialogAddr1 = 0x01CE43A8;
         // 0x80: skip pre-SMT dialog
-        internal static uint DialogAddr2 = 0x01CE43A9;
-        internal static uint DialogAddr3 = 0x01CE43AC;
-        internal static uint DialogAddr4 = 0x01CE43AD;  // 0x02 is releated to end game cutscenes
-        internal static uint DialogAddr5 = 0x01CE43AE;
-        internal static uint DialogAddr6 = 0x01CE43B4;
-        internal static uint DialogAddr7 = 0x01CE43B5;
-        internal static uint DialogAddr8 = 0x01CE43B8;
-        internal static uint DialogAddr9 = 0x01CE43AA;
+        internal const uint DialogAddr2 = 0x01CE43A9;
+        internal const uint DialogAddr3 = 0x01CE43AC;
+        internal const uint DialogAddr4 = 0x01CE43AD;  // 0x02 is releated to end game cutscenes
+        internal const uint DialogAddr5 = 0x01CE43AE;
+        internal const uint DialogAddr6 = 0x01CE43B4;
+        internal const uint DialogAddr7 = 0x01CE43B5;
+        internal const uint DialogAddr8 = 0x01CE43B8;
+        internal const uint DialogAddr9 = 0x01CE43AA;
 
         // Does more than just shipwreck, but that's the only thing we interact with it for currently
-        private static uint ShipwreckKeyAddr = 0x01CE43AB;
+        private const uint ShipwreckKeyAddr = 0x01CE43AB;
         private const byte ShipwreckKeyValue = 0xFF - 0x10;
 
         // 01CE43AF Boss kill flag for Joe?: sets to 0x01
@@ -31,7 +32,7 @@ namespace DC1AP.Mem
         // 0x01 = Things Lost, 0x02 = Departure 
         private static uint EastKingStoryAddr3 = 0x01CE43C6;
 
-        internal static (uint, byte)[] D6StorySkip = [(EastKingStoryAddr1, 0x40), (EastKingStoryAddr1, 0x80),
+        private static (uint, byte)[] D6StorySkip = [(EastKingStoryAddr1, 0x40), (EastKingStoryAddr1, 0x80),
             (EastKingStoryAddr2, 0x01), (EastKingStoryAddr2, 0x02), (EastKingStoryAddr2, 0x04), (EastKingStoryAddr2, 0x08),
             (EastKingStoryAddr2, 0x10), (EastKingStoryAddr2, 0x20), (EastKingStoryAddr2, 0x40), (EastKingStoryAddr2, 0x80),
             (EastKingStoryAddr3, 0x01), (EastKingStoryAddr3, 0x02)];
@@ -73,7 +74,7 @@ namespace DC1AP.Mem
          */
         internal static void InitMasks()
         {
-            // Skip first scene entering Queens (40) & first dialog with Randro (80)
+            // Skip first scene entering Queens (40) & first dialog with Rando (80)
             // 11b skips need to get the mayor's key & open DBC, but you skip getting the first items.
             OrMask(DialogAddr1, 0xC0);
             // Skips initial cutscene when entering Matataki
@@ -153,6 +154,26 @@ namespace DC1AP.Mem
         {
             (uint, byte) set = D6StorySkip[buildingId];
             OrMask(set.Item1, set.Item2);
+
+            CheckD6Flags();
+        }
+
+        internal static void CheckD6Flags()
+        {
+            int count = 0;
+
+            foreach ((uint, byte) mem in D6StorySkip)
+            {
+                if ((Memory.ReadByte(mem.Item1) & mem.Item2) > 0) count++;
+
+                if (count >= Options.MemoryCount)
+                {
+                    if (Memory.ReadByte(MiscAddrs.GoTFloorCountAddr) > 0)
+                        Memory.WriteByte(MiscAddrs.GoTFloorCountAddr, MiscAddrs.GenieFloorCountValue);
+
+                    break;
+                }
+            }
         }
     }
 }
