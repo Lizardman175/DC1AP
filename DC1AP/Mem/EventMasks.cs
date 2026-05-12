@@ -168,7 +168,7 @@ namespace DC1AP.Mem
 
                 if (count >= Options.MemoryCount)
                 {
-                    if (Memory.ReadByte(MiscAddrs.GoTFloorCountAddr) > 0)
+                    if (Memory.ReadByte(MiscAddrs.GoTFloorCountAddr) != 0xFF)
                         Memory.WriteByte(MiscAddrs.GoTFloorCountAddr, MiscAddrs.GenieFloorCountValue);
 
                     break;
