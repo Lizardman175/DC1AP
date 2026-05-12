@@ -62,16 +62,6 @@ namespace DC1AP.Threads
             }
         }
 
-        /// <summary>
-        /// Checks all MCs for the given town.
-        /// </summary>
-        /// <param name="town"></param>
-        internal static void CheckTown(Towns town)
-        {
-            if (town < Towns.Castle && PlayerState.PlayerMovableTown())
-                chests[(int)town].RemoveAll(mc => mc.CheckChest());
-        }
-
         internal static void DoLoop(object? parameters)
         {
             if (!Options.MiracleSanity)
@@ -83,8 +73,6 @@ namespace DC1AP.Threads
 
             while (PlayerState.ValidGameState)
             {
-                Thread.Sleep(50);
-
                 int zoneId = Memory.ReadInt(MiscAddrs.CurZoneAddr);
 
                 if (PlayerState.PlayerMovableInTown())
@@ -139,7 +127,19 @@ namespace DC1AP.Threads
                     else if (zoneId == MiscAddrs.YellowDropsZone || zoneId == MiscAddrs.FactoryZone)
                         MiracleChestMgmt.CheckTown(Towns.Factory);
                 }
+
+                Thread.Sleep(50);
             }
+        }
+
+        /// <summary>
+        /// Checks all MCs for the given town.
+        /// </summary>
+        /// <param name="town"></param>
+        private static void CheckTown(Towns town)
+        {
+            if (town < Towns.Castle && PlayerState.PlayerMovableTown())
+                chests[(int)town].RemoveAll(mc => mc.CheckChest());
         }
 
         private static void EmptyMiracleChests(uint addr, bool mayor = false, bool bunbuku = false)

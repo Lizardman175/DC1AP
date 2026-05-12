@@ -16,11 +16,11 @@ namespace DC1AP.Threads
         private const int DisplayTime = 350; // cs, 3.5 seconds
         //private static int MsToCs = 10;  // Convert 1000ths of a second to 100ths
 
-        private static ConcurrentQueue<GeoBuilding> geoBuildingQueue = new();
-        private static ConcurrentQueue<long> keyItemQueue = new();
-        private static ConcurrentQueue<long> inventoryQueue = new();
-        private static ConcurrentQueue<long> attachmentQueue = new();
-        private static ConcurrentQueue<string> msgQueue = new();
+        private static readonly ConcurrentQueue<GeoBuilding> geoBuildingQueue = new();
+        private static readonly ConcurrentQueue<long> keyItemQueue = new();
+        private static readonly ConcurrentQueue<long> inventoryQueue = new();
+        private static readonly ConcurrentQueue<long> attachmentQueue = new();
+        private static readonly ConcurrentQueue<string> msgQueue = new();
 
         private static int oldKeyCount = 0;
         private static int oldInvCount = 0;
@@ -103,8 +103,7 @@ namespace DC1AP.Threads
             bool itemReceived = false;
             bool attachmentReceived = false;
 
-            // Clean out the queues before stopping
-            while (PlayerState.ValidGameState)
+            while (true)
             {
                 Thread.Sleep(100);
 
@@ -119,6 +118,7 @@ namespace DC1AP.Threads
                         Queue<GeoBuilding> tempQueue = new();
                         while (PlayerState.CanGiveGeorama() && geoBuildingQueue.TryDequeue(out GeoBuilding? geoBuilding))
                         {
+                            // TODO could probably give parts of building in town, just can't give the full building right now
                             if (PlayerState.CanGiveGeoInTown() && (int)geoBuilding.Town == PlayerState.GetCurrentTown())
                                 //geoBuilding.GiveBuildingTown();  TODO see below
                                 tempQueue.Enqueue(geoBuilding);
@@ -210,14 +210,7 @@ namespace DC1AP.Threads
                         CheckItems();
                     }
                 }
-                // Player hasn't started the game, or has reset so clear the queues.
-                else
-                {
-                    ClearQueues();
-                }
             }
-
-            ClearQueues();
         }
 
         /// <summary>
@@ -257,7 +250,7 @@ namespace DC1AP.Threads
             checkItems = false;
         }
 
-        private static void ClearQueues()
+        internal static void ClearQueues()
         {
             geoBuildingQueue.Clear();
             ClearItemQueues();
