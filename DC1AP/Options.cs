@@ -48,8 +48,6 @@ namespace DC1AP
 
         internal static void ParseOptions(Dictionary<string, object> options)
         {
-#pragma warning disable CS8604 // Possible null reference argument.
-#pragma warning disable CS8601 // Possible null reference.
             goal = ((JsonElement)options["goal"]).Deserialize<int>();  // What dungeon to randomize through
             memoryCount = ((JsonElement)options["memory_count"]).Deserialize<int>();
             attachMultConfig = (AttachMultConfig)((JsonElement)options["attach_mult_config"]).Deserialize<int>();
@@ -62,12 +60,12 @@ namespace DC1AP
             autobuild = (AutobuildFlags)((JsonElement)options["auto_build"]).Deserialize<int>();
             miracleSanity = ((JsonElement)options["miracle_sanity"]).Deserialize<int>() != 0;  // Shuffle in miracle chests
             deathLink = ((JsonElement)options["death_link"]).Deserialize<int>() != 0;
-            toanName = ((JsonElement)options["toan_name"]).Deserialize<String>();
-            xiaoName = ((JsonElement)options["xiao_name"]).Deserialize<String>();
-            goroName = ((JsonElement)options["goro_name"]).Deserialize<String>();
-            rubyName = ((JsonElement)options["ruby_name"]).Deserialize<String>();
-            ungagaName = ((JsonElement)options["ungaga_name"]).Deserialize<String>();
-            osmondName = ((JsonElement)options["osmond_name"]).Deserialize<String>();
+            toanName = ((JsonElement)options["toan_name"]).Deserialize<String>()!;
+            xiaoName = ((JsonElement)options["xiao_name"]).Deserialize<String>()!;
+            goroName = ((JsonElement)options["goro_name"]).Deserialize<String>()!;
+            rubyName = ((JsonElement)options["ruby_name"]).Deserialize<String>()!;
+            ungagaName = ((JsonElement)options["ungaga_name"]).Deserialize<String>()!;
+            osmondName = ((JsonElement)options["osmond_name"]).Deserialize<String>()!;
             if (options.TryGetValue("apf", out object? value))
             {
                 if (value != null)
@@ -75,8 +73,6 @@ namespace DC1AP
                     atlaPerFloor = ((JsonElement)value).Deserialize<List<List<int>>>();
                 }
             }
-#pragma warning restore CS8601 // Possible null reference.
-#pragma warning restore CS8604 // Possible null reference argument.
         }
     }
 }
