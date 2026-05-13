@@ -84,9 +84,9 @@ namespace DC1AP
             Context.ConnectClicked += Context_ConnectClicked;
             Context.CommandReceived += (_, a) => Client?.SendMessage(a.Command);
 
-            // TODO save last used host/slot?
-            //Context.Host = "localhost:38281";
-            //Context.Slot = "DC1";
+            AppSettings settings = AppSettings.LoadAppSettings();
+            Context.Host = settings.Host;
+            Context.Slot = settings.Slot;
 
             InventoryMgmt.InitInventoryMgmt();
         }
@@ -153,6 +153,8 @@ namespace DC1AP
                 Context.ConnectButtonEnabled = true;
                 return;
             }
+
+            AppSettings.SaveAppSettings(new AppSettings(e.Host, e.Slot));
 
             Client.ItemManager.ItemReceived += Client_ItemReceived;
             Client.ItemManager.ReceiveReady(Client.CurrentSession);
@@ -322,8 +324,8 @@ namespace DC1AP
             if (chestThread == null || chestThread.ThreadState == ThreadState.Stopped)
             {
                 chestThread = new Thread(new ParameterizedThreadStart(MiracleChestMgmt.DoLoop))
-            {
-                IsBackground = true
+                {
+                    IsBackground = true
                 };
                 chestThread.Start();
             }
@@ -377,16 +379,16 @@ namespace DC1AP
             // Test slot info before sending checks in case the player has loaded a save state to avoid releasing extra items.
             if (PlayerState.ValidGameState && OpenMem.TestSlotInfo(slotName, seedName))
             {
-            Location loc = new()
-            {
-                Id = locId
-            };
+                Location loc = new()
+                {
+                    Id = locId
+                };
 
-            if (Client.CurrentSession != null && Client.CurrentSession.Socket.Connected) 
-                App.Client.SendLocationAsync(loc);
-            else
-                locationQueue.Enqueue(loc);
-        }
+                if (Client.CurrentSession != null && Client.CurrentSession.Socket.Connected)
+                    App.Client.SendLocationAsync(loc);
+                else
+                    locationQueue.Enqueue(loc);
+            }
             else
             {
                 PlayerState.ValidGameState = false;
