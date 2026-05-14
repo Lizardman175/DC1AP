@@ -155,12 +155,6 @@ namespace DC1AP.Georama
                     BuildBuilding(inTown);
                 }
 
-                // Skip the dialog only events for the 4 pilots
-                if (town == Towns.Factory && MiscConstants.FactoryEventSkips.Contains(BuildingId))
-                {
-                    SeeEvent();
-                }
-
                 msg = "Received " + Name + ".";
             }
             // Not first piece, add next item
@@ -181,11 +175,17 @@ namespace DC1AP.Georama
                 else
                     MemFuncs.GiveGeoItem(town, (short)item.ItemId);
 
-                // Skip having to view the d6 events after getting the last item
-                if (town == Towns.Castle && buildingValue == Items.Length)
+                // Skip the dialog-only events for the 4 pilots
+                if (town == Towns.Factory && MiscConstants.FactoryEventSkips.Contains(BuildingId) && buildingValue == Items.Length)
                 {
-                    EventMasks.SetD6Flag(BuildingId);
                     SeeEvent();
+                    CharFuncs.GoTAccess();
+                }
+                // Skip having to view the d6 events after getting the last item
+                else if (town == Towns.Castle && buildingValue == Items.Length)
+                {
+                    SeeEvent();
+                    EventMasks.SetD6Flag(BuildingId);
                 }
 
                 buildingValue++;

@@ -107,5 +107,10 @@ namespace DC1AP.Constants
         private const short SundewId = 225;
 
         internal static readonly short[] KeyItemIds = [HornedKeyId, PocketId, SundewId];
+
+        // HGR/HGL
+        internal static readonly long[] HgApIds = [971_110_503, 971_110_504];
+        // TIR/TIL
+        internal static readonly long[] TiApIds = [971_110_509, 971_110_510];
     }
 }

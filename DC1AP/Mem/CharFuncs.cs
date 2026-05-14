@@ -1,5 +1,6 @@
 ﻿using Archipelago.Core.Util;
 using DC1AP.Constants;
+using DC1AP.Georama;
 using DC1AP.Items;
 using System;
 
@@ -251,16 +252,45 @@ namespace DC1AP.Mem
                     Memory.WriteByte(MiscAddrs.FloorCountAddrs[(int)Towns.Factory], MiscAddrs.FloorCountRear[(int)Towns.Factory]);
                 }
 
-                if (Options.Goal > (int)Towns.Factory + 1)
-                {
-                    Memory.WriteByte(MiscAddrs.DHCCountAddr, 1);
-                }
-
                 Weapons.GiveCharWeapon((int)Towns.Factory + 1);
                 if (Options.MiracleSanity)
                     InventoryMgmt.VerifyItems();
 
                 OpenMem.SetCharReceived(OsmondIndex);
+                GoTAccess();
+            }
+        }
+
+        internal static void GoTAccess()
+        {
+            if (osmond && Options.Goal > (int)Towns.Factory + 1)
+            {
+                bool head = false;
+                bool leg = false;
+
+                foreach (long tempId in MiscConstants.HgApIds)
+                {
+                    if (GeoBuilding.buildings[tempId].EventSeen())
+                    {
+                        leg = true;
+                        break;
+                    }
+                }
+
+                if (leg)
+                {
+                    foreach (long tempId in MiscConstants.TiApIds)
+                    {
+                        if (GeoBuilding.buildings[tempId].EventSeen())
+                        {
+                            head = true;
+                            break;
+                        }
+                    }
+
+                    if (head)
+                        Memory.WriteByte(MiscAddrs.DHCCountAddr, 1);
+                }
             }
         }
         #endregion
