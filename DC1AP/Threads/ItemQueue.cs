@@ -118,10 +118,13 @@ namespace DC1AP.Threads
                         Queue<GeoBuilding> tempQueue = new();
                         while (PlayerState.CanGiveGeorama() && geoBuildingQueue.TryDequeue(out GeoBuilding? geoBuilding))
                         {
-                            // TODO could probably give parts of building in town, just can't give the full building right now
                             if (PlayerState.CanGiveGeoInTown() && (int)geoBuilding.Town == PlayerState.GetCurrentTown())
-                                //geoBuilding.GiveBuildingTown();  TODO see below
-                                tempQueue.Enqueue(geoBuilding);
+                                // TODO only give pieces of buildings in town; can't give the full building right now
+                                if (geoBuilding.BuildingValue == 0 || geoBuilding.Multi > 0)
+                                    //geoBuilding.GiveBuildingTown();
+                                    tempQueue.Enqueue(geoBuilding);
+                                else
+                                    geoBuilding.GiveBuildingTown();
                             else
                                 geoBuilding.GiveBuilding();
                         }
