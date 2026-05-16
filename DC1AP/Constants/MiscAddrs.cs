@@ -67,13 +67,14 @@ namespace DC1AP.Constants
         internal const uint SWFloorCountAddr  = 0x01CDD80D;
         internal const uint SMTFloorCountAddr = 0x01CDD80E;
         internal const uint MSFloorCountAddr  = 0x01CDD80F;
-        internal const uint DHCFloorCountAddr = 0x01CDD810;
+        internal const uint GoTFloorCountAddr = 0x01CDD810;
         //internal const uint DSFloorCountAddr  = 0x01CDD811;
 
-        internal static uint[] FloorCountAddrs = [DBCFloorCountAddr, WOFFloorCountAddr, SWFloorCountAddr, SMTFloorCountAddr, MSFloorCountAddr, DHCFloorCountAddr];
+        internal static uint[] FloorCountAddrs = [DBCFloorCountAddr, WOFFloorCountAddr, SWFloorCountAddr, SMTFloorCountAddr, MSFloorCountAddr, GoTFloorCountAddr];
         // Floor counts are 0 indexed
-        internal static byte[] FloorCountFront = [ 7,  8,  8,  8,  7, 24];
-        internal static byte[] FloorCountRear  = [14, 16, 17, 17, 14, 24];
+        internal static byte[] FloorCountFront = [ 7,  8,  8,  8,  7, 23];
+        internal static byte[] FloorCountRear  = [14, 16, 17, 17, 14, 23];
+        internal static byte GenieFloorCountValue = 24;
 
         // 1 = Walking Mode, 2 = On Menu, 3 = Door Menu, 4 = Floor picker screen, 5 = Ally Quick Select,  7 = Next Floor Screen
         // Only give items/atla in dungeon when this is 1
@@ -115,6 +116,7 @@ namespace DC1AP.Constants
         internal const int SMTExtZone = 0x2A;
         internal const int FactoryZone = 0x04;
         internal const int YellowDropsZone = 0x17;
+        internal const int DHCZone = 0x26;
 
         internal const uint CurZoneAddr = 0x002A2810;
 

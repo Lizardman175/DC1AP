@@ -21,6 +21,15 @@ namespace DC1AP.Mem
         }
 
         /// <summary>
+        /// See MiscAddrs for a list of zone IDs this can return.
+        /// </summary>
+        /// <returns></returns>
+        public static int GetCurrentTown()
+        {
+            return Memory.ReadByte(MiscAddrs.CurZoneAddr);
+        }
+
+        /// <summary>
         /// Determines if the player is in a state in a dungeon that we can give an item/display a message.
         ///  Can't receive in georama menu as it will conditionally overwrite our changes.
         ///  Want to be out of menus to show a dialogue as well.
@@ -67,6 +76,20 @@ namespace DC1AP.Mem
         public static bool PlayerMovableInTown()
         {
             return PlayerState.IsPlayerInTown() && PlayerState.PlayerMovableTown();
+        }
+
+        public static bool CanGiveGeoInTown()
+        {
+            // TODO probably need to replace IsPlayerInTown with a check for specifically the town IDs (or town ID < 5 since build doesn't work in DHC/non-geo zone IDs.)
+            byte townState = Memory.ReadByte(MiscAddrs.PlayerTownState);
+            int undetermined = Memory.ReadByte(0x002A1F4C);
+            return PlayerState.IsPlayerInTown() && ((townState == 0x04 && undetermined == 0x65));
+            //return townState == MiscAddrs.PlayerTownInterior;
+        }
+
+        public static bool CanGiveGeorama()
+        {
+            return CanGiveGeoInTown() || CanGiveItemDungeon();
         }
     }
 }

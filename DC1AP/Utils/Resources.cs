@@ -138,7 +138,7 @@ namespace DC1AP.Utils
                     var name = info.Name;
                     using var stream = Assembly
                         .GetExecutingAssembly()
-                        .GetManifestResourceStream($"{name}.Items.miracle_locations.csv")!;
+                        .GetManifestResourceStream($"{name}.Locations.miracle_locations.csv")!;
                     using var streamReader = new StreamReader(stream, Encoding.UTF8);
                     return streamReader.ReadToEnd();
                 }

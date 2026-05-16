@@ -3,6 +3,7 @@ using DC1AP.Constants;
 using DC1AP.Threads;
 using DC1AP.Utils;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 
 namespace DC1AP.Georama
@@ -24,8 +25,13 @@ namespace DC1AP.Georama
                 IncludeFields = true
             };
 
+            GeoBuilding.buildings.Add(MiscConstants.ProgCharBldId, ProgCharBuilding.GetInstance());
+
             for (int i = 0; i < Options.Goal; i++)
-                GeoBuilding.buildings[i] = buildingFiles[i];
+            {
+                foreach (GeoBuilding building in buildingFiles[i])
+                    GeoBuilding.buildings.Add(building.ApId, building);
+            }
         }
 
         /// <summary>
@@ -35,7 +41,7 @@ namespace DC1AP.Georama
         {
             for (int i = 0; i < Options.Goal; i++)
             {
-                GeoBuilding[]? buildings = GeoBuilding.buildings[i];
+                GeoBuilding[]? buildings = buildingFiles[i];
                 if (buildings == null) continue;
 
                 Towns town = (Towns)i;
@@ -46,30 +52,18 @@ namespace DC1AP.Georama
                     building.ReadValues();
                 }
             }
-
-            VerifyItems();
         }
 
         internal static bool GiveGeorama(long itemId)
         {
             bool added = false;
 
-            for (int i = 0; i < Options.Goal; i++)
+            GeoBuilding.buildings.TryGetValue(itemId, out GeoBuilding? building);
+
+            if (building != null)
             {
-                GeoBuilding[] list = GeoBuilding.buildings[i];
-                if (list == null) continue;
-
-                foreach (GeoBuilding building in list)
-                {
-                    if (building.ApId == itemId)
-                    {
-                        ItemQueue.AddGeorama(building);
-                        added = true;
-                        break;
-                    }
-                }
-
-                if (added) break;
+                ItemQueue.AddGeorama(building);
+                added = true;
             }
 
             return added;
@@ -80,12 +74,8 @@ namespace DC1AP.Georama
         /// </summary>
         internal static void VerifyItems()
         {
-            foreach (GeoBuilding[]? buildingList in GeoBuilding.buildings)
-            {
-                if (buildingList == null) continue;
-                foreach (GeoBuilding building in buildingList)
-                    building.CheckItems();
-            }
+            foreach (GeoBuilding building in GeoBuilding.buildings.Values)
+                building.CheckItems();
         }
 
         internal static bool RemoveGeoItem(short itemId, int dungeon)

@@ -51,6 +51,18 @@ namespace DC1AP.Constants
 
         internal static readonly uint[] TownMapAddrs = [T1TownMap, T2TownMap, T3TownMap, T4TownMap, T5TownMap];
 
+        // This table contains georama piece info for the current town (zero'd out for other areas)
+        // Other offsets if useful: 0x04 == event seen flag, 0x0C == placed count, 0x10 == ???
+        // TODO may need to use 1DA6B00 for final dungeon starting point.  Offsets are the same though.  Likely need to use menu flags etc as well
+        //    - Last dungeon isn't as important since there are no chests
+        internal const uint CurTownFirstBld = 0x01D19C54;
+        internal const uint CurTownBldOffset = 0xE8;
+        internal const uint CurTownBldOwnedOffset = 0x08;
+        internal const uint CurTownBldCountOffset = 0x14;  // How many, for rivers etc.
+        // First piece is offset 0x20, 8 bytes in is the flag, each piece after moves by 0x20
+        internal const uint CurTownBldPiece1FlagOffset = 0x2C;
+        internal const uint CurTownBldPieceOffset = 0x20;
+
         // Atla per floor memory start addr by dungeon.  4 bytes each.
         // -1 == uninit or no atla there.  -2 == available (also various >0 values for static floor atla).  -3 == collected
         private const uint DBCAtlaFlag = 0x01CD97C4;
@@ -65,7 +77,7 @@ namespace DC1AP.Constants
         // Georama loot table references.  All are 4byte fields.  As these tables get initialized, they'll be filled with junk IDs
         // This table is initialized when entering the dungeon for the first time.  We'll need to watch for the memory to change then set the values to junk
         internal const uint GeoFloorOffset = 4;
-        //public const uint GeoCountOffset = 8;
+        //internal const uint GeoCountOffset = 8;
         internal const uint GeoItemOffset = 12;  // Offset to next entry in table from start addr.
 
         private const uint NoruneTableAddr = 0x01CDB5C4;  // Toan's House is the first one.

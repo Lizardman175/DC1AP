@@ -1,5 +1,6 @@
 ﻿using Archipelago.Core.Util;
 using DC1AP.Constants;
+using DC1AP.Locations;
 using DC1AP.Mem;
 using System.Collections.Generic;
 using System.Threading;
@@ -21,24 +22,17 @@ namespace DC1AP.Threads
         private static List<Atla>[] atlaMap = new List<Atla>[6];
         private static bool[] dungeonsMapped = [false, false, false, false, false, false];
 
-        private static bool runThread = false;
         private static bool catPlaced = false;
 
         // Flag used to prevent re-running Startup() multiple times waiting for player to load game.
         private static bool playableState = true;
 
-        internal static bool RunThread { get => runThread; set => runThread = value; }
-
         /// <summary>
         /// Handle startup and the player reloading from memory by zeroing out various values and reinitializing data.
         /// </summary>
-        private static void Startup()
+        internal static void Startup()
         {
-            atlaMap = new List<Atla>[6];
-            dungeonsMapped = [false, false, false, false, false, false];
-            catPlaced = false;
-            playableState = false;
-
+            Clear();
             InitAtla();
 
             // Can't use a loop here as InitAtla will only reference the loop counter's final value: Options.Goal
@@ -69,22 +63,21 @@ namespace DC1AP.Threads
             }
         }
 
+        private static void Clear()
+        {
+            atlaMap = new List<Atla>[6];
+            dungeonsMapped = [false, false, false, false, false, false];
+            catPlaced = false;
+            playableState = false;
+        }
+
         internal static void DoLoop(object? parameters)
         {
-            runThread = true;
-
             Startup();
 
-            while (runThread)
+            while (true)
             {
-                bool playerReady = PlayerState.PlayerReady();
-
-                // Handle player resets
-                if (playableState && !playerReady)
-                {
-                    Startup();
-                }
-                else if (playerReady)
+                if (PlayerState.PlayerReady())
                 {
                     if (!playableState) playableState = true;
 
@@ -118,7 +111,7 @@ namespace DC1AP.Threads
                     }
                 }
 
-                Thread.Sleep(500);
+                Thread.Sleep(100);
             }
         }
 
@@ -188,7 +181,6 @@ namespace DC1AP.Threads
                 // Brief sleep to allow the game to initialize the dungeon
                 Thread.Sleep(500);
 
-                // Skip current dungeon if already mapped out
                 // Don't read the atla until the player enters the first dungeon since we can't initialize it.
                 // Don't rerun or run if the game isn't in a valid state
                 if (!PlayerState.ValidGameState || dungeonsMapped[dun] ||
@@ -201,7 +193,7 @@ namespace DC1AP.Threads
                 MemFuncs.ClearAtlaTable(dun);
 
                 uint addr = GeoAddrs.AtlaFlagAddrs[dun];
-                // TODO magic nums.  Atla values are likely to change soon, so not bothering yet.
+                // TODO magic nums.
                 int atlaId = MiscConstants.BaseId + 101 + 1000 * (dun + 1);
                 List<Atla> dunAtla = [];
 
@@ -257,6 +249,8 @@ namespace DC1AP.Threads
                     }
                     else
                         Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], MiscAddrs.FloorCountFront[dun]);
+
+                    if (dun == (int)Towns.Castle) EventMasks.CheckD6Flags();
                 }
 
                 atlaMap[dun] = dunAtla;

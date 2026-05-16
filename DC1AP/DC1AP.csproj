@@ -20,7 +20,7 @@
 		<None Remove="Georama\CastleBuildings.json" />
 		<None Remove="Items\Items.json" />
 		<None Remove="Items\Attachments.json" />
-		<None Remove="Items\miracle_locations.csv" />
+		<None Remove="Locations\miracle_locations.csv" />
 	    <None Remove="App.xaml" />
 	</ItemGroup>
 	  
@@ -33,7 +33,7 @@
 		<EmbeddedResource Include="Georama\CastleBuildings.json" />
 		<EmbeddedResource Include="Items\Items.json" />
 		<EmbeddedResource Include="Items\Attachments.json" />
-		<EmbeddedResource Include="Items\miracle_locations.csv" />
+		<EmbeddedResource Include="Locations\miracle_locations.csv" />
 	    <AvaloniaResource Include="App.xaml" />
 	</ItemGroup>
 	  

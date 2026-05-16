@@ -8,19 +8,22 @@ using System.Text;
 namespace DC1AP.Mem
 {
     /// <summary>
-    /// Empty(?) block of memory on the mem card to use as we see fit.
+    /// Unused(?) block of memory on the mem card to use as we see fit.
     /// </summary>
     internal class OpenMem
     {
-        private static readonly uint StartMem = 0x01CD4330;
-        //private static readonly uint EndMem = 0x01CD4780;  Just here for reference; don't go past this byte!
+        // Actually the town map for Dark Heaven Castle, but seems to be unused so far?
+        private static readonly uint StartMem = 0x01CD8500;
+        //private static readonly uint EndMem = ;  Just here for reference; don't go past this byte!  TODO update
 
         private static readonly uint SlotNameAddr = StartMem;
         private static readonly uint SlotNameLen = 32;  // Len from AP max slot name size
 
         // Byte
         internal static readonly uint GoalAddr = SlotNameAddr + SlotNameLen;
-        // Note: currently a 1 byte gap after GoalAddr
+
+        // Byte. Used by ProgCharBuilding.cs
+        internal static readonly uint ProgCharBldAddr = GoalAddr + 1;
 
         // 1 byte each. Includes space for Toan
         internal static readonly uint[] CharHandledAddrs = [GoalAddr + 2, GoalAddr + 3,  GoalAddr + 4, GoalAddr + 5, GoalAddr + 6, GoalAddr + 7];
@@ -57,9 +60,24 @@ namespace DC1AP.Mem
             return s2;
         }
 
-        internal static bool TestRoomSeed()
+        internal static bool TestSlotInfo(string slotName, string seedName)
         {
-            string seed = App.Client.CurrentSession.RoomState.Seed;
+            return TestSlotName(slotName) && TestRoomSeed(seedName);
+        }
+
+        private static bool TestSlotName(string slotName)
+        {
+            string currSlot = OpenMem.GetSlotName();
+            if (currSlot != slotName)
+            {
+                Log.Logger.Error("Wrong slot name. Current save is using slot: " + currSlot + "      ");
+                return false;
+            }
+            return true;
+        }
+
+        internal static bool TestRoomSeed(string seed)
+        {
             string memSeed = Memory.ReadString(RoomSeedAddr, seed.Length);
             bool result = seed == memSeed;
             if (!result)
@@ -83,8 +101,12 @@ namespace DC1AP.Mem
             }
             else if (GetSlotName().Equals(""))
             {
-                Memory.WriteString(SlotNameAddr, slotName, Enums.Endianness.Little, Encoding.Unicode);
-                Memory.WriteString(RoomSeedAddr, App.Client.CurrentSession.RoomState.Seed);
+                // Trailing nulls to force a null terminator over possible existing data
+                Memory.WriteString(SlotNameAddr, slotName + "\0\0", Enums.Endianness.Little, Encoding.Unicode);
+                Memory.WriteString(RoomSeedAddr, App.Client.CurrentSession.RoomState.Seed + "\0\0");
+
+                // Zero out default values for certain entries
+                foreach (uint addr in ItemCountAddrs.Values) Memory.WriteByte(addr, 0);
             }
         }
 

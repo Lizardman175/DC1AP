@@ -1,5 +1,6 @@
 ﻿using Archipelago.Core.Util;
 using DC1AP.Constants;
+using DC1AP.Locations;
 using DC1AP.Mem;
 using DC1AP.Utils;
 using System;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 using System.Threading;
 
 
-namespace DC1AP.Items
+namespace DC1AP.Threads
 {
     internal class MiracleChestMgmt
     {
@@ -61,16 +62,6 @@ namespace DC1AP.Items
             }
         }
 
-        /// <summary>
-        /// Checks all MCs for the given town.
-        /// </summary>
-        /// <param name="town"></param>
-        internal static void CheckTown(Towns town)
-        {
-            if (town < Towns.Castle && PlayerState.PlayerMovableTown())
-                chests[(int)town].RemoveAll(mc => mc.CheckChest());
-        }
-
         internal static void DoLoop(object? parameters)
         {
             if (!Options.MiracleSanity)
@@ -82,8 +73,6 @@ namespace DC1AP.Items
 
             while (PlayerState.ValidGameState)
             {
-                Thread.Sleep(50);
-
                 int zoneId = Memory.ReadInt(MiscAddrs.CurZoneAddr);
 
                 if (PlayerState.PlayerMovableInTown())
@@ -138,7 +127,19 @@ namespace DC1AP.Items
                     else if (zoneId == MiscAddrs.YellowDropsZone || zoneId == MiscAddrs.FactoryZone)
                         MiracleChestMgmt.CheckTown(Towns.Factory);
                 }
+
+                Thread.Sleep(50);
             }
+        }
+
+        /// <summary>
+        /// Checks all MCs for the given town.
+        /// </summary>
+        /// <param name="town"></param>
+        private static void CheckTown(Towns town)
+        {
+            if (town < Towns.Castle && PlayerState.PlayerMovableTown())
+                chests[(int)town].RemoveAll(mc => mc.CheckChest());
         }
 
         private static void EmptyMiracleChests(uint addr, bool mayor = false, bool bunbuku = false)
@@ -167,7 +168,5 @@ namespace DC1AP.Items
                 Memory.Write(PricklyValueAddr, -1);
             }
         }
-
-
     }
 }

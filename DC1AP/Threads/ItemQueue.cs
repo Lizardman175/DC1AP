@@ -5,6 +5,7 @@ using DC1AP.Items;
 using DC1AP.Mem;
 using Serilog;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
@@ -15,19 +16,17 @@ namespace DC1AP.Threads
         private const int DisplayTime = 350; // cs, 3.5 seconds
         //private static int MsToCs = 10;  // Convert 1000ths of a second to 100ths
 
-        private static ConcurrentQueue<GeoBuilding> geoBuildingQueue = new();
-        private static ConcurrentQueue<long> keyItemQueue = new();
-        private static ConcurrentQueue<long> inventoryQueue = new();
-        private static ConcurrentQueue<long> attachmentQueue = new();
-        private static ConcurrentQueue<string> msgQueue = new();
+        private static readonly ConcurrentQueue<GeoBuilding> geoBuildingQueue = new();
+        private static readonly ConcurrentQueue<long> keyItemQueue = new();
+        private static readonly ConcurrentQueue<long> inventoryQueue = new();
+        private static readonly ConcurrentQueue<long> attachmentQueue = new();
+        private static readonly ConcurrentQueue<string> msgQueue = new();
 
         private static int oldKeyCount = 0;
         private static int oldInvCount = 0;
         private static int oldAttachCount = 0;
 
         internal static bool checkItems = false;
-
-        internal static bool runThread = true;
 
         internal static void AddGeorama(GeoBuilding geoBuilding)
         {
@@ -100,13 +99,11 @@ namespace DC1AP.Threads
 
         internal static void ThreadLoop(object? parameters)
         {
-            runThread = true;
             bool result = true;
             bool itemReceived = false;
             bool attachmentReceived = false;
 
-            // Clean out the queues before stopping
-            while (runThread)
+            while (true)
             {
                 Thread.Sleep(100);
 
@@ -116,11 +113,26 @@ namespace DC1AP.Threads
                     if (!PlayerState.IsPlayerInDungeon() && !msgQueue.IsEmpty) msgQueue.Clear();
 
                     // Geo items can only be received in dungeon
-                    if (PlayerState.CanGiveItemDungeon())
+                    if (PlayerState.CanGiveGeorama())
                     {
-                        while (PlayerState.CanGiveItemDungeon() && geoBuildingQueue.TryDequeue(out GeoBuilding geoBuilding))
+                        Queue<GeoBuilding> tempQueue = new();
+                        while (PlayerState.CanGiveGeorama() && geoBuildingQueue.TryDequeue(out GeoBuilding? geoBuilding))
                         {
-                            geoBuilding.GiveBuilding();
+                            if (PlayerState.CanGiveGeoInTown() && (int)geoBuilding.Town == PlayerState.GetCurrentTown())
+                                // TODO only give pieces of buildings in town; can't give the full building right now
+                                if (geoBuilding.BuildingValue == 0 || geoBuilding.Multi > 0)
+                                    //geoBuilding.GiveBuildingTown();
+                                    tempQueue.Enqueue(geoBuilding);
+                                else
+                                    geoBuilding.GiveBuildingTown();
+                            else
+                                geoBuilding.GiveBuilding();
+                        }
+
+                        // TODO temp handling of local town pieces until auto build is working for the local town with GiveBuildingTown().
+                        while (tempQueue.TryDequeue(out GeoBuilding? geoBuilding))
+                        {
+                            AddGeorama(geoBuilding);
                         }
 
                         // Display queued up messages after the last one fades.
@@ -198,15 +210,8 @@ namespace DC1AP.Threads
 
                     if (checkItems)
                     {
-                        InventoryMgmt.VerifyItems();
-                        GeoInvMgmt.VerifyItems();
-                        checkItems = false;
+                        CheckItems();
                     }
-                }
-                // Player hasn't started the game, or has reset so clear the queues.
-                else
-                {
-                    ClearQueues();
                 }
             }
         }
@@ -240,6 +245,14 @@ namespace DC1AP.Threads
             }
         }
 
+        private static void CheckItems()
+        {
+            ClearQueues();
+            InventoryMgmt.VerifyItems();
+            GeoInvMgmt.VerifyItems();
+            checkItems = false;
+        }
+
         internal static void ClearQueues()
         {
             geoBuildingQueue.Clear();
@@ -247,7 +260,7 @@ namespace DC1AP.Threads
             msgQueue.Clear();
         }
 
-        internal static void ClearItemQueues()
+        private static void ClearItemQueues()
         {
             keyItemQueue.Clear();
             inventoryQueue.Clear();

@@ -143,7 +143,7 @@ namespace DC1AP.ViewModels
             set => this.RaiseAndSetIfChanged(ref this._archipelagoVersion, value);
         }
 
-        public MainWindowViewModel(string archipelagoVersion = "0.6.2")
+        public MainWindowViewModel(string archipelagoVersion = "0.6.7")
         {
             if (!Dispatcher.UIThread.CheckAccess())
             {
@@ -154,7 +154,7 @@ namespace DC1AP.ViewModels
             CommandSentCommand = ReactiveCommand.Create(HandleCommandSent);
             TogglePaneCommand = ReactiveCommand.Create(HandleTogglePane);
             UnstuckClickedCommand = ReactiveCommand.Create(HandleUnstuck);
-            ClientVersion = "0.4.4";
+            ClientVersion = "0.5.0";
             ArchipelagoVersion = archipelagoVersion;
 
             _processingTimer = new Timer(TIMER_INTERVAL);
@@ -166,7 +166,7 @@ namespace DC1AP.ViewModels
         }
 
         //Parameterless constructor required for XAML design time compiler
-        public MainWindowViewModel() : this("0.6.2")
+        public MainWindowViewModel() : this("0.6.7")
         {}
 
         private void HandleTogglePane()
