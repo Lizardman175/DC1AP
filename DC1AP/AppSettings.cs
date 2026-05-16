@@ -10,7 +10,6 @@ namespace DC1AP
     public class AppSettings
     {
         private const string Filename = "dc1_settings.json";
-        private static readonly JsonSerializerOptions options = new() { WriteIndented = true };
 
         public AppSettings() { }
 
@@ -21,7 +20,7 @@ namespace DC1AP
         }
 
         [JsonInclude]
-        public string Host { get; set; } = String.Empty;
+        public string Host { get; set; } = "archipelago.gg:";
         [JsonInclude]
         public string Slot { get; set; } = String.Empty;
 
