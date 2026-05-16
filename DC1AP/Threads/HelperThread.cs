@@ -178,14 +178,13 @@ namespace DC1AP.Threads
         {
             lock (_lock)
             {
-                // Skip current dungeon if already mapped out
-                if (dungeonsMapped[dun]) return;
-
                 // Brief sleep to allow the game to initialize the dungeon
                 Thread.Sleep(500);
 
                 // Don't read the atla until the player enters the first dungeon since we can't initialize it.
-                if ((Memory.ReadInt(GeoAddrs.AtlaFlagAddrs[dun]) == MiscConstants.AtlaUnavailable && (!PlayerState.IsPlayerInDungeon() || PlayerState.GetCurDungeon() != dun))) return;
+                // Don't rerun or run if the game isn't in a valid state
+                if (!PlayerState.ValidGameState || dungeonsMapped[dun] ||
+                    (Memory.ReadInt(GeoAddrs.AtlaFlagAddrs[dun]) == MiscConstants.AtlaUnavailable && (!PlayerState.IsPlayerInDungeon() || PlayerState.GetCurDungeon() != dun))) return;
 
                 // Only bother checking if not updated yet.
                 if (!catPlaced && dun == 0)
