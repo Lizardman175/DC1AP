@@ -1,4 +1,5 @@
-﻿using DC1AP.Constants;
+﻿using Archipelago.Core.Util;
+using DC1AP.Constants;
 using DC1AP.Mem;
 
 namespace DC1AP.Georama
@@ -32,8 +33,8 @@ namespace DC1AP.Georama
             Name = "Progressive Char Building";
             ApId = MiscConstants.ProgCharBldId;
 
-            buildingValue = 0;
             BuildingCountAddr = OpenMem.ProgCharBldAddr;
+            buildingValue = Memory.ReadByte(BuildingCountAddr);
         }
 
         internal override void ReadValues()
@@ -48,7 +49,13 @@ namespace DC1AP.Georama
 
         internal override void GiveBuilding(bool inTown = false)
         {
-            DetermineBuilding()?.GiveBuilding();
+            GeoBuilding? building = DetermineBuilding();
+            if (building != null)
+            {
+                building.GiveBuilding();
+                buildingValue++;
+                Memory.WriteByte(BuildingCountAddr, (byte)buildingValue);
+            }
         }
 
         private GeoBuilding? DetermineBuilding()
