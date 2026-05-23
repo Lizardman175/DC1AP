@@ -17,7 +17,7 @@ namespace DC1AP.Mem
         public static bool PlayerReady()
         {
             // Player name is only set when a game is started/loaded and the client accepts the save is valid for the slot.  Otherwise, Toan will have no name.
-            return ValidGameState && Memory.ReadByte(MiscAddrs.PlayerState) > 1;
+            return ValidGameState && Memory.ReadByte(MiscAddrs.TimeOfDayAddr) > 1;
         }
 
         /// <summary>

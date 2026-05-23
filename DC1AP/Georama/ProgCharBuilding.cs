@@ -44,11 +44,14 @@ namespace DC1AP.Georama
 
         internal override void GiveBuildingTown()
         {
+            if (buildingValue >= CountThisBuilding()) return;
             DetermineBuilding()?.GiveBuildingTown();
         }
 
         internal override void GiveBuilding(bool inTown = false)
         {
+            if (buildingValue >= CountThisBuilding()) return;
+
             GeoBuilding? building = DetermineBuilding();
             if (building != null)
             {
