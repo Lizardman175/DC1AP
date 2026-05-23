@@ -36,18 +36,20 @@ namespace DC1AP.Threads
 
         internal static void AddKeyItem(long apId)
         {
-            keyItemQueue.Enqueue(apId);
+            if (PlayerState.PlayerReady())
+                keyItemQueue.Enqueue(apId);
         }
 
         internal static void AddItem(long apId)
         {
-            if (CanQueueItem(apId))
+            if (PlayerState.PlayerReady() && CanQueueItem(apId))
                 inventoryQueue.Enqueue(apId);
         }
 
         internal static void AddAttachment(long apId)
         {
-            attachmentQueue.Enqueue(apId);
+            if (PlayerState.PlayerReady())
+                attachmentQueue.Enqueue(apId);
         }
 
         internal static void AddMsg(string msg)

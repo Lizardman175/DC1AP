@@ -91,7 +91,8 @@ namespace DC1AP.Georama
         {
             // Small chance of race condition giving us 2 items at the same time.  Double check the count before adding.
             // Also prevents trying to add too many of an item if /send was used on the server.
-            //if (buildingValue == CountThisBuilding()) return;
+            if (buildingValue >= CountThisBuilding()) return;
+            // TODO can this IF be removed?
 
             uint baseAddr = (uint)(GeoAddrs.CurTownFirstBld + GeoAddrs.CurTownBldOffset * BuildingId);
 
@@ -124,7 +125,7 @@ namespace DC1AP.Georama
         {
             // Small chance of race condition giving us 2 items at the same time.  Double check the count before adding.
             // Also prevents trying to add too many of an item if /send was used on the server.
-            //if (buildingValue == CountThisBuilding()) return;
+            if (buildingValue >= CountThisBuilding()) return;
             // TODO can this IF be removed?
 
             string? msg = null;
@@ -220,7 +221,7 @@ namespace DC1AP.Georama
         /// Counts how many of this building the player is supposed to have per the GameState.
         /// </summary>
         /// <returns></returns>
-        private int CountThisBuilding()
+        protected int CountThisBuilding()
         {
             int count = 0;
             foreach (ItemInfo item in App.Client.CurrentSession.Items.AllItemsReceived)

@@ -2,6 +2,7 @@
 using DC1AP.Constants;
 using DC1AP.Georama;
 using DC1AP.Items;
+using DC1AP.Threads;
 using System;
 
 namespace DC1AP.Mem
@@ -164,7 +165,7 @@ namespace DC1AP.Mem
 
                 Weapons.GiveCharWeapon((int)Towns.Norune + 1);
                 if (Options.MiracleSanity)
-                    InventoryMgmt.VerifyItems();
+                    ItemQueue.checkItems = true;
 
                 OpenMem.SetCharReceived(XiaoIndex);
             }
@@ -187,7 +188,7 @@ namespace DC1AP.Mem
 
                 Weapons.GiveCharWeapon((int)Towns.Matataki + 1);
                 if (Options.MiracleSanity)
-                    InventoryMgmt.VerifyItems();
+                    ItemQueue.checkItems = true;
 
                 OpenMem.SetCharReceived(GoroIndex);
             }
@@ -212,7 +213,7 @@ namespace DC1AP.Mem
 
                 Weapons.GiveCharWeapon((int)Towns.Queens + 1);
                 if (Options.MiracleSanity)
-                    InventoryMgmt.VerifyItems();
+                    ItemQueue.checkItems = true;
 
                 OpenMem.SetCharReceived(RubyIndex);
             }
@@ -236,7 +237,7 @@ namespace DC1AP.Mem
 
                 Weapons.GiveCharWeapon((int)Towns.Muska + 1);
                 if (Options.MiracleSanity)
-                    InventoryMgmt.VerifyItems();
+                    ItemQueue.checkItems = true;
 
                 OpenMem.SetCharReceived(UngagaIndex);
             }
@@ -254,7 +255,7 @@ namespace DC1AP.Mem
 
                 Weapons.GiveCharWeapon((int)Towns.Factory + 1);
                 if (Options.MiracleSanity)
-                    InventoryMgmt.VerifyItems();
+                    ItemQueue.checkItems = true;
 
                 OpenMem.SetCharReceived(OsmondIndex);
                 GoTAccess();
