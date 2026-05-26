@@ -66,8 +66,8 @@ Mr. Prickles' Gift,971111065,0,,,0x01CE43AE,0x02,Prickly
 Matataki Treant chest 1,971112001,1,,Matataki River H,0x01CE4B95,0x01,Gourd
 Matataki Treant chest 2,971112002,1,,Matataki River H,0x01CE4B95,0x02,Fruit of Eden
 Matataki Treant chest 3,971112003,1,,Matataki River H,0x01CE4B95,0x04,Beast Buster
-Matataki Treant chest 4,971112004,1,goro,Matataki River H,0x01CE4B95,0x08,Sky Hunter
-Matataki Treant chest 5,971112005,1,goro,Matataki River H,0x01CE4B95,0x10,Grass Cake
+Matataki Treant chest 4,971112004,1,goro,,0x01CE4B95,0x08,Sky Hunter
+Matataki Treant chest 5,971112005,1,goro,,0x01CE4B95,0x10,Grass Cake
 Matataki Near Waterfall chest,971112006,1,,,0x01CE4896,0x04,Fluffy Doughnut
 Matataki Pond chest,971112007,1,goro,,0x01CE4896,0x10,Fish Candy
 Matataki Near Treant chest,971112008,1,goro,,0x01CE4896,0x08,Fluffy Doughnut
@@ -87,7 +87,7 @@ Pao's House Outside chest (ground),971112021,1,,Pao's House,0x01CE4874,0x20,Plan
 Pao's House Outside chest (upstairs),971112022,1,,Pao's Stairway,0x01CE4874,0x10,Bread
 Pao's House Outside chest (laundry),971112023,1,,Pao's Stairway,0x01CE4874,0x40,Repair Powder
 Cacao's House Inside chest (wall shelf),971112024,1,,Cacao's Stairway,0x01CE4878,0x04,Cheese
-Cacao's House Inside chest (bench),971112025,1,goro,Cacao's Cabin,0x01CE4878,0x08,Plant Buster
+Cacao's House Inside chest (bench),971112025,1,goro,,0x01CE4878,0x08,Plant Buster
 Cacao's House Outside chest (ground 1),971112026,1,,Cacao's House,0x01CE4877,0x01,Mage Slayer
 Cacao's House Outside chest (ground 2),971112027,1,,Cacao's House,0x01CE4877,0x02,Thunder
 Cacao's House Outside chest (laundry),971112028,1,goro,,0x01CE4877,0x04,Throbbing Cherry
@@ -122,16 +122,16 @@ Mushroom House Outside chest (behind),971112058,1,goro,Mushroom House,0x01CE4886
 Mushroom House Outside chest (ladder),971112059,1,goro,Mushroom House,0x01CE4886,0x02,Mage Slayer
 Watermill 1 Inside chest (right),971112060,1,,Watermill 1&Matataki River A,0x01CE4889,0x40,Gourd
 Watermill 1 Inside chest (left),971112061,1,,Watermill 1&Matataki River A,0x01CE4889,0x80,Plant Buster
-Watermill 1 Outside chest (right),971112062,1,goro,Watermill 1&Matataki River A,0x01CE4888,0x20,Antidote Amulet
+Watermill 1 Outside chest (right),971112062,1,goro,Watermill 1,0x01CE4888,0x20,Antidote Amulet
 Watermill 1 Outside chest (left),971112063,1,,Watermill 1&Matataki River A,0x01CE4888,0x10,Cheese
-Watermill 2 Inside chest (right),971112064,1,goro,Watermill 2&Matataki River B,0x01CE488C,0x08,Sea Killer
+Watermill 2 Inside chest (right),971112064,1,goro,Watermill 2,0x01CE488C,0x08,Sea Killer
 Watermill 2 Inside chest (left),971112065,1,,Watermill 2&Matataki River B,0x01CE488C,0x04,Gourd
-Watermill 2 Outside chest (right),971112066,1,goro,Watermill 2&Matataki River B,0x01CE488B,0x02,Anti-Goo Amulet
-Watermill 2 Outside chest (left),971112067,1,goro,Watermill 2&Matataki River B,0x01CE488B,0x01,Mage Slayer
-Watermill 3 Inside chest (right),971112068,1,goro,Watermill 3&Matataki River B,0x01CE488E,0x40,Gourd
-Watermill 3 Inside chest (left),971112069,1,goro,Watermill 3&Matataki River B,0x01CE488E,0x80,Beast Buster
-Watermill 3 Outside chest (right),971112070,1,goro,Watermill 3&Matataki River B,0x01CE488D,0x20,Anti-Curse Amulet
-Watermill 3 Outside chest (left),971112071,1,goro,Watermill 3&Matataki River B,0x01CE488D,0x10,Cheese
+Watermill 2 Outside chest (right),971112066,1,goro,Watermill 2,0x01CE488B,0x02,Anti-Goo Amulet
+Watermill 2 Outside chest (left),971112067,1,goro,Watermill 2,0x01CE488B,0x01,Mage Slayer
+Watermill 3 Inside chest (right),971112068,1,goro,Watermill 3,0x01CE488E,0x40,Gourd
+Watermill 3 Inside chest (left),971112069,1,goro,Watermill 3,0x01CE488E,0x80,Beast Buster
+Watermill 3 Outside chest (right),971112070,1,goro,Watermill 3,0x01CE488D,0x20,Anti-Curse Amulet
+Watermill 3 Outside chest (left),971112071,1,goro,Watermill 3,0x01CE488D,0x10,Cheese
 Wise Owl Shop Inside chest (stools),971112072,1,,Wise Owl Shop Entrance,0x01CE4891,0x04,Gourd
 Wise Owl Shop Inside chest (counter),971112073,1,,Wise Owl Shop Entrance,0x01CE4891,0x08,Cheese
 Wise Owl Shop Inside chest (trash left),971112074,1,,Wise Owl Shop Entrance,0x01CE4891,0x10,Plant Buster
