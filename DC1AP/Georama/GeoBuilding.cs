@@ -89,11 +89,6 @@ namespace DC1AP.Georama
         /// </summary>
         internal virtual void GiveBuildingTown()
         {
-            // Small chance of race condition giving us 2 items at the same time.  Double check the count before adding.
-            // Also prevents trying to add too many of an item if /send was used on the server.
-            if (buildingValue >= CountThisBuilding()) return;
-            // TODO can this IF be removed?
-
             uint baseAddr = (uint)(GeoAddrs.CurTownFirstBld + GeoAddrs.CurTownBldOffset * BuildingId);
 
             Memory.Write(baseAddr + GeoAddrs.CurTownBldOwnedOffset, buildingValue + 1);
@@ -123,11 +118,6 @@ namespace DC1AP.Georama
         /// </summary>
         internal virtual void GiveBuilding(bool inTown = false)
         {
-            // Small chance of race condition giving us 2 items at the same time.  Double check the count before adding.
-            // Also prevents trying to add too many of an item if /send was used on the server.
-            if (buildingValue >= CountThisBuilding()) return;
-            // TODO can this IF be removed?
-
             string? msg = null;
 
             // Buildings with multiple copies, like river
