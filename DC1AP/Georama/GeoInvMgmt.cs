@@ -29,8 +29,12 @@ namespace DC1AP.Georama
 
             for (int i = 0; i < Options.Goal; i++)
             {
+                Towns town = (Towns)i;
                 foreach (GeoBuilding building in buildingFiles[i])
+                {
+                    building.Init(town);
                     GeoBuilding.buildings.Add(building.ApId, building);
+                }
             }
         }
 
@@ -39,18 +43,9 @@ namespace DC1AP.Georama
         /// </summary>
         internal static void InitBuildings()
         {
-            for (int i = 0; i < Options.Goal; i++)
+            foreach (GeoBuilding building in GeoBuilding.buildings.Values)
             {
-                GeoBuilding[]? buildings = buildingFiles[i];
-                if (buildings == null) continue;
-
-                Towns town = (Towns)i;
-
-                foreach (GeoBuilding building in buildings)
-                {
-                    building.Init(town);
-                    building.ReadValues();
-                }
+                building.ReadValues();
             }
         }
 
@@ -75,7 +70,10 @@ namespace DC1AP.Georama
         internal static void VerifyItems()
         {
             foreach (GeoBuilding building in GeoBuilding.buildings.Values)
+            {
+                building.ReadValues();
                 building.CheckItems();
+            }
         }
 
         internal static bool RemoveGeoItem(short itemId, int dungeon)

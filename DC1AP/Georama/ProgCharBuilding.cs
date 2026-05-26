@@ -20,7 +20,18 @@ namespace DC1AP.Georama
             return charBuilding;
         }
 
-        internal override Towns Town { get
+        private ProgCharBuilding()
+        {
+            Name = "Progressive Char Building";
+            ApId = MiscConstants.ProgCharBldId;
+
+            BuildingCountAddr = OpenMem.ProgCharBldAddr;
+            BaseAddr = OpenMem.ProgCharBldAddr;
+        }
+
+        internal override Towns Town
+        {
+            get
             {
                 GeoBuilding? bld = DetermineBuilding();
                 Towns t = bld == null ? Towns.Castle : bld.Town;
@@ -28,30 +39,24 @@ namespace DC1AP.Georama
             }
         }
 
-        private ProgCharBuilding()
-        {
-            Name = "Progressive Char Building";
-            ApId = MiscConstants.ProgCharBldId;
-
-            BuildingCountAddr = OpenMem.ProgCharBldAddr;
-            buildingValue = Memory.ReadByte(BuildingCountAddr);
-        }
-
         internal override void ReadValues()
         {
-            // Intentionally empty override to avoid running base method
+            buildingValue = Memory.ReadShort(OpenMem.ProgCharBldAddr);
         }
 
         internal override void GiveBuildingTown()
         {
-            if (buildingValue >= CountThisBuilding()) return;
-            DetermineBuilding()?.GiveBuildingTown();
+            GeoBuilding? building = DetermineBuilding();
+            if (building != null)
+            {
+                building.GiveBuildingTown();
+                buildingValue++;
+                Memory.WriteByte(BuildingCountAddr, (byte)buildingValue);
+            }
         }
 
         internal override void GiveBuilding(bool inTown = false)
         {
-            if (buildingValue >= CountThisBuilding()) return;
-
             GeoBuilding? building = DetermineBuilding();
             if (building != null)
             {
