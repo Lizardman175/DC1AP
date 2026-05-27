@@ -301,7 +301,9 @@ namespace DC1AP.Items
             foreach (ItemInfo itemInfo in App.Client.CurrentSession.Items.AllItemsReceived)
             {
                 long apId = itemInfo.ItemId;
-                if (apId > MiscConstants.AttachIdBase)
+                if (itemInfo.ItemId == MiscConstants.DarkGenieApId)
+                    App.AddBossKill(MiscConstants.DarkGenieMask);
+                else if (apId > MiscConstants.AttachIdBase)
                     IncAttachCount(apId);
                 else if (apId > MiscConstants.ItemIdBase)
                     IncItemCount(apId);

@@ -93,6 +93,7 @@ namespace DC1AP.Constants
         internal const long GourdId = 971_111_182;
 
         internal const int DarkGenieApId = 971_119_999;
+        internal const byte DarkGenieMask = 0b10_0000;
 
         internal const long HornedKeyChestId = 971_111_063;
 
