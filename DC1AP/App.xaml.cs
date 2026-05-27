@@ -476,7 +476,7 @@ namespace DC1AP
         /// Mask the boss kills into the goal byte.
         /// </summary>
         /// <param name="mask">Bit to set for killed boss.</param>
-        private static void AddBossKill(byte mask)
+        internal static void AddBossKill(byte mask)
         {
             byte bb = Memory.ReadByte(OpenMem.GoalAddr);
             bb |= mask;
@@ -564,10 +564,11 @@ namespace DC1AP
         {
             long itemId = e.Item.Id;
 
-            // Not a real item, so ignore
-            if (itemId == MiscConstants.DarkGenieApId) return;
-
-            if (itemId >= MiscConstants.AttachIdBase)
+            if (itemId == MiscConstants.DarkGenieApId)
+            {
+                AddBossKill(MiscConstants.DarkGenieMask);
+            }
+            else if (itemId >= MiscConstants.AttachIdBase)
             {
                 ItemQueue.AddAttachment(itemId);
             }
