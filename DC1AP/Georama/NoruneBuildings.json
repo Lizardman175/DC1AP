@@ -37,16 +37,35 @@
       }
     ],
     "HundoCoords": {
-      "X": 3287945706,
+      "X": -500.13995,
       "Y": 0,
-      "Z": 3259529952,
-      "Orientation": 1
+      "Z": -50.119995,
+      "Orientation": 1,
+      "OrientationFloat": 1.5707964,
+      "Addrs": [
+        3600132,
+        3600160,
+        3600188,
+        3600580,
+        3600608,
+        3600636
+      ]
     },
     "AnyCoords": {
-      "X": 3288959221,
-      "Y": 0.0,
-      "Z": 3289778094,
-      "Orientation": 0
+      "X": -550.13995,
+      "Y": 0,
+      "Z": -600.12,
+      "Orientation": 0,
+      "OrientationFloat": 0,
+      "TableIndex": 0,
+      "Addrs": [
+        3599544,
+        3599572,
+        3599992,
+        3600020,
+        3600440,
+        3600468
+      ]
     }
   },
   {
@@ -87,16 +106,35 @@
       }
     ],
     "HundoCoords": {
-      "X": 1138814486,
+      "X": 449.86005,
       "Y": 0,
-      "Z": 3284668252,
-      "Orientation": 0
+      "Z": -400.12,
+      "Orientation": 0,
+      "OrientationFloat": 0,
+      "Addrs": [
+        3604080,
+        3604108,
+        3604528,
+        3604556,
+        3604976,
+        3605004
+      ]
     },
     "AnyCoords": {
-      "X": 1135537686,
-      "Y": 0.0,
-      "Z": 3284668252,
-      "Orientation": 0
+      "X": 349.86005,
+      "Y": 0,
+      "Z": -400.12,
+      "Orientation": 0,
+      "OrientationFloat": 0,
+      "TableIndex": 0,
+      "Addrs": [
+        3603632,
+        3603660,
+        3604080,
+        3604108,
+        3604528,
+        3604556
+      ]
     }
   },
   {
@@ -137,16 +175,35 @@
       }
     ],
     "HundoCoords": {
-      "X": 1125506092,
+      "X": 99.86005,
       "Y": 0,
-      "Z": 3267902832,
-      "Orientation": 2
+      "Z": -50.119995,
+      "Orientation": -1,
+      "OrientationFloat": -1.5707964,
+      "Addrs": [
+        3602820,
+        3602848,
+        3602876,
+        3603268,
+        3603296,
+        3603324
+      ]
     },
     "AnyCoords": {
-      "X": 3279561684,
-      "Y": 0.0,
-      "Z": 3284668252,
-      "Orientation": 0
+      "X": -250.13995,
+      "Y": 0,
+      "Z": -400.12,
+      "Orientation": 0,
+      "OrientationFloat": 0,
+      "TableIndex": 0,
+      "Addrs": [
+        3600944,
+        3600972,
+        3601392,
+        3601420,
+        3601840,
+        3601868
+      ]
     }
   },
   {
@@ -187,16 +244,35 @@
       }
     ],
     "HundoCoords": {
-      "X":  1140452886,
+      "X": 499.86005,
       "Y": 0,
-      "Z": 1111983392,
-      "Orientation": -1
+      "Z": 49.880005,
+      "Orientation": -1,
+      "OrientationFloat": -1.5707964,
+      "Addrs": [
+        3604640,
+        3604668,
+        3604696,
+        3605088,
+        3605116,
+        3605144
+      ]
     },
     "AnyCoords": {
-      "X": 3279561684,
-      "Y": 0.0,
-      "Z": 3289778094,
-      "Orientation": 0
+      "X": -250.13995,
+      "Y": 0,
+      "Z": -600.12,
+      "Orientation": 0,
+      "OrientationFloat": 0,
+      "TableIndex": 0,
+      "Addrs": [
+        3600888,
+        3600916,
+        3601336,
+        3601364,
+        3601784,
+        3601812
+      ]
     }
   },
   {
@@ -237,16 +313,35 @@
       }
     ],
     "HundoCoords": {
-      "X": 1128782892,
+      "X": 199.86005,
       "Y": 0,
-      "Z": 1135538340,
-      "Orientation": -1
+      "Z": 349.88,
+      "Orientation": -1,
+      "OrientationFloat": -1.5707964,
+      "Addrs": [
+        3603380,
+        3603408,
+        3603436,
+        3603828,
+        3603856,
+        3603884
+      ]
     },
     "AnyCoords": {
-      "X": 3288959221,
-      "Y": 0.0,
-      "Z": 3276283576,
-      "Orientation": 0
+      "X": -550.13995,
+      "Y": 0,
+      "Z": -200.12,
+      "Orientation": 0,
+      "OrientationFloat": 0,
+      "TableIndex": 0,
+      "Addrs": [
+        3599656,
+        3599684,
+        3600104,
+        3600132,
+        3600552,
+        3600580
+      ]
     }
   },
   {
@@ -287,16 +382,35 @@
       }
     ],
     "HundoCoords": {
-      "X": 3273008084,
+      "X": -150.13995,
       "Y": 0,
-      "Z": 3284668252,
-      "Orientation": 0
+      "Z": -400.12,
+      "Orientation": 0,
+      "OrientationFloat": 0,
+      "Addrs": [
+        3601392,
+        3601420,
+        3601840,
+        3601868,
+        3602288,
+        3602316
+      ]
     },
     "AnyCoords": {
-      "X": 1111978160,
-      "Y": 0.0,
-      "Z": 3284668252,
-      "Orientation": 0
+      "X": 49.860046,
+      "Y": 0,
+      "Z": -400.12,
+      "Orientation": 0,
+      "OrientationFloat": 0,
+      "TableIndex": 0,
+      "Addrs": [
+        3602288,
+        3602316,
+        3602736,
+        3602764,
+        3603184,
+        3603212
+      ]
     }
   },
   {
@@ -337,16 +451,35 @@
       }
     ],
     "HundoCoords": {
-      "X": 3276284884,
+      "X": -200.13995,
       "Y": 0,
-      "Z": 1135538340,
-      "Orientation": 1
+      "Z": 349.88,
+      "Orientation": 1,
+      "OrientationFloat": 1.5707964,
+      "Addrs": [
+        3601588,
+        3601616,
+        3601644,
+        3602036,
+        3602064,
+        3602092
+      ]
     },
     "AnyCoords": {
-      "X": 1135537686,
-      "Y": 0.0,
-      "Z": 3289778094,
-      "Orientation": 0
+      "X": 349.86005,
+      "Y": 0,
+      "Z": -600.12,
+      "Orientation": 0,
+      "OrientationFloat": 0,
+      "TableIndex": 0,
+      "Addrs": [
+        3603576,
+        3603604,
+        3604024,
+        3604052,
+        3604472,
+        3604500
+      ]
     }
   },
   {
@@ -377,16 +510,31 @@
       }
     ],
     "HundoCoords": {
-      "X": 3276284884,
+      "X": -200.13995,
       "Y": 0,
-      "Z": 3267902832,
-      "Orientation": 1
+      "Z": -100.119995,
+      "Orientation": 1,
+      "OrientationFloat": 1.5707964,
+      "Addrs": [
+        3601476,
+        3601504,
+        3601924,
+        3601952
+      ]
     },
     "AnyCoords": {
-      "X": 3289778421,
-      "Y": 0.0,
-      "Z": 3284668252,
-      "Orientation": -1
+      "X": -600.13995,
+      "Y": 0,
+      "Z": -400.12,
+      "Orientation": -1,
+      "OrientationFloat": -1.5707964,
+      "TableIndex": 0,
+      "Addrs": [
+        3599600,
+        3599628,
+        3600048,
+        3600076
+      ]
     }
   },
   {
@@ -417,16 +565,35 @@
       }
     ],
     "HundoCoords": {
-      "X": 3279561684,
+      "X": -250.13995,
       "Y": 0,
-      "Z": 3289778094,
-      "Orientation": 0
+      "Z": -600.12,
+      "Orientation": 0,
+      "OrientationFloat": 0,
+      "Addrs": [
+        3600888,
+        3600916,
+        3601336,
+        3601364,
+        3601784,
+        3601812
+      ]
     },
     "AnyCoords": {
-      "X": 1111978160,
-      "Y": 0.0,
-      "Z": 3289778094,
-      "Orientation": 0
+      "X": 49.860046,
+      "Y": 0,
+      "Z": -600.12,
+      "Orientation": 0,
+      "OrientationFloat": 0,
+      "TableIndex": 0,
+      "Addrs": [
+        3602232,
+        3602260,
+        3602680,
+        3602708,
+        3603128,
+        3603156
+      ]
     }
   },
   {
@@ -447,10 +614,14 @@
       }
     ],
     "HundoCoords": {
-      "X": 1135537686,
+      "X": 349.86005,
       "Y": 0,
-      "Z": 3290597294,
-      "Orientation": 0
+      "Z": -650.12,
+      "Orientation": 0,
+      "OrientationFloat": 0,
+      "Addrs": [
+        3604024
+      ]
     }
   },
   {
@@ -471,10 +642,14 @@
       }
     ],
     "HundoCoords": {
-      "X": 3286307306,
+      "X": -450.13995,
       "Y": 0,
-      "Z": 1132061000,
-      "Orientation": 0
+      "Z": 249.88,
+      "Orientation": 0,
+      "OrientationFloat": 0,
+      "Addrs": [
+        3600692
+      ]
     }
   },
   {
@@ -495,10 +670,14 @@
       }
     ],
     "HundoCoords": {
-      "X": 1143109387,
+      "X": 649.86005,
       "Y": 0,
-      "Z": 1132061000,
-      "Orientation": 0
+      "Z": 249.88,
+      "Orientation": 0,
+      "OrientationFloat": 0,
+      "Addrs": [
+        3605620
+      ]
     }
   },
   {
@@ -508,16 +687,31 @@
     "BuildingId": 12,
     "Items": [],
     "HundoCoords": {
-      "X": 1140452886,
+      "X": 499.86005,
       "Y": 0,
-      "Z": 1137176740,
-      "Orientation": 0
+      "Z": 399.88,
+      "Orientation": 0,
+      "OrientationFloat": 0,
+      "Addrs": [
+        3604752,
+        3604780,
+        3605200,
+        3605228
+      ]
     },
     "AnyCoords": {
-      "X": 3281392106,
-      "Y": 0.0,
-      "Z": 3276283576,
-      "Orientation": 0
+      "X": -300.13995,
+      "Y": 0,
+      "Z": -200.12,
+      "Orientation": 0,
+      "OrientationFloat": 0,
+      "TableIndex": 0,
+      "Addrs": [
+        3601000,
+        3601028,
+        3601448,
+        3601476
+      ]
     }
   },
   {
@@ -529,66 +723,104 @@
     "Items": [],
     "MultiCoords": [
       {
-        "X": 1141470987,
+        "X": 549.86005,
         "Y": 0,
-        "Z": 3288958894,
-        "Orientation": 0
+        "Z": -550.12,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3604948
+        ]
       },
       {
-        "X": 1111978160,
+        "X": 49.860046,
         "Y": 0,
-        "Z": 3290597294,
-        "Orientation": 0
+        "Z": -650.12,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3602680
+        ]
       },
       {
-        "X": 3290597621,
+        "X": -650.13995,
         "Y": 0,
-        "Z": 3290597294,
-        "Orientation": 0
+        "Z": -650.12,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3599544
+        ]
       },
       {
-        "X": 3286307306,
+        "X": -550.13995,
         "Y": 0,
-        "Z": 3279560376,
-        "Orientation": 0
+        "Z": 449.88,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3600300
+        ]
       },
       {
-        "X": 1132059692,
+        "X": -450.13995,
         "Y": 0,
-        "Z": 1111983392,
-        "Orientation": 0
-      },
-
-
-      {
-        "X": 1125506092,
-        "Y": 0,
-        "Z": 3283029852,
-        "Orientation": 0
+        "Z": -250.12,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3600552
+        ]
       },
       {
-        "X": 1111978160,
+        "X": 149.86005,
         "Y": 0,
-        "Z": 1132061000,
-        "Orientation": 0
+        "Z": -350.12,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3603212
+        ]
       },
       {
-        "X": 3288959221,
+        "X": 249.86005,
         "Y": 0,
-        "Z": 1138815140,
-        "Orientation": 0
+        "Z": 49.880005,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3603772
+        ]
       },
       {
-        "X": 1143109387,
+        "X": 49.860046,
         "Y": 0,
-        "Z": 3290597294,
-        "Orientation": 0
+        "Z": 249.88,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3602932
+        ]
       },
       {
-        "X": 1143109387,
+        "X": 649.86005,
         "Y": 0,
-        "Z": 3259529952,
-        "Orientation": 0
+        "Z": -650.12,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3605368
+        ]
+      },
+      {
+        "X": 649.86005,
+        "Y": 0,
+        "Z": -50.119995,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3605536
+        ]
       }
     ]
   },
@@ -601,158 +833,254 @@
     "Items": [],
     "MultiCoords": [
       {
-        "X": 3273008084,
+        "X": -150.13995,
         "Y": 0,
-        "Z": 3279560376,
-        "Orientation": 1
+        "Z": -250.12,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3601896
+        ]
       },
       {
-        "X": 3259535184,
+        "X": -50.139954,
         "Y": 0,
-        "Z": 3279560376,
-        "Orientation": 0
+        "Z": -250.12,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3602344
+        ]
       },
       {
-        "X": 1111978160,
+        "X": 49.860046,
         "Y": 0,
-        "Z": 3279560376,
-        "Orientation": 1
+        "Z": -250.12,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3602792
+        ]
       },
       {
-        "X": 1135537686,
+        "X": 349.86005,
         "Y": 0,
-        "Z": 1111983392,
-        "Orientation": 2
+        "Z": 49.880005,
+        "Orientation": 2,
+        "OrientationFloat": 3.1415927,
+        "Addrs": [
+          3604220
+        ]
       },
       {
-        "X": 1125506092,
+        "X": 149.86005,
         "Y": 0,
-        "Z": 3279560376,
-        "Orientation": 1
-      },
-
-      {
-        "X": 1135537686,
-        "Y": 0,
-        "Z": 3279560376,
-        "Orientation": 0
+        "Z": -250.12,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3603240
+        ]
       },
       {
-        "X": 3259535184,
+        "X": 349.86005,
         "Y": 0,
-        "Z": 3259529952,
-        "Orientation": 0
+        "Z": -250.12,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3604136
+        ]
       },
       {
-        "X": 3259535184,
+        "X": -50.139954,
         "Y": 0,
-        "Z": 1111983392,
-        "Orientation": 2
+        "Z": -50.119995,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3602400
+        ]
       },
       {
-        "X": 3283030506,
+        "X": -50.139954,
         "Y": 0,
-        "Z": 3279560376,
-        "Orientation": 1
+        "Z": 49.880005,
+        "Orientation": 2,
+        "OrientationFloat": 3.1415927,
+        "Addrs": [
+          3602428
+        ]
       },
       {
-        "X": 1135537686,
+        "X": -350.13995,
         "Y": 0,
-        "Z": 3273006776,
-        "Orientation": 0
-      },
-
-      {
-        "X": 1135537686,
-        "Y": 0,
-        "Z": 3259529952,
-        "Orientation": 0
+        "Z": -250.12,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3601000
+        ]
       },
       {
-        "X": 1132059692,
+        "X": 349.86005,
         "Y": 0,
-        "Z": 3279560376,
-        "Orientation": 1
+        "Z": -150.12,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3604164
+        ]
       },
       {
-        "X": 3283030506,
+        "X": 349.86005,
         "Y": 0,
-        "Z": 1111983392,
-        "Orientation": 2
+        "Z": -50.119995,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3604192
+        ]
       },
       {
-        "X": 3259535184,
+        "X": 249.86005,
         "Y": 0,
-        "Z": 1132061000,
-        "Orientation": 0
+        "Z": -250.12,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3603688
+        ]
       },
       {
-        "X": 3259535184,
+        "X": -350.13995,
         "Y": 0,
-        "Z": 1135538340,
-        "Orientation": 1
-      },
-
-      {
-        "X": 1138814486,
-        "Y": 0,
-        "Z": 3279560376,
-        "Orientation": -1
+        "Z": 49.880005,
+        "Orientation": 2,
+        "OrientationFloat": 3.1415927,
+        "Addrs": [
+          3601084
+        ]
       },
       {
-        "X": 1111978160,
+        "X": -50.139954,
         "Y": 0,
-        "Z": 1135538340,
-        "Orientation": -1
+        "Z": 249.88,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3602484
+        ]
       },
       {
-        "X": 3283030506,
+        "X": -50.139954,
         "Y": 0,
-        "Z": 3259529952,
-        "Orientation": 0
+        "Z": 349.88,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3602512
+        ]
       },
       {
-        "X": 3283030506,
+        "X": 449.86005,
         "Y": 0,
-        "Z": 3273006776,
-        "Orientation": 0
+        "Z": -250.12,
+        "Orientation": -1,
+        "OrientationFloat": -1.5707964,
+        "Addrs": [
+          3604584
+        ]
       },
       {
-        "X": 3259535184,
+        "X": 49.860046,
         "Y": 0,
-        "Z": 3273006776,
-        "Orientation": 0
-      },
-
-      {
-        "X": 3279561684,
-        "Y": 0,
-        "Z": 3279560376,
-        "Orientation": 1
+        "Z": 349.88,
+        "Orientation": -1,
+        "OrientationFloat": -1.5707964,
+        "Addrs": [
+          3602960
+        ]
       },
       {
-        "X": 3288959221,
+        "X": -350.13995,
         "Y": 0,
-        "Z": 3283029852,
-        "Orientation": 1
+        "Z": -50.119995,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3601056
+        ]
       },
       {
-        "X": 3286307306,
+        "X": -350.13995,
         "Y": 0,
-        "Z": 3283029852,
-        "Orientation": 1
+        "Z": -150.12,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3601028
+        ]
       },
       {
-        "X": 3283030506,
+        "X": -50.139954,
         "Y": 0,
-        "Z": 3283029852,
-        "Orientation": -1
+        "Z": -150.12,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3602372
+        ]
       },
       {
-        "X": 3283030506,
+        "X": -250.13995,
         "Y": 0,
-        "Z": 3286306652,
-        "Orientation": 0
+        "Z": -250.12,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3601448
+        ]
+      },
+      {
+        "X": -550.13995,
+        "Y": 0,
+        "Z": -350.12,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3600076
+        ]
+      },
+      {
+        "X": -450.13995,
+        "Y": 0,
+        "Z": -350.12,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3600524
+        ]
+      },
+      {
+        "X": -350.13995,
+        "Y": 0,
+        "Z": -350.12,
+        "Orientation": -1,
+        "OrientationFloat": -1.5707964,
+        "Addrs": [
+          3600972
+        ]
+      },
+      {
+        "X": -350.13995,
+        "Y": 0,
+        "Z": -450.12,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3600944
+        ]
       }
     ]
   },
@@ -765,132 +1093,204 @@
     "Items": [],
     "MultiCoords": [
       {
-        "X": 3288959221,
+        "X": -550.13995,
         "Y": 0,
-        "Z": 3288958894,
-        "Orientation": 1
+        "Z": -550.12,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3600020
+        ]
       },
       {
-        "X": 3290597621,
+        "X": -650.13995,
         "Y": 0,
-        "Z": 3283029852,
-        "Orientation": 0
+        "Z": -350.12,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3599628
+        ]
       },
       {
-        "X": 3290597621,
+        "X": -650.13995,
         "Y": 0,
-        "Z": 3259529952,
-        "Orientation": 0
+        "Z": -50.119995,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3599712
+        ]
       },
       {
-        "X": 3283030506,
+        "X": -350.13995,
         "Y": 0,
-        "Z": 1125507400,
-        "Orientation": 1
+        "Z": 149.88,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3601112
+        ]
       },
       {
-        "X": 3259535184,
+        "X": -50.139954,
         "Y": 0,
-        "Z": 1125507400,
-        "Orientation": 1
-      },
-
-
-      {
-        "X": 3290597621,
-        "Y": 0,
-        "Z": 3288958894,
-        "Orientation": -1
+        "Z": 149.88,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3602456
+        ]
       },
       {
-        "X": 3286307306,
+        "X": -650.13995,
         "Y": 0,
-        "Z": 3288958894,
-        "Orientation": -1
+        "Z": -550.12,
+        "Orientation": -1,
+        "OrientationFloat": -1.5707964,
+        "Addrs": [
+          3599572
+        ]
       },
       {
-        "X": 3290597621,
+        "X": -450.13995,
         "Y": 0,
-        "Z": 3286306652,
-        "Orientation": 0
+        "Z": -550.12,
+        "Orientation": -1,
+        "OrientationFloat": -1.5707964,
+        "Addrs": [
+          3600468
+        ]
       },
       {
-        "X": 3290597621,
+        "X": -650.13995,
         "Y": 0,
-        "Z": 3279560376,
-        "Orientation": 0
+        "Z": -450.12,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3599600
+        ]
       },
       {
-        "X": 3290597621,
+        "X": -650.13995,
         "Y": 0,
-        "Z": 3273006776,
-        "Orientation": 0
-      },
-
-
-      {
-        "X": 3286307306,
-        "Y": 0,
-        "Z": 1125507400,
-        "Orientation": 1
+        "Z": -250.12,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3599656
+        ]
       },
       {
-        "X": 3279561684,
+        "X": -650.13995,
         "Y": 0,
-        "Z": 1125507400,
-        "Orientation": 1
+        "Z": -150.12,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3599684
+        ]
       },
       {
-        "X": 3273008084,
+        "X": -450.13995,
         "Y": 0,
-        "Z": 1125507400,
-        "Orientation": 1
+        "Z": 149.88,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3600664
+        ]
       },
       {
-        "X": 1111978160,
+        "X": -250.13995,
         "Y": 0,
-        "Z": 1125507400,
-        "Orientation": -1
-      },
-
-
-      {
-        "X": 3290597621,
-        "Y": 0,
-        "Z": 1111983392,
-        "Orientation": 0
+        "Z": 149.88,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3601560
+        ]
       },
       {
-        "X": 3290597621,
+        "X": -150.13995,
         "Y": 0,
-        "Z": 1125507400,
-        "Orientation": 0
-      },
-
-      {
-        "X": 3288959221,
-        "Y": 0,
-        "Z": 1125507400,
-        "Orientation": 1
+        "Z": 149.88,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3602008
+        ]
       },
       {
-        "X": 1135537686,
+        "X": 49.860046,
         "Y": 0,
-        "Z": 1125507400,
-        "Orientation": 1
-      },
-
-      {
-        "X": 1125506092,
-        "Y": 0,
-        "Z": 1125507400,
-        "Orientation": 1
+        "Z": 149.88,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3602904
+        ]
       },
       {
-        "X": 1132059692,
+        "X": -650.13995,
         "Y": 0,
-        "Z": 1125507400,
-        "Orientation": 1
+        "Z": 49.880005,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3599740
+        ]
+      },
+      {
+        "X": -650.13995,
+        "Y": 0,
+        "Z": 149.88,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3599768
+        ]
+      },
+      {
+        "X": -550.13995,
+        "Y": 0,
+        "Z": 149.88,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3600216
+        ]
+      },
+      {
+        "X": 349.86005,
+        "Y": 0,
+        "Z": 149.88,
+        "Orientation": -1,
+        "OrientationFloat": -1.5707964,
+        "Addrs": [
+          3604248
+        ]
+      },
+      {
+        "X": 149.86005,
+        "Y": 0,
+        "Z": 149.88,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3603352
+        ]
+      },
+      {
+        "X": 249.86005,
+        "Y": 0,
+        "Z": 149.88,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3603800
+        ]
       }
     ]
   },
@@ -903,34 +1303,54 @@
     "Items": [],
     "MultiCoords": [
       {
-        "X": 3288959221,
+        "X": -550.13995,
         "Y": 0,
-        "Z": 3288958894,
-        "Orientation": 1
+        "Z": -550.12,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3600020
+        ]
       },
       {
-        "X": 3290597621,
+        "X": -650.13995,
         "Y": 0,
-        "Z": 3283029852,
-        "Orientation": 0
+        "Z": -350.12,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3599628
+        ]
       },
       {
-        "X": 3290597621,
+        "X": -650.13995,
         "Y": 0,
-        "Z": 3259529952,
-        "Orientation": 0
+        "Z": -50.119995,
+        "Orientation": 0,
+        "OrientationFloat": 0,
+        "Addrs": [
+          3599712
+        ]
       },
       {
-        "X": 3283030506,
+        "X": -350.13995,
         "Y": 0,
-        "Z": 1125507400,
-        "Orientation": 1
+        "Z": 149.88,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3601112
+        ]
       },
       {
-        "X": 3259535184,
+        "X": -50.139954,
         "Y": 0,
-        "Z": 1125507400,
-        "Orientation": 1
+        "Z": 149.88,
+        "Orientation": 1,
+        "OrientationFloat": 1.5707964,
+        "Addrs": [
+          3602456
+        ]
       }
     ]
   }
