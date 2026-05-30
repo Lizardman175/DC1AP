@@ -459,7 +459,7 @@ namespace DC1AP
                         else
                         {
                             int value = (i + 1) * 100;
-                            Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(mask), (o) => { return o == (short) value; });
+                            Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(mask, true), (o) => { return o == (short) value; });
                         }
                     }
                 }
@@ -476,7 +476,8 @@ namespace DC1AP
         /// Mask the boss kills into the goal byte.
         /// </summary>
         /// <param name="mask">Bit to set for killed boss.</param>
-        internal static void AddBossKill(byte mask)
+        /// <param name="trueKill">Flag indicating if this was called from actually killing the boss.</param>
+        internal static void AddBossKill(byte mask, bool trueKill = false)
         {
             byte bb = Memory.ReadByte(OpenMem.GoalAddr);
             bb |= mask;
@@ -487,7 +488,9 @@ namespace DC1AP
             {
                 SendLocation(MiscConstants.DarkGenieApId);
                 // The game will reset after the credits but it doesn't clear the time of day field.  This will force PlayerNotReady() to be called to avoid issues.
-                Memory.Write(MiscAddrs.TimeOfDayAddr, 0);
+                // Only call if from actually beating the boss.  If the item is collected, clearing Time of Day will cause issues.
+                if (trueKill)
+                    Memory.Write(MiscAddrs.TimeOfDayAddr, 0);
             }
 
             if (bb == bossKillTest)
