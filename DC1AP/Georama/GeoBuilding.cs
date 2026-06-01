@@ -77,6 +77,22 @@ namespace DC1AP.Georama
         private void SeeEvent()
         {
             Memory.WriteByte(BaseAddr - EventFlagOffset, 1);
+
+            if (PlayerState.GetCurrentTown() == ((int)town))
+            {
+                // TODO duplicate code, consider making a method
+                uint addr = GeoAddrs.BldDataTable;
+                // Find first empty entry in the table
+                int index = 0;
+                while (Memory.ReadInt(addr + GeoAddrs.BldDataBldIdOffset) != BuildingId && index < 128)
+                {
+                    addr += GeoAddrs.BldDataTableOffset;
+                    index++;
+                }
+
+                uint table = Memory.ReadUInt(addr + GeoAddrs.BldDataAddrOffset);
+                Memory.Write(table + sizeof(int), 1);
+            }
         }
 
         internal void UnseeEvent()
@@ -426,8 +442,7 @@ namespace DC1AP.Georama
                 byte[] source = Memory.ReadByteArray(sourceAddr, GeoAddrs.BldDataTableOffset);
                 Memory.WriteByteArray(addr, source);
 
-                // TODO not sure if this needs set?
-                Memory.Write(addr + GeoAddrs.BldDataUnknownOffset, 0);
+                Memory.Write(addr + GeoAddrs.BldDataTableIdxOffset, map.TableIndex);
 
                 // Orientation value * .5pi.  Needed for orientation to set correctly.
                 Memory.Write(addr + GeoAddrs.BldDataFOrientOffset, map.OrientationFloat);
