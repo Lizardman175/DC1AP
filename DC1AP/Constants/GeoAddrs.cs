@@ -145,9 +145,11 @@ namespace DC1AP.Constants
 
         internal const uint BldDataCoordsOffset = 0x10;
         internal const uint BldDataPartsNoOffset = 0xE8;
-        internal const uint BldDataUnknownOffset = 0xF4;  // Just sets to 0
+        internal const uint BldDataBldIdOffset = 0xF0;
+        internal const uint BldDataTableIdxOffset = 0xF4;  // Index for which grid table building is in
         internal const uint BldDataFOrientOffset = 0x64;
         internal const uint BldDataOrientOffset = 0xF8;
+        internal const uint BldDataAddrOffset = 0x108;
         internal const uint BldDataPartsExtraOffset = 0x118;
         internal const uint BldDataHundoOffset = 0x1D0;  // Mystery 100.0f value
 
