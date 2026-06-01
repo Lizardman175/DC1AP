@@ -12,6 +12,6 @@ namespace DC1AP.Georama
 
         public uint TableIndex = 0;
         // Note: these are only the perimeter for things like Earth A that have both dimensions larger than 2 so it won't have x*z entries necessarily
-        public uint[]? Addrs;
+        public uint[] Addrs = [];
     }
 }
