@@ -57,7 +57,8 @@ namespace DC1AP.Constants
         //    - Last dungeon isn't as important since there are no chests
         internal const uint CurTownFirstBld = 0x01D19C54;
         internal const uint CurTownBldOffset = 0xE8;
-        internal const uint CurTownBldOwnedOffset = 0x08;
+        internal const uint CurTownBldIdOffset = 0x08;
+        internal const uint CurTownBldOwnedOffset = 0x0C;
         internal const uint CurTownBldCountOffset = 0x14;  // How many, for rivers etc.
         // First piece is offset 0x20, 8 bytes in is the flag, each piece after moves by 0x20
         internal const uint CurTownBldPiece1FlagOffset = 0x2C;
@@ -131,5 +132,27 @@ namespace DC1AP.Constants
         // Points to the completion event flag for these buildings
         internal const uint YayaBldEventFlag = 30236688 - sizeof(int);
         internal const uint CathedralBldEventFlag = 30236712 - sizeof(int);
+
+        /**
+         * Table for building data and offsets.
+         * Some unused offsets of note:
+         * F0: Building ID
+         * 108: address linking to table for part in the building
+         */
+        internal const uint BldDataTable = 0x00376E70;
+        internal const uint BldDataTableSrc = 0x003977C0;
+        internal const int BldDataTableOffset = 0x2A0;
+
+        internal const uint BldDataCoordsOffset = 0x10;
+        internal const uint BldDataPartsNoOffset = 0xE8;
+        internal const uint BldDataBldIdOffset = 0xF0;
+        internal const uint BldDataTableIdxOffset = 0xF4;  // Index for which grid table building is in
+        internal const uint BldDataFOrientOffset = 0x64;
+        internal const uint BldDataOrientOffset = 0xF8;
+        internal const uint BldDataAddrOffset = 0x108;
+        internal const uint BldDataPartsExtraOffset = 0x118;
+        internal const uint BldDataHundoOffset = 0x1D0;  // Mystery 100.0f value
+
+        internal const int BldDataPartExtraFlag = 0x81;
     }
 }

@@ -77,6 +77,22 @@ namespace DC1AP.Georama
         private void SeeEvent()
         {
             Memory.WriteByte(BaseAddr - EventFlagOffset, 1);
+
+            if (PlayerState.GetCurrentTown() == ((int)town))
+            {
+                // TODO duplicate code, consider making a method
+                uint addr = GeoAddrs.BldDataTable;
+                // Find first empty entry in the table
+                int index = 0;
+                while (Memory.ReadInt(addr + GeoAddrs.BldDataBldIdOffset) != BuildingId && index < 128)
+                {
+                    addr += GeoAddrs.BldDataTableOffset;
+                    index++;
+                }
+
+                uint table = Memory.ReadUInt(addr + GeoAddrs.BldDataAddrOffset);
+                Memory.Write(table + sizeof(int), 1);
+            }
         }
 
         internal void UnseeEvent()
@@ -91,27 +107,29 @@ namespace DC1AP.Georama
         {
             uint baseAddr = (uint)(GeoAddrs.CurTownFirstBld + GeoAddrs.CurTownBldOffset * BuildingId);
 
-            Memory.Write(baseAddr + GeoAddrs.CurTownBldOwnedOffset, buildingValue + 1);
+            Memory.Write(baseAddr + GeoAddrs.CurTownBldIdOffset, buildingValue + 1);
 
-            if (Multi != 0 && buildingValue < Multi)
+            if (Multi > 0 && buildingValue < Multi)
             {
-                //Memory.Write(baseAddr + GeoAddrs.CurTownBldCountOffset, Multiplier*(buildingValue+1));
+                Memory.Write(baseAddr + GeoAddrs.CurTownBldOwnedOffset, Multiplier*(buildingValue+1));
+                Memory.Write(baseAddr + GeoAddrs.CurTownBldCountOffset, Multiplier * (buildingValue + 1));
             }
             else if (buildingValue == 0)
             {
-                //Memory.Write(baseAddr + GeoAddrs.CurTownBldOwnedOffset, 1);
+                Memory.Write(baseAddr + GeoAddrs.CurTownBldOwnedOffset, 1);
                 Memory.Write(baseAddr + GeoAddrs.CurTownBldCountOffset, 1);
             }
-            else
+            else if (buildingValue <= Items.Length)
             {
                 GeoItem item = Items[buildingValue - 1];
                 uint itemAddr = (uint)(baseAddr + GeoAddrs.CurTownBldPiece1FlagOffset + (GeoAddrs.CurTownBldPieceOffset * item.SlotId));
                 Memory.Write(itemAddr, 1);
             }
+            // Nothing to place as an extra copy has been received
+            else
+                return;
 
-            // TODO map
-
-            GiveBuilding(false);
+            GiveBuilding(true);
         }
 
         /// <summary>
@@ -237,12 +255,12 @@ namespace DC1AP.Georama
                     if (ApId == MiscConstants.CouscousId)
                     {
                         uint earthBAddr = FindBuildingById(town, MiscConstants.EarthBId);
-                        WriteBuildingMap(HundoCoords, earthBAddr != 0);
+                        WriteBuildingMap(HundoCoords, inTown, earthBAddr != 0);
                     }
                     else if (ApId == MiscConstants.MushroomId)
                     {
                         uint earthAAddr = FindBuildingById(town, MiscConstants.EarthAId);
-                        WriteBuildingMap(HundoCoords, earthAAddr != 0);
+                        WriteBuildingMap(HundoCoords, inTown, earthAAddr != 0);
                     }
                     else if (ApId == MiscConstants.EarthBId)
                     {
@@ -252,7 +270,7 @@ namespace DC1AP.Georama
                             couscousAddr += sizeof(long);
                             Memory.Write(couscousAddr, buildings[MiscConstants.CouscousId].HundoCoords.Y);
                         }
-                        WriteBuildingMap(HundoCoords);
+                        WriteBuildingMap(HundoCoords, inTown);
                     }
                     else if (ApId == MiscConstants.EarthAId)
                     {
@@ -262,42 +280,42 @@ namespace DC1AP.Georama
                             mushAddr += sizeof(long);
                             Memory.Write(mushAddr, buildings[MiscConstants.MushroomId].HundoCoords.Y);
                         }
-                        WriteBuildingMap(HundoCoords);
+                        WriteBuildingMap(HundoCoords, inTown);
                     }
                     else if (ApId >= MiscConstants.Watermill1Id && ApId <= MiscConstants.Watermill3Id)
                     {
                         if (ApId == MiscConstants.Watermill1Id)
                         {
                             if (buildings[MiscConstants.MatatakiRiverId].buildingValue > 0)
-                                WriteBuildingMap(HundoCoords);
+                                WriteBuildingMap(HundoCoords, inTown);
                         }
                         else
                         {
                             // Need at least 2 sets of river pieces for the second and third watermill
                             if (buildings[MiscConstants.MatatakiRiverId].buildingValue > 1)
-                                WriteBuildingMap(HundoCoords);
+                                WriteBuildingMap(HundoCoords, inTown);
                         }
                     }
                     else
-                        WriteBuildingMap(HundoCoords);
+                        WriteBuildingMap(HundoCoords, inTown);
                 }
                 else
-                    WriteBuildingMap(HundoCoords, true, inTown);
+                    WriteBuildingMap(HundoCoords, inTown);
             }
             else if (AnyCoords != null && Options.Autobuild == AutobuildFlags.Any)
             {
                 if (town == Towns.Matataki && ApId == MiscConstants.Watermill1Id)
                 {
                     if (buildings[MiscConstants.MatatakiRiverId].buildingValue > 0)
-                        WriteBuildingMap(AnyCoords);
+                        WriteBuildingMap(AnyCoords, inTown);
                 }
                 else if (town == Towns.Matataki && (ApId == MiscConstants.Watermill2Id || ApId == MiscConstants.Watermill3Id))
                 {
                     if (buildings[MiscConstants.MatatakiRiverId].buildingValue > 1)
-                        WriteBuildingMap(AnyCoords);
+                        WriteBuildingMap(AnyCoords, inTown);
                 }
                 else
-                    WriteBuildingMap(AnyCoords);
+                    WriteBuildingMap(AnyCoords, inTown);
             }
         }
 
@@ -325,10 +343,9 @@ namespace DC1AP.Georama
 
                     for (; i < max; i++)
                     {
-                        WriteBuildingMap(MultiCoords[i]);
+                        WriteBuildingMap(MultiCoords[i], inTown);
                     }
 
-                    // TODO test the calls where inTown was added
                     if (town == Towns.Norune && ApId == MiscConstants.NoruneRiverId &&
                         buildingValue == MiscConstants.NoruneBridgeRiverCount &&
                         buildings[MiscConstants.NoruneBridgeId].buildingValue > 0)
@@ -363,7 +380,7 @@ namespace DC1AP.Georama
                 {
                     for (int i = Multiplier * (buildingValue - 1); i < Multiplier * buildingValue; i++)
                     {
-                        WriteBuildingMap(MultiCoords[i]);
+                        WriteBuildingMap(MultiCoords[i], inTown);
                     }
                 }
                 // Matataki Bridge after River
@@ -372,121 +389,106 @@ namespace DC1AP.Georama
                 {
                     for (int i = Multiplier * (buildingValue - 1); i < Multiplier * buildingValue; i++)
                     {
-                        WriteBuildingMap(MultiCoords[i]);
+                        WriteBuildingMap(MultiCoords[i], inTown);
                     }
                 }
             }
         }
 
-        // TODO un-default inTown to see what needs updating
-        private void WriteBuildingMap(BuildingCoords map, bool useY = true, bool inTown=false)
+        // Is this harder than it needs to be? maybe. It is fun though!
+        private void WriteBuildingMap(BuildingCoords map, bool inTown, bool useY = true)
         {
-            if (inTown && MultiCoords == null && town == Towns.Norune)// used to diable pond:  && BuildingId != 12)
-            {
-                // TODO need to find next available slot rather than BuildingId as the index
-                uint addr = 0x00376E80 + (uint)(0x2a0 * BuildingId);
+            uint addr = GeoAddrs.TownMapAddrs[((int)town)];
+            short buildingIdMem = Memory.ReadShort(addr);
 
-                //Memory.Write(0x377040, 0x42c80000);
-                //Memory.Write(0x377048, 0x01);
-                //Memory.Write(0x37704C, 0x01);
+            // Find the first empty building slot
+            while (buildingIdMem != -1)
+            {
+                addr += 0x10; // 4 ints
+                buildingIdMem = Memory.ReadShort(addr);
+            }
+
+            Memory.Write(addr, BuildingId);
+
+            addr += sizeof(short);
+            Memory.Write(addr, map.Orientation);
+
+            addr += sizeof(short);
+            Memory.Write(addr, map.X);
+
+            addr += sizeof(float);
+            if (useY) Memory.Write(addr, map.Y);
+            else Memory.Write(addr, 0.0f);
+
+            addr += sizeof(float);
+            Memory.Write(addr, map.Z);
+
+            Memory.Write(placedCountAddr, (short)1);
+
+            if (inTown)
+            {
+                // Note: table has 0-127 possible entries but no town has that many geo parts
+                addr = GeoAddrs.BldDataTable;
+                // Find first empty entry in the table
+                int index = 0;
+                while (Memory.ReadInt(addr + GeoAddrs.BldDataCoordsOffset) != 0 && index < 128)
+                {
+                    addr += GeoAddrs.BldDataTableOffset;
+                    index++;
+                }
+
+                // Most of this table is copied from a table paged in for the town starting 0x003977C0, then +2A0 for each building
+                uint sourceAddr = GeoAddrs.BldDataTableSrc + (uint)(GeoAddrs.BldDataTableOffset * BuildingId);
+                byte[] source = Memory.ReadByteArray(sourceAddr, GeoAddrs.BldDataTableOffset);
+                Memory.WriteByteArray(addr, source);
+
+                Memory.Write(addr + GeoAddrs.BldDataTableIdxOffset, map.TableIndex);
 
                 // Orientation value * .5pi.  Needed for orientation to set correctly.
-                Memory.Write(addr + 0x54, OrientationFloat);
+                Memory.Write(addr + GeoAddrs.BldDataFOrientOffset, map.OrientationFloat);
+                Memory.Write(addr + GeoAddrs.BldDataOrientOffset, (int)map.Orientation);
 
-                // Seem to be memory addresses where data for the building live.  doesn't seem to affect anything to ignore?
-                //Memory.Write(0x3770A8, 0x3c3f40);
-                //Memory.Write(0x3770AC, 0x3c3fB0);
-
-                // Makes the building tangible.  Actually a collection of floats.  Seems to be boundary coordinates for the building or something?
-                // TODO Hoping we don't need these for river/road/bridge
-                for (int i = 0; i < MCoords1.Length; i++)
-                {
-                    Memory.Write(addr + 0x120 + (uint)(i * 4), MCoords1[i]);
-                }
-                for (int i = 0; i < MCoords2.Length; i++)
-                {
-                    Memory.Write(addr + 0x130 + (uint)(i * 4), MCoords2[i]);
-                }
-
-                // Needed to enter building
-                Memory.Write(addr + 0xE0, (long)0);
-                //Memory.Write(0x376F80, 0x449920);
-
-                // These 7 are needed to make the building actually appear.  Not sure what they mean
-                for (int i = 0; i < MInts1.Length; i++)
-                {
-                    Memory.Write((uint)(addr + 0xA0 + i * 0x4), MInts1[i]);
-                }
-                //Memory.Write(0x376F20, 0xa00050);
-                //Memory.Write(0x376F24, 0xa392d0);
-                //Memory.Write(0x376F28, 0xa63c90);
-
-                for (int i = 0; i < MInts2.Length; i++)
-                {
-                    Memory.Write((uint)(addr + 0xC0 + i * 0x4), MInts2[i]);
-                }
-                //Memory.Write(0x376F40, 0xa82dd0);
-                //Memory.Write(0x376F44, 0xa7c150);
-                //Memory.Write(0x376F48, 0xa8ef10);
-                //Memory.Write(0x376F4C, 0xa956d0);
-
-                Memory.Write(addr + 0xE8, (long)map.Orientation);
-                Memory.Write(addr + 0xD8, (long)BuildingId);
-                Memory.Write(addr + 0xF8, GeoAddrs.CurTownFirstBld + GeoAddrs.CurTownBldOffset*BuildingId);
-                //Memory.Write(addr + 0xF8 + 4, 0x0C);
-
-                Memory.Write(addr, map.X);
+                Memory.Write(addr + GeoAddrs.BldDataCoordsOffset, map.X);
                 //addr += sizeof(float);
 
-                if (useY) Memory.Write(addr + sizeof(float), map.Y);
-                else Memory.Write(addr, 0.0f);
+                if (useY) Memory.Write(addr + GeoAddrs.BldDataCoordsOffset + sizeof(float), map.Y);
+                else Memory.Write(addr + GeoAddrs.BldDataCoordsOffset + sizeof(float), 0.0f);
                 //addr += sizeof(float);
 
-                Memory.Write(addr + sizeof(float)*2, map.Z);
-                Memory.Write(addr + sizeof(float)*3, 1.0f);
+                Memory.Write(addr + GeoAddrs.BldDataCoordsOffset + sizeof(float) * 2, map.Z);
+                Memory.Write(addr + GeoAddrs.BldDataCoordsOffset + sizeof(float) * 3, 1.0f);
+                Memory.Write(addr + GeoAddrs.BldDataHundoOffset, 100.0f);
 
-                // Doesn't seem we need to set these
-                //Memory.Write(addr + 0x1C, 0xDACB8981);
-                //Memory.Write(addr + 0x2C, 0xDACB8981);
-                //Memory.Write(addr + 0x3C, 0xDACB8981);
-                //Memory.Write(addr + 0x5C, 0xDACB8981);
-                //Memory.Write(addr + 0x6C, 0xDACB8981);
-                //Memory.Write(addr + 0x7C, 0xDACB8981);
+                int partsExtra = Memory.ReadInt(addr + GeoAddrs.BldDataPartsExtraOffset);
 
-                // Magic value to make buildings render
-                if (town == Towns.Norune && BuildingId == 12)
-                    Memory.Write(addr + 0xD4, 01);
-                else
-                    Memory.Write(addr + 0xD4, 02);
+                // TODO Need to either figure out how to trigger the game placing road/river/bridge, do some tedious work to make pieces place with correct geometry, or just not do these piece types
+                //if (partsExtra == 1)
+                //{
+                //    if (town == Towns.Norune)
+                //        Memory.Write(addr + 0xB0, 0x0101d690);
+                //    else if (town == Towns.Muska && BuildingId == 0x0D)
+                //    {
+                //        Memory.Write(addr + 0xE8, 1);
+                //        Memory.Write(addr + 0xB0, 0xee7cd0);
+                //        Memory.Write(addr + 0xBC, 0xEE8550);
+                //        Memory.Write(addr + 0xD0, 0xee8dd0);
+                //    }
+                //}
 
-                //addr = 0x00376E80 + 
-            }
-            else
-            {
-                uint addr = GeoAddrs.TownMapAddrs[((int)town)];
-                short buildingIdMem = Memory.ReadShort(addr);
+                // Not actually sure what this is, but is the value actually used in the grid table. Usually same as the building ID but river, bridge and others have different numbers.
+                int partsNo = Memory.ReadInt(addr + GeoAddrs.BldDataPartsNoOffset);
 
-                // Find the first empty building slot
-                while (buildingIdMem != -1)
+                foreach (uint mapAddr in map.Addrs)
                 {
-                    addr += 0x10; // 4 ints
-                    buildingIdMem = Memory.ReadShort(addr);
+                    GridEntry entry = new();
+                    entry.BuildingId = (uint)partsNo;
+                    entry.tableIndex = (uint)index;
+                    if (partsExtra != 0)
+                        entry.eighty = GeoAddrs.BldDataPartExtraFlag;
+                    entry.partsExtra = partsExtra;
+
+                    Memory.WriteStruct(mapAddr, entry);
                 }
-
-                Memory.Write(addr, BuildingId);
-
-                addr += sizeof(short);
-                Memory.Write(addr, map.Orientation);
-
-                addr += sizeof(short);
-                Memory.Write(addr, map.X);
-
-                addr += sizeof(float);
-                if (useY) Memory.Write(addr, map.Y);
-                else Memory.Write(addr, 0.0f);
-
-                addr += sizeof(float);
-                Memory.Write(addr, map.Z);
             }
         }
 

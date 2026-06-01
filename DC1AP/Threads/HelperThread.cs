@@ -196,8 +196,11 @@ namespace DC1AP.Threads
                 // TODO magic nums.
                 int atlaId = MiscConstants.BaseId + 101 + 1000 * (dun + 1);
                 List<Atla> dunAtla = [];
+                int maxFloor = MiscAddrs.FloorCountRear[dun];
+                // Final dungeon floor counter is 1 less than it should be to not give early access to the Genie.  This is needed to check the final floor's atla.
+                if (dun == (int)Towns.Castle) maxFloor++;
 
-                for (int floor = 0; floor < MiscAddrs.FloorCountRear[dun]; floor++)
+                for (int floor = 0; floor < maxFloor; floor++)
                 {
                     // Adjust value for back half of a dungeon
                     if (dunAtla.Count == GeoAddrs.AtlaHalfwayCounts[dun] && dun != (int)Towns.Castle)

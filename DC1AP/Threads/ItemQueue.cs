@@ -121,9 +121,8 @@ namespace DC1AP.Threads
                         while (PlayerState.CanGiveGeorama() && geoBuildingQueue.TryDequeue(out GeoBuilding? geoBuilding))
                         {
                             if (PlayerState.CanGiveGeoInTown() && (int)geoBuilding.Town == PlayerState.GetCurrentTown())
-                                // TODO only give pieces of buildings in town; can't give the full building right now
-                                if (geoBuilding.BuildingValue == 0 || geoBuilding.Multi > 0)
-                                    //geoBuilding.GiveBuildingTown();
+                                // TODO can't give river/road/bridge in town currently, stash them for now and continue the loop
+                                if (geoBuilding.Multi > 0 && !geoBuilding.Name.Contains("Tree"))
                                     tempQueue.Enqueue(geoBuilding);
                                 else
                                     geoBuilding.GiveBuildingTown();
@@ -131,7 +130,7 @@ namespace DC1AP.Threads
                                 geoBuilding.GiveBuilding();
                         }
 
-                        // TODO temp handling of local town pieces until auto build is working for the local town with GiveBuildingTown().
+                        // TODO can't give river/road/bridge in town currently
                         while (tempQueue.TryDequeue(out GeoBuilding? geoBuilding))
                         {
                             AddGeorama(geoBuilding);
