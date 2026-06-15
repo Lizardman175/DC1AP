@@ -35,31 +35,13 @@ namespace DC1AP.Threads
             Clear();
             InitAtla();
 
-            // Can't use a loop here as InitAtla will only reference the loop counter's final value: Options.Goal
-            // TODO there may be a way to make this loop?
-            if (!dungeonsMapped[0])
+            for (int i = 0; i < Options.Goal; i++)
             {
-                Memory.MonitorAddressForAction<byte>(GeoAddrs.AtlaFlagAddrs[0], () => InitAtla(0), (o) => { return playableState && o != 0xff; });
-            }
-            if (!dungeonsMapped[1])
-            {
-                Memory.MonitorAddressForAction<byte>(GeoAddrs.AtlaFlagAddrs[1], () => InitAtla(1), (o) => { return playableState && o != 0xff; });
-            }
-            if (Options.Goal > 2 && !dungeonsMapped[2])
-            {
-                Memory.MonitorAddressForAction<byte>(GeoAddrs.AtlaFlagAddrs[2], () => InitAtla(2), (o) => { return playableState && o != 0xff; });
-            }
-            if (Options.Goal > 3 && !dungeonsMapped[3])
-            {
-                Memory.MonitorAddressForAction<byte>(GeoAddrs.AtlaFlagAddrs[3], () => InitAtla(3), (o) => { return playableState && o != 0xff; });
-            }
-            if (Options.Goal > 4 && !dungeonsMapped[4])
-            {
-                Memory.MonitorAddressForAction<byte>(GeoAddrs.AtlaFlagAddrs[4], () => InitAtla(4), (o) => { return playableState && o != 0xff; });
-            }
-            if (Options.Goal > 5 && !dungeonsMapped[5])
-            {
-                Memory.MonitorAddressForAction<byte>(GeoAddrs.AtlaFlagAddrs[5], () => InitAtla(5), (o) => { return playableState && o != 0xff; });
+                int x = i;
+                if (!dungeonsMapped[i])
+                {
+                    Memory.MonitorAddressForAction<int>(GeoAddrs.LastAltaPerDungeon[x], () => InitAtla(x), (o) => { return playableState && o != -1; });
+                }
             }
         }
 
@@ -178,9 +160,6 @@ namespace DC1AP.Threads
         {
             lock (_lock)
             {
-                // Brief sleep to allow the game to initialize the dungeon
-                Thread.Sleep(500);
-
                 // Don't read the atla until the player enters the first dungeon since we can't initialize it.
                 // Don't rerun or run if the game isn't in a valid state
                 if (!PlayerState.ValidGameState || dungeonsMapped[dun] ||
