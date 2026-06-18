@@ -154,7 +154,7 @@ namespace DC1AP.ViewModels
             CommandSentCommand = ReactiveCommand.Create(HandleCommandSent);
             TogglePaneCommand = ReactiveCommand.Create(HandleTogglePane);
             UnstuckClickedCommand = ReactiveCommand.Create(HandleUnstuck);
-            ClientVersion = "0.5.5";
+            ClientVersion = App.ClientVersion;
             ArchipelagoVersion = archipelagoVersion;
 
             _processingTimer = new Timer(TIMER_INTERVAL);
