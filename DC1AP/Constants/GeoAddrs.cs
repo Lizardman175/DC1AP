@@ -154,5 +154,7 @@ namespace DC1AP.Constants
         internal const uint BldDataHundoOffset = 0x1D0;  // Mystery 100.0f value
 
         internal const int BldDataPartExtraFlag = 0x81;
+
+        internal static readonly uint[] LastAltaPerDungeon = [0x01CDB960, 0x01CDBE7C, 0x01CDC26C, 0x01CDC6D4, 0x01CDCB18, 0x01CDD010];
     }
 }

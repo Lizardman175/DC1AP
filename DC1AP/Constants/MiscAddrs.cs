@@ -55,11 +55,11 @@ namespace DC1AP.Constants
         internal const uint YDCountAddr = 0x01CE7056; // Yellow Drops
         internal const uint MSCountAddr = 0x01CE70D0; // Moon sea
 
-        internal const uint GOTCountAddr = 0x01CE70D2; // Gallery of Time
-        internal const uint DHCCountAddr = 0x01CE7078; // DHC? Seems to also activate ThE sHaFt
+        internal const uint DHCCountAddr = 0x01CE7074; // DHC
+        internal const uint GOTCountAddr = 0x01CE7078; // GoT. Seems to also activate ThE sHaFt?
 
         // >0 will open the demon shaft dungeon for business
-        //internal const uint ShaftCounterAddr = 0x1CE70A0;
+        //internal const uint ShaftCounterAddr = 0x01CE70A0;
 
         // How many floors are available for a given dungeon.  0 indexed.  Setting these early will skip normal dungeon initialization.
         internal const uint DBCFloorCountAddr = 0x01CDD80B;

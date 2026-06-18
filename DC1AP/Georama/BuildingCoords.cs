@@ -13,5 +13,19 @@ namespace DC1AP.Georama
         public uint TableIndex = 0;
         // Note: these are only the perimeter for things like Earth A that have both dimensions larger than 2 so it won't have x*z entries necessarily
         public uint[] Addrs = [];
+
+        public struct Vector
+        {
+            public float x;
+            public float y;
+            public float z;
+
+            public Vector(float x, float y, float z) : this()
+            {
+                this.x = x;
+                this.y = y;
+                this.z = z;
+            }
+        }
     }
 }

@@ -290,7 +290,10 @@ namespace DC1AP.Mem
                     }
 
                     if (head)
+                    {
                         Memory.WriteByte(MiscAddrs.DHCCountAddr, 1);
+                        Memory.WriteByte(MiscAddrs.GOTCountAddr, 1);
+                    }
                 }
             }
         }

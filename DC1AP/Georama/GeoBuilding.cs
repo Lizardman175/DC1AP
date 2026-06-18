@@ -6,6 +6,7 @@ using DC1AP.Threads;
 using Serilog;
 using System.Collections.Generic;
 using System.Linq;
+using static DC1AP.Georama.BuildingCoords;
 
 namespace DC1AP.Georama
 {
@@ -414,16 +415,15 @@ namespace DC1AP.Georama
             Memory.Write(addr, map.Orientation);
 
             addr += sizeof(short);
-            Memory.Write(addr, map.X);
+            Vector vector = new(map.X, map.Y, map.Z);
+            if (!useY) vector.y = 0.0f;
 
-            addr += sizeof(float);
-            if (useY) Memory.Write(addr, map.Y);
-            else Memory.Write(addr, 0.0f);
+            Memory.WriteStruct<Vector>(addr, vector);
 
-            addr += sizeof(float);
-            Memory.Write(addr, map.Z);
-
-            Memory.Write(placedCountAddr, (short)1);
+            if (MultiCoords != null)
+                Memory.Write(placedCountAddr, (short)(buildingValue * 5));
+            else
+                Memory.Write(placedCountAddr, (short)1);
 
             if (inTown)
             {
@@ -448,15 +448,18 @@ namespace DC1AP.Georama
                 Memory.Write(addr + GeoAddrs.BldDataFOrientOffset, map.OrientationFloat);
                 Memory.Write(addr + GeoAddrs.BldDataOrientOffset, (int)map.Orientation);
 
-                Memory.Write(addr + GeoAddrs.BldDataCoordsOffset, map.X);
-                //addr += sizeof(float);
+                // If Couscous/mush are already placed, put them on top of the Earths before placing the Earths
+                if (town == Towns.Matataki)
+                {
+                    if (ApId == MiscConstants.EarthAId)
+                        UpdateBldY(MiscConstants.MushroomId);
+                    else if (ApId == MiscConstants.EarthBId)
+                        UpdateBldY(MiscConstants.CouscousId);
+                }
 
-                if (useY) Memory.Write(addr + GeoAddrs.BldDataCoordsOffset + sizeof(float), map.Y);
-                else Memory.Write(addr + GeoAddrs.BldDataCoordsOffset + sizeof(float), 0.0f);
-                //addr += sizeof(float);
+                Memory.WriteStruct<Vector>(addr + GeoAddrs.BldDataCoordsOffset, vector);
+                Memory.Write(addr + GeoAddrs.BldDataCoordsOffset + sizeof(float) * 3, 1.0f);  // W value for the quaternion; not used in the other coords so for reuse of vector object, not putting in the struct
 
-                Memory.Write(addr + GeoAddrs.BldDataCoordsOffset + sizeof(float) * 2, map.Z);
-                Memory.Write(addr + GeoAddrs.BldDataCoordsOffset + sizeof(float) * 3, 1.0f);
                 Memory.Write(addr + GeoAddrs.BldDataHundoOffset, 100.0f);
 
                 int partsExtra = Memory.ReadInt(addr + GeoAddrs.BldDataPartsExtraOffset);
@@ -492,6 +495,34 @@ namespace DC1AP.Georama
             }
         }
 
+        private static void UpdateBldY(int bldId)
+        {
+            // Note: table has 0-127 possible entries but no town has that many geo parts
+            uint addr2 = GeoAddrs.BldDataTable;
+            // Find first empty entry in the table
+            int index2 = 0;
+            bool found = false;
+            GeoBuilding bld = buildings[bldId];
+            if (bld.buildingValue == 0) return;  // Building not placed, nothing to do
+
+            while (Memory.ReadInt(addr2 + GeoAddrs.BldDataCoordsOffset) != 0 && index2 < 128)
+            {
+                if (Memory.ReadInt(addr2 + GeoAddrs.BldDataBldIdOffset) == bld.BuildingId)
+                {
+                    found = true;
+                    break;
+                }
+
+                addr2 += GeoAddrs.BldDataTableOffset;
+                index2++;
+            }
+
+            if (found)
+            {
+                Memory.Write(addr2 + GeoAddrs.BldDataCoordsOffset + sizeof(float), bld.HundoCoords.Y);
+            }
+        }
+
         /// <summary>
         /// Finds the given building ID for the given town and returns the addr for it.  Returns 0 if not found.
         /// </summary>
@@ -501,10 +532,10 @@ namespace DC1AP.Georama
         private static uint FindBuildingById(Towns town, int apid)
         {
             uint addr = GeoAddrs.TownMapAddrs[((int)town)];
-            int temp = Memory.ReadInt(addr);
+            ushort temp = (ushort)Memory.ReadShort(addr);
             GeoBuilding target = buildings[apid];
 
-            while (temp != -1)
+            while (temp != 0xFFFF)
             {
                 short buildingIdMem = Memory.ReadShort(addr);
                 if (buildingIdMem == target.BuildingId)
@@ -512,6 +543,7 @@ namespace DC1AP.Georama
                     return addr;
                 }
                 addr += 0x10;
+                temp = (ushort)Memory.ReadShort(addr);
             }
 
             return 0;
