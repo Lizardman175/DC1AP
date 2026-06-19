@@ -71,7 +71,7 @@ namespace DC1AP.Threads
             int currInteriorId = -1;
             int currAltInteriorId = -1;
 
-            while (PlayerState.ValidGameState)
+            while (PlayerState.GetGameState())
             {
                 int zoneId = Memory.ReadInt(MiscAddrs.CurZoneAddr);
 

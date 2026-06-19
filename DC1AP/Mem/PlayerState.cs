@@ -8,7 +8,22 @@ namespace DC1AP.Mem
     /// </summary>
     public static class PlayerState
     {
-        public static bool ValidGameState = false;
+        private static bool ValidGameState = false;
+
+        public static void SetGameState()
+        {
+            ValidGameState = true;
+        }
+
+        public static void ClearGameState()
+        {
+            ValidGameState = false;
+        }
+
+        public static bool GetGameState()
+        {
+            return ValidGameState;
+        }
 
         /// <summary>
         /// Game is loaded and ready to connect with.
@@ -17,7 +32,7 @@ namespace DC1AP.Mem
         public static bool PlayerReady()
         {
             // Player name is only set when a game is started/loaded and the client accepts the save is valid for the slot.  Otherwise, Toan will have no name.
-            return ValidGameState && Memory.ReadByte(MiscAddrs.TimeOfDayAddr) > 1;
+            return ValidGameState && Memory.ReadInt(MiscAddrs.TimeOfDayAddr) != 0;
         }
 
         /// <summary>

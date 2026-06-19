@@ -162,7 +162,7 @@ namespace DC1AP.Threads
             {
                 // Don't read the atla until the player enters the first dungeon since we can't initialize it.
                 // Don't rerun or run if the game isn't in a valid state
-                if (!PlayerState.ValidGameState || dungeonsMapped[dun] ||
+                if (!PlayerState.GetGameState() || dungeonsMapped[dun] ||
                     (Memory.ReadInt(GeoAddrs.AtlaFlagAddrs[dun]) == MiscConstants.AtlaUnavailable && (!PlayerState.IsPlayerInDungeon() || PlayerState.GetCurDungeon() != dun))) return;
 
                 // Only bother checking if not updated yet.

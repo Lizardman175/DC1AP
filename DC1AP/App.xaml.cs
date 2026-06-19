@@ -117,7 +117,7 @@ namespace DC1AP
             Context.ConnectButtonEnabled = false;
             Log.Logger.Information("Connecting...");
 
-            PlayerState.ValidGameState = false;
+            PlayerState.ClearGameState();
 
             if (Client != null)
             {
@@ -186,7 +186,7 @@ namespace DC1AP
             }
 
             GeoInvMgmt.Init();
-            PlayerState.ValidGameState = true;
+            PlayerState.SetGameState();
 
             // Initialize things once the player is connected
             if (PlayerState.PlayerReady())
@@ -290,12 +290,12 @@ namespace DC1AP
             {
                 // Padding because Avalonia keeps cutting things off...
                 Log.Logger.Error("Wrong slot name. Current save is using slot: " + currSlot + "      ");
-                PlayerState.ValidGameState = false;
+                PlayerState.ClearGameState();
                 return;
             }
             else if (!OpenMem.TestRoomSeed(Client.CurrentSession.RoomState.Seed))
             {
-                PlayerState.ValidGameState = false;
+                PlayerState.ClearGameState();
                 return;
             }
 
@@ -320,7 +320,7 @@ namespace DC1AP
 
             MiracleChestMgmt.Init();
 
-            PlayerState.ValidGameState = true;
+            PlayerState.SetGameState();
 
             // Other threads shouldn't stop, but if disconnecting from a slot without MC shuffle and connecting to one with MC shuffle, need to test thread state.
             if (chestThread == null || chestThread.ThreadState == ThreadState.Stopped)
@@ -339,7 +339,7 @@ namespace DC1AP
 
         private void PlayerNotReady(string slotName)
         {
-            PlayerState.ValidGameState = false;
+            PlayerState.ClearGameState();
             ItemQueue.ClearQueues();
             HelperThread.Startup();
             Memory.MonitorAddressForAction<int>(MiscAddrs.TimeOfDayAddr, () => PlayerReady(slotName), (o) => { return o != 0; });
@@ -379,7 +379,7 @@ namespace DC1AP
         internal static async Task SendLocation(int locId)
         {
             // Test slot info before sending checks in case the player has loaded a save state to avoid releasing extra items.
-            if (PlayerState.ValidGameState && OpenMem.TestSlotInfo(slotName, seedName))
+            if (PlayerState.GetGameState() && OpenMem.TestSlotInfo(slotName, seedName))
             {
                 Location loc = new()
                 {
@@ -393,7 +393,7 @@ namespace DC1AP
             }
             else
             {
-                PlayerState.ValidGameState = false;
+                PlayerState.ClearGameState();
             }
         }
 
