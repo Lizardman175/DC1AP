@@ -56,7 +56,7 @@ namespace DC1AP
 {
     public partial class App : Application
     {
-        public const string ClientVersion = "0.5.7";
+        public const string ClientVersion = "0.5.8";
 
         internal static ArchipelagoClient Client { get; set; }
 
