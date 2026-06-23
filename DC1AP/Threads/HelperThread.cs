@@ -37,10 +37,10 @@ namespace DC1AP.Threads
 
             for (int i = 0; i < Options.Goal; i++)
             {
-                int x = i;
                 if (!dungeonsMapped[i])
                 {
-                    Memory.MonitorAddressForAction<int>(GeoAddrs.LastAltaPerDungeon[x], () => InitAtla(x), (o) => { return playableState && o != -1; });
+                    int x = i;
+                    Memory.MonitorAddressForAction<byte>(GeoAddrs.AtlaFlagAddrs[x], () => InitAtla(x), (o) => { return playableState && o != 0xff; });
                 }
             }
         }
@@ -160,6 +160,9 @@ namespace DC1AP.Threads
         {
             lock (_lock)
             {
+                // Brief sleep to allow the game to initialize the dungeon
+                Thread.Sleep(500);
+
                 // Don't read the atla until the player enters the first dungeon since we can't initialize it.
                 // Don't rerun or run if the game isn't in a valid state
                 if (!PlayerState.GetGameState() || dungeonsMapped[dun] ||
