@@ -56,7 +56,7 @@ namespace DC1AP
 {
     public partial class App : Application
     {
-        public const string ClientVersion = "0.5.8";
+        public const string ClientVersion = "0.5.9";
 
         internal static ArchipelagoClient Client { get; set; }
 
@@ -231,8 +231,6 @@ namespace DC1AP
                 };
                 helperThread.Start();
             }
-
-            MessageFuncs.InitOverlay();
 
             Context.ConnectButtonEnabled = true;
         }
