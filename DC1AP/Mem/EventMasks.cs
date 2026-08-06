@@ -150,12 +150,21 @@ namespace DC1AP.Mem
             Memory.WriteByte(ShipwreckKeyAddr, tempMask);
         }
 
-        internal static void SetD6Flag(int buildingId)
+        private static void SetAllD6Flags()
+        {
+            for (int i = 0; i < D6StorySkip.Length; i++)
+            {
+                SetD6Flag(i, false);
+            }
+        }
+
+        internal static void SetD6Flag(int buildingId, bool check = true)
         {
             (uint, byte) set = D6StorySkip[buildingId];
             OrMask(set.Item1, set.Item2);
 
-            CheckD6Flags();
+            if (check)
+                CheckD6Flags();
         }
 
         internal static void CheckD6Flags()
@@ -168,8 +177,15 @@ namespace DC1AP.Mem
 
                 if (count >= Options.MemoryCount)
                 {
-                    if (Memory.ReadByte(MiscAddrs.GoTFloorCountAddr) != 0xFF)
+                    byte floorCount = Memory.ReadByte(MiscAddrs.GoTFloorCountAddr);
+                    if (floorCount != 0xFF && Options.OpenDungeon)
+                    {
                         Memory.WriteByte(MiscAddrs.GoTFloorCountAddr, MiscAddrs.GenieFloorCountValue);
+                    }
+                    else if (!Options.OpenDungeon)
+                    {
+                        SetAllD6Flags();
+                    }
 
                     break;
                 }
