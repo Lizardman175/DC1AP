@@ -24,16 +24,6 @@ namespace DC1AP.Threads
          *  If in town, determine which and zero out MCs.  Can either map out the data or determine if a piece is an MC on the fly by 
          *  checking if the first field is set and the one below it is 2.
          */
-        private const uint TownChestDataAddr = 0x003C6BD0;
-        private const uint InteriorChestDataAddr = 0x003D2710;
-        private const uint ObjetTypeOffset = 0x10;
-        private const uint ChestItemIdOffset = 0x1C;
-        private const uint InteractableOffset = 0x90;
-
-        // Item displayed during prickly cutscene.  Changes with zone change.  Need to account for when entering mayor's house.
-        private const uint PricklyDisplayAddr = 0x00415148;
-        // Determines item received from Mayor's closet
-        private const uint PricklyValueAddr = 0x004156D4;
 
         private static List<List<MiracleChest>> chests = [[], [], [], [], []];
 
@@ -87,7 +77,7 @@ namespace DC1AP.Threads
                         {
                             currZoneId = zoneId;
                             if (zoneId != MiscAddrs.DeadTreeZone)
-                                EmptyMiracleChests(TownChestDataAddr);
+                                EmptyMiracleChests(ItemValues.TownChestDataAddr);
                         }
                         // Small case when connecting if the player is in town the interior ID will still be the last interior value
                         if (inInterior && (interiorId != currInteriorId || altInteriorId != currAltInteriorId))
@@ -97,12 +87,12 @@ namespace DC1AP.Threads
 
                             // Mayor's House
                             if (currZoneId == 0 && currInteriorId == 255)
-                                EmptyMiracleChests(InteriorChestDataAddr, mayor: true);
+                                EmptyMiracleChests(ItemValues.InteriorChestDataAddr, mayor: true);
                             // Bunbuku's House
                             else if (zoneId == 1 && interiorId == 2)
-                                EmptyMiracleChests(InteriorChestDataAddr, bunbuku: true);
+                                EmptyMiracleChests(ItemValues.InteriorChestDataAddr, bunbuku: true);
                             else
-                                EmptyMiracleChests(InteriorChestDataAddr);
+                                EmptyMiracleChests(ItemValues.InteriorChestDataAddr);
                         }
                     }
                 }
@@ -149,23 +139,23 @@ namespace DC1AP.Threads
             int skipCount = 0;
             while (chestFlag > 0)
             {
-                int objectType = Memory.ReadInt(addr + ObjetTypeOffset);
-                int itemId = Memory.ReadInt(addr + ChestItemIdOffset);
+                int objectType = Memory.ReadInt(addr + ItemValues.ObjetTypeOffset);
+                int itemId = Memory.ReadInt(addr + ItemValues.ChestItemIdOffset);
                 if (objectType == 2)
                 {
                     if (bunbuku && skipCount < 2)
                         skipCount++;
                     else
-                        Memory.Write(addr + ChestItemIdOffset, -1);
+                        Memory.Write(addr + ItemValues.ChestItemIdOffset, -1);
                 }
-                addr += InteractableOffset;
+                addr += ItemValues.InteractableOffset;
                 chestFlag = Memory.ReadInt(addr);
             }
 
             if (mayor)
             {
-                Memory.Write(PricklyDisplayAddr, -1);
-                Memory.Write(PricklyValueAddr, -1);
+                Memory.Write(ItemValues.PricklyDisplayAddr, -1);
+                Memory.Write(ItemValues.PricklyValueAddr, -1);
             }
         }
     }
