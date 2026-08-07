@@ -23,12 +23,7 @@ namespace DC1AP.Items
         private static readonly ConcurrentDictionary<long, int> itemCounts = [];
         private static readonly ConcurrentDictionary<long, int> attachCounts = [];
 
-        private const uint InvMaxAddr = 0x01CDD8AC;  // Byte.  Can't exceed 100 or we run past the buffer.
-        private const byte InvMaxLimit = 10;  // Subtract from the value at InvMaxAddr
-        private const uint InvCurAddr = 0x01CDD8AD;  // Byte.  Next byte starts the active item shorts, followed by 3 shorts giving count of the active items per slot, then shorts for the other items.
         private const uint IDSize = sizeof(short);
-
-        private const uint FirstInvAddr = 0x01CDD8BA;
         /*
          *  0 for most items. Duration for things like feathers and amulets. Gives value item restores as well for curatives
          *  but doesn't seem to do anything if changed. -1 or 0 for no item (sometimes ghost values as well caused by moving items from the active list)
@@ -98,7 +93,7 @@ namespace DC1AP.Items
         private static bool HasAvailableInventory(short itemID)
         {
             byte invCount = 0;
-            byte maxCount = Memory.ReadByte(InvMaxAddr);
+            byte maxCount = Memory.ReadByte(ItemValues.InvMaxAddr);
 
             byte activeCount = (byte)(Memory.ReadByte(FirstActiveItemCountAddr) + Memory.ReadByte(FirstActiveItemCountAddr
                 + sizeof(short)) + Memory.ReadByte(FirstActiveItemCountAddr + 2 * sizeof(short)));
@@ -107,7 +102,7 @@ namespace DC1AP.Items
 
             for (int ii = 0; ii < maxCount; ii++)
             {
-                uint addr = (uint)(FirstInvAddr + IDSize * ii);
+                uint addr = (uint)(ItemValues.FirstInvAddr + IDSize * ii);
                 short itemValue = Memory.ReadShort(addr);
 
                 if (itemValue != -1 && itemValue != 0)
@@ -118,7 +113,7 @@ namespace DC1AP.Items
 
             // Allow pockets and key items to be received even if the player is at the limited max items count.
             if (!MiscConstants.KeyItemIds.Contains(itemID))
-                maxCount -= InvMaxLimit;
+                maxCount -= ItemValues.InvMaxLimit;
 
             return invCount < maxCount;
         }
@@ -130,14 +125,14 @@ namespace DC1AP.Items
         /// <returns></returns>
         internal static bool GiveItem(long itemId, bool updateFlag=true)
         {
-            byte maxInv = Memory.ReadByte(InvMaxAddr);
+            byte maxInv = Memory.ReadByte(ItemValues.InvMaxAddr);
             InvItem item = ItemData[itemId];
 
             if (HasAvailableInventory(item.ItemID))
             {
                 for (int ii = 0; ii < maxInv; ii++)
                 {
-                    uint addr = (uint)(FirstInvAddr + IDSize * ii);
+                    uint addr = (uint)(ItemValues.FirstInvAddr + IDSize * ii);
                     short itemValue = Memory.ReadShort(addr);
 
                     if (itemValue == -1 || itemValue == 0)
@@ -227,11 +222,11 @@ namespace DC1AP.Items
             return false;
         }
 
-        internal static bool RemoveInvItem(short itemId)
+        internal static bool RemoveInvItem(short itemId, bool removeAll = false)
         {
             bool success = false;
-            byte maxInv = Memory.ReadByte(InvMaxAddr);
-            uint addr = FirstInvAddr - IDSize + (maxInv * IDSize);
+            byte maxInv = Memory.ReadByte(ItemValues.InvMaxAddr);
+            uint addr = ItemValues.FirstInvAddr - IDSize + (maxInv * IDSize);
 
             for (int ii = maxInv - 1; ii >= 0; ii--)
             {
@@ -241,7 +236,7 @@ namespace DC1AP.Items
                     Memory.Write(addr, (ushort)0xFFFF);
                     // We probably should overwrite the durability value for the item but it shouldn't matter.
                     success = true;
-                    break;
+                    if (!removeAll) break;
                 }
                 addr -= IDSize;
             }
