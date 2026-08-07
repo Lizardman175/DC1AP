@@ -1,5 +1,4 @@
-﻿
-using DC1AP.Constants;
+﻿using DC1AP.Constants;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -17,6 +16,7 @@ namespace DC1AP
         private static bool allBosses = false;
         private static bool starterWeapons = false;
         private static bool miracleSanity = false;
+        private static bool shopShuffle = false;
         private static bool deathLink = false;
         private static AutobuildFlags autobuild = AutobuildFlags.Off;
         private static string toanName = "Toan";
@@ -36,6 +36,7 @@ namespace DC1AP
         public static bool AllBosses { get => allBosses; }
         public static bool StarterWeapons { get => starterWeapons; }
         public static bool MiracleSanity { get => miracleSanity; }
+        public static bool ShopShuffle { get => shopShuffle; }
         internal static AutobuildFlags Autobuild { get => autobuild; }
         internal static bool DeathLink { get => deathLink; }
         internal static string ToanName { get => toanName; }
@@ -59,6 +60,7 @@ namespace DC1AP
             starterWeapons = ((JsonElement)options["starter_weapons"]).Deserialize<int>() != 0;  // All floors logically accessible will be unlocked
             autobuild = (AutobuildFlags)((JsonElement)options["auto_build"]).Deserialize<int>();
             miracleSanity = ((JsonElement)options["miracle_sanity"]).Deserialize<int>() != 0;  // Shuffle in miracle chests
+            shopShuffle = ((JsonElement)options["shop_sanity"]).Deserialize<int>() != 0;
             deathLink = ((JsonElement)options["death_link"]).Deserialize<int>() != 0;
             toanName = ((JsonElement)options["toan_name"]).Deserialize<String>()!;
             xiaoName = ((JsonElement)options["xiao_name"]).Deserialize<String>()!;

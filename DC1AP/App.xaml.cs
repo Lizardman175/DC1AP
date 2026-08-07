@@ -34,6 +34,7 @@ using Avalonia.Media;
 using DC1AP.Constants;
 using DC1AP.Georama;
 using DC1AP.Items;
+using DC1AP.Locations;
 using DC1AP.Mem;
 using DC1AP.Models;
 using DC1AP.Threads;
@@ -56,7 +57,7 @@ namespace DC1AP
 {
     public partial class App : Application
     {
-        public const string ClientVersion = "0.5.8";
+        public const string ClientVersion = "0.6.0";
 
         internal static ArchipelagoClient Client { get; set; }
 
@@ -232,8 +233,6 @@ namespace DC1AP
                 helperThread.Start();
             }
 
-            MessageFuncs.InitOverlay();
-
             Context.ConnectButtonEnabled = true;
         }
 
@@ -304,6 +303,7 @@ namespace DC1AP
             CharFuncs.Init();
             Enemies.MultiplyABS();
             InventoryMgmt.MultiplyAttachments();
+            ShopMgmt.UpdateShops();
 
             // Check for any missing items after a connect/reconnect
             ItemQueue.checkItems = true;
