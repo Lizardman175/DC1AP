@@ -1,5 +1,6 @@
 ﻿using Archipelago.Core.Util;
 using DC1AP.Constants;
+using DC1AP.Items;
 using DC1AP.Locations;
 using DC1AP.Mem;
 using System.Collections.Generic;
@@ -90,10 +91,38 @@ namespace DC1AP.Threads
                     else if (PlayerState.PlayerMovableInTown())
                     {
                         CharFuncs.CheckForChars();
+                        ShopLocationCheck();
                     }
                 }
 
                 Thread.Sleep(100);
+            }
+        }
+
+        private static void ShopLocationCheck()
+        {
+            if (!Options.ShopShuffle) return;
+
+            uint shopIndex = Memory.ReadUInt(ItemValues.MostRecentShopAddr);
+            bool sent = false;
+
+            if (InventoryMgmt.RemoveInvItem(ItemValues.MedusaPowderID, true))
+            {
+                App.SendLocation((int)ItemValues.ShopItemAPIDs[shopIndex]);
+
+                sent = true;
+            }
+
+            if (InventoryMgmt.RemoveInvItem(ItemValues.WarpPowderID, true))
+            {
+                App.SendLocation((int)ItemValues.ShopItemAPIDs[shopIndex] + 1);
+                sent = true;
+            }
+
+            if (sent)
+            {
+                Thread.Sleep(150);  // Waiting for the location send to hit the server and get back to us to clear the items from the shop.
+                ShopMgmt.UpdateShopItems(shopIndex);
             }
         }
 
