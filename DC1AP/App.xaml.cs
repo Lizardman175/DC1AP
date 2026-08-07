@@ -233,8 +233,6 @@ namespace DC1AP
                 helperThread.Start();
             }
 
-            MessageFuncs.InitOverlay();
-
             Context.ConnectButtonEnabled = true;
         }
 

@@ -34,20 +34,6 @@ namespace DC1AP.Mem
 {
     public class MessageFuncs
     {
-        internal static void InitOverlay()
-        {
-            var overlayService = new WindowsOverlayService(new OverlayOptions
-            {
-                FontSize = 24,
-                XOffset = 50,
-                YOffset = 150,
-                FadeDuration = 5.0f,
-                DefaultTextColor = Color.White
-            });
-            
-            App.Client.IntializeOverlayService(overlayService);
-        }
-
         /// 
         /// Adapted from Dark Cloud Enhanced project Dayuppy.cs:DisplayMessageProcess()
         /// <param name="message"></param>

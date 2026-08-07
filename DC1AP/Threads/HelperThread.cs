@@ -263,9 +263,9 @@ namespace DC1AP.Threads
                     }
                     else
                         Memory.WriteByte(MiscAddrs.FloorCountAddrs[dun], MiscAddrs.FloorCountFront[dun]);
-
-                    if (dun == (int)Towns.Castle) EventMasks.CheckD6Flags();
                 }
+
+                if (dun == (int)Towns.Castle) EventMasks.CheckD6Flags();
 
                 atlaMap[dun] = dunAtla;
                 dungeonsMapped[dun] = true;
