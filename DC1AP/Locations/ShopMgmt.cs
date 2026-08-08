@@ -9,17 +9,19 @@ namespace DC1AP.Locations
     {
         internal static void UpdateShops()
         {
-            // TODO instead of returning, clear changes to shop inventory?
-            if (!Options.ShopShuffle) return;
+            // Put the carrot in first to make managing the dummy items easier
+            if (Options.FishSanity > 0) AddCarrot();
+
+            if (!Options.ShopSanity) return;
 
             // Update price for replacer items
             uint addr = ItemValues.ShopPriceTableAddr + 4 * (ItemValues.MedusaPowderID - ItemValues.FireGemID);
-            Memory.Write(addr, (short)ItemValues.Item1Cost);
-            Memory.Write(addr + sizeof(short), (short)ItemValues.Item1Cost / 2);
+            Memory.Write(addr, ItemValues.Item1Cost);
+            Memory.Write(addr + sizeof(short), (short)(ItemValues.Item1Cost / 2));
 
             addr = ItemValues.ShopPriceTableAddr + 4 * (ItemValues.WarpPowderID - ItemValues.FireGemID);
-            Memory.Write(addr, (short)ItemValues.Item2Cost);
-            Memory.Write(addr + sizeof(short), (short)ItemValues.Item2Cost / 2);
+            Memory.Write(addr, ItemValues.Item2Cost);
+            Memory.Write(addr + sizeof(short), (short)(ItemValues.Item2Cost / 2));
 
             switch (Options.Goal)
             {
@@ -176,6 +178,31 @@ namespace DC1AP.Locations
                 Memory.Write(ItemValues.GafferEnduranceAddr, ItemValues.WarpPowderID);
             else
                 Memory.Write(ItemValues.GafferEnduranceAddr, ItemValues.EnduranceID);
+        }
+
+        /// <summary>
+        /// Adds a carrot to the owl shop
+        /// </summary>
+        private static void AddCarrot()
+        {
+            if (Options.FishSanity == 0) return;
+
+            uint baseAddr = ItemValues.ShopAddrs[ItemValues.OwlShopIndex];
+
+            ReadOnlyCollection<long> locations = App.Client.CurrentSession.Locations.AllMissingLocations;
+
+            uint addr = FindNextShopEntry(baseAddr, ItemValues.CarrotID);
+            if (addr == 0)
+            {
+                Log.Logger.Error("Unable to add carrot to owl shop, tell Lizardman.    ");
+                return;
+            }
+            // Item already in the list, just return
+            else if (addr == 1)
+                return;
+
+            Memory.Write(addr, ItemValues.CarrotID);
+            Memory.Write(addr + sizeof(short), (short)-1);
         }
     }
 }

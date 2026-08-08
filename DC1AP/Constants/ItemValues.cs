@@ -1,5 +1,7 @@
 ﻿
 
+using System.Collections.Generic;
+
 namespace DC1AP.Constants
 {
     internal class ItemValues
@@ -22,6 +24,9 @@ namespace DC1AP.Constants
         public const uint PricklyDisplayAddr = 0x00415148;
         // Determines item received from Mayor's closet
         public const uint PricklyValueAddr = 0x004156D4;
+
+        //public const uint AlnetRewardDisplayAddr = 0x0041478C;
+        //public const uint AlnetRewardValueAddr = 0x00415D54;
 
         /// Shops
         public const uint ShopDataTableAddr  = 0x00292020;  // Only resets with a game reset, not a save file load.
@@ -92,6 +97,7 @@ namespace DC1AP.Constants
         public const short FireGemID = 0x51;  // First item in shop price list; used to calculate offset for other items
         public const short MedusaPowderID = 0xAB;
         public const short WarpPowderID = 0xAD;
+        public const short CarrotID = 0xBA;
         public const short AttackID = 0x5B;
         public const short EnduranceID = 0x5C;
         public const short Item1Cost = 300;
@@ -99,5 +105,54 @@ namespace DC1AP.Constants
 
         public const uint GafferAttackAddr = 0x00292036;
         public const uint GafferEnduranceAddr = 0x00292038;
+
+        // int.  Default of -1
+        public const uint FishCatchAddr = 0x01D1CC30;
+        // int?  0 for unused but also Bobo fish, check size for zero if this is zero
+        public const uint FirstFishLogAddr = 0x01CD4320;
+        public const uint FishLogEntryOffset = 0x10;
+        public const uint FishLogSizeOffset = 0x06;
+
+        public static readonly Dictionary<int, int> FishLogToApId = new Dictionary<int, int>{
+            [0] = 97111_0400,    // Bobo
+            [1] = 97111_0401,    // Gobbler
+            [2] = 97111_0402,    // Nonky
+            [3] = 97111_0403,    // Kaji
+            [4] = 97111_0404,    // Baku Baku
+            [5] = 97111_0405,    // Mardan Garayan
+            [6] = 97111_0406,    // Gummy
+            [7] = 97111_0407,    // Niler
+            [8] = 97111_0409,    // Umadakara (seems unused)
+            [9] = 97111_0409,    // Umadakara
+            [10] = 97111_0410,   // Tarton
+            [11] = 97111_0411,   // Piccoly
+            [12] = 97111_0412,   // Bon
+            [13] = 97111_0413,   // Hama Hama
+            [14] = 97111_0414,   // Negie
+            [15] = 97111_0415,   // Den
+            [16] = 97111_0416,   // Heela
+            [17] = 97111_0417,   // Baron Garayan
+        };
+
+        public static readonly Dictionary<int, int> FishCatchToApId = new()
+        {
+            [0x28] = 97111_0400, // Bobo
+            [0x29] = 97111_0401, // Gobbler
+            [0x2A] = 97111_0402, // Nonky
+            [0x2B] = 97111_0403, // Kaji
+            [0x2C] = 97111_0404, // Baku Baku
+            [0x2D] = 97111_0405, // Mardan Garayan
+            [0x2E] = 97111_0406, // Gummy
+            [0x2F] = 97111_0407, // Niler
+            [0x31] = 97111_0409, // Umadakara
+            [0x1E] = 97111_0410, // Tarton
+            [0x1F] = 97111_0411, // Piccoly
+            [0x20] = 97111_0412, // Bon
+            [0x21] = 97111_0413, // Hama Hama
+            [0x22] = 97111_0414, // Negie
+            [0x23] = 97111_0415, // Den
+            [0x24] = 97111_0416, // Heela
+            [0x25] = 97111_0417, // Baron Garayan
+        };
     }
 }

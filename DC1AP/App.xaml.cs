@@ -304,6 +304,8 @@ namespace DC1AP
             Enemies.MultiplyABS();
             InventoryMgmt.MultiplyAttachments();
             ShopMgmt.UpdateShops();
+            Fish.CheckFishLog();
+            Fish.WatchFishCatchField();
 
             // Check for any missing items after a connect/reconnect
             ItemQueue.checkItems = true;
@@ -335,6 +337,8 @@ namespace DC1AP
             // Watch for the player to reset the game, then change the valid state flag and ready up to connect again.
             Memory.MonitorAddressForAction<int>(MiscAddrs.TimeOfDayAddr, () => PlayerNotReady(slotName), (o) => { return o == 0; });
             WatchGoal();
+
+            Log.Logger.Information("Connected and Ready!");
         }
 
         private void PlayerNotReady(string slotName)
