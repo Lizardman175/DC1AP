@@ -16,7 +16,8 @@ namespace DC1AP
         private static bool allBosses = false;
         private static bool starterWeapons = false;
         private static bool miracleSanity = false;
-        private static bool shopShuffle = false;
+        private static bool shopSanity = false;
+        private static int fishSanity = 0;
         private static bool deathLink = false;
         private static AutobuildFlags autobuild = AutobuildFlags.Off;
         private static string toanName = "Toan";
@@ -36,16 +37,17 @@ namespace DC1AP
         public static bool AllBosses { get => allBosses; }
         public static bool StarterWeapons { get => starterWeapons; }
         public static bool MiracleSanity { get => miracleSanity; }
-        public static bool ShopShuffle { get => shopShuffle; }
-        internal static AutobuildFlags Autobuild { get => autobuild; }
-        internal static bool DeathLink { get => deathLink; }
-        internal static string ToanName { get => toanName; }
-        internal static string XiaoName { get => xiaoName; }
-        internal static string GoroName { get => goroName; }
-        internal static string RubyName { get => rubyName; }
-        internal static string UngagaName { get => ungagaName; }
-        internal static string OsmondName { get => osmondName; }
-        internal static List<List<int>>? AtlaPerFloor { get => atlaPerFloor; }
+        public static bool ShopSanity { get => shopSanity; }
+        public static int FishSanity { get => fishSanity; }
+        public static AutobuildFlags Autobuild { get => autobuild; }
+        public static bool DeathLink { get => deathLink; }
+        public static string ToanName { get => toanName; }
+        public static string XiaoName { get => xiaoName; }
+        public static string GoroName { get => goroName; }
+        public static string RubyName { get => rubyName; }
+        public static string UngagaName { get => ungagaName; }
+        public static string OsmondName { get => osmondName; }
+        public static List<List<int>>? AtlaPerFloor { get => atlaPerFloor; }
 
         internal static void ParseOptions(Dictionary<string, object> options)
         {
@@ -60,7 +62,8 @@ namespace DC1AP
             starterWeapons = ((JsonElement)options["starter_weapons"]).Deserialize<int>() != 0;  // All floors logically accessible will be unlocked
             autobuild = (AutobuildFlags)((JsonElement)options["auto_build"]).Deserialize<int>();
             miracleSanity = ((JsonElement)options["miracle_sanity"]).Deserialize<int>() != 0;  // Shuffle in miracle chests
-            shopShuffle = ((JsonElement)options["shop_sanity"]).Deserialize<int>() != 0;
+            shopSanity = ((JsonElement)options["shop_sanity"]).Deserialize<int>() != 0;
+            fishSanity = ((JsonElement)options["shop_sanity"]).Deserialize<int>();
             deathLink = ((JsonElement)options["death_link"]).Deserialize<int>() != 0;
             toanName = ((JsonElement)options["toan_name"]).Deserialize<String>()!;
             xiaoName = ((JsonElement)options["xiao_name"]).Deserialize<String>()!;
@@ -68,6 +71,7 @@ namespace DC1AP
             rubyName = ((JsonElement)options["ruby_name"]).Deserialize<String>()!;
             ungagaName = ((JsonElement)options["ungaga_name"]).Deserialize<String>()!;
             osmondName = ((JsonElement)options["osmond_name"]).Deserialize<String>()!;
+            // TODO use this.  Still wrapped in if in case we remove it
             if (options.TryGetValue("apf", out object? value))
             {
                 if (value != null)

@@ -101,7 +101,7 @@ namespace DC1AP.Threads
 
         private static void ShopLocationCheck()
         {
-            if (!Options.ShopShuffle) return;
+            if (!Options.ShopSanity) return;
 
             uint shopIndex = Memory.ReadUInt(ItemValues.MostRecentShopAddr);
             bool sent = false;

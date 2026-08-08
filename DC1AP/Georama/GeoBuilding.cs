@@ -165,6 +165,12 @@ namespace DC1AP.Georama
                     BuildBuilding(inTown);
                 }
 
+                // Clear Alnet's reward event to avoid double fishing rods
+                if (ApId == MiscConstants.AlnetHouseId)
+                {
+                    Memory.Write(BaseAddr - sizeof(int), 1);
+                }
+
                 msg = "Received " + Name + ".";
             }
             // Not first piece, add next item

@@ -113,5 +113,7 @@ namespace DC1AP.Constants
         internal static readonly long[] HgApIds = [971_110_503, 971_110_504];
         // TIR/TIL
         internal static readonly long[] TiApIds = [971_110_509, 971_110_510];
+
+        internal const long AlnetHouseId = 971_110_106;
     }
 }
