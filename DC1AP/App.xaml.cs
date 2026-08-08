@@ -75,7 +75,7 @@ namespace DC1AP
         private bool cathedralDone = false;
 
         private DeathLinkService? _deathlinkService = null;
-        private bool deathFromDeathlink = false;
+        internal static bool deathFromDeathlink = false;
         private static string slotName = string.Empty;
         private static string seedName = string.Empty;
 
@@ -559,14 +559,9 @@ namespace DC1AP
 
         private void _deathlinkService_OnDeathLinkReceived(DeathLink deathLink)
         {
-            // Kill player x_x
-            if (PlayerState.IsPlayerInDungeon())
-            {
-                deathFromDeathlink = true;
-                byte currChar = Memory.ReadByte(MiscAddrs.CurrCharAddr);
-                Memory.Write(MiscAddrs.HpAddrs[currChar], (short)-1);
-                Log.Logger.Information("DeathLink: Received from " + deathLink.Source);
-            }
+            // Let the thread kill the player once they are in a dungeon
+            HelperThread.doDeathLink = true;
+            HelperThread.deathlinkSource = deathLink.Source;
         }
 
         private static void Client_ItemReceived(object? sender, ItemReceivedEventArgs e)

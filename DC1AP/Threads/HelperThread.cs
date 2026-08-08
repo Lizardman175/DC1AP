@@ -3,6 +3,7 @@ using DC1AP.Constants;
 using DC1AP.Items;
 using DC1AP.Locations;
 using DC1AP.Mem;
+using Serilog;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -27,6 +28,9 @@ namespace DC1AP.Threads
 
         // Flag used to prevent re-running Startup() multiple times waiting for player to load game.
         private static bool playableState = true;
+
+        internal static bool doDeathLink = false;
+        internal static string deathlinkSource = "";
 
         /// <summary>
         /// Handle startup and the player reloading from memory by zeroing out various values and reinitializing data.
@@ -87,6 +91,9 @@ namespace DC1AP.Threads
                         // Hide the stray cat atla if present.  There is special code around it in game so we can't use it.
                         if (curDungeon == 0 && curFloor == CatFloor && Memory.ReadInt(GeoAddrs.AtlaCollectedFlag) != 0)
                             Memory.Write(GeoAddrs.AtlaCollectedFlag, 0);
+
+                        if (doDeathLink && PlayerState.CanGiveItemDungeon())
+                            DeathLink();
                     }
                     else if (PlayerState.PlayerMovableInTown())
                     {
@@ -270,6 +277,16 @@ namespace DC1AP.Threads
                 atlaMap[dun] = dunAtla;
                 dungeonsMapped[dun] = true;
             }
+        }
+
+        // Kill player x_x
+        private static void DeathLink()
+        {
+            App.deathFromDeathlink = true;
+            byte currChar = Memory.ReadByte(MiscAddrs.CurrCharAddr);
+            Memory.Write(MiscAddrs.HpAddrs[currChar], (short)-1);
+            Log.Logger.Information("DeathLink: Received from " + deathlinkSource);
+            doDeathLink = false;
         }
     }
 }
