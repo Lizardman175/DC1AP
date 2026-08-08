@@ -279,6 +279,13 @@ namespace DC1AP
             // First load for this save, so do extra stuff
             if (currSlot == "")
             {
+                // Check first atla in DBC. If already set, then the user may have loaded a vanilla save.
+                if (Memory.ReadInt(GeoAddrs.AtlaFlagAddrs[0]) != MiscConstants.AtlaUnavailable)
+                {
+                    PlayerState.ClearGameState();
+                    Log.Logger.Error("Vanilla save loaded or first dungeon already entered.  Load a rando save or start a clean save file.   ");
+                    return;
+                }
                 OpenMem.SetSlotData(slotName);
                 EventMasks.InitMasks();
                 Weapons.GiveCharWeapon(0);
@@ -288,12 +295,13 @@ namespace DC1AP
             else if (currSlot != slotName)
             {
                 // Padding because Avalonia keeps cutting things off...
-                Log.Logger.Error("Wrong slot name. Current save is using slot: " + currSlot + "      ");
                 PlayerState.ClearGameState();
+                Log.Logger.Error("Wrong slot name. Current save is using slot: " + currSlot + "      ");
                 return;
             }
             else if (!OpenMem.TestRoomSeed(Client.CurrentSession.RoomState.Seed))
             {
+                // The call in the if logs an error here
                 PlayerState.ClearGameState();
                 return;
             }
