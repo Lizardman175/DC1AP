@@ -8,7 +8,7 @@
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
- * vfurnished to do so, subject to the following conditions:
+ * furnished to do so, subject to the following conditions:
  * 
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
@@ -78,6 +78,10 @@ namespace DC1AP
         internal static bool deathFromDeathlink = false;
         private static string slotName = string.Empty;
         private static string seedName = string.Empty;
+
+        // Genie handled differently so not in the lists
+        private static readonly string[] bossNames = ["Dran", "Utan", "Saia", "Curse", "Joe"];
+        private static readonly int[] bossMasks = [1, 2, 4, 8, 16];
 
         public override void Initialize()
         {
@@ -301,7 +305,7 @@ namespace DC1AP
             }
             else if (!OpenMem.TestRoomSeed(Client.CurrentSession.RoomState.Seed))
             {
-                // The call in the if logs an error here
+                // The call in the if above logs an error for us
                 PlayerState.ClearGameState();
                 return;
             }
@@ -451,10 +455,10 @@ namespace DC1AP
             {
                 byte currKills = Memory.ReadByte(OpenMem.GoalAddr);
 
-                if ((currKills & 32) == 0 & Options.Goal >= 6 && Client.CurrentSession.Locations.AllLocationsChecked.Contains(MiscConstants.DarkGenieApId))
+                if ((currKills & MiscConstants.DarkGenieMask) == 0 & Options.Goal >= 6 && Client.CurrentSession.DataStorage["Genie"] == true)
                 {
-                    bossKillTest |= 32;
-                    currKills |= 32;
+                    bossKillTest |= MiscConstants.DarkGenieMask;
+                    currKills |= MiscConstants.DarkGenieMask;
                     Memory.WriteByte(OpenMem.GoalAddr, currKills);
                 }
 
@@ -475,6 +479,16 @@ namespace DC1AP
                             int value = (i + 1) * 100;
                             Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(mask, true), (o) => { return o == (short) value; });
                         }
+                        
+                        // Genie shouldn't get reset
+                        if (i < bossNames.Length)
+                        {
+                            Client.CurrentSession.DataStorage[bossNames[i]] = false;
+                        }
+                    }
+                    else if (i < bossNames.Length)
+                    {
+                        Client.CurrentSession.DataStorage[bossNames[i]] = true;
                     }
                 }
             }
@@ -484,6 +498,10 @@ namespace DC1AP
                     Memory.MonitorAddressForAction<byte>(MiscAddrs.UtanFlag, () => Client.SendGoalCompletion(), (o) => { return o != 0; });
                 else
                     Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => Client.SendGoalCompletion(), (o) => { return o == Options.Goal * 100; });
+
+            // If reloading after the genie fight with more bosses, add the boss kill here
+            if (Client.CurrentSession.DataStorage["Genie"] == true)
+                AddBossKill(MiscConstants.DarkGenieMask);
         }
 
         /// <summary>
@@ -498,13 +516,17 @@ namespace DC1AP
             Memory.WriteByte(OpenMem.GoalAddr, bb);
 
             // Track on the server that the Dark Genie has been killed
-            if (mask == 32)
+            if (mask == MiscConstants.DarkGenieMask)
             {
-                SendLocation(MiscConstants.DarkGenieApId);
+                Client.CurrentSession.DataStorage["Genie"] = true;
                 // The game will reset after the credits but it doesn't clear the time of day field.  This will force PlayerNotReady() to be called to avoid issues.
                 // Only call if from actually beating the boss.  If the item is collected, clearing Time of Day will cause issues.
                 if (trueKill)
                     Memory.Write(MiscAddrs.TimeOfDayAddr, 0);
+            }
+            else
+            {
+                Client.CurrentSession.DataStorage[bossNames[bossMasks.IndexOf(mask)]] = true;
             }
 
             if (bb == bossKillTest)
@@ -576,11 +598,7 @@ namespace DC1AP
         {
             long itemId = e.Item.Id;
 
-            if (itemId == MiscConstants.DarkGenieApId)
-            {
-                AddBossKill(MiscConstants.DarkGenieMask);
-            }
-            else if (itemId >= MiscConstants.AttachIdBase)
+            if (itemId >= MiscConstants.AttachIdBase)
             {
                 ItemQueue.AddAttachment(itemId);
             }

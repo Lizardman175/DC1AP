@@ -296,9 +296,7 @@ namespace DC1AP.Items
             foreach (ItemInfo itemInfo in App.Client.CurrentSession.Items.AllItemsReceived)
             {
                 long apId = itemInfo.ItemId;
-                if (itemInfo.ItemId == MiscConstants.DarkGenieApId)
-                    App.AddBossKill(MiscConstants.DarkGenieMask);
-                else if (apId > MiscConstants.AttachIdBase)
+                if (apId > MiscConstants.AttachIdBase)
                     IncAttachCount(apId);
                 else if (apId > MiscConstants.ItemIdBase)
                     IncItemCount(apId);
@@ -306,8 +304,6 @@ namespace DC1AP.Items
 
             foreach (long itemId in itemCounts.Keys)
             {
-                if (itemId == MiscConstants.DarkGenieApId) continue;
-
                 byte value = OpenMem.ReadItemCountValue(itemId);
                 if (itemCounts[itemId] > value)
                 {
@@ -323,8 +319,6 @@ namespace DC1AP.Items
 
             foreach (long attachId in attachCounts.Keys)
             {
-                if (attachId == MiscConstants.DarkGenieApId) continue;
-
                 byte value = OpenMem.ReadItemCountValue(attachId);
                 if (attachCounts[attachId] > value)
                 {
