@@ -22,10 +22,10 @@ namespace DC1AP.Constants
     {
         Off = 0,
         Any = 1,
-        Hundo = 2,
-        Muska = 3,
+        Hundo = 14,
+        Muska = 2,
         Robot = 4,
-        MuskaRobot = 5
+        MuskaRobot = 6
     }
 
     internal enum ItemCategory
