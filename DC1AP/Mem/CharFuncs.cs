@@ -61,30 +61,23 @@ namespace DC1AP.Mem
         private static bool ungaga = false;
         private static bool osmond = false;
 
-        public static bool Xiao { get => xiao; set => xiao = value; }
-        public static bool Goro { get => goro; set => goro = value; }
-        public static bool Ruby { get => ruby; set => ruby = value; }
-        public static bool Ungaga { get => ungaga; set => ungaga = value; }
-        public static bool Osmond { get => osmond; set => osmond = value; }
+        public static bool Xiao { get => xiao; }
+        public static bool Goro { get => goro; }
+        public static bool Ruby { get => ruby; }
+        public static bool Ungaga { get => ungaga; }
+        public static bool Osmond { get => osmond; }
 
         internal static bool HaveChar(int index)
         {
-            switch (index)
+            return index switch
             {
-                case (int)Towns.Norune:
-                    return xiao;
-                case (int)Towns.Matataki:
-                    return goro;
-                case (int)Towns.Queens:
-                    return ruby;
-                case (int)Towns.Muska:
-                    return ungaga;
-                case (int)Towns.Factory:
-                case (int)Towns.Castle:
-                    return osmond;
-                default:
-                    return false;
-            }
+                (int)Towns.Norune => xiao,
+                (int)Towns.Matataki => goro,
+                (int)Towns.Queens => ruby,
+                (int)Towns.Muska => ungaga,
+                (int)Towns.Factory or (int)Towns.Castle => osmond,
+                _ => false,
+            };
         }
 
         internal static void Init()
@@ -94,35 +87,31 @@ namespace DC1AP.Mem
             ruby = Memory.ReadByte(MiscAddrs.RubySlotAddr) != 0xff && OpenMem.CheckCharReceived(RubyIndex);
             ungaga = Memory.ReadByte(MiscAddrs.UngagaSlotAddr) != 0xff && OpenMem.CheckCharReceived(UngagaIndex);
             osmond = Memory.ReadByte(MiscAddrs.OsmondSlotAddr) != 0xff && OpenMem.CheckCharReceived(OsmondIndex);
+
+            if (!xiao)
+                App.Client.CurrentSession.DataStorage["Xiao"] = false;
+            if (!goro)
+                App.Client.CurrentSession.DataStorage["Goro"] = false;
+            if (!ruby)
+                App.Client.CurrentSession.DataStorage["Ruby"] = false;
+            if (!ungaga)
+                App.Client.CurrentSession.DataStorage["Ungaga"] = false;
+            if (!osmond)
+                App.Client.CurrentSession.DataStorage["Osmond"] = false;
         }
 
         internal static void CheckForChars()
         {
-            if (!xiao)
-            {
-                if (Memory.ReadByte(MiscAddrs.XiaoSlotAddr) != 0xff)
-                    XiaoGained();
-            }
-            else if (!goro)
-            {
-                if (Memory.ReadByte(MiscAddrs.GoroSlotAddr) != 0xff)
-                    GoroGained();
-            }
-            else if (!ruby)
-            {
-                if (Memory.ReadByte(MiscAddrs.RubySlotAddr) != 0xff)
-                    RubyGained();
-            }
-            else if (!ungaga)
-            {
-                if (Memory.ReadByte(MiscAddrs.UngagaSlotAddr) != 0xff)
-                    UngagaGained();
-            }
-            else if (!osmond)
-            {
-                if (Memory.ReadByte(MiscAddrs.OsmondSlotAddr) != 0xff)
-                    OsmondGained();
-            }
+            if (!xiao && Memory.ReadByte(MiscAddrs.XiaoSlotAddr) != 0xff)
+                XiaoGained();
+            else if (!goro && Memory.ReadByte(MiscAddrs.GoroSlotAddr) != 0xff)
+                GoroGained();
+            else if (!ruby && Memory.ReadByte(MiscAddrs.RubySlotAddr) != 0xff)
+                RubyGained();
+            else if (!ungaga && Memory.ReadByte(MiscAddrs.UngagaSlotAddr) != 0xff)
+                UngagaGained();
+            else if (!osmond && Memory.ReadByte(MiscAddrs.OsmondSlotAddr) != 0xff)
+                OsmondGained();
         }
 
         internal static void SetDefaultCharName(uint addr, string name)
@@ -167,6 +156,7 @@ namespace DC1AP.Mem
                 if (Options.MiracleSanity)
                     ItemQueue.checkItems = true;
 
+                App.Client.CurrentSession.DataStorage["Xiao"] = true;
                 OpenMem.SetCharReceived(XiaoIndex);
             }
         }
@@ -190,6 +180,7 @@ namespace DC1AP.Mem
                 if (Options.MiracleSanity)
                     ItemQueue.checkItems = true;
 
+                App.Client.CurrentSession.DataStorage["Goro"] = true;
                 OpenMem.SetCharReceived(GoroIndex);
             }
         }
@@ -215,6 +206,7 @@ namespace DC1AP.Mem
                 if (Options.MiracleSanity)
                     ItemQueue.checkItems = true;
 
+                App.Client.CurrentSession.DataStorage["Ruby"] = true;
                 OpenMem.SetCharReceived(RubyIndex);
             }
         }
@@ -239,6 +231,7 @@ namespace DC1AP.Mem
                 if (Options.MiracleSanity)
                     ItemQueue.checkItems = true;
 
+                App.Client.CurrentSession.DataStorage["Ungaga"] = true;
                 OpenMem.SetCharReceived(UngagaIndex);
             }
         }
@@ -257,6 +250,7 @@ namespace DC1AP.Mem
                 if (Options.MiracleSanity)
                     ItemQueue.checkItems = true;
 
+                App.Client.CurrentSession.DataStorage["Osmond"] = true;
                 OpenMem.SetCharReceived(OsmondIndex);
                 GoTAccess();
             }
