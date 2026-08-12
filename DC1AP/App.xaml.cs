@@ -56,7 +56,7 @@ namespace DC1AP
 {
     public partial class App : Application
     {
-        public const string ClientVersion = "0.5.9";
+        public const string ClientVersion = "0.5.10";
 
         internal static ArchipelagoClient Client { get; set; }
 
@@ -77,6 +77,10 @@ namespace DC1AP
         private bool deathFromDeathlink = false;
         private static string slotName = string.Empty;
         private static string seedName = string.Empty;
+
+        // Genie handled differently so not in the lists
+        private static readonly string[] bossNames = ["Dran", "Utan", "Saia", "Curse", "Joe"];
+        private static readonly int[] bossMasks = [1, 2, 4, 8, 16];
 
         public override void Initialize()
         {
@@ -316,9 +320,8 @@ namespace DC1AP
                 Memory.MonitorAddressForAction<short>(GeoAddrs.CathedralBldEventFlag, AckCathedral, (o) => { return o >= 1; });
             }
 
-            MiracleChestMgmt.Init();
-
             PlayerState.SetGameState();
+            MiracleChestMgmt.Init();
 
             // Other threads shouldn't stop, but if disconnecting from a slot without MC shuffle and connecting to one with MC shuffle, need to test thread state.
             if (chestThread == null || chestThread.ThreadState == ThreadState.Stopped)
@@ -459,8 +462,18 @@ namespace DC1AP
                         else
                         {
                             int value = (i + 1) * 100;
-                            Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(mask, true), (o) => { return o == (short) value; });
+                            Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(mask, true), (o) => { return o == (short)value; });
                         }
+
+                        // Genie shouldn't get reset
+                        if (i < bossNames.Length)
+                        {
+                            Client.CurrentSession.DataStorage[bossNames[i]] = false;
+                        }
+                    }
+                    else if (i < bossNames.Length)
+                    {
+                        Client.CurrentSession.DataStorage[bossNames[i]] = true;
                     }
                 }
             }
@@ -491,6 +504,10 @@ namespace DC1AP
                 // Only call if from actually beating the boss.  If the item is collected, clearing Time of Day will cause issues.
                 if (trueKill)
                     Memory.Write(MiscAddrs.TimeOfDayAddr, 0);
+            }
+            else
+            {
+                Client.CurrentSession.DataStorage[bossNames[bossMasks.IndexOf(mask)]] = true;
             }
 
             if (bb == bossKillTest)
