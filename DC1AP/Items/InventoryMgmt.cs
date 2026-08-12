@@ -118,6 +118,23 @@ namespace DC1AP.Items
             return invCount < maxCount;
         }
 
+        internal static bool HasAvailableAttachInventory()
+        {
+            int blankCount = 0;
+            for (int ii = 0; ii < MaxAttachCount && blankCount <= (MaxAttachCount - AttachLimit); ii++)
+            {
+                uint addr = (uint)(FirstAttchAddr + AttachmentSize * ii);
+                short itemValue = Memory.ReadShort(addr);
+
+                if (itemValue == -1 || itemValue == 0)
+                {
+                    blankCount++;
+                }
+            }
+
+            return blankCount > (MaxAttachCount - AttachLimit);
+        }
+
         /// <summary>
         /// Searches for an empty inventory slot and gives the player the item supplied.  Returns true if successful, false if inventory is full.
         /// </summary>
@@ -177,6 +194,8 @@ namespace DC1AP.Items
 
         internal static bool GiveAttachment(long itemId, bool updateFlag = true)
         {
+            if (!HasAvailableAttachInventory()) return false;
+
             Attachment item = AttachmentData[itemId];
             
             int attachCount = 0;

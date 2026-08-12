@@ -90,14 +90,28 @@ namespace DC1AP.Mem
 
             if (!xiao)
                 App.Client.CurrentSession.DataStorage["Xiao"] = false;
+            else
+                App.Client.CurrentSession.DataStorage["Xiao"] = true;
+
             if (!goro)
                 App.Client.CurrentSession.DataStorage["Goro"] = false;
+            else
+                App.Client.CurrentSession.DataStorage["Goro"] = true;
+
             if (!ruby)
                 App.Client.CurrentSession.DataStorage["Ruby"] = false;
+            else
+                App.Client.CurrentSession.DataStorage["Ruby"] = true;
+
             if (!ungaga)
                 App.Client.CurrentSession.DataStorage["Ungaga"] = false;
+            else
+                App.Client.CurrentSession.DataStorage["Ungaga"] = true;
+
             if (!osmond)
                 App.Client.CurrentSession.DataStorage["Osmond"] = false;
+            else
+                App.Client.CurrentSession.DataStorage["Osmond"] = true;
         }
 
         internal static void CheckForChars()
@@ -129,7 +143,7 @@ namespace DC1AP.Mem
             }
 
             // Erase extra chars
-            for (;  i < 10; i++)
+            for (; i < 10; i++)
             {
                 Memory.Write(addr, (short)0);
                 addr += sizeof(short);
