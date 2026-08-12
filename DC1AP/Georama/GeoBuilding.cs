@@ -165,6 +165,12 @@ namespace DC1AP.Georama
                     BuildBuilding(inTown);
                 }
 
+                // Clear Alnet's reward event to avoid double fishing rods
+                if (ApId == MiscConstants.AlnetHouseId)
+                {
+                    Memory.Write(BaseAddr - sizeof(int), 1);
+                }
+
                 msg = "Received " + Name + ".";
             }
             // Not first piece, add next item
@@ -243,11 +249,10 @@ namespace DC1AP.Georama
         #region TownBuilding
         private void BuildBuilding(bool inTown)
         {
-            // Eww...
             if (HundoCoords != null &&
                  (Options.Autobuild == AutobuildFlags.Hundo ||
-                 (town == Towns.Muska && (Options.Autobuild == AutobuildFlags.Muska || Options.Autobuild == AutobuildFlags.MuskaRobot)) ||
-                 (town == Towns.Factory && (Options.Autobuild == AutobuildFlags.Robot || Options.Autobuild == AutobuildFlags.MuskaRobot)))
+                 (town == Towns.Muska && (Options.Autobuild & AutobuildFlags.Muska) > 0) ||
+                 (town == Towns.Factory && (Options.Autobuild & AutobuildFlags.Robot) > 0))
                )
             {
                 if (town == Towns.Matataki)
@@ -322,12 +327,10 @@ namespace DC1AP.Georama
 
         private void BuildMultiBuilding(bool inTown)
         {
-            // Ewwww...
             if (MultiCoords != null &&
                  (Options.Autobuild == AutobuildFlags.Hundo ||
                  (Options.Autobuild == AutobuildFlags.Any && town == Towns.Matataki && ApId == MiscConstants.MatatakiRiverId) ||  // Need rivers for any%
-                 (town == Towns.Muska && (Options.Autobuild == AutobuildFlags.Muska || Options.Autobuild == AutobuildFlags.MuskaRobot)) ||
-                 (town == Towns.Factory && (Options.Autobuild == AutobuildFlags.Robot || Options.Autobuild == AutobuildFlags.MuskaRobot)))
+                 (town == Towns.Muska && (Options.Autobuild & AutobuildFlags.Muska) > 0))
                )
             {
                 if (!(town == Towns.Norune && ApId == MiscConstants.NoruneBridgeId) &&

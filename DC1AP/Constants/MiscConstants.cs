@@ -22,10 +22,10 @@ namespace DC1AP.Constants
     {
         Off = 0,
         Any = 1,
-        Hundo = 2,
-        Muska = 3,
+        Hundo = 14,
+        Muska = 2,
         Robot = 4,
-        MuskaRobot = 5
+        MuskaRobot = 6
     }
 
     internal enum ItemCategory
@@ -92,7 +92,6 @@ namespace DC1AP.Constants
         internal const long FruitOfEdenId = 971_111_180;
         internal const long GourdId = 971_111_182;
 
-        internal const int DarkGenieApId = 971_119_999;
         internal const byte DarkGenieMask = 0b10_0000;
 
         internal const long HornedKeyChestId = 971_111_063;
@@ -113,5 +112,7 @@ namespace DC1AP.Constants
         internal static readonly long[] HgApIds = [971_110_503, 971_110_504];
         // TIR/TIL
         internal static readonly long[] TiApIds = [971_110_509, 971_110_510];
+
+        internal const long AlnetHouseId = 971_110_106;
     }
 }

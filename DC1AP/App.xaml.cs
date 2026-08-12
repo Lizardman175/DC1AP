@@ -8,7 +8,7 @@
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
- * vfurnished to do so, subject to the following conditions:
+ * furnished to do so, subject to the following conditions:
  * 
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
@@ -34,6 +34,7 @@ using Avalonia.Media;
 using DC1AP.Constants;
 using DC1AP.Georama;
 using DC1AP.Items;
+using DC1AP.Locations;
 using DC1AP.Mem;
 using DC1AP.Models;
 using DC1AP.Threads;
@@ -56,7 +57,7 @@ namespace DC1AP
 {
     public partial class App : Application
     {
-        public const string ClientVersion = "0.5.10";
+        public const string ClientVersion = "0.6.0";
 
         internal static ArchipelagoClient Client { get; set; }
 
@@ -74,7 +75,7 @@ namespace DC1AP
         private bool cathedralDone = false;
 
         private DeathLinkService? _deathlinkService = null;
-        private bool deathFromDeathlink = false;
+        internal static bool deathFromDeathlink = false;
         private static string slotName = string.Empty;
         private static string seedName = string.Empty;
 
@@ -282,6 +283,13 @@ namespace DC1AP
             // First load for this save, so do extra stuff
             if (currSlot == "")
             {
+                // Check first atla in DBC. If already set, then the user may have loaded a vanilla save.
+                if (Memory.ReadInt(GeoAddrs.AtlaFlagAddrs[0]) != MiscConstants.AtlaUnavailable)
+                {
+                    PlayerState.ClearGameState();
+                    Log.Logger.Error("Vanilla save loaded or first dungeon already entered.  Load a rando save or start a clean save file.   ");
+                    return;
+                }
                 OpenMem.SetSlotData(slotName);
                 EventMasks.InitMasks();
                 Weapons.GiveCharWeapon(0);
@@ -291,12 +299,13 @@ namespace DC1AP
             else if (currSlot != slotName)
             {
                 // Padding because Avalonia keeps cutting things off...
-                Log.Logger.Error("Wrong slot name. Current save is using slot: " + currSlot + "      ");
                 PlayerState.ClearGameState();
+                Log.Logger.Error("Wrong slot name. Current save is using slot: " + currSlot + "      ");
                 return;
             }
             else if (!OpenMem.TestRoomSeed(Client.CurrentSession.RoomState.Seed))
             {
+                // The call in the if above logs an error for us
                 PlayerState.ClearGameState();
                 return;
             }
@@ -306,6 +315,9 @@ namespace DC1AP
             CharFuncs.Init();
             Enemies.MultiplyABS();
             InventoryMgmt.MultiplyAttachments();
+            ShopMgmt.UpdateShops();
+            Fish.CheckFishLog();
+            Fish.WatchFishCatchField();
 
             // Check for any missing items after a connect/reconnect
             ItemQueue.checkItems = true;
@@ -336,6 +348,8 @@ namespace DC1AP
             // Watch for the player to reset the game, then change the valid state flag and ready up to connect again.
             Memory.MonitorAddressForAction<int>(MiscAddrs.TimeOfDayAddr, () => PlayerNotReady(slotName), (o) => { return o == 0; });
             WatchGoal();
+
+            Log.Logger.Information("Connected and Ready!");
         }
 
         private void PlayerNotReady(string slotName)
@@ -440,10 +454,10 @@ namespace DC1AP
             {
                 byte currKills = Memory.ReadByte(OpenMem.GoalAddr);
 
-                if ((currKills & 32) == 0 & Options.Goal >= 6 && Client.CurrentSession.Locations.AllLocationsChecked.Contains(MiscConstants.DarkGenieApId))
+                if ((currKills & MiscConstants.DarkGenieMask) == 0 & Options.Goal >= 6 && Client.CurrentSession.DataStorage["Genie"] == true)
                 {
-                    bossKillTest |= 32;
-                    currKills |= 32;
+                    bossKillTest |= MiscConstants.DarkGenieMask;
+                    currKills |= MiscConstants.DarkGenieMask;
                     Memory.WriteByte(OpenMem.GoalAddr, currKills);
                 }
 
@@ -483,6 +497,10 @@ namespace DC1AP
                     Memory.MonitorAddressForAction<byte>(MiscAddrs.UtanFlag, () => Client.SendGoalCompletion(), (o) => { return o != 0; });
                 else
                     Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => Client.SendGoalCompletion(), (o) => { return o == Options.Goal * 100; });
+
+            // If reloading after the genie fight with more bosses, add the boss kill here
+            if (Client.CurrentSession.DataStorage["Genie"] == true)
+                AddBossKill(MiscConstants.DarkGenieMask);
         }
 
         /// <summary>
@@ -497,9 +515,9 @@ namespace DC1AP
             Memory.WriteByte(OpenMem.GoalAddr, bb);
 
             // Track on the server that the Dark Genie has been killed
-            if (mask == 32)
+            if (mask == MiscConstants.DarkGenieMask)
             {
-                SendLocation(MiscConstants.DarkGenieApId);
+                Client.CurrentSession.DataStorage["Genie"] = true;
                 // The game will reset after the credits but it doesn't clear the time of day field.  This will force PlayerNotReady() to be called to avoid issues.
                 // Only call if from actually beating the boss.  If the item is collected, clearing Time of Day will cause issues.
                 if (trueKill)
@@ -570,25 +588,16 @@ namespace DC1AP
 
         private void _deathlinkService_OnDeathLinkReceived(DeathLink deathLink)
         {
-            // Kill player x_x
-            if (PlayerState.IsPlayerInDungeon())
-            {
-                deathFromDeathlink = true;
-                byte currChar = Memory.ReadByte(MiscAddrs.CurrCharAddr);
-                Memory.Write(MiscAddrs.HpAddrs[currChar], (short)-1);
-                Log.Logger.Information("DeathLink: Received from " + deathLink.Source);
-            }
+            // Let the thread kill the player once they are in a dungeon
+            HelperThread.doDeathLink = true;
+            HelperThread.deathlinkSource = deathLink.Source;
         }
 
         private static void Client_ItemReceived(object? sender, ItemReceivedEventArgs e)
         {
             long itemId = e.Item.Id;
 
-            if (itemId == MiscConstants.DarkGenieApId)
-            {
-                AddBossKill(MiscConstants.DarkGenieMask);
-            }
-            else if (itemId >= MiscConstants.AttachIdBase)
+            if (itemId >= MiscConstants.AttachIdBase)
             {
                 ItemQueue.AddAttachment(itemId);
             }
