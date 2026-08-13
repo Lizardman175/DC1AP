@@ -25,6 +25,7 @@ namespace DC1AP.Georama
         public GeoItem[] Items = [];
         public short BuildingId;
         public int Multi = 0;
+        public int Extra = 0;
         public BuildingCoords? AnyCoords;
         // Only D6 should have nothing for HundoCoords so this should be safe to have empty.
         public BuildingCoords HundoCoords = new();
@@ -112,8 +113,9 @@ namespace DC1AP.Georama
 
             if (Multi > 0 && buildingValue < Multi)
             {
-                Memory.Write(baseAddr + GeoAddrs.CurTownBldOwnedOffset, Multiplier*(buildingValue+1));
-                Memory.Write(baseAddr + GeoAddrs.CurTownBldCountOffset, Multiplier * (buildingValue + 1));
+                Memory.Write(baseAddr + GeoAddrs.CurTownBldOwnedOffset, Multiplier * (buildingValue + 1));
+                Memory.Write(baseAddr + GeoAddrs.CurTownBldCountOffset, (Multiplier + Extra) * (buildingValue + 1));
+                Memory.Write(baseAddr + GeoAddrs.CurTownBldCountOffset + 4, (Multiplier + Extra) * (buildingValue + 1));
             }
             else if (buildingValue == 0)
             {
@@ -143,7 +145,8 @@ namespace DC1AP.Georama
             if (Multi != 0 && buildingValue < Multi)
             {
                 buildingValue++;
-                short buildingCount = (short)(Multiplier * buildingValue);
+                short count = (short)(buildingValue * (Multiplier + Extra));
+                short buildingCount = count;
                 Memory.Write(BuildingCountAddr, buildingCount);
 
                 // Auto building of towns. Castle has no town to build, factory has no multi buildings
@@ -424,7 +427,10 @@ namespace DC1AP.Georama
             Memory.WriteStruct<Vector>(addr, vector);
 
             if (MultiCoords != null)
-                Memory.Write(placedCountAddr, (short)(buildingValue * 5));
+            {
+                short count = (short)(buildingValue * (Multiplier + Extra));
+                Memory.Write(placedCountAddr, count);
+            }
             else
                 Memory.Write(placedCountAddr, (short)1);
 
