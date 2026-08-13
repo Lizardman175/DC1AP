@@ -829,6 +829,7 @@
     "BaseAddr": 30233928,
     "BuildingId": 15,
     "Multi": 2,
+    "Extra": 3,
     "Items": [],
     "MultiCoords": [
       {
@@ -949,6 +950,7 @@
     "BaseAddr": 30233952,
     "BuildingId": 16,
     "Multi": 8,
+    "Extra": 0,
     "Items": [],
     "MultiCoords": [
       {
@@ -1397,6 +1399,7 @@
     "BaseAddr": 30233976,
     "BuildingId": 17,
     "Multi": 1,
+    "Extra": 3,
     "Items": [],
     "MultiCoords": [
       {
