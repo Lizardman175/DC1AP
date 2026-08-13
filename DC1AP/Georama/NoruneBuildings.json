@@ -691,8 +691,8 @@
       "X": 499.86005,
       "Y": 0,
       "Z": 399.88,
-      "Orientation": 0,
-      "OrientationFloat": 0,
+      "Orientation": 2,
+      "OrientationFloat": 3.1415927,
       "Addrs": [
         3604752,
         3604780,
@@ -721,6 +721,7 @@
     "BaseAddr": 30230880,
     "BuildingId": 13,
     "Multi": 2,
+    "Extra": 2,
     "Items": [],
     "MultiCoords": [
       {
@@ -831,6 +832,7 @@
     "BaseAddr": 30230904,
     "BuildingId": 14,
     "Multi": 5,
+    "Extra": 1,
     "Items": [],
     "MultiCoords": [
       {
@@ -1091,6 +1093,7 @@
     "BaseAddr": 30230928,
     "BuildingId": 15,
     "Multi": 4,
+    "Extra": 1,
     "Items": [],
     "MultiCoords": [
       {
@@ -1301,6 +1304,7 @@
     "BaseAddr": 30230952,
     "BuildingId": 16,
     "Multi": 1,
+    "Extra": 2,
     "Items": [],
     "MultiCoords": [
       {
