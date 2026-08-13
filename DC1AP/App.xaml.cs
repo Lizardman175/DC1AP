@@ -332,9 +332,8 @@ namespace DC1AP
                 Memory.MonitorAddressForAction<short>(GeoAddrs.CathedralBldEventFlag, AckCathedral, (o) => { return o >= 1; });
             }
 
-            MiracleChestMgmt.Init();
-
             PlayerState.SetGameState();
+            MiracleChestMgmt.Init();
 
             // Other threads shouldn't stop, but if disconnecting from a slot without MC shuffle and connecting to one with MC shuffle, need to test thread state.
             if (chestThread == null || chestThread.ThreadState == ThreadState.Stopped)
@@ -477,9 +476,9 @@ namespace DC1AP
                         else
                         {
                             int value = (i + 1) * 100;
-                            Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(mask, true), (o) => { return o == (short) value; });
+                            Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => AddBossKill(mask, true), (o) => { return o == (short)value; });
                         }
-                        
+
                         // Genie shouldn't get reset
                         if (i < bossNames.Length)
                         {
