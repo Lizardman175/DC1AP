@@ -62,7 +62,7 @@ namespace DC1AP.Items
         private static void CheckFishCatch()
         {
             // Field will reset to zero on a reset so don't send fish on reset.
-            if (!PlayerState.PlayerReady()) return;
+            if (!PlayerState.PlayerReady() || PlayerState.IsPlayerInDungeon()) return;
 
             int fishId = Memory.ReadInt(ItemValues.FishCatchAddr);
 
