@@ -84,6 +84,7 @@ namespace DC1AP.Constants
         internal const uint CurFloor = 0x01CD954E;      // 0 index
         internal const uint InDungeonFlag = 0x01CD954F;  // -1 if not in dungeon, 0 if in dungeon
         internal const uint BackFloorFlag = 0x002A34B4;  // 0 or 1
+        internal const uint DunMobileAddr = 0x002A347C;  // 0 if player can move, 1 while in the entrance cutscene
 
         // Player state.  0 is main title, 1 is demo reel, 2 is town, 3 is dungeon
         internal const uint PlayerState = 0x002A2534;
