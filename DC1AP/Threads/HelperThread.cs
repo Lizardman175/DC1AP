@@ -92,6 +92,17 @@ namespace DC1AP.Threads
                         if (curDungeon == 0 && curFloor == CatFloor && Memory.ReadInt(GeoAddrs.AtlaCollectedFlag) != 0)
                             Memory.Write(GeoAddrs.AtlaCollectedFlag, 0);
 
+                        if (Options.FloorSanity > 0)
+                        {
+                            int loc = MiscConstants.BaseId + (curDungeon+1) * 1000 + 400 + curFloor + 1;
+                            if (Memory.ReadInt(MiscAddrs.BackFloorFlag) == 0 && PlayerState.CanGiveItemDungeon() &&
+                                App.Client.CurrentSession.Locations.AllMissingLocations.Contains(loc))
+                            {
+                                if (Enemies.CheckEnemyKills())
+                                    App.SendLocation(loc);
+                            }
+                        }
+
                         if (doDeathLink && PlayerState.CanGiveItemDungeon())
                             DeathLink();
                     }
