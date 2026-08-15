@@ -189,9 +189,12 @@ namespace DC1AP.Threads
                     oldInvCount = inventoryQueue.Count;
 
                     result = true;
-                    while (result && PlayerState.CanGiveItem() && InventoryMgmt.HasAvailableAttachInventory() && attachmentQueue.TryDequeue(out long apId))
+                    while (result && PlayerState.CanGiveItem() && attachmentQueue.TryDequeue(out long apId))
                     {
-                        result = InventoryMgmt.GiveAttachment(apId);
+                        result = InventoryMgmt.HasAvailableAttachInventory();
+                        if (result)
+                            result = InventoryMgmt.GiveAttachment(apId);
+
                         // If we fail to give the item because inventory is full, requeue it
                         if (!result)
                         {

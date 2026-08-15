@@ -80,8 +80,8 @@ namespace DC1AP
         private static string seedName = string.Empty;
 
         // Genie handled differently so not in the lists
-        private static readonly string[] bossNames = ["Dran", "Utan", "Saia", "Curse", "Joe"];
-        private static readonly int[] bossMasks = [1, 2, 4, 8, 16];
+        private static readonly string[] bossNames = ["Dran", "Utan", "Saia", "Curse", "Joe", "Genie"];
+        private static readonly int[] bossMasks = [1, 2, 4, 8, 16, 32];
 
         public override void Initialize()
         {
@@ -450,6 +450,9 @@ namespace DC1AP
 
         private static void WatchGoal()
         {
+            int maxLoop = Options.Goal;
+            if (Client.CurrentSession.Locations.AllLocations.Contains(971117405)) maxLoop++;
+
             if (Options.AllBosses)
             {
                 byte currKills = Memory.ReadByte(OpenMem.GoalAddr);
@@ -461,7 +464,7 @@ namespace DC1AP
                     Memory.WriteByte(OpenMem.GoalAddr, currKills);
                 }
 
-                for (int i = 0; i < Options.Goal; i++)
+                for (int i = 0; i < maxLoop; i++)
                 {
                     byte mask = (byte)(1 << i);
                     bossKillTest |= mask;
@@ -492,11 +495,22 @@ namespace DC1AP
                 }
             }
             else
+            {
                 // For some reason, the Boss Kill Flag doesn't set for Utan so use the floor kill count instead
                 if (Options.Goal == 2)
-                    Memory.MonitorAddressForAction<byte>(MiscAddrs.UtanFlag, () => Client.SendGoalCompletion(), (o) => { return o != 0; });
+                {
+                    Memory.MonitorAddressForAction<byte>(MiscAddrs.UtanFlag, Client.SendGoalCompletion, (o) => { return o != 0; });
+                }
+                else if (Client.CurrentSession.Locations.AllLocations.Contains(971117405))
+                {
+                    Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, Client.SendGoalCompletion, (o) => { return o == 700; });
+                    Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, SendFGoalCompletion, (o) => { return o == 600; });
+                }
                 else
-                    Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => Client.SendGoalCompletion(), (o) => { return o == Options.Goal * 100; });
+                {
+                    Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, Client.SendGoalCompletion, (o) => { return o == Options.Goal * 100; });
+                }
+            }
 
             // If reloading after the genie fight with more bosses, add the boss kill here
             if (Client.CurrentSession.DataStorage["Genie"] == true)
@@ -517,13 +531,16 @@ namespace DC1AP
             // Track on the server that the Dark Genie has been killed
             if (mask == MiscConstants.DarkGenieMask)
             {
+                if (!Client.CurrentSession.DataStorage["Genie"] && Client.CurrentSession.Locations.AllLocations.Contains(971117405))
+                    SendFGoalCompletion();
+
                 Client.CurrentSession.DataStorage["Genie"] = true;
                 // The game will reset after the credits but it doesn't clear the time of day field.  This will force PlayerNotReady() to be called to avoid issues.
                 // Only call if from actually beating the boss.  If the item is collected, clearing Time of Day will cause issues.
                 if (trueKill)
                     Memory.Write(MiscAddrs.TimeOfDayAddr, 0);
             }
-            else
+            else if (bossMasks.IndexOf(mask) != -1)
             {
                 Client.CurrentSession.DataStorage[bossNames[bossMasks.IndexOf(mask)]] = true;
             }
@@ -583,6 +600,11 @@ namespace DC1AP
                     Memory.Write(MiscAddrs.BossKillAddr, (short)300);
                 }
             }
+        }
+
+        private static void SendFGoalCompletion()
+        {
+            Log.Logger.Warning("A far stronger foe yet awaits you...");
         }
         #endregion
 
