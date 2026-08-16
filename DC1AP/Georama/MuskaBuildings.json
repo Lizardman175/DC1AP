@@ -708,8 +708,8 @@
       "X": 499.86005,
       "Y": 0,
       "Z": -200.13995,
-      "Orientation": 0,
-      "OrientationFloat": 0,
+      "Orientation": 2,
+      "OrientationFloat": 3.1415927,
       "TableIndex": 0,
       "Addrs": [
         3604108,
@@ -763,6 +763,7 @@
     "BaseAddr": 30239856,
     "BuildingId": 12,
     "Multi": 2,
+    "Extra": 2,
     "Items": [],
     "MultiCoords": [
       {
@@ -883,6 +884,7 @@
     "BaseAddr": 30239880,
     "BuildingId": 13,
     "Multi": 5,
+    "Extra": 1,
     "Items": [],
     "MultiCoords": [
       {

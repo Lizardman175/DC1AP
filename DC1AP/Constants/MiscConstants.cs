@@ -94,13 +94,14 @@ namespace DC1AP.Constants
 
         internal const byte DarkGenieMask = 0b10_0000;
 
-        internal const long HornedKeyChestId = 971_111_063;
+        internal const long HornedKeyChestId = 971_110_163;
 
         private const long HornedKeyApId = 971_111_207;
         private const long PocketApId = 971_111_101;
         private const long SundewApId = 971_111_225;
+        private const long FishingRodApId = 971_111_185;
 
-        internal static readonly long[] KeyItemApIds = [HornedKeyApId, PocketApId, SundewApId];
+        internal static readonly long[] KeyItemApIds = [HornedKeyApId, PocketApId, SundewApId, FishingRodApId];
 
         private const short HornedKeyId = 207;
         private const short PocketId = 179;

@@ -80,8 +80,9 @@ namespace DC1AP
         private static string seedName = string.Empty;
 
         // Genie handled differently so not in the lists
-        private static readonly string[] bossNames = ["Dran", "Utan", "Saia", "Curse", "Joe"];
-        private static readonly int[] bossMasks = [1, 2, 4, 8, 16];
+        private static readonly string[] bossNamesSrc = ["dc1_Dran_", "dc1_Utan_", "dc1_Saia_", "dc1_Curse_", "dc1_Joe_", "dc1_Genie_"];
+        private static readonly string[] bossNames = bossNamesSrc;
+        private static readonly int[] bossMasks = [1, 2, 4, 8, 16, 32];
 
         public override void Initialize()
         {
@@ -279,6 +280,13 @@ namespace DC1AP
         {
             Thread.Sleep(50);
             string currSlot = OpenMem.GetSlotName();
+            int slotNum = Client.CurrentSession.Players.ActivePlayer.Slot;
+            seedName = Client.CurrentSession.RoomState.Seed;
+
+            for (int i = 0; i < Options.Goal; i++)
+            {
+                bossNames[i] = bossNamesSrc[i] + slotNum;
+            }
 
             // First load for this save, so do extra stuff
             if (currSlot == "")
@@ -294,7 +302,11 @@ namespace DC1AP
                 EventMasks.InitMasks();
                 Weapons.GiveCharWeapon(0);
                 InventoryMgmt.GiveFreeFeather();
-                seedName = Client.CurrentSession.RoomState.Seed;
+
+                for (int i = 0; i < Options.Goal; i++)
+                {
+                    Client.CurrentSession.DataStorage[bossNames[i]] = false;
+                }
             }
             else if (currSlot != slotName)
             {
@@ -312,7 +324,7 @@ namespace DC1AP
 
             SetDefaultNames(false);
             GeoInvMgmt.InitBuildings();
-            CharFuncs.Init();
+            CharFuncs.Init(slotNum);
             Enemies.MultiplyABS();
             InventoryMgmt.MultiplyAttachments();
             ShopMgmt.UpdateShops();
@@ -450,18 +462,21 @@ namespace DC1AP
 
         private static void WatchGoal()
         {
+            int maxLoop = Options.Goal;
+            if (Client.CurrentSession.Locations.AllLocations.Contains(971117405)) maxLoop++;
+
             if (Options.AllBosses)
             {
                 byte currKills = Memory.ReadByte(OpenMem.GoalAddr);
 
-                if ((currKills & MiscConstants.DarkGenieMask) == 0 & Options.Goal >= 6 && Client.CurrentSession.DataStorage["Genie"] == true)
+                if ((currKills & MiscConstants.DarkGenieMask) == 0 & Options.Goal >= 6 && Client.CurrentSession.DataStorage[bossNames[5]] == true)
                 {
                     bossKillTest |= MiscConstants.DarkGenieMask;
                     currKills |= MiscConstants.DarkGenieMask;
                     Memory.WriteByte(OpenMem.GoalAddr, currKills);
                 }
 
-                for (int i = 0; i < Options.Goal; i++)
+                for (int i = 0; i < maxLoop; i++)
                 {
                     byte mask = (byte)(1 << i);
                     bossKillTest |= mask;
@@ -492,14 +507,25 @@ namespace DC1AP
                 }
             }
             else
+            {
                 // For some reason, the Boss Kill Flag doesn't set for Utan so use the floor kill count instead
                 if (Options.Goal == 2)
-                    Memory.MonitorAddressForAction<byte>(MiscAddrs.UtanFlag, () => Client.SendGoalCompletion(), (o) => { return o != 0; });
+                {
+                    Memory.MonitorAddressForAction<byte>(MiscAddrs.UtanFlag, Client.SendGoalCompletion, (o) => { return o != 0; });
+                }
+                else if (Client.CurrentSession.Locations.AllLocations.Contains(971117405))
+                {
+                    Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, Client.SendGoalCompletion, (o) => { return o == 700; });
+                    Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, SendFGoalCompletion, (o) => { return o == 600; });
+                }
                 else
-                    Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, () => Client.SendGoalCompletion(), (o) => { return o == Options.Goal * 100; });
+                {
+                    Memory.MonitorAddressForAction<short>(MiscAddrs.BossKillAddr, Client.SendGoalCompletion, (o) => { return o == Options.Goal * 100; });
+                }
+            }
 
             // If reloading after the genie fight with more bosses, add the boss kill here
-            if (Client.CurrentSession.DataStorage["Genie"] == true)
+            if (Client.CurrentSession.DataStorage[bossNames[5]] == true)
                 AddBossKill(MiscConstants.DarkGenieMask);
         }
 
@@ -514,24 +540,35 @@ namespace DC1AP
             bb |= mask;
             Memory.WriteByte(OpenMem.GoalAddr, bb);
 
-            // Track on the server that the Dark Genie has been killed
-            if (mask == MiscConstants.DarkGenieMask)
+            try
             {
-                Client.CurrentSession.DataStorage["Genie"] = true;
-                // The game will reset after the credits but it doesn't clear the time of day field.  This will force PlayerNotReady() to be called to avoid issues.
-                // Only call if from actually beating the boss.  If the item is collected, clearing Time of Day will cause issues.
-                if (trueKill)
-                    Memory.Write(MiscAddrs.TimeOfDayAddr, 0);
-            }
-            else
-            {
-                Client.CurrentSession.DataStorage[bossNames[bossMasks.IndexOf(mask)]] = true;
-            }
+                // Track on the server that the Dark Genie has been killed
+                if (mask == MiscConstants.DarkGenieMask)
+                {
+                    if (!Client.CurrentSession.DataStorage[bossNames[5]] && Client.CurrentSession.Locations.AllLocations.Contains(971117405))
+                        SendFGoalCompletion();
 
-            if (bb == bossKillTest)
+                    Client.CurrentSession.DataStorage[bossNames[5]] = true;
+                    // The game will reset after the credits but it doesn't clear the time of day field.  This will force PlayerNotReady() to be called to avoid issues.
+                    // Only call if from actually beating the boss.  If the item is collected, clearing Time of Day will cause issues.
+                    if (trueKill)
+                        Memory.Write(MiscAddrs.TimeOfDayAddr, 0);
+                }
+                else if (bossMasks.IndexOf(mask) != -1)
+                {
+                    Client.CurrentSession.DataStorage[bossNames[bossMasks.IndexOf(mask)]] = true;
+                }
+
+                if (bb == bossKillTest)
+                {
+                    Client.SendGoalCompletion();
+                    return;
+                }
+            }
+            catch (Exception)
             {
-                Client.SendGoalCompletion();
-                return;
+                // Ignore. The DataStorage access can collide harmlessly when there are duplicate monitors due to resets (or whatever reason the game keeps tripping PlayerReady/NotReady)
+                // TODO since we can't pass cancellation tokens to the monitors, should probably monitor boss kills in HelperThread or similar instead of this jank
             }
 
             // Take away the useless Moon Orb item since we already have Muska Lacka access
@@ -582,7 +619,20 @@ namespace DC1AP
                 {
                     Memory.Write(MiscAddrs.BossKillAddr, (short)300);
                 }
+                else if ((bb & (1 << (int)Towns.Factory)) == 0)
+                {
+                    Memory.Write(MiscAddrs.BossKillAddr, (short)400);
+                }
+                else if ((bb & (1 << (int)Towns.Castle)) == 0)
+                {
+                    Memory.Write(MiscAddrs.BossKillAddr, (short)500);
+                }
             }
+        }
+
+        private static void SendFGoalCompletion()
+        {
+            Log.Logger.Warning("A far stronger foe yet awaits you...");
         }
         #endregion
 

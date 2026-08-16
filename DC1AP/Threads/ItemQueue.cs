@@ -117,12 +117,14 @@ namespace DC1AP.Threads
                     // Geo items can only be received in dungeon
                     if (PlayerState.CanGiveGeorama())
                     {
+                        bool inFactory = PlayerState.GetCurrentTown() == (int)Towns.Factory;
                         Queue<GeoBuilding> tempQueue = new();
                         while (PlayerState.CanGiveGeorama() && geoBuildingQueue.TryDequeue(out GeoBuilding? geoBuilding))
                         {
                             if (PlayerState.CanGiveGeoInTown() && (int)geoBuilding.Town == PlayerState.GetCurrentTown())
                                 // TODO can't give river/road/bridge in town currently, stash them for now and continue the loop
-                                if (geoBuilding.Multi > 0 && !geoBuilding.Name.Contains("Tree"))
+                                // There is a rare game crash that can happen receiving robot parts while in the factory
+                                if ((inFactory && geoBuilding.Town == Towns.Factory) || (geoBuilding.Multi > 0 && !geoBuilding.Name.Contains("Tree")))
                                     tempQueue.Enqueue(geoBuilding);
                                 else
                                     geoBuilding.GiveBuildingTown();
@@ -191,7 +193,10 @@ namespace DC1AP.Threads
                     result = true;
                     while (result && PlayerState.CanGiveItem() && InventoryMgmt.HasAvailableAttachInventory() && attachmentQueue.TryDequeue(out long apId))
                     {
-                        result = InventoryMgmt.GiveAttachment(apId);
+                        result = InventoryMgmt.HasAvailableAttachInventory();
+                        if (result)
+                            result = InventoryMgmt.GiveAttachment(apId);
+
                         // If we fail to give the item because inventory is full, requeue it
                         if (!result)
                         {

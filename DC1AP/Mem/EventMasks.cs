@@ -6,18 +6,29 @@ namespace DC1AP.Mem
 {
     internal class EventMasks
     {
+        // 0x04: first talk with Goro
+        // 0x08: Goro duel complete
+        // 0x10: Got serpent sword
         internal const uint DialogAddr1 = 0x01CE43A8;
         // 0x80: skip pre-SMT dialog
         internal const uint DialogAddr2 = 0x01CE43A9;
+        // 0x40: ship "duel" complete
         internal const uint DialogAddr3 = 0x01CE43AC;
         internal const uint DialogAddr4 = 0x01CE43AD;  // 0x02 is releated to end game cutscenes
+        // 0x01: Snake duel complete
         internal const uint DialogAddr5 = 0x01CE43AE;
+        // 0x40: Skeleduel complete
         internal const uint DialogAddr6 = 0x01CE43B4;
+        // 0x80: werewolf duel complete
         internal const uint DialogAddr7 = 0x01CE43B5;
         internal const uint DialogAddr8 = 0x01CE43B8;
+        // 0x04: Xiao recruited
+        // 0x08: Revived treant cutscene
+        // 0x10: Matatki river connected
         internal const uint DialogAddr9 = 0x01CE43AA;
 
         // Does more than just shipwreck, but that's the only thing we interact with it for currently
+        // 0x02: Seda duel complete
         private const uint ShipwreckKeyAddr = 0x01CE43AB;
         private const byte ShipwreckKeyValue = 0xFF - 0x10;
 
@@ -92,7 +103,7 @@ namespace DC1AP.Mem
             // Muska Lacka dialog.  0x04 and 0x08 are the Theo/Ungaga dialogs. 0x10 is the gol/sil convo on floor 9, 0x20 and 0x40 are gol and sil being dead respectively.
             OrMask(DialogAddr8, 0x0C);
             // Addr8+1 goes to 0x10 for Osmond scene
-            
+
             OrMask(DialogAddr9, 0x40); // Factory entrance sequence
             OrMask(DialogAddr3, 0x08); // Skip the pre robot battle dialog. (doesn't actually skip it?)
             OrMask(DialogAddr3, 0x10); // Genie/Robot fight

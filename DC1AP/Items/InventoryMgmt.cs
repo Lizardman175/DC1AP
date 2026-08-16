@@ -142,6 +142,10 @@ namespace DC1AP.Items
         /// <returns></returns>
         internal static bool GiveItem(long itemId, bool updateFlag=true)
         {
+            // Somehow got more than we should, don't add it but pretend we did so the queue skips it.
+            if (updateFlag && OpenMem.ReadItemCountValue(itemId) >= App.Client.CurrentSession.Items.AllItemsReceived.Count((x) => x.ItemId == itemId))
+                return true;
+
             byte maxInv = Memory.ReadByte(ItemValues.InvMaxAddr);
             InvItem item = ItemData[itemId];
 
@@ -194,6 +198,10 @@ namespace DC1AP.Items
 
         internal static bool GiveAttachment(long itemId, bool updateFlag = true)
         {
+            // Somehow got more than we should, don't add it but pretend we did so the queue skips it.
+            if (OpenMem.ReadItemCountValue(itemId) >= App.Client.CurrentSession.Items.AllItemsReceived.Count((x) => x.ItemId == itemId))
+                return true;
+
             if (!HasAvailableAttachInventory()) return false;
 
             Attachment item = AttachmentData[itemId];

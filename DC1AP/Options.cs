@@ -18,6 +18,7 @@ namespace DC1AP
         private static bool miracleSanity = false;
         private static bool shopSanity = false;
         private static int fishSanity = 0;
+        private static int floorSanity = 0;
         private static bool deathLink = false;
         private static AutobuildFlags autobuild = AutobuildFlags.Off;
         private static string toanName = "Toan";
@@ -39,6 +40,7 @@ namespace DC1AP
         public static bool MiracleSanity { get => miracleSanity; }
         public static bool ShopSanity { get => shopSanity; }
         public static int FishSanity { get => fishSanity; }
+        public static int FloorSanity { get => floorSanity; }
         public static AutobuildFlags Autobuild { get => autobuild; }
         public static bool DeathLink { get => deathLink; }
         public static string ToanName { get => toanName; }
@@ -63,7 +65,8 @@ namespace DC1AP
             autobuild = (AutobuildFlags)((JsonElement)options["auto_build"]).Deserialize<int>();
             miracleSanity = ((JsonElement)options["miracle_sanity"]).Deserialize<int>() != 0;  // Shuffle in miracle chests
             shopSanity = ((JsonElement)options["shop_sanity"]).Deserialize<int>() != 0;
-            fishSanity = ((JsonElement)options["shop_sanity"]).Deserialize<int>();
+            fishSanity = ((JsonElement)options["fish_sanity"]).Deserialize<int>();
+            floorSanity = ((JsonElement)options["floor_sanity"]).Deserialize<int>();
             deathLink = ((JsonElement)options["death_link"]).Deserialize<int>() != 0;
             toanName = ((JsonElement)options["toan_name"]).Deserialize<String>()!;
             xiaoName = ((JsonElement)options["xiao_name"]).Deserialize<String>()!;

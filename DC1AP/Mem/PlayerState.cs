@@ -52,7 +52,7 @@ namespace DC1AP.Mem
         /// <returns>True if safe to give the player an item.</returns>
         public static bool CanGiveItemDungeon()
         {
-            return PlayerReady() && IsPlayerInDungeon() && Memory.ReadByte(MiscAddrs.DungeonMode) == 1;
+            return PlayerReady() && IsPlayerInDungeon() && Memory.ReadByte(MiscAddrs.DungeonMode) == 1 && Memory.ReadByte(MiscAddrs.DunMobileAddr) == 0;
         }
 
         /// <summary>
