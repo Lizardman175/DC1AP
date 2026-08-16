@@ -88,11 +88,11 @@ namespace DC1AP.Mem
 
         internal static void Init(int slotNumber)
         {
-            XiaoStorage += slotNumber;
-            GoroStorage += slotNumber;
-            RubyStorage += slotNumber;
-            UngagaStorage += slotNumber;
-            OsmondStorage += slotNumber;
+            XiaoStorage = "dc1_Xiao_" + slotNumber;
+            GoroStorage = "dc1_Goro_" + slotNumber;
+            RubyStorage = "dc1_Ruby_" + slotNumber;
+            UngagaStorage = "dc1_Ungaga_" + slotNumber;
+            OsmondStorage = "dc1_Osmond_" + slotNumber;
 
             xiao = Memory.ReadByte(MiscAddrs.XiaoSlotAddr) != 0xff && OpenMem.CheckCharReceived(XiaoIndex);
             goro = Memory.ReadByte(MiscAddrs.GoroSlotAddr) != 0xff && OpenMem.CheckCharReceived(GoroIndex);

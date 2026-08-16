@@ -80,7 +80,8 @@ namespace DC1AP
         private static string seedName = string.Empty;
 
         // Genie handled differently so not in the lists
-        private static readonly string[] bossNames = ["dc1_Dran_", "dc1_Utan_", "dc1_Saia_", "dc1_Curse_", "dc1_Joe_", "dc1_Genie_"];
+        private static readonly string[] bossNamesSrc = ["dc1_Dran_", "dc1_Utan_", "dc1_Saia_", "dc1_Curse_", "dc1_Joe_", "dc1_Genie_"];
+        private static readonly string[] bossNames = bossNamesSrc;
         private static readonly int[] bossMasks = [1, 2, 4, 8, 16, 32];
 
         public override void Initialize()
@@ -284,7 +285,7 @@ namespace DC1AP
 
             for (int i = 0; i < Options.Goal; i++)
             {
-                bossNames[i] += slotNum;
+                bossNames[i] = bossNamesSrc[i] + slotNum;
             }
 
             // First load for this save, so do extra stuff
@@ -539,27 +540,35 @@ namespace DC1AP
             bb |= mask;
             Memory.WriteByte(OpenMem.GoalAddr, bb);
 
-            // Track on the server that the Dark Genie has been killed
-            if (mask == MiscConstants.DarkGenieMask)
+            try
             {
-                if (!Client.CurrentSession.DataStorage[bossNames[5]] && Client.CurrentSession.Locations.AllLocations.Contains(971117405))
-                    SendFGoalCompletion();
+                // Track on the server that the Dark Genie has been killed
+                if (mask == MiscConstants.DarkGenieMask)
+                {
+                    if (!Client.CurrentSession.DataStorage[bossNames[5]] && Client.CurrentSession.Locations.AllLocations.Contains(971117405))
+                        SendFGoalCompletion();
 
-                Client.CurrentSession.DataStorage[bossNames[5]] = true;
-                // The game will reset after the credits but it doesn't clear the time of day field.  This will force PlayerNotReady() to be called to avoid issues.
-                // Only call if from actually beating the boss.  If the item is collected, clearing Time of Day will cause issues.
-                if (trueKill)
-                    Memory.Write(MiscAddrs.TimeOfDayAddr, 0);
-            }
-            else if (bossMasks.IndexOf(mask) != -1)
-            {
-                Client.CurrentSession.DataStorage[bossNames[bossMasks.IndexOf(mask)]] = true;
-            }
+                    Client.CurrentSession.DataStorage[bossNames[5]] = true;
+                    // The game will reset after the credits but it doesn't clear the time of day field.  This will force PlayerNotReady() to be called to avoid issues.
+                    // Only call if from actually beating the boss.  If the item is collected, clearing Time of Day will cause issues.
+                    if (trueKill)
+                        Memory.Write(MiscAddrs.TimeOfDayAddr, 0);
+                }
+                else if (bossMasks.IndexOf(mask) != -1)
+                {
+                    Client.CurrentSession.DataStorage[bossNames[bossMasks.IndexOf(mask)]] = true;
+                }
 
-            if (bb == bossKillTest)
+                if (bb == bossKillTest)
+                {
+                    Client.SendGoalCompletion();
+                    return;
+                }
+            }
+            catch (Exception)
             {
-                Client.SendGoalCompletion();
-                return;
+                // Ignore. The DataStorage access can collide harmlessly when there are duplicate monitors due to resets (or whatever reason the game keeps tripping PlayerReady/NotReady)
+                // TODO since we can't pass cancellation tokens to the monitors, should probably monitor boss kills in HelperThread or similar instead of this jank
             }
 
             // Take away the useless Moon Orb item since we already have Muska Lacka access
