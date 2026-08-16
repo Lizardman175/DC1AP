@@ -132,6 +132,12 @@ namespace DC1AP.Threads
                 chests[(int)town].RemoveAll(mc => mc.CheckChest());
         }
 
+        /// <summary>
+        /// Empties loot table for currently loaded chests
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="mayor"></param>
+        /// <param name="bunbuku"></param>
         private static void EmptyMiracleChests(uint addr, bool mayor = false, bool bunbuku = false)
         {
             // Some of this area is apparently protected so I can't read a full struct of data at once. We don't need most of it anyway.

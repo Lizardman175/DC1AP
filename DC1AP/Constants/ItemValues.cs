@@ -75,8 +75,8 @@ namespace DC1AP.Constants
                                                    ShopDataTableAddr + SimbaShop2Index * ShopInvOffset,
                                                    ShopDataTableAddr + SimbaShop3Index * ShopInvOffset];
         
-        public static readonly uint[] ShopItemAPIDs = [97111_1300,  // Gaffer + Pike
-                                                       97111_2300,  // Owl
+        public static readonly uint[] ShopItemAPIDs = [97111_3100,  // Gaffer + Pike
+                                                       97111_3200,  // Owl
                                                        97111_3300,  // Ruty
                                                        97111_3310,  // Suzy
                                                        97111_3310,  // Suzy
@@ -84,15 +84,15 @@ namespace DC1AP.Constants
                                                        97111_3310,  // Suzy
                                                        97111_3320,  // Lana
                                                        97111_3330,  // Jack
-                                                       97111_4300,  // Brooke
-                                                       97111_5300,  // Ledan
-                                                       97111_6300,  // Simba items
+                                                       97111_3400,  // Brooke
+                                                       97111_3500,  // Ledan
+                                                       97111_3600,  // Simba items
                                                        97111_3340,  // Joker
-                                                       97111_1300,  // Gaffer alt
+                                                       97111_3100,  // Gaffer alt
                                                        0,  // No known shop for 0xE.  Seems to be a variant of the wise owl shop but lacking the sword and bait items
                                                        0,  // Rando, unused since he is missable
-                                                       97111_6310,  // Simba gems
-                                                       97111_6320];  // Simba attachments
+                                                       97111_3610,  // Simba gems
+                                                       97111_3620];  // Simba attachments
 
         public const short FireGemID = 0x51;  // First item in shop price list; used to calculate offset for other items
         public const short MedusaPowderID = 0xAB;
@@ -113,46 +113,47 @@ namespace DC1AP.Constants
         public const uint FishLogEntryOffset = 0x10;
         public const uint FishLogSizeOffset = 0x06;
 
-        public static readonly Dictionary<int, int> FishLogToApId = new Dictionary<int, int>{
-            [0] = 97111_0400,    // Bobo
-            [1] = 97111_0401,    // Gobbler
-            [2] = 97111_0402,    // Nonky
-            [3] = 97111_0403,    // Kaji
-            [4] = 97111_0404,    // Baku Baku
-            [5] = 97111_0405,    // Mardan Garayan
-            [6] = 97111_0406,    // Gummy
-            [7] = 97111_0407,    // Niler
-            [8] = 97111_0409,    // Umadakara (seems unused)
-            [9] = 97111_0409,    // Umadakara
-            [10] = 97111_0410,   // Tarton
-            [11] = 97111_0411,   // Piccoly
-            [12] = 97111_0412,   // Bon
-            [13] = 97111_0413,   // Hama Hama
-            [14] = 97111_0414,   // Negie
-            [15] = 97111_0415,   // Den
-            [16] = 97111_0416,   // Heela
-            [17] = 97111_0417,   // Baron Garayan
+        public static readonly Dictionary<int, int> FishLogToApId = new()
+        {
+            [0] = 97111_4000,    // Bobo
+            [1] = 97111_4001,    // Gobbler
+            [2] = 97111_4002,    // Nonky
+            [3] = 97111_4003,    // Kaji
+            [4] = 97111_4004,    // Baku Baku
+            [5] = 97111_4005,    // Mardan Garayan
+            [6] = 97111_4006,    // Gummy
+            [7] = 97111_4007,    // Niler
+            [8] = 97111_4009,    // Umadakara (seems unused)
+            [9] = 97111_4009,    // Umadakara
+            [10] = 97111_4010,   // Tarton
+            [11] = 97111_4011,   // Piccoly
+            [12] = 97111_4012,   // Bon
+            [13] = 97111_4013,   // Hama Hama
+            [14] = 97111_4014,   // Negie
+            [15] = 97111_4015,   // Den
+            [16] = 97111_4016,   // Heela
+            [17] = 97111_4017,   // Baron Garayan
         };
 
         public static readonly Dictionary<int, int> FishCatchToApId = new()
         {
-            [0x28] = 97111_0400, // Bobo
-            [0x29] = 97111_0401, // Gobbler
-            [0x2A] = 97111_0402, // Nonky
-            [0x2B] = 97111_0403, // Kaji
-            [0x2C] = 97111_0404, // Baku Baku
-            [0x2D] = 97111_0405, // Mardan Garayan
-            [0x2E] = 97111_0406, // Gummy
-            [0x2F] = 97111_0407, // Niler
-            [0x31] = 97111_0409, // Umadakara
-            [0x1E] = 97111_0410, // Tarton
-            [0x1F] = 97111_0411, // Piccoly
-            [0x20] = 97111_0412, // Bon
-            [0x21] = 97111_0413, // Hama Hama
-            [0x22] = 97111_0414, // Negie
-            [0x23] = 97111_0415, // Den
-            [0x24] = 97111_0416, // Heela
-            [0x25] = 97111_0417, // Baron Garayan
+            [0x28] = 97111_4000, // Bobo
+            [0x29] = 97111_4001, // Gobbler
+            [0x2A] = 97111_4002, // Nonky
+            [0x2B] = 97111_4003, // Kaji
+            [0x2C] = 97111_4004, // Baku Baku
+            [0x2D] = 97111_4005, // Mardan Garayan
+            [0x2E] = 97111_4006, // Gummy
+            [0x2F] = 97111_4007, // Niler
+            [0x31] = 97111_4009, // Umadakara
+            [0x1E] = 97111_4010, // Tarton
+            [0x1F] = 97111_4011, // Piccoly
+            [0x20] = 97111_4012, // Bon
+            [0x21] = 97111_4013, // Hama Hama
+            [0x22] = 97111_4014, // Negie
+            [0x23] = 97111_4015, // Den
+            [0x24] = 97111_4016, // Heela
+            [0x25] = 97111_4017, // Baron Garayan
         };
     }
 }

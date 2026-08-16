@@ -94,7 +94,7 @@ namespace DC1AP.Threads
 
                         if (Options.FloorSanity > 0)
                         {
-                            int loc = MiscConstants.BaseId + (curDungeon+1) * 1000 + 400 + curFloor + 1;
+                            int loc = MiscConstants.BaseId + (curDungeon+1) * 100 + 4000 + curFloor + 1;
                             if (Memory.ReadInt(MiscAddrs.BackFloorFlag) == 0 && PlayerState.CanGiveItemDungeon() &&
                                 App.Client.CurrentSession.Locations.AllMissingLocations.Contains(loc))
                             {
@@ -223,7 +223,7 @@ namespace DC1AP.Threads
 
                 uint addr = GeoAddrs.AtlaFlagAddrs[dun];
                 // TODO magic nums.
-                int atlaId = MiscConstants.BaseId + 101 + 1000 * (dun + 1);
+                int atlaId = MiscConstants.BaseId + 1001 + 100 * (dun + 1);
                 List<Atla> dunAtla = [];
                 int maxFloor = MiscAddrs.FloorCountRear[dun];
                 // Final dungeon floor counter is 1 less than it should be to not give early access to the Genie.  This is needed to check the final floor's atla.
@@ -233,7 +233,7 @@ namespace DC1AP.Threads
                 {
                     // Adjust value for back half of a dungeon
                     if (dunAtla.Count == GeoAddrs.AtlaHalfwayCounts[dun] && dun != (int)Towns.Castle)
-                        atlaId = MiscConstants.BaseId + 201 + 1000 * (dun + 1);
+                        atlaId = MiscConstants.BaseId + 2001 + 100 * (dun + 1);
 
                     for (int slot = 0; slot < MiscConstants.MaxAtlaPerFloor; slot++)
                     {
