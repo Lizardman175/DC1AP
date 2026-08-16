@@ -80,7 +80,7 @@ namespace DC1AP
         private static string seedName = string.Empty;
 
         // Genie handled differently so not in the lists
-        private static readonly string[] bossNames = ["Dran", "Utan", "Saia", "Curse", "Joe", "Genie"];
+        private static readonly string[] bossNames = ["dc1_Dran_", "dc1_Utan_", "dc1_Saia_", "dc1_Curse_", "dc1_Joe_", "dc1_Genie_"];
         private static readonly int[] bossMasks = [1, 2, 4, 8, 16, 32];
 
         public override void Initialize()
@@ -279,6 +279,13 @@ namespace DC1AP
         {
             Thread.Sleep(50);
             string currSlot = OpenMem.GetSlotName();
+            int slotNum = Client.CurrentSession.Players.ActivePlayer.Slot;
+            seedName = Client.CurrentSession.RoomState.Seed;
+
+            for (int i = 0; i < Options.Goal; i++)
+            {
+                bossNames[i] += slotNum;
+            }
 
             // First load for this save, so do extra stuff
             if (currSlot == "")
@@ -294,7 +301,11 @@ namespace DC1AP
                 EventMasks.InitMasks();
                 Weapons.GiveCharWeapon(0);
                 InventoryMgmt.GiveFreeFeather();
-                seedName = Client.CurrentSession.RoomState.Seed;
+
+                for (int i = 0; i < Options.Goal; i++)
+                {
+                    Client.CurrentSession.DataStorage[bossNames[i]] = false;
+                }
             }
             else if (currSlot != slotName)
             {
@@ -312,7 +323,7 @@ namespace DC1AP
 
             SetDefaultNames(false);
             GeoInvMgmt.InitBuildings();
-            CharFuncs.Init();
+            CharFuncs.Init(slotNum);
             Enemies.MultiplyABS();
             InventoryMgmt.MultiplyAttachments();
             ShopMgmt.UpdateShops();
@@ -457,7 +468,7 @@ namespace DC1AP
             {
                 byte currKills = Memory.ReadByte(OpenMem.GoalAddr);
 
-                if ((currKills & MiscConstants.DarkGenieMask) == 0 & Options.Goal >= 6 && Client.CurrentSession.DataStorage["Genie"] == true)
+                if ((currKills & MiscConstants.DarkGenieMask) == 0 & Options.Goal >= 6 && Client.CurrentSession.DataStorage[bossNames[5]] == true)
                 {
                     bossKillTest |= MiscConstants.DarkGenieMask;
                     currKills |= MiscConstants.DarkGenieMask;
@@ -513,7 +524,7 @@ namespace DC1AP
             }
 
             // If reloading after the genie fight with more bosses, add the boss kill here
-            if (Client.CurrentSession.DataStorage["Genie"] == true)
+            if (Client.CurrentSession.DataStorage[bossNames[5]] == true)
                 AddBossKill(MiscConstants.DarkGenieMask);
         }
 
@@ -531,10 +542,10 @@ namespace DC1AP
             // Track on the server that the Dark Genie has been killed
             if (mask == MiscConstants.DarkGenieMask)
             {
-                if (!Client.CurrentSession.DataStorage["Genie"] && Client.CurrentSession.Locations.AllLocations.Contains(971117405))
+                if (!Client.CurrentSession.DataStorage[bossNames[5]] && Client.CurrentSession.Locations.AllLocations.Contains(971117405))
                     SendFGoalCompletion();
 
-                Client.CurrentSession.DataStorage["Genie"] = true;
+                Client.CurrentSession.DataStorage[bossNames[5]] = true;
                 // The game will reset after the credits but it doesn't clear the time of day field.  This will force PlayerNotReady() to be called to avoid issues.
                 // Only call if from actually beating the boss.  If the item is collected, clearing Time of Day will cause issues.
                 if (trueKill)
@@ -598,6 +609,14 @@ namespace DC1AP
                 else if ((bb & (1 << (int)Towns.Muska)) == 0)
                 {
                     Memory.Write(MiscAddrs.BossKillAddr, (short)300);
+                }
+                else if ((bb & (1 << (int)Towns.Factory)) == 0)
+                {
+                    Memory.Write(MiscAddrs.BossKillAddr, (short)400);
+                }
+                else if ((bb & (1 << (int)Towns.Castle)) == 0)
+                {
+                    Memory.Write(MiscAddrs.BossKillAddr, (short)500);
                 }
             }
         }

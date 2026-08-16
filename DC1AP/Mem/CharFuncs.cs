@@ -67,6 +67,12 @@ namespace DC1AP.Mem
         public static bool Ungaga { get => ungaga; }
         public static bool Osmond { get => osmond; }
 
+        private static string XiaoStorage = "dc1_Xiao_";
+        private static string GoroStorage = "dc1_Goro_";
+        private static string RubyStorage = "dc1_Ruby_";
+        private static string UngagaStorage = "dc1_Ungaga_";
+        private static string OsmondStorage = "dc1_Osmond_";
+
         internal static bool HaveChar(int index)
         {
             return index switch
@@ -80,8 +86,14 @@ namespace DC1AP.Mem
             };
         }
 
-        internal static void Init()
+        internal static void Init(int slotNumber)
         {
+            XiaoStorage += slotNumber;
+            GoroStorage += slotNumber;
+            RubyStorage += slotNumber;
+            UngagaStorage += slotNumber;
+            OsmondStorage += slotNumber;
+
             xiao = Memory.ReadByte(MiscAddrs.XiaoSlotAddr) != 0xff && OpenMem.CheckCharReceived(XiaoIndex);
             goro = Memory.ReadByte(MiscAddrs.GoroSlotAddr) != 0xff && OpenMem.CheckCharReceived(GoroIndex);
             ruby = Memory.ReadByte(MiscAddrs.RubySlotAddr) != 0xff && OpenMem.CheckCharReceived(RubyIndex);
@@ -89,29 +101,29 @@ namespace DC1AP.Mem
             osmond = Memory.ReadByte(MiscAddrs.OsmondSlotAddr) != 0xff && OpenMem.CheckCharReceived(OsmondIndex);
 
             if (!xiao)
-                App.Client.CurrentSession.DataStorage["Xiao"] = false;
+                App.Client.CurrentSession.DataStorage[XiaoStorage] = false;
             else
-                App.Client.CurrentSession.DataStorage["Xiao"] = true;
+                App.Client.CurrentSession.DataStorage[XiaoStorage] = true;
 
             if (!goro)
-                App.Client.CurrentSession.DataStorage["Goro"] = false;
+                App.Client.CurrentSession.DataStorage[GoroStorage] = false;
             else
-                App.Client.CurrentSession.DataStorage["Goro"] = true;
+                App.Client.CurrentSession.DataStorage[GoroStorage] = true;
 
             if (!ruby)
-                App.Client.CurrentSession.DataStorage["Ruby"] = false;
+                App.Client.CurrentSession.DataStorage[RubyStorage] = false;
             else
-                App.Client.CurrentSession.DataStorage["Ruby"] = true;
+                App.Client.CurrentSession.DataStorage[RubyStorage] = true;
 
             if (!ungaga)
-                App.Client.CurrentSession.DataStorage["Ungaga"] = false;
+                App.Client.CurrentSession.DataStorage[UngagaStorage] = false;
             else
-                App.Client.CurrentSession.DataStorage["Ungaga"] = true;
+                App.Client.CurrentSession.DataStorage[UngagaStorage] = true;
 
             if (!osmond)
-                App.Client.CurrentSession.DataStorage["Osmond"] = false;
+                App.Client.CurrentSession.DataStorage[OsmondStorage] = false;
             else
-                App.Client.CurrentSession.DataStorage["Osmond"] = true;
+                App.Client.CurrentSession.DataStorage[OsmondStorage] = true;
         }
 
         internal static void CheckForChars()
@@ -170,7 +182,7 @@ namespace DC1AP.Mem
                 if (Options.MiracleSanity)
                     ItemQueue.checkItems = true;
 
-                App.Client.CurrentSession.DataStorage["Xiao"] = true;
+                App.Client.CurrentSession.DataStorage[XiaoStorage] = true;
                 OpenMem.SetCharReceived(XiaoIndex);
             }
         }
@@ -194,7 +206,7 @@ namespace DC1AP.Mem
                 if (Options.MiracleSanity)
                     ItemQueue.checkItems = true;
 
-                App.Client.CurrentSession.DataStorage["Goro"] = true;
+                App.Client.CurrentSession.DataStorage[GoroStorage] = true;
                 OpenMem.SetCharReceived(GoroIndex);
             }
         }
@@ -220,7 +232,7 @@ namespace DC1AP.Mem
                 if (Options.MiracleSanity)
                     ItemQueue.checkItems = true;
 
-                App.Client.CurrentSession.DataStorage["Ruby"] = true;
+                App.Client.CurrentSession.DataStorage[RubyStorage] = true;
                 OpenMem.SetCharReceived(RubyIndex);
             }
         }
@@ -245,7 +257,7 @@ namespace DC1AP.Mem
                 if (Options.MiracleSanity)
                     ItemQueue.checkItems = true;
 
-                App.Client.CurrentSession.DataStorage["Ungaga"] = true;
+                App.Client.CurrentSession.DataStorage[UngagaStorage] = true;
                 OpenMem.SetCharReceived(UngagaIndex);
             }
         }
@@ -264,7 +276,7 @@ namespace DC1AP.Mem
                 if (Options.MiracleSanity)
                     ItemQueue.checkItems = true;
 
-                App.Client.CurrentSession.DataStorage["Osmond"] = true;
+                App.Client.CurrentSession.DataStorage[OsmondStorage] = true;
                 OpenMem.SetCharReceived(OsmondIndex);
                 GoTAccess();
             }
