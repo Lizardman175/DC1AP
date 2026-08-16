@@ -94,7 +94,7 @@ namespace DC1AP.Constants
 
         internal const byte DarkGenieMask = 0b10_0000;
 
-        internal const long HornedKeyChestId = 971_111_063;
+        internal const long HornedKeyChestId = 971_110_163;
 
         private const long HornedKeyApId = 971_111_207;
         private const long PocketApId = 971_111_101;
