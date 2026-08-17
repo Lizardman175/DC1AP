@@ -6,11 +6,6 @@
     "BuildingId": 0,
     "Items": [
       {
-        "Name": "Chief Bonka",
-        "ItemId": 40,
-        "SlotId": 3
-      },
-      {
         "Name": "Chief Bonka's Mini Totem Pole",
         "ItemId": 0,
         "SlotId": 0
@@ -24,6 +19,11 @@
         "Name": "Chief Bonka's Cabin 2",
         "ItemId": 1,
         "SlotId": 2
+      },
+      {
+        "Name": "Chief Bonka",
+        "ItemId": 40,
+        "SlotId": 3
       }
     ],
     "HundoCoords": {
