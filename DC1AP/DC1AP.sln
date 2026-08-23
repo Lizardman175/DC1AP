@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DC1AP", "DC1AP.csproj", "{2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DC1AP.Desktop", "..\DC1AP.Desktop\DC1AP.Desktop.csproj", "{AD6DC180-0BCB-F671-BAA6-EFF8ADCFB14F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DC1AP.linux", "..\DC1AP.linux\DC1AP.linux.csproj", "{B3A92E03-7EA0-49B8-9ABF-989E5B966F3C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{AD6DC180-0BCB-F671-BAA6-EFF8ADCFB14F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD6DC180-0BCB-F671-BAA6-EFF8ADCFB14F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD6DC180-0BCB-F671-BAA6-EFF8ADCFB14F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3A92E03-7EA0-49B8-9ABF-989E5B966F3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3A92E03-7EA0-49B8-9ABF-989E5B966F3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3A92E03-7EA0-49B8-9ABF-989E5B966F3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3A92E03-7EA0-49B8-9ABF-989E5B966F3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
