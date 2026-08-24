@@ -62,7 +62,7 @@ and
 
 **PLEASE NOTE** These commands, while benign, will reduce the overall security of your system and should be reversed when you are not using the client.
 - Command 2 allows any program to read the memory of another program which is running under the same uid as it. It is not dangerous on its own, but can make a bad situation much worse if your machine does get compromised.
-- Command 1 doesn't have any security implications, but makes changes to the binary which will disable PCSX2's raw-socket networking, so games which use network services are likely to break until you revert the change.
+- Command 1 doesn't have any security implications, but makes changes to the binary which will break PCSX2's raw-socket networking on some Linux builds, so games which use network services may break until you revert the change.
 
 ### Reversing Compatibility Commands
 Command 1 can be reversed by running:
