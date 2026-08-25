@@ -99,7 +99,7 @@ namespace DC1AP.Threads
             return true;
         }
 
-        internal static void ThreadLoop(object? parameters)
+        internal static void ThreadLoop()
         {
             bool result = true;
             bool itemReceived = false;

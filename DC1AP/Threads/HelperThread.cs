@@ -4,6 +4,7 @@ using DC1AP.Items;
 using DC1AP.Locations;
 using DC1AP.Mem;
 using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -40,13 +41,21 @@ namespace DC1AP.Threads
             Clear();
             InitAtla();
 
-            for (int i = 0; i < Options.Goal; i++)
+            try
             {
-                if (!dungeonsMapped[i])
+                for (int i = 0; i < Options.Goal; i++)
                 {
-                    int x = i;
-                    Memory.MonitorAddressForAction<byte>(GeoAddrs.AtlaFlagAddrs[x], () => InitAtla(x), (o) => { return playableState && o != 0xff; });
+                    if (!dungeonsMapped[i])
+                    {
+                        int x = i;
+                        Memory.MonitorAddressForAction<byte>(GeoAddrs.AtlaFlagAddrs[x], () => InitAtla(x), (o) => { return playableState && o != 0xff; });
+                    }
                 }
+            }
+            catch (ArgumentException)
+            {
+                // could probably do something cleaner, but I'm not sure why this gets called rarely on disconnection
+                return;
             }
         }
 
@@ -58,7 +67,7 @@ namespace DC1AP.Threads
             playableState = false;
         }
 
-        internal static void DoLoop(object? parameters)
+        internal static void DoLoop()
         {
             Startup();
 
