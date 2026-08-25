@@ -31,6 +31,7 @@ namespace DC1AP.ViewModels
         private Color _textColor;
         private Color _buttonColor;
         private Color _buttonTextColor;
+        private string _connectBtnText = "Connect";
         private string _commandText;
         private string _selectedLogLevel;
         private bool _connectButtonEnabled;
@@ -83,6 +84,11 @@ namespace DC1AP.ViewModels
         {
             get => this._autoscrollEnabled;
             set => this.RaiseAndSetIfChanged(ref _autoscrollEnabled, value);
+        }
+        public string ConnectBtnText
+        {
+            get => _connectBtnText;
+            set => this.RaiseAndSetIfChanged(ref _connectBtnText, value);
         }
         public ReactiveCommand<Unit, Unit> ConnectClickedCommand { get; }
         public ReactiveCommand<Unit, Unit> UnstuckClickedCommand { get; }

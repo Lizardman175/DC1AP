@@ -166,7 +166,7 @@
 								<Button Grid.Row="3"
 										Grid.Column="0"
 										Grid.ColumnSpan="2"
-										Content="Connect"
+										Content="{Binding ConnectBtnText}"
 										Command="{Binding ConnectClickedCommand}"
 										IsEnabled="{Binding ConnectButtonEnabled}" HorizontalContentAlignment="Center"/>
 
