@@ -3,8 +3,6 @@ using DC1AP.Constants;
 using DC1AP.Threads;
 using DC1AP.Utils;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
 
 namespace DC1AP.Georama
 {
@@ -19,12 +17,7 @@ namespace DC1AP.Georama
         /// </summary>
         internal static void Init()
         {
-            JsonSerializerOptions jOptions = new(JsonSerializerDefaults.Web)
-            {
-                AllowOutOfOrderMetadataProperties = true,
-                IncludeFields = true
-            };
-
+            GeoBuilding.buildings.Clear();
             GeoBuilding.buildings.Add(MiscConstants.ProgCharBldId, ProgCharBuilding.GetInstance());
 
             for (int i = 0; i < Options.Goal; i++)
