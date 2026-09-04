@@ -306,6 +306,7 @@ namespace DC1AP
             Thread.Sleep(50);
             string currSlot = OpenMem.GetSlotName();
             int slotNum = Client.CurrentSession.Players.ActivePlayer.Slot;
+            HelperThread.slotNum = slotNum;
             seedName = Client.CurrentSession.RoomState.Seed;
 
             for (int i = 0; i < Options.Goal; i++)

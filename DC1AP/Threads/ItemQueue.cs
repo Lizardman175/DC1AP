@@ -52,11 +52,12 @@ namespace DC1AP.Threads
                 attachmentQueue.Enqueue(apId);
         }
 
-        internal static void AddMsg(string msg)
+        internal static void AddMsg(string msg, bool log = true)
         {
             if (PlayerState.PlayerReady())
             {
-                Log.Logger.Information(msg);
+                if (log)
+                    Log.Logger.Information(msg);
                 msgQueue.Enqueue(msg);
             }
         }
@@ -144,7 +145,7 @@ namespace DC1AP.Threads
                             Memory.ReadByte(MiscAddrs.LoadingIntoDungeonFlagAddr) == 0 &&
                             msgQueue.TryDequeue(out string? msg))
                             // TODO nums
-                            MessageFuncs.DisplayMessageDungeon(msg, 1, 20, DisplayTime);
+                            MessageFuncs.DisplayMessageDungeon(msg, 2, 20, DisplayTime);
                     }
 
                     itemReceived = false;
