@@ -44,7 +44,6 @@ using Newtonsoft.Json;
 using ReactiveUI;
 using Serilog;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Concurrency;
@@ -57,14 +56,12 @@ namespace DC1AP
 {
     public partial class App : Application
     {
-        public const string ClientVersion = "0.6.0";
+        public const string ClientVersion = "0.6.1";
 
         internal static ArchipelagoClient Client { get; set; }
 
         private static MainWindowViewModel Context;
         private static readonly object _lockObject = new();
-
-        private static readonly ConcurrentQueue<Location> locationQueue = new();
 
         private Thread queueThread;
         private Thread helperThread;
@@ -73,6 +70,7 @@ namespace DC1AP
         private GameClient? ps2Client;
         private bool diviningHouseDone = false;
         private bool cathedralDone = false;
+        private bool manualDisconnect = false;
 
         private DeathLinkService? _deathlinkService = null;
         internal static bool deathFromDeathlink = false;
@@ -83,6 +81,8 @@ namespace DC1AP
         private static readonly string[] bossNamesSrc = ["dc1_Dran_", "dc1_Utan_", "dc1_Saia_", "dc1_Curse_", "dc1_Joe_", "dc1_Genie_"];
         private static readonly string[] bossNames = bossNamesSrc;
         private static readonly int[] bossMasks = [1, 2, 4, 8, 16, 32];
+
+        private static App app;
 
         public override void Initialize()
         {
@@ -97,6 +97,7 @@ namespace DC1AP
             Context.Slot = settings.Slot;
 
             InventoryMgmt.InitInventoryMgmt();
+            app = this;
         }
 
         public override void OnFrameworkInitializationCompleted()
@@ -121,6 +122,26 @@ namespace DC1AP
         private async void Context_ConnectClicked(object? sender, ConnectClickedEventArgs e)
         {
             Context.ConnectButtonEnabled = false;
+
+            // This feels dirty
+            if (Context.ConnectBtnText.StartsWith("Dis") || (Client != null && Client.IsConnected))
+                Disconnect();
+            else
+                Connect(e);
+
+            Context.ConnectButtonEnabled = true;
+        }
+
+        private async void Disconnect()
+        {
+            manualDisconnect = true;
+            PlayerState.ClearGameState();
+            Client.Disconnect();
+            Context.ConnectBtnText = "Connect";
+        }
+
+        private async void Connect(ConnectClickedEventArgs e)
+        {
             Log.Logger.Information("Connecting...");
 
             PlayerState.ClearGameState();
@@ -162,6 +183,7 @@ namespace DC1AP
                 return;
             }
 
+            manualDisconnect = false;
             AppSettings.SaveAppSettings(new AppSettings(e.Host, e.Slot));
 
             Client.ItemManager.ItemReceived += Client_ItemReceived;
@@ -182,9 +204,9 @@ namespace DC1AP
                 return;
             }
 
-            if (reconnectThread == null)
+            if (reconnectThread == null || reconnectThread.ThreadState != ThreadState.Running)
             {
-                reconnectThread = new(new ParameterizedThreadStart(Reconnect))
+                reconnectThread = new(new ThreadStart(MonitorDisconnect))
                 {
                     IsBackground = true
                 };
@@ -222,7 +244,7 @@ namespace DC1AP
 
             if (queueThread == null)
             {
-                queueThread = new Thread(new ParameterizedThreadStart(ItemQueue.ThreadLoop))
+                queueThread = new Thread(new ThreadStart(ItemQueue.ThreadLoop))
                 {
                     IsBackground = true
                 };
@@ -231,14 +253,14 @@ namespace DC1AP
 
             if (helperThread == null)
             {
-                helperThread = new Thread(new ParameterizedThreadStart(HelperThread.DoLoop))
+                helperThread = new Thread(new ThreadStart(HelperThread.DoLoop))
                 {
                     IsBackground = true
                 };
                 helperThread.Start();
             }
 
-            Context.ConnectButtonEnabled = true;
+            Context.ConnectBtnText = "Disconnect";
         }
 
         #region PS2
@@ -278,6 +300,9 @@ namespace DC1AP
 
         private void PlayerReady(string slotName)
         {
+            if (!Client.CurrentSession.Socket.Connected)
+                return;
+
             Thread.Sleep(50);
             string currSlot = OpenMem.GetSlotName();
             int slotNum = Client.CurrentSession.Players.ActivePlayer.Slot;
@@ -350,7 +375,7 @@ namespace DC1AP
             // Other threads shouldn't stop, but if disconnecting from a slot without MC shuffle and connecting to one with MC shuffle, need to test thread state.
             if (chestThread == null || chestThread.ThreadState == ThreadState.Stopped)
             {
-                chestThread = new Thread(new ParameterizedThreadStart(MiracleChestMgmt.DoLoop))
+                chestThread = new Thread(new ThreadStart(MiracleChestMgmt.DoLoop))
                 {
                     IsBackground = true
                 };
@@ -368,8 +393,11 @@ namespace DC1AP
         {
             PlayerState.ClearGameState();
             ItemQueue.ClearQueues();
-            HelperThread.Startup();
-            Memory.MonitorAddressForAction<int>(MiscAddrs.TimeOfDayAddr, () => PlayerReady(slotName), (o) => { return o != 0; });
+            if (Client.CurrentSession.Socket.Connected)
+            {
+                HelperThread.Startup();
+                Memory.MonitorAddressForAction<int>(MiscAddrs.TimeOfDayAddr, () => PlayerReady(slotName), (o) => { return o != 0; });
+            }
         }
 
         private static void SetDefaultNames(bool sleep)
@@ -415,8 +443,6 @@ namespace DC1AP
 
                 if (Client.CurrentSession != null && Client.CurrentSession.Socket.Connected)
                     App.Client.SendLocationAsync(loc);
-                else
-                    locationQueue.Enqueue(loc);
             }
             else
             {
@@ -705,67 +731,77 @@ namespace DC1AP
         private static void OnDisconnected(object? sender, EventArgs? args)
         {
             Log.Logger.Information("Disconnected from Archipelago");
+            app.Reconnect();
         }
 
-        private async void Reconnect(object? parameters)
+        private async void Reconnect()
         {
             int waitTime = 100;
 
-            while (true)
+            while ((Client.CurrentSession == null || !Client.CurrentSession.Socket.Connected) && !manualDisconnect)
             {
-                if (Client.CurrentSession == null || !Client.CurrentSession.Socket.Connected)
+                // Connect to archipelago server
+                Client = new ArchipelagoClient(ps2Client);
+
+                Client.Connected += OnConnected;
+                Client.Disconnected += OnDisconnected;
+
+                await Client.Connect(Context.Host, "Dark Cloud 1");
+
+                if (!Client.IsConnected && waitTime < 10_000)
                 {
-                    waitTime = 0;  // Setup for longer wait time on reconnect attempts
-
-                    if (Client != null)
-                    {
-                        Client.Disconnect();
-
-                        Client.Connected -= OnConnected;
-                        Client.Disconnected -= OnDisconnected;
-                        Client.MessageReceived -= Client_MessageReceived;
-
-                        if (_deathlinkService != null)
-                        {
-                            _deathlinkService.OnDeathLinkReceived -= _deathlinkService_OnDeathLinkReceived;
-                            _deathlinkService = null;
-                        }
-                    }
-
-                    // Connect to archipelago server
-                    Client = new ArchipelagoClient(ps2Client);
-
-                    Client.Connected += OnConnected;
-                    Client.Disconnected += OnDisconnected;
-
-                    await Client.Connect(Context.Host, "Dark Cloud 1");
-
-                    if (!Client.IsConnected && waitTime < 10_000)
-                    {
-                        waitTime += 1000;
-                    }
-                    else if (Client.IsConnected)
-                    {
-                        Client.MessageReceived += Client_MessageReceived;
-
-                        await Client.Login(Context.Slot, !string.IsNullOrWhiteSpace(Context.Password) ? Context.Password : null);
-
-                        Client.ItemManager.ItemReceived += Client_ItemReceived;
-                        Client.ItemManager.ReceiveReady(Client.CurrentSession);
-
-                        Log.Logger.Information("Reconnected to Archipelago");
-                        waitTime = 100;
-                    }
-                }
-                else
-                {
-                    while (locationQueue.TryDequeue(out Location? loc))
-                    {
-                        Client.SendLocationAsync(loc);
-                    }
+                    waitTime += 1000;
                 }
 
                 Thread.Sleep(waitTime);
+            }
+
+            if (Client.CurrentSession != null && Client.CurrentSession.Socket.Connected)
+            {
+                Client.MessageReceived += Client_MessageReceived;
+
+                await Client.Login(Context.Slot, !string.IsNullOrWhiteSpace(Context.Password) ? Context.Password : null);
+
+                Thread.Sleep(50);
+
+                Client.ItemManager.ItemReceived += Client_ItemReceived;
+                Client.ItemManager.ReceiveReady(Client.CurrentSession);
+
+                Thread.Sleep(100);
+                Log.Logger.Information("Reconnected to Archipelago");
+
+                PlayerNotReady(slotName);
+
+                if (reconnectThread.ThreadState != ThreadState.Running)
+                {
+                    reconnectThread = new(new ThreadStart(MonitorDisconnect))
+                    {
+                        IsBackground = true
+                    };
+                    reconnectThread.Start();
+                }
+            }
+        }
+
+        internal void MonitorDisconnect()
+        {
+            while (true)
+            {
+                if ((Client.CurrentSession == null || !Client.CurrentSession.Socket.Connected) && !manualDisconnect)
+                {
+                    PlayerNotReady("");
+                    Client.Disconnect();
+
+                    Client.Connected -= OnConnected;
+                    Client.Disconnected -= OnDisconnected;
+                    Client.MessageReceived -= Client_MessageReceived;
+                    _deathlinkService?.OnDeathLinkReceived -= _deathlinkService_OnDeathLinkReceived;
+                    _deathlinkService = null;
+
+                    break;
+                }
+
+                Thread.Sleep(100);
             }
         }
     }
