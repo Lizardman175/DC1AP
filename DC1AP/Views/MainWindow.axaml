@@ -181,13 +181,6 @@
 										  ItemsSource="{Binding LogEventLevels}"
 										  SelectedItem="{Binding SelectedLogLevel}" Margin="5"/>
 
-								<Button Grid.Row="6"
-										Grid.Column="0"
-										Grid.ColumnSpan="2"
-										Content="UNSTUCK"
-										Command="{Binding UnstuckClickedCommand}"
-										IsEnabled="{Binding UnstuckButtonEnabled}"
-										HorizontalContentAlignment="Center"/>
 							</Grid>
 
 							<StackPanel VerticalAlignment="Bottom" Spacing="5" Grid.Row="2" >
