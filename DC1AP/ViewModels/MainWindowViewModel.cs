@@ -31,14 +31,14 @@ namespace DC1AP.ViewModels
         private Color _textColor;
         private Color _buttonColor;
         private Color _buttonTextColor;
+        private string _connectBtnText = "Connect";
         private string _commandText;
         private string _selectedLogLevel;
         private bool _connectButtonEnabled;
         private ObservableCollection<LogListItem> _hintList = new ObservableCollection<LogListItem>();
         private ObservableCollection<LogListItem> _itemList = new ObservableCollection<LogListItem>();
         private bool _autoscrollEnabled = true;
-        private bool _unstuckButtonEnabled;
-        private readonly System.Timers.Timer _processingTimer;
+        private readonly Timer _processingTimer;
         private readonly object _processingLock = new();
         private bool _isProcessingQueue = false;
         private const int MAX_BATCH_SIZE = 25; // Process messages in batches
@@ -68,12 +68,6 @@ namespace DC1AP.ViewModels
         }
         public event EventHandler<ConnectClickedEventArgs> ConnectClicked;
         public event EventHandler<ArchipelagoCommandEventArgs> CommandReceived;
-        public event EventHandler UnstuckClicked;
-        public bool UnstuckButtonEnabled
-        {
-            get => this._unstuckButtonEnabled;
-            set => this.RaiseAndSetIfChanged(ref _unstuckButtonEnabled, value);
-        }
         public bool ConnectButtonEnabled
         {
             get => this._connectButtonEnabled;
@@ -84,8 +78,12 @@ namespace DC1AP.ViewModels
             get => this._autoscrollEnabled;
             set => this.RaiseAndSetIfChanged(ref _autoscrollEnabled, value);
         }
+        public string ConnectBtnText
+        {
+            get => _connectBtnText;
+            set => this.RaiseAndSetIfChanged(ref _connectBtnText, value);
+        }
         public ReactiveCommand<Unit, Unit> ConnectClickedCommand { get; }
-        public ReactiveCommand<Unit, Unit> UnstuckClickedCommand { get; }
         public ReactiveCommand<Unit, Unit> TogglePaneCommand { get; }
         public ReactiveCommand<Unit, Unit> CommandSentCommand { get; }
 
@@ -153,7 +151,6 @@ namespace DC1AP.ViewModels
             ConnectClickedCommand = ReactiveCommand.Create(HandleConnect);
             CommandSentCommand = ReactiveCommand.Create(HandleCommandSent);
             TogglePaneCommand = ReactiveCommand.Create(HandleTogglePane);
-            UnstuckClickedCommand = ReactiveCommand.Create(HandleUnstuck);
             ClientVersion = App.ClientVersion;
             ArchipelagoVersion = archipelagoVersion;
 
@@ -186,14 +183,6 @@ namespace DC1AP.ViewModels
                     Command = CommandText
                 });
                 CommandText = string.Empty;
-            });
-        }
-
-        private void HandleUnstuck()
-        {
-            RxApp.MainThreadScheduler.Schedule(() =>
-            {
-                UnstuckClicked?.Invoke(this, EventArgs.Empty);
             });
         }
 

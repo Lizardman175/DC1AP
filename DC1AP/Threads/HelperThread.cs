@@ -1,10 +1,13 @@
 ﻿using Archipelago.Core.Util;
+using Archipelago.MultiClient.Net.Models;
 using DC1AP.Constants;
 using DC1AP.Items;
 using DC1AP.Locations;
 using DC1AP.Mem;
 using Serilog;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace DC1AP.Threads
@@ -31,6 +34,8 @@ namespace DC1AP.Threads
 
         internal static bool doDeathLink = false;
         internal static string deathlinkSource = "";
+        internal static int slotNum;
+        private static readonly Dictionary<int, Dictionary<long, ScoutedItemInfo>> itemScouts = [];
 
         /// <summary>
         /// Handle startup and the player reloading from memory by zeroing out various values and reinitializing data.
@@ -40,13 +45,21 @@ namespace DC1AP.Threads
             Clear();
             InitAtla();
 
-            for (int i = 0; i < Options.Goal; i++)
+            try
             {
-                if (!dungeonsMapped[i])
+                for (int i = 0; i < Options.Goal; i++)
                 {
-                    int x = i;
-                    Memory.MonitorAddressForAction<byte>(GeoAddrs.AtlaFlagAddrs[x], () => InitAtla(x), (o) => { return playableState && o != 0xff; });
+                    if (!dungeonsMapped[i])
+                    {
+                        int x = i;
+                        Memory.MonitorAddressForAction<byte>(GeoAddrs.AtlaFlagAddrs[x], () => InitAtla(x), (o) => { return playableState && o != 0xff; });
+                    }
                 }
+            }
+            catch (ArgumentException)
+            {
+                // could probably do something cleaner, but I'm not sure why this gets called rarely on disconnection
+                return;
             }
         }
 
@@ -58,7 +71,7 @@ namespace DC1AP.Threads
             playableState = false;
         }
 
-        internal static void DoLoop(object? parameters)
+        internal static void DoLoop()
         {
             Startup();
 
@@ -99,7 +112,10 @@ namespace DC1AP.Threads
                                 App.Client.CurrentSession.Locations.AllMissingLocations.Contains(loc))
                             {
                                 if (Enemies.CheckEnemyKills())
+                                {
                                     App.SendLocation(loc);
+                                    ScoutAndQueueLocMessage(loc);
+                                }
                             }
                         }
 
@@ -127,7 +143,6 @@ namespace DC1AP.Threads
             if (InventoryMgmt.RemoveInvItem(ItemValues.MedusaPowderID, true))
             {
                 App.SendLocation((int)ItemValues.ShopItemAPIDs[shopIndex]);
-
                 sent = true;
             }
 
@@ -160,9 +175,13 @@ namespace DC1AP.Threads
                         if (!atla.Collected && Memory.ReadInt(atla.Address) == MiscConstants.AtlaClaimed)
                         {
                             atla.Collected = true;
+                            int locId = atla.LocationId;
 
-                            if (!App.Client.CurrentSession.Locations.AllLocationsChecked.Contains(atla.LocationId))
-                                App.SendLocation(atla.LocationId);
+                            if (!App.Client.CurrentSession.Locations.AllLocationsChecked.Contains(locId))
+                            {
+                                App.SendLocation(locId);
+                                QueueLocMessage(itemScouts[curDun][locId]);
+                            }
                         }
                         else
                             CheckForCollectedAtla(atla);
@@ -203,7 +222,7 @@ namespace DC1AP.Threads
             }
         }
 
-        private static void InitAtla(int dun)
+        private static async void InitAtla(int dun)
         {
             lock (_lock)
             {
@@ -287,6 +306,21 @@ namespace DC1AP.Threads
 
                 atlaMap[dun] = dunAtla;
                 dungeonsMapped[dun] = true;
+            }
+
+            itemScouts[dun] = await App.Client.CurrentSession.Locations.ScoutLocationsAsync([.. atlaMap[dun].Select(atla => atla.LocationId)]);
+        }
+
+        private static async void ScoutAndQueueLocMessage(int loc)
+        {
+            QueueLocMessage((await App.Client.CurrentSession.Locations.ScoutLocationsAsync(loc))[loc]);
+        }
+
+        private static void QueueLocMessage(ScoutedItemInfo scout)
+        {
+            if (scout.Player.Slot != slotNum)
+            {
+                ItemQueue.AddMsg("Sent " + scout.ItemName + " to " + scout.Player.Name, false);
             }
         }
 

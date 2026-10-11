@@ -52,7 +52,7 @@ namespace DC1AP.Threads
             }
         }
 
-        internal static void DoLoop(object? parameters)
+        internal static void DoLoop()
         {
             if (!Options.MiracleSanity)
                 return;

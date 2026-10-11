@@ -25,10 +25,8 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 using Archipelago.Core.Util;
-using Archipelago.Core.Util.Overlay;
 using DC1AP.Constants;
 using System.Text;
-using Color = Archipelago.Core.Util.Overlay.Color;
 
 namespace DC1AP.Mem
 {

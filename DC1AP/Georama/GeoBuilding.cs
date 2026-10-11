@@ -252,6 +252,9 @@ namespace DC1AP.Georama
         #region TownBuilding
         private void BuildBuilding(bool inTown)
         {
+            // Something about the factory causes a rare crash.  Just return for now to avoid logic changes until more is known
+            if (town == Towns.Factory) return;
+
             if (HundoCoords != null &&
                  (Options.Autobuild == AutobuildFlags.Hundo ||
                  (town == Towns.Muska && (Options.Autobuild & AutobuildFlags.Muska) > 0) ||
@@ -330,6 +333,9 @@ namespace DC1AP.Georama
 
         private void BuildMultiBuilding(bool inTown)
         {
+            // Something about the factory causes a rare crash.  Just return for now to avoid logic changes until more is known
+            if (town == Towns.Factory) return;
+
             if (MultiCoords != null &&
                  (Options.Autobuild == AutobuildFlags.Hundo ||
                  (Options.Autobuild == AutobuildFlags.Any && town == Towns.Matataki && ApId == MiscConstants.MatatakiRiverId) ||  // Need rivers for any%
