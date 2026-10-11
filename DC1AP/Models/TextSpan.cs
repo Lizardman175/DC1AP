@@ -4,7 +4,11 @@ namespace DC1AP.Models
 {
     public class TextSpan
     {
-        public string Text { get; set; }
+        private string _text;
+        public string Text { get { return _text; } set
+            {
+                _text = value.Trim() + " ";
+            } }
         public IBrush TextColor { get; set; }
     }
 }
